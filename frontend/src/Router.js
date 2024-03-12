@@ -1,12 +1,13 @@
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
-import Main from './pages/Main';
+import AddAPIPage from './Componants/provider_componants/AddApi';
+
 
 function Router() {
   // const { isAuthenticated } = useAuthContext();
   
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<Main/>} />
+      <Route path="/" element={<AddAPIPage/>} />
     )
   );
   return (
