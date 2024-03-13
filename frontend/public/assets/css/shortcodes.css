@@ -2830,6 +2830,29 @@
 .tf-tab .content-tab .content-inner {
   display: none;
 }
+ form .search-form2 {
+  position: relative;
+  flex-grow: 1; 
+
+}
+ form .search-form2 input {
+border-radius: 10rem;
+  color: var(--primary-color8);
+  font-size: 16px;
+  line-height: 24px;
+}
+ form .search-form2 input::placeholder {
+  font-size: 16px;
+  color: var(--primary-color8);
+}
+ form .search-form2 .btn-search {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary-color49);
+  font-size: 21px;
+}
 
 .tab-details .top {
   display: flex;
