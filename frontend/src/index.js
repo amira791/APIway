@@ -11,6 +11,8 @@ import {
   Switch,
 } from "react-router-dom";
 import Home from './Componants/home';
+import AddApi from './Componants/addApi';
+import AddAPIPage from './Componants/provider_componants/AddApi';
 
 
 class Root extends Component {
@@ -20,6 +22,7 @@ class Root extends Component {
         <Router>
           <Routes>
             <Route exact path="/" element={<Home/>} />
+            <Route exact path="/addAPI" element={<AddAPIPage/>} />
           </Routes>
         </Router>
       </div>

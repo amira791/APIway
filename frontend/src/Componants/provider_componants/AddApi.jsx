@@ -1,18 +1,25 @@
 import React from "react";
 import { useEffect } from "react";
+import Footer from "../global_componants/footer";
+import Navbar from "../global_componants/navbar";
 const AddAPIPage = () => {
   return (
+    <body>
+      
+   
     <div className="wrapper">
       <div className="page clearfix">
+      <Navbar />
         <section className="page-title">
           <div className="tf-container">
             <div className="row">
               <div className="col-md-12">
                 <ul className="breadcrumbs">
                   <li>
-                    <a href="index-2.html">Home</a>
+                    <a href="index-2.html">---</a>
                   </li>
-                  <li>Create</li>
+                  <li>---</li>
+                  <li>--</li>
                 </ul>
 
                 <h4 className="page-title-heading">Add New API</h4>
@@ -887,7 +894,7 @@ const AddAPIPage = () => {
           </div>
         </section>
       </div>
-
+      <Footer />
       <div
         className="modal fade popup"
         id="popup_bid"
@@ -898,6 +905,7 @@ const AddAPIPage = () => {
         {/* Modal content for bidding */}
       </div>
     </div>
+    </body>
   );
 };
 

@@ -1,10 +1,14 @@
-import React from 'react';
-import HomeSection from './global_components/home_section';
+/* import React from 'react';
+import AddAPIPage from './provider_componants/AddApi';
+import Navbar from './global_componants/navbar';
+import Footer from './global_componants/footer';
 
-const Home = () => {
-    return <div>
-     <HomeSection/>
-    </div>
+const AddApi = () => {
+    return <body>
+        <Navbar/>
+     <AddAPIPage/>
+     <Footer/>
+    </body>
 }
 
-export default Home;
+export default AddApi; */

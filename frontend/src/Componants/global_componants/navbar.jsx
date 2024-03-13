@@ -76,7 +76,7 @@ class Navbar extends Component {
                                         </li>
 
                                         <li className="menu-item">
-                                            <a href="add-NFT.html">Create</a>
+                                            <a href="addAPI">Create</a>
                             
                                         </li>
                                                                                 
