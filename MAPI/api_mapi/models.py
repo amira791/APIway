@@ -45,9 +45,11 @@ class API(models.Model):
     id_api = models.AutoField(primary_key=True)
     api_name = models.CharField(max_length=100)
     description = models.CharField(max_length=100)
-    price = models.FloatField
     provider = models.ForeignKey(Fournisseur, on_delete=models.DO_NOTHING )
     category = models.ForeignKey(APIcategory, on_delete=models.DO_NOTHING )
+    terme_of_use= models.CharField(max_length=1000)
+    Logo = models.ImageField
+    visibility= models.BooleanField
     pricingPlans = models.ManyToManyField('Tarification')  
     def __str__(self):
         return self.api_name
@@ -86,7 +88,21 @@ class APIendpoint(models.Model):
     version = models.ForeignKey(APIversion, on_delete=models.DO_NOTHING )
     def __str__(self):
         return self.title
+class type(models.Model):
+    id_type = models.AutoField(primary_key=True)
+    name= models.CharField(max_length=100)
+    def __str__(self):
+        return self.title
 
+class Endpoint_parameter(models.Model):
+    id_parameter = models.AutoField(primary_key=True)
+    id_endpoint = models.ForeignKey(API, on_delete=models.DO_NOTHING )
+    name= models.CharField(max_length=100)
+    type_id = models.ForeignKey(type, on_delete=models.DO_NOTHING )
+    required = models.BooleanField
+    deleted = models.BooleanField
+    def __str__(self):
+        return self.title
 class Functionnality(models.Model):
     id_funct= models.AutoField(primary_key=True)
     functName = models.CharField(max_length=100)
