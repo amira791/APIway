@@ -2,80 +2,100 @@ import React from "react";
 import { useEffect } from "react";
 import Footer from "../global_componants/footer";
 import Navbar from "../global_componants/navbar";
+import DataTable from "../global_componants/Datatable";
 const AddAPIPage = () => {
+  const columns = [
+    {
+      Header: 'Name',
+      accessor: 'name', // accessor is the "key" in your data
+    },
+    {
+      Header: 'Age',
+      accessor: 'age',
+    },
+    {
+      Header: 'Location',
+      accessor: 'location',
+    },
+  ];
+
+  const data = [
+    { name: 'John', age: 30, location: 'New York' },
+    { name: 'Jane', age: 25, location: 'Los Angeles' },
+    { name: 'Doe', age: 40, location: 'Chicago' },
+  ];
+
   return (
     <body>
-      
-   
-    <div className="wrapper">
-      <div className="page clearfix">
-      <Navbar />
-        <section className="page-title">
-          <div className="tf-container">
-            <div className="row">
-              <div className="col-md-12">
-                <ul className="breadcrumbs">
-                  <li>
-                    <a href="index-2.html">---</a>
-                  </li>
-                  <li>---</li>
-                  <li>--</li>
-                </ul>
+      <div className="wrapper">
+        <div className="page clearfix">
+          <Navbar />
+          <section className="page-title">
+            <div className="tf-container">
+              <div className="row">
+                <div className="col-md-12">
+                  <ul className="breadcrumbs">
+                    <li>
+                      <a href="index-2.html">---</a>
+                    </li>
+                    <li>---</li>
+                    <li>--</li>
+                  </ul>
 
-                <h4 className="page-title-heading">Add New API</h4>
+                  <h4 className="page-title-heading">Add New API</h4>
+                </div>
+              </div>
+            </div>
+          </section>
+          <div class="row tf-container">
+            <div class="col-md-12">
+              <div class="top-menu">
+                <ul class="filter-menu">
+                  <li class="active">
+                    <a href="#" data-filter=".3d">
+                      General
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" data-filter=".anime">
+                      Definitions
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" data-filter=".cyber">
+                      Documentation
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" data-filter=".pixel">
+                      Gateway
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" data-filter=".music">
+                      Community
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" data-filter=".abstract">
+                      Monetize
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
-        </section>
-        <div class="row tf-container">
-          <div class="col-md-12">
-            <div class="top-menu">
-              <ul class="filter-menu">
-                <li class="active">
-                  <a href="#" data-filter=".3d">
-                    General
-                  </a>
-                </li>
-                <li>
-                  <a href="#" data-filter=".anime">
-                    Definitions
-                  </a>
-                </li>
-                <li>
-                  <a href="#" data-filter=".cyber">
-                    Documentation
-                  </a>
-                </li>
-                <li>
-                  <a href="#" data-filter=".pixel">
-                    Gateway
-                  </a>
-                </li>
-                <li>
-                  <a href="#" data-filter=".music">
-                    Community
-                  </a>
-                </li>
-                <li>
-                  <a href="#" data-filter=".abstract">
-                    Monetize
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <section className="add-nft tf-section tf-hot-pick tf-filter">
-          <div className="tf-container">
-            <div className="row ">
-              <div className="col-xl-9 col-lg-8 content-inner">
-                <fieldset>
-                  <label>Name your item*</label>
-                  <input
-                    type="text"
-                    placeholder="E.G. Redeemable  T-Shirt With Logo "
-                  />
-                </fieldset>
+          <section className="add-nft tf-section tf-hot-pick tf-filter">
+            <div className="tf-container">
+              <div className="row ">
+                <div className="col-xl-9 col-lg-8 content-inner">
+                  <fieldset>
+                    <label>Name your item*</label>
+                    <input
+                      type="text"
+                      placeholder="E.G. Redeemable  T-Shirt With Logo "
+                    />
+                  </fieldset>
 
                 <div className="add-nft-inner">
                   <h6 className="title">Choose a category</h6>
@@ -189,66 +209,66 @@ const AddAPIPage = () => {
                         </div>
                       </li>
                     </ul> */}
-                    <div className="content-tab">
-                      <div className="content-inner active">
-                        <div className="tab-create-item">
-                          <h6 className="title">
-                            Drop file to upload or attach it (optional)
-                          </h6>
-                          <p className="sub">
-                            But Each One Takes A Different Approach And Makes
-                            Different Tradeoffs.
-                          </p>
-                          <div className="drag-upload">
-                            <input type="file" />
-                            <img
-                              src="assets/images/svg/drap-upload.svg"
-                              alt="Image"
-                            />
-                            <h6 className="title">Upload Logo</h6>
-                            <p className="sub-title">
-                              Maximum Size: 500 x 500px, JPEG / PNG
+                      <div className="content-tab">
+                        <div className="content-inner active">
+                          <div className="tab-create-item">
+                            <h6 className="title">
+                              Drop file to upload or attach it (optional)
+                            </h6>
+                            <p className="sub">
+                              But Each One Takes A Different Approach And Makes
+                              Different Tradeoffs.
                             </p>
-                          </div>
-                          <div className="list">
-                            <div className="col-xl-12 col-lg-12 col-md-12">
-                              <div>
-                                <h5 className="title-preview">
-                                  API Visibility
-                                </h5>
-                                <p>
-                                  Switching your API visibility to Public makes
-                                  it searchable and accessible to everyone on
-                                  the API Hub.
-                                </p>
-                                <div className="sc-product style1">
-                                  <div className="top">
-                                    <div>
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="30"
-                                        height="30"
-                                        fill="currentColor"
-                                        class="bi bi-lock-fill"
-                                        viewBox="0 0 16 16"
-                                      >
-                                        <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2" />
-                                      </svg>
+                            <div className="drag-upload">
+                              <input type="file" />
+                              <img
+                                src="assets/images/svg/drap-upload.svg"
+                                alt="Image"
+                              />
+                              <h6 className="title">Upload Logo</h6>
+                              <p className="sub-title">
+                                Maximum Size: 500 x 500px, JPEG / PNG
+                              </p>
+                            </div>
+                            <div className="list">
+                              <div className="col-xl-12 col-lg-12 col-md-12">
+                                <div>
+                                  <h5 className="title-preview">
+                                    API Visibility
+                                  </h5>
+                                  <p>
+                                    Switching your API visibility to Public
+                                    makes it searchable and accessible to
+                                    everyone on the API Hub.
+                                  </p>
+                                  <div className="sc-product style1">
+                                    <div className="top">
+                                      <div>
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="30"
+                                          height="30"
+                                          fill="currentColor"
+                                          class="bi bi-lock-fill"
+                                          viewBox="0 0 16 16"
+                                        >
+                                          <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2" />
+                                        </svg>
+                                      </div>
+                                      <div>
+                                        <h6 className="title-preview">
+                                          API Project is Private
+                                        </h6>
+                                        <p>
+                                          It’s not visible on the Hub and new
+                                          users can’t access it{" "}
+                                        </p>
+                                      </div>
+                                      <div className="button-toggle mt0">
+                                        <input type="checkbox" id="switch1" />
+                                        <label for="switch1"></label>
+                                      </div>
                                     </div>
-                                    <div>
-                                      <h6 className="title-preview">
-                                        API Project is Private
-                                      </h6>
-                                      <p>
-                                        It’s not visible on the Hub and new
-                                        users can’t access it{" "}
-                                      </p>
-                                    </div>
-                                    <div className="button-toggle mt0">
-                                      <input type="checkbox" id="switch1" />
-                                      <label for="switch1"></label>
-                                    </div>
-                                  </div>
 
                                   <div className="bottom">
                                     <div className="details-product">
@@ -526,24 +546,26 @@ const AddAPIPage = () => {
                             Different Tradeoffs.
                           </p>
 
-                          <div className="drag-upload">
-                            <input type="file" />
-                            <img
-                              src="assets/images/svg/drap-upload.svg"
-                              alt="image"
-                            />
-                            <h6 className="title">Drag your item to upload</h6>
-                            <p className="sub-title">
-                              PNG, GIF, WebP, MP4 Or MP3. Maximum File Size 100
-                              Mb.
-                            </p>
-                          </div>
+                            <div className="drag-upload">
+                              <input type="file" />
+                              <img
+                                src="assets/images/svg/drap-upload.svg"
+                                alt="image"
+                              />
+                              <h6 className="title">
+                                Drag your item to upload
+                              </h6>
+                              <p className="sub-title">
+                                PNG, GIF, WebP, MP4 Or MP3. Maximum File Size
+                                100 Mb.
+                              </p>
+                            </div>
 
-                          <h6 className="title">Upload An Item</h6>
-                          <p className="sub mb22">
-                            But Each One Takes A Different Approach And Makes
-                            Different Tradeoffs.
-                          </p>
+                            <h6 className="title">Upload An Item</h6>
+                            <p className="sub mb22">
+                              But Each One Takes A Different Approach And Makes
+                              Different Tradeoffs.
+                            </p>
 
                           <fieldset>
                             <label>Name your item</label>
@@ -553,251 +575,259 @@ const AddAPIPage = () => {
                             />
                           </fieldset>
 
-                          <fieldset className="propertise">
-                            <label className="mb8">Add properties</label>
-                            <ul className="propertise-list">
-                              <li>
-                                <a href="#">
-                                  Art<i className="fal fa-times"></i>
-                                </a>
+                            <fieldset className="propertise">
+                              <label className="mb8">Add properties</label>
+                              <ul className="propertise-list">
+                                <li>
+                                  <a href="#">
+                                    Art<i className="fal fa-times"></i>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="#">
+                                    Body type<i className="fal fa-times"></i>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="#">
+                                    Face color<i className="fal fa-times"></i>
+                                  </a>
+                                </li>
+                              </ul>
+                            </fieldset>
+
+                            <div className="set-item">
+                              <fieldset>
+                                <label className="mb8">
+                                  Set item price or starting bid
+                                </label>
+                                <input
+                                  type="text"
+                                  placeholder="E.G. 0,01 Eth"
+                                />
+                              </fieldset>
+                              <fieldset>
+                                <label className="mb8">
+                                  Select royalties amount, %
+                                </label>
+                                <input
+                                  type="text"
+                                  placeholder="E.G. 0,01 Eth"
+                                />
+                              </fieldset>
+                            </div>
+
+                            <h6 className="title ">Choose Collection</h6>
+                            <p className="sub">
+                              They All Serve The Same Purpose.
+                            </p>
+
+                            <ul className="create-collection">
+                              <li className="active">
+                                <div className="create-item">
+                                  <div className="img">
+                                    <i className="fal fa-plus"></i>
+                                  </div>
+                                  <div className="content">
+                                    <h6>Create new collection</h6>
+                                    <p>Type to create</p>
+                                  </div>
+                                </div>
                               </li>
                               <li>
-                                <a href="#">
-                                  Body type<i className="fal fa-times"></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  Face color<i className="fal fa-times"></i>
-                                </a>
+                                <div className="create-item">
+                                  <div className="img">
+                                    <img
+                                      src="assets/images/collection/add-collection.jpg"
+                                      alt="image"
+                                    />
+                                  </div>
+                                  <div className="content">
+                                    <h6>Battle for Digital</h6>
+                                    <p>56 items</p>
+                                  </div>
+                                </div>
                               </li>
                             </ul>
-                          </fieldset>
 
-                          <div className="set-item">
-                            <fieldset>
-                              <label className="mb8">
-                                Set item price or starting bid
-                              </label>
-                              <input type="text" placeholder="E.G. 0,01 Eth" />
-                            </fieldset>
-                            <fieldset>
-                              <label className="mb8">
-                                Select royalties amount, %
-                              </label>
-                              <input type="text" placeholder="E.G. 0,01 Eth" />
-                            </fieldset>
-                          </div>
+                            <h6 className="title mb0">Choose collection</h6>
+                            <p className="sub mb20">
+                              They all serve the same purpose.
+                            </p>
 
-                          <h6 className="title ">Choose Collection</h6>
-                          <p className="sub">
-                            They All Serve The Same Purpose.
-                          </p>
+                            <ul className="collection-list">
+                              <li>
+                                <div className="list">
+                                  <div className="infor">
+                                    <p>Product updates</p>
+                                    <h6>Receive messages from our platform</h6>
+                                  </div>
 
-                          <ul className="create-collection">
-                            <li className="active">
-                              <div className="create-item">
-                                <div className="img">
-                                  <i className="fal fa-plus"></i>
+                                  <div className="button-toggle">
+                                    <input
+                                      type="checkbox"
+                                      id="switch4"
+                                      defaultChecked={true}
+                                    />
+                                    <label for="switch4"></label>
+                                  </div>
                                 </div>
-                                <div className="content">
-                                  <h6>Create new collection</h6>
-                                  <p>Type to create</p>
+                              </li>
+                              <li>
+                                <div className="list">
+                                  <div className="infor">
+                                    <p>Reminders</p>
+                                    <h6>
+                                      Receive booking reminders, pricing notices
+                                    </h6>
+                                  </div>
+                                  <div className="button-toggle mt0">
+                                    <input type="checkbox" id="switch5" />
+                                    <label for="switch5"></label>
+                                  </div>
                                 </div>
-                              </div>
-                            </li>
-                            <li>
-                              <div className="create-item">
-                                <div className="img">
-                                  <img
-                                    src="assets/images/collection/add-collection.jpg"
-                                    alt="image"
-                                  />
+                              </li>
+                              <li>
+                                <div className="list">
+                                  <div className="infor">
+                                    <p>Promotions and tips</p>
+                                    <h6>
+                                      Receive coupons, promotions, surveys
+                                    </h6>
+                                  </div>
+                                  <div className="button-toggle">
+                                    <input
+                                      type="checkbox"
+                                      id="switch6"
+                                      defaultChecked={true}
+                                    />
+                                    <label for="switch6"></label>
+                                  </div>
                                 </div>
-                                <div className="content">
-                                  <h6>Battle for Digital</h6>
-                                  <p>56 items</p>
+                              </li>
+                              <li>
+                                <div className="list">
+                                  <div className="infor">
+                                    <p>Account support</p>
+                                    <h6>
+                                      Receive messages about your account, your
+                                      trips, legal alerts
+                                    </h6>
+                                  </div>
+                                  <div className="button-toggle">
+                                    <input type="checkbox" id="switch7" />
+                                    <label for="switch7"></label>
+                                  </div>
                                 </div>
-                              </div>
-                            </li>
-                          </ul>
+                              </li>
+                            </ul>
 
-                          <h6 className="title mb0">Choose collection</h6>
-                          <p className="sub mb20">
-                            They all serve the same purpose.
-                          </p>
-
-                          <ul className="collection-list">
-                            <li>
-                              <div className="list">
-                                <div className="infor">
-                                  <p>Product updates</p>
-                                  <h6>Receive messages from our platform</h6>
-                                </div>
-
-                                <div className="button-toggle">
-                                  <input
-                                    type="checkbox"
-                                    id="switch4"
-                                    defaultChecked={true}
-                                  />
-                                  <label for="switch4"></label>
-                                </div>
-                              </div>
-                            </li>
-                            <li>
-                              <div className="list">
-                                <div className="infor">
-                                  <p>Reminders</p>
-                                  <h6>
-                                    Receive booking reminders, pricing notices
-                                  </h6>
-                                </div>
-                                <div className="button-toggle mt0">
-                                  <input type="checkbox" id="switch5" />
-                                  <label for="switch5"></label>
-                                </div>
-                              </div>
-                            </li>
-                            <li>
-                              <div className="list">
-                                <div className="infor">
-                                  <p>Promotions and tips</p>
-                                  <h6>Receive coupons, promotions, surveys</h6>
-                                </div>
-                                <div className="button-toggle">
-                                  <input
-                                    type="checkbox"
-                                    id="switch6"
-                                    defaultChecked={true}
-                                  />
-                                  <label for="switch6"></label>
-                                </div>
-                              </div>
-                            </li>
-                            <li>
-                              <div className="list">
-                                <div className="infor">
-                                  <p>Account support</p>
-                                  <h6>
-                                    Receive messages about your account, your
-                                    trips, legal alerts
-                                  </h6>
-                                </div>
-                                <div className="button-toggle">
-                                  <input type="checkbox" id="switch7" />
-                                  <label for="switch7"></label>
-                                </div>
-                              </div>
-                            </li>
-                          </ul>
-
-                          <div className="bottom-button">
-                            <a href="#" className="tf-button active">
-                              Publish
-                            </a>
-                            <a href="#" className="tf-button">
-                              Discard all
-                            </a>
+                            <div className="bottom-button">
+                              <a href="#" className="tf-button active">
+                                Publish
+                              </a>
+                              <a href="#" className="tf-button">
+                                Discard all
+                              </a>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="col-xl-3 col-lg-4 col-md-6">
-                <h5 className="title-preview">API Preview</h5>
-                <div className="sc-product style1">
-                  <div className="top">
-                    <a href="#" className="tag">
-                      Sweet Baby #1
-                    </a>
-                    <div className="wish-list">
-                      <a href="#" className="heart-icon"></a>
+                <div className="col-xl-3 col-lg-4 col-md-6">
+                  <h5 className="title-preview">API Preview</h5>
+                  <div className="sc-product style1">
+                    <div className="top">
+                      <a href="#" className="tag">
+                        Sweet Baby #1
+                      </a>
+                      <div className="wish-list">
+                        <a href="#" className="heart-icon"></a>
+                      </div>
                     </div>
-                  </div>
-                  <div className="features">
-                    <div className="product-media">
-                      <img
-                        src="assets/images/product/product4.jpg"
-                        alt="images"
-                      />
+                    <div className="features">
+                      <div className="product-media">
+                        <img
+                          src="assets/images/product/product4.jpg"
+                          alt="images"
+                        />
+                      </div>
+                      <div className="featured-countdown">
+                        <span
+                          className="js-countdown"
+                          data-timer="55555"
+                          data-labels=" ,  h , m , s "
+                        ></span>
+                      </div>
+                      <div className="rain-drop1">
+                        <img src="assets/images/icon/rain1.svg" alt="images" />
+                      </div>
+                      <div className="rain-drop2">
+                        <img src="assets/images/icon/rain2.svg" alt="images" />
+                      </div>
                     </div>
-                    <div className="featured-countdown">
-                      <span
-                        className="js-countdown"
-                        data-timer="55555"
-                        data-labels=" ,  h , m , s "
-                      ></span>
-                    </div>
-                    <div className="rain-drop1">
-                      <img src="assets/images/icon/rain1.svg" alt="images" />
-                    </div>
-                    <div className="rain-drop2">
-                      <img src="assets/images/icon/rain2.svg" alt="images" />
-                    </div>
-                  </div>
-                  <div className="bottom">
-                    <div className="details-product">
-                      <div className="author">
-                        <div className="avatar">
-                          <img
-                            src="assets/images/author/author1.png"
-                            alt="images"
-                          />
+                    <div className="bottom">
+                      <div className="details-product">
+                        <div className="author">
+                          <div className="avatar">
+                            <img
+                              src="assets/images/author/author1.png"
+                              alt="images"
+                            />
+                          </div>
+                          <div className="content">
+                            <div className="position">Creator</div>
+                            <div className="name">
+                              {" "}
+                              <a href="#">Carly Webster</a>
+                            </div>
+                          </div>
                         </div>
-                        <div className="content">
-                          <div className="position">Creator</div>
-                          <div className="name">
-                            {" "}
-                            <a href="#">Carly Webster</a>
+                        <div className="current-bid">
+                          <div className="subtitle">Current bid</div>
+                          <div className="price">
+                            <span className="cash">5 ETH</span>
+                            <span className="icon">
+                              <img
+                                src="assets/images/icon/ethe.svg"
+                                alt="images"
+                              />
+                            </span>
                           </div>
                         </div>
                       </div>
-                      <div className="current-bid">
-                        <div className="subtitle">Current bid</div>
-                        <div className="price">
-                          <span className="cash">5 ETH</span>
-                          <span className="icon">
-                            <img
-                              src="assets/images/icon/ethe.svg"
-                              alt="images"
-                            />
-                          </span>
-                        </div>
+                      <div className="product-button">
+                        <a
+                          href="#"
+                          data-toggle="modal"
+                          data-target="#popup_bid"
+                          className="tf-button"
+                        >
+                          {" "}
+                          <span className="icon-btn-product"></span> Place Bid
+                        </a>
                       </div>
-                    </div>
-                    <div className="product-button">
-                      <a
-                        href="#"
-                        data-toggle="modal"
-                        data-target="#popup_bid"
-                        className="tf-button"
-                      >
-                        {" "}
-                        <span className="icon-btn-product"></span> Place Bid
-                      </a>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
+        <Footer />
+        <div
+          className="modal fade popup"
+          id="popup_bid"
+          tabIndex="-1"
+          aria-modal="true"
+          role="dialog"
+        >
+          {/* Modal content for bidding */}
+        </div>
       </div>
-      <Footer />
-      <div
-        className="modal fade popup"
-        id="popup_bid"
-        tabIndex="-1"
-        aria-modal="true"
-        role="dialog"
-      >
-        {/* Modal content for bidding */}
-      </div>
-    </div>
     </body>
   );
 };
