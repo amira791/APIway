@@ -506,7 +506,7 @@ const AddAPIPage = () => {
                                     <textarea id="message" name="message" rows="4" placeholder="Message" tabindex="4" aria-required="true" required=""></textarea>
                                 </fieldset>
                             <fieldset className="propertise">
-                              <label className="mb8">Add properties</label>
+                              <label className="mb8">Add functionality</label>
                               <ul className="propertise-list">
                                 <li>
                                   <a href="#">
