@@ -13,4 +13,7 @@ urlpatterns = [
    path('apidocumentation/api', APIdocumentationView.as_view()),
    path('tarification/api', TarificationView.as_view()),
    path('abonnement/api', AbonnementView.as_view()),
+   path('type/api', TypeView.as_view()),
+   path('endpoint_parameter/api', Endpoint_parameterView.as_view()),
+
 ]

@@ -56,3 +56,14 @@ class TarificationView(generics.CreateAPIView):
 class AbonnementView(generics.CreateAPIView):
     queryset = Abonnement.objects.all()
     serializer_class = AbonnementSerializer
+    
+# Endpoint_parameter View
+class Endpoint_parameterView(generics.CreateAPIView):
+    queryset = Endpoint_parameter.objects.all()
+    serializer_class = Endpoint_parameterSerializer
+
+# Type View
+class TypeView(generics.CreateAPIView):
+    queryset = Type.objects.all()
+    serializer_class = TypeSerializer
+    
