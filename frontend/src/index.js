@@ -1,16 +1,15 @@
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+
 import React, { Component } from "react";
 import {
   BrowserRouter as Router,
-  HashRouter,
   Route,
   Routes,
-  Switch,
 } from "react-router-dom";
+
 import Home from "./components/home";
+import signupForm from './components/forms/signupForm';
 
 class Root extends Component {
   render() {
@@ -18,7 +17,7 @@ class Root extends Component {
       <div id="App">
         <Router>
           <Routes>
-            <Route exact path="/" element={<Home />} />
+            <Route exact path="/" element={<signupForm />} />
           </Routes>
         </Router>
       </div>

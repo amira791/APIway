@@ -39,8 +39,22 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api_mapi.apps.ApiMapiConfig',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'rest_framework_simplejwt',
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=3),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
+    'ROTATE_REFRESH_TOKENS': True,  # Recommended for security
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
