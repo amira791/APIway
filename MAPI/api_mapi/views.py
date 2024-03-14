@@ -1,69 +1,69 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import viewsets
 from .models import *
 from .serializers import *
+
 # Fournisseur View
-class FournisseurView(generics.CreateAPIView):
+class FournisseurView(viewsets.ModelViewSet):
     queryset = Fournisseur.objects.all()
     serializer_class = FournisseurSerializer
 
 # Admin View
-class AdminView(generics.CreateAPIView):
+class AdminView(viewsets.ModelViewSet):
     queryset = Admin.objects.all()
     serializer_class = AdminSerializer
 
 # Consommateur View
-class ConsommateurView(generics.CreateAPIView):
+class ConsommateurView(viewsets.ModelViewSet):
     queryset = Consommateur.objects.all()
     serializer_class = ConsommateurSerializer
 
 # APIcategory View
-class APIcategoryView(generics.CreateAPIView):
+class APIcategoryView(viewsets.ModelViewSet):
     queryset = APIcategory.objects.all()
     serializer_class = APIcategorySerializer
 
 # API View
-class APIView(generics.CreateAPIView):
+class APIView(viewsets.ModelViewSet):
     queryset = API.objects.all()
     serializer_class = APISerializer
 
 # APIversion View
-class APIversionView(generics.CreateAPIView):
+class APIversionView(viewsets.ModelViewSet):
     queryset = APIversion.objects.all()
     serializer_class = APIversionSerializer
 
 # APIendpoint View
-class APIendpointView(generics.CreateAPIView):
+class APIendpointView(viewsets.ModelViewSet):
     queryset = APIendpoint.objects.all()
     serializer_class = APIendpointSerializer
 
 # Functionnality View
-class FunctionnalityView(generics.CreateAPIView):
+class FunctionnalityView(viewsets.ModelViewSet):
     queryset = Functionnality.objects.all()
     serializer_class = FunctionnalitySerializer
 
 # APIdocumentation View
-class APIdocumentationView(generics.CreateAPIView):
+class APIdocumentationView(viewsets.ModelViewSet):
     queryset = APIdocumentation.objects.all()
     serializer_class = APIdocumentationSerializer
 
 # Tarification View
-class TarificationView(generics.CreateAPIView):
+class TarificationView(viewsets.ModelViewSet):
     queryset = Tarification.objects.all()
     serializer_class = TarificationSerializer
 
 # Abonnement View
-class AbonnementView(generics.CreateAPIView):
+class AbonnementView(viewsets.ModelViewSet):
     queryset = Abonnement.objects.all()
     serializer_class = AbonnementSerializer
     
 # Endpoint_parameter View
-class Endpoint_parameterView(generics.CreateAPIView):
+class Endpoint_parameterView(viewsets.ModelViewSet):
     queryset = Endpoint_parameter.objects.all()
     serializer_class = Endpoint_parameterSerializer
 
 # Type View
-class TypeView(generics.CreateAPIView):
+class TypeView(viewsets.ModelViewSet):
     queryset = Type.objects.all()
     serializer_class = TypeSerializer
-    
