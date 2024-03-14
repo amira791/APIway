@@ -1,6 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class Fournisseur(models.Model):
+class Fournisseur(User):
     id_fournisseur = models.AutoField(primary_key=True)
     FR_first_name = models.CharField(max_length=100)
     FR_last_name = models.CharField(max_length=100)
@@ -12,8 +13,10 @@ class Fournisseur(models.Model):
     def __str__(self):
         return self.FRusername
     
-class Admin(models.Model):
+class Admin(User):
     id_admin = models.AutoField(primary_key=True)
+    AdminEmail = models.CharField(max_length=100)
+    AdminUsername = models.CharField(max_length=100)
     AdminEmail = models.CharField(max_length=100)
     AdminUsername = models.CharField(max_length=100)
     AdminPassword = models.CharField(max_length=100)
@@ -21,7 +24,7 @@ class Admin(models.Model):
     def __str__(self):
         return self.AdminUsername
 
-class Consommateur(models.Model):
+class Consommateur(User):
     id_fournisseur = models.AutoField(primary_key=True)
     CN_first_name = models.CharField(max_length=100)
     CN_last_name = models.CharField(max_length=100)

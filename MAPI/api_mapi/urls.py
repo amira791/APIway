@@ -13,4 +13,5 @@ urlpatterns = [
    path('apidocumentation/api', APIdocumentationView.as_view()),
    path('tarification/api', TarificationView.as_view()),
    path('abonnement/api', AbonnementView.as_view()),
+   path('signup/',signup)
 ]
