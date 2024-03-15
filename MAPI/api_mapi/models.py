@@ -44,16 +44,18 @@ class APIcategory(models.Model):
 class API(models.Model):
     id_api = models.AutoField(primary_key=True)
     api_name = models.CharField(max_length=100)
-    description = models.CharField(max_length=100)
-    provider = models.ForeignKey(Fournisseur, on_delete=models.DO_NOTHING )
-    category = models.ForeignKey(APIcategory, on_delete=models.DO_NOTHING )
-    terme_of_use= models.CharField(max_length=1000)
-    Logo = models.ImageField
-    visibility= models.BooleanField
-    pricingPlans = models.ManyToManyField('Tarification')  
+    description = models.CharField(max_length=100, help_text="Brief description of the API")
+    provider = models.ForeignKey(Fournisseur, on_delete=models.DO_NOTHING, verbose_name="Provider")
+    category = models.ForeignKey(APIcategory, on_delete=models.DO_NOTHING, verbose_name="Category")
+    terms_of_use = models.TextField(verbose_name="Terms of Use", help_text="Terms and conditions for API usage")
+    logo = models.ImageField(upload_to="assets/images/", verbose_name="Logo")
+    visibility = models.BooleanField(default=False, verbose_name="Visibility")
+    base_link = models.TextField(verbose_name="Base Link", help_text="Base link for API endpoints")
+    pricing_plans = models.ManyToManyField('Tarification', verbose_name="Pricing Plans")
+
     def __str__(self):
         return self.api_name
-    
+
 class APIversion(models.Model):
     id_version = models.AutoField(primary_key=True)
     num_version= models.CharField(max_length=100)

@@ -225,7 +225,16 @@ img {
 select {
   max-width: 100%;
 }
-
+.form-select {
+  position: relative;
+}
+.form-select i {
+  position: absolute;
+  top: 20px;
+  right: 23px;
+  color: var(--primary-color8);
+  font-size: 10px;
+}
 /* General
 -------------------------------------------------------------- */
 body,
@@ -443,7 +452,7 @@ p > video {
 -------------------------------------------------------------- */
 /* Fixes */
 button,
-input {
+input,select {
   line-height: normal;
 }
 
@@ -516,7 +525,7 @@ input::-moz-focus-inner {
 }
 
 /* Remove chrome yellow autofill */
-input:-webkit-autofill {
+input:-webkit-autofill,select:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px #f7f7f7 inset;
 }
 
@@ -605,7 +614,21 @@ input[type=color] {
   background-color: transparent;
   color: var(--primary-color2);
 }
-
+select {
+  border: 1px solid var(--primary-color21);
+  outline: 0;
+  border-radius: 50%;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  font-size: 18px;
+  line-height: 26px;
+  border-radius: 4px;
+  padding: 15px;
+  width: 100%;
+  background-color: transparent;
+  color: var(--primary-color2);
+}
 /* Input focus */
 textarea:focus,
 input[type=text]:focus,
@@ -621,7 +644,7 @@ input[type=email]:focus,
 input[type=url]:focus,
 input[type=search]:focus,
 input[type=tel]:focus,
-input[type=color]:focus {
+input[type=color]:focus,select:focus {
   border: 1px solid #8A8AA0;
   outline: 0;
   -webkit-box-shadow: none;
@@ -643,7 +666,7 @@ input[type=email]::placeholder,
 input[type=url]::placeholder,
 input[type=search]::placeholder,
 input[type=tel]::placeholder,
-input[type=color]::placeholder {
+input[type=color]::placeholder, ::selection {
   font-size: 18px;
   font-weight: 400;
   line-height: 26px;
