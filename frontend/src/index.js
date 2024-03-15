@@ -11,7 +11,6 @@ import {
   Switch,
 } from "react-router-dom";
 import Home from './Componants/home';
-import AddApi from './Componants/addApi';
 import AddAPIPage from './Componants/provider_componants/AddApi';
 import ProviderHomePage from './Componants/provider_componants/ProviderHome';
 

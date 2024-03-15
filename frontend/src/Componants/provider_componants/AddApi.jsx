@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import Footer from "../global_componants/footer";
 import Navbar from "../global_componants/navbar";
 import DataTable from "../global_componants/Datatable";
-import ManipulateCat from "../../hooks/CategoryHook";
-import APIAjout from "../../hooks/APIHook";
+import ManipulateCat from "../../Hooks/CategoryHook";
+import APIAjout from "../../Hooks/APIHook.jsx";
 
 const AddAPIPage = () => {
   const { categories } = ManipulateCat();
@@ -12,7 +12,7 @@ const AddAPIPage = () => {
   const columns = [
     {
       Header: "Name",
-      accessor: "name", // accessor is the "key" in your data
+      accessor: "name",
     },
     {
       Header: "Age",
@@ -46,19 +46,14 @@ const AddAPIPage = () => {
     baseURLs: [""],
     logo: null,
   });
-  const handleChange = (e, index) => {
-    const { id, value } = e.target;
-    if (id === "Api-visibility") {
+  const handleChange = (e) => {
+    const { id, value, type, checked } = e.target;
+
+    if (type === "checkbox") {
+      alert(checked);
       setFormData((prevState) => ({
         ...prevState,
-        visibility: e.target.checked,
-      }));
-    } else if (id === "Api-baseURL") {
-      const newBaseURLs = [...formData.baseURLs];
-      newBaseURLs[index] = value;
-      setFormData((prevState) => ({
-        ...prevState,
-        baseURLs: newBaseURLs,
+        visibility: checked,
       }));
     } else {
       setFormData((prevState) => ({
@@ -67,36 +62,47 @@ const AddAPIPage = () => {
       }));
     }
   };
+  const handleChanges = (e, index) => {
+    const { value } = e.target;
+    setFormData((prevState) => {
+      const updatedURLs = [...prevState.baseURLs];
+      updatedURLs[index] = value; // Update the URL at the specified index
+      return { ...prevState, baseURLs: updatedURLs };
+    });
+  };
+
   const handleLogoChange = (e) => {
     const file = e.target.files[0];
     setFormData((prevState) => ({
       ...prevState,
-      logo: file,
+      logo: file, // Set logo field to the selected file
     }));
   };
 
   const handleCategoryChange = (e) => {
-    const { value } = e.target;
+    const categoryId = e.target.value;
+
+    alert(categoryId);
     setFormData((prevState) => ({
       ...prevState,
-      category: value,
+      categoryId: categoryId,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Your submission logic goes here
-    console.log(formData);
+
+    alert(formData.apiName);
     addNewAPI(formData);
   };
 
   const handleAddURL = () => {
     setFormData((prevState) => ({
       ...prevState,
-      baseURLs: [...prevState.baseURLs, ""],
+      baseURLs: [...prevState.baseURLs, ""], // Add an empty string for the new URL
     }));
   };
-
 
   return (
     <body>
@@ -191,14 +197,16 @@ const AddAPIPage = () => {
                             : "none",
                       }}
                     >
-                      <form onSubmit={handleSubmit}>
+                      <form
+                        onSubmit={handleSubmit}
+                        encType="multipart/form-data"
+                      >
                         <fieldset>
                           <label>Name your API*</label>
                           <input
-                            id="Api-name"
+                            id="apiName"
                             type="text"
                             placeholder="E.G. Climat change API "
-                            value={formData.apiName}
                             onChange={handleChange}
                           />
                         </fieldset>
@@ -206,15 +214,14 @@ const AddAPIPage = () => {
                           <label>Choose a category*</label>
                           <div class="form-select">
                             <select
-                              id="Api-category"
-                              value={formData.categoryId}
+                              id="categoryId"
                               onChange={handleCategoryChange}
                             >
                               <option value="">Select Category</option>
                               {categories.map((category) => (
                                 <option
                                   key={category.id}
-                                  value={category.value}
+                                  value={category.id_category}
                                 >
                                   {category.label}
                                 </option>
@@ -227,14 +234,13 @@ const AddAPIPage = () => {
                         <fieldset class="message">
                           <label>Enter a description*</label>
                           <textarea
-                            id="Api-description"
+                            id="description"
                             name="message"
                             rows="4"
-                            placeholder="description"
+                            placeholder="Description"
                             tabindex="4"
                             aria-required="true"
                             required=""
-                            value={formData.description}
                             onChange={handleChange}
                           ></textarea>
                         </fieldset>
@@ -267,10 +273,9 @@ const AddAPIPage = () => {
                         <fieldset>
                           <label>Terms of Use (optional)</label>
                           <input
-                            id="Api-terme_of_use"
+                            id="termOfUse"
                             type="text"
-                            placeholder="E.G. After Purchase You Will Get A  T-Shirt"
-                            value={formData.termOfUse}
+                            placeholder="Terms of Use"
                             onChange={handleChange}
                           />
                         </fieldset>
@@ -288,8 +293,8 @@ const AddAPIPage = () => {
                                 <div className="drag-upload">
                                   <input
                                     type="file"
-                                    id="Api-logo"
-                                    accept="image/png, image/jpeg,image/jpg" // Set accepted file types
+                                    id="logo"
+                                    accept="image/png, image/jpeg, image/jpg"
                                     onChange={handleLogoChange}
                                   />
                                   <img
@@ -345,20 +350,18 @@ const AddAPIPage = () => {
                                                 : "It’s not visible on the Hub and new users can’t access it"}
                                             </p>
                                           </div>
-                                          <div className="button-toggle mt0">
+
+                                          <div class="button-toggle mt0">
                                             <input
                                               type="checkbox"
-                                              id="Api-visibility"
-                                              checked={formData.visibility}
+                                              id="switch1"
                                               onChange={handleChange}
-                                              disabled={termesAgreed}
-                                              unselectable={termesAgreed}
+                                              disabled={!termesAgreed}
                                             />
-                                            <label htmlFor="Api-visibility">
-                                              {formData.visibility
+                                            <label for="switch1">    {formData.visibility
                                                 ? "Make API Private"
-                                                : "Make API Public"}
-                                            </label>
+                                                : "Make API Public"}</label>
+                                            
                                           </div>
                                         </div>{" "}
                                         {!formData.visibility && (
@@ -367,11 +370,13 @@ const AddAPIPage = () => {
                                               <input
                                                 type="checkbox"
                                                 checked={termesAgreed}
-                                                onChange={(e) =>
+                                                onChange={(e) => {
                                                   setTermsAgreed(
                                                     e.target.checked
-                                                  )
-                                                }
+                                                  );
+
+                                                  alert(termesAgreed);
+                                                }}
                                               />
                                               <span class="btn-checkbox"></span>
                                             </span>
@@ -401,9 +406,8 @@ const AddAPIPage = () => {
                                           <input
                                             type="text"
                                             placeholder="Api base"
-                                            value={url}
                                             onChange={(e) =>
-                                              handleChange(e, index)
+                                              handleChanges(e, index)
                                             }
                                           />
                                         </fieldset>

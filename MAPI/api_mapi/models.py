@@ -51,7 +51,7 @@ class API(models.Model):
     logo = models.ImageField(upload_to="assets/images/", verbose_name="Logo")
     visibility = models.BooleanField(default=False, verbose_name="Visibility")
     base_link = models.TextField(verbose_name="Base Link", help_text="Base link for API endpoints")
-    pricing_plans = models.ManyToManyField('Tarification', verbose_name="Pricing Plans")
+    """ pricing_plans = models.ManyToManyField('Tarification', verbose_name="Pricing Plans") """
 
     def __str__(self):
         return self.api_name
