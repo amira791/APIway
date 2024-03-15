@@ -13,7 +13,7 @@ import {
 import Home from './Componants/home';
 import AddApi from './Componants/addApi';
 import AddAPIPage from './Componants/provider_componants/AddApi';
-
+import ProviderHomePage from './Componants/provider_componants/ProviderHome';
 
 class Root extends Component {
   render() {
@@ -23,6 +23,7 @@ class Root extends Component {
           <Routes>
             <Route exact path="/" element={<Home/>} />
             <Route exact path="/addAPI" element={<AddAPIPage/>} />
+            <Route exact path="/provider_home" element={<ProviderHomePage/>} />
           </Routes>
         </Router>
       </div>

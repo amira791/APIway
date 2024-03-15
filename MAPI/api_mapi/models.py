@@ -94,7 +94,7 @@ class Type(models.Model):
     id_type = models.AutoField(primary_key=True)
     name= models.CharField(max_length=100)
     def __str__(self):
-        return self.title
+        return self.name
 
 class Endpoint_parameter(models.Model):
     id_parameter = models.AutoField(primary_key=True)

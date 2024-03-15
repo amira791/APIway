@@ -3,9 +3,9 @@ import HomeSection from './global_componants/home_section';
 
 
 const Home = () => {
-    return <div>
-<HomeSection/>
-    </div>
+    return (
+   <HomeSection/>
+   )
 }
 
 export default Home;

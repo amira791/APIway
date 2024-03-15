@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import Footer from "../global_componants/footer";
 import Navbar from "../global_componants/navbar";
 import DataTable from "../global_componants/Datatable";
-import ManipulateCat from "../../Hooks/CategoryHook";
-import APIAjout from "../../Hooks/APIhook";
+import ManipulateCat from "../../hooks/CategoryHook";
+import APIAjout from "../../hooks/APIHook";
 
 const AddAPIPage = () => {
   const { categories } = ManipulateCat();
@@ -96,6 +96,7 @@ const AddAPIPage = () => {
       baseURLs: [...prevState.baseURLs, ""],
     }));
   };
+
 
   return (
     <body>
