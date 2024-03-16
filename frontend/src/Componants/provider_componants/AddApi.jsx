@@ -1,12 +1,44 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useEffect } from "react";
-import Footer from "../global_componants/footer";
-import Navbar from "../global_componants/navbar";
-import DataTable from "../global_componants/Datatable";
-import ManipulateCat from "../../Hooks/CategoryHook";
-import APIAjout from "../../Hooks/APIHook.jsx";
+import React, { useRef } from "react";
+import Footer from "../global_componants/footer.jsx";
+import Navbar from "../global_componants/navbar.jsx";
+import DataTable from "../global_componants/Datatable.jsx";
+import ManipulateCat from "../../Hooks/CategoryHook.jsx";
+import APIAjout from "../../Hooks/APIHook.jsx.jsx";
+import $ from "jquery";
+import "datatables.net";
+import CreateEndpointForm from "./CreateEndpointForm.jsx";
 
 const AddAPIPage = () => {
+  const tableRef = useRef(null);
+  $.noConflict();
+
+  useEffect(() => {
+    if (tableRef.current) {
+      $("#example").DataTable();
+    }
+  }, [tableRef]);
+
+  const [newFunctionality, setNewFunctionality] = useState("");
+  const [functionalities, setFunctionalities] = useState([]);
+
+  const handleInputChange = (e) => {
+    setNewFunctionality(e.target.value);
+  };
+
+  const handleInputKeyPress = (e) => {
+    if (e.key === "Enter" && newFunctionality.trim() !== "") {
+      e.preventDefault();
+      setFunctionalities([...functionalities, newFunctionality.trim()]);
+      setNewFunctionality("");
+    }
+  };
+  const handleRemoveFunctionality = (indexToRemove) => {
+    setFunctionalities((prevFunctionalities) =>
+      prevFunctionalities.filter((_, index) => index !== indexToRemove)
+    );
+  };
   const { categories } = ManipulateCat();
   const { addNewAPI } = APIAjout();
   const columns = [
@@ -29,6 +61,17 @@ const AddAPIPage = () => {
     { name: "Jane", age: 25, location: "Los Angeles" },
     { name: "Doe", age: 40, location: "Chicago" },
   ];
+  const [showForm, setShowForm] = useState(false);
+
+  const handleCreateEndpoint = () => {
+    setShowForm(true);
+  };
+
+  const handleSubmitForm = (formData) => {
+    // Handle form submission here
+    console.log("Form data:", formData);
+    setShowForm(false); // Close the form after submission
+  };
   const [activeFilter, setActiveFilter] = useState("#general-section");
   const [termesAgreed, setTermsAgreed] = useState(false);
   const handleFilterClick = (filterId) => {
@@ -94,7 +137,7 @@ const AddAPIPage = () => {
     // Your submission logic goes here
 
     alert(formData.apiName);
-    addNewAPI(formData);
+    addNewAPI(formData, functionalities);
   };
 
   const handleAddURL = () => {
@@ -113,14 +156,6 @@ const AddAPIPage = () => {
             <div className="tf-container">
               <div className="row">
                 <div className="col-md-12">
-                  <ul className="breadcrumbs">
-                    <li>
-                      <a href="index-2.html">---</a>
-                    </li>
-                    <li>---</li>
-                    <li>--</li>
-                  </ul>
-
                   <h4 className="page-title-heading">Add New API</h4>
                 </div>
               </div>
@@ -248,20 +283,29 @@ const AddAPIPage = () => {
                         <fieldset className="propertise">
                           <label className="mb8">Add functionality</label>
                           <ul className="propertise-list">
+                            {functionalities.map((functionality, index) => (
+                              <li key={index}>
+                                {functionality}
+                                <i
+                                  className="fal fa-times"
+                                  onClick={() =>
+                                    handleRemoveFunctionality(index)
+                                  }
+                                  style={{
+                                    cursor: "pointer",
+                                    marginLeft: "5px",
+                                  }}
+                                ></i>
+                              </li>
+                            ))}
                             <li>
-                              <a href="#">
-                                Art<i className="fal fa-times"></i>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#">
-                                Body type<i className="fal fa-times"></i>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#">
-                                Face color<i className="fal fa-times"></i>
-                              </a>
+                              <input
+                                type="text"
+                                value={newFunctionality}
+                                onChange={handleInputChange}
+                                onKeyPress={handleInputKeyPress}
+                                placeholder="Add new functionality..."
+                              />
                             </li>
                           </ul>
                         </fieldset>
@@ -358,10 +402,12 @@ const AddAPIPage = () => {
                                               onChange={handleChange}
                                               disabled={!termesAgreed}
                                             />
-                                            <label for="switch1">    {formData.visibility
+                                            <label for="switch1">
+                                              {" "}
+                                              {formData.visibility
                                                 ? "Make API Private"
-                                                : "Make API Public"}</label>
-                                            
+                                                : "Make API Public"}
+                                            </label>
                                           </div>
                                         </div>{" "}
                                         {!formData.visibility && (
@@ -461,7 +507,7 @@ const AddAPIPage = () => {
                       </p>
                       <div class="row">
                         <div className="col-xl-12 col-lg-12 col-md-12">
-                          <form action="#">
+                          {/*   <form action="#">
                             <div class="search-form2">
                               <input
                                 type="text"
@@ -472,13 +518,18 @@ const AddAPIPage = () => {
                                 <i class="icon-fl-search-filled"></i>
                               </a>
                             </div>
-                          </form>
-
+                          </form> */}
+                          <div>
                           <div class="banner-collection-inner">
                             <div class="button-top">
-                              <a href="#" class="btn-wishlish">
-                                <i class="far fa-plus"></i> Create Endpoint
+                              <a
+                                href="#"
+                                className="btn-wishlish"
+                                onClick={handleCreateEndpoint}
+                              >
+                                <i className="far fa-plus"></i> Create Endpoint
                               </a>
+                             
                               <a href="#" class="btn-wishlish">
                                 <i class="far fa-plus"></i> Create Group
                               </a>
@@ -490,7 +541,172 @@ const AddAPIPage = () => {
                                 </div>
                               </div>
                             </div>
+                         
                           </div>
+                          {showForm && (
+                                <CreateEndpointForm
+                                  onSubmit={handleSubmitForm}
+                                />
+                              )}
+                          </div>
+                          <table
+                            ref={tableRef}
+                            id="example"
+                            className="display"
+                            style={{ width: "100%" }}
+                          >
+                            <thead>
+                              <tr>
+                                <th>
+                                  <input type="checkbox" id="select-all" />
+                                  Select
+                                </th>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Email</th>
+                                <th>Adresse</th>
+                                <th>Email</th>
+                                <th>Adresse</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <input
+                                    type="checkbox"
+                                    name="selected_students[]"
+                                    value="student_id"
+                                  />
+                                </td>
+                                <td>Airi Satou</td>
+                                <td>Accountant</td>
+                                <td>Tokyo</td>
+                                <td>33</td>
+                                <td>2008-11-28</td>
+                                <td>$162,700</td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <input
+                                    type="checkbox"
+                                    name="selected_students[]"
+                                    value="student_id"
+                                  />
+                                </td>
+                                <td>Brielle Williamson</td>
+                                <td>Integration Specialist</td>
+                                <td>New York</td>
+                                <td>61</td>
+                                <td>2012-12-02</td>
+                                <td>$372,000</td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <input
+                                    type="checkbox"
+                                    name="selected_students[]"
+                                    value="student_id"
+                                  />
+                                </td>
+                                <td>Herrod Chandler</td>
+                                <td>Sales Assistant</td>
+                                <td>San Francisco</td>
+                                <td>59</td>
+                                <td>2012-08-06</td>
+                                <td>$137,500</td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <input
+                                    type="checkbox"
+                                    name="selected_students[]"
+                                    value="student_id"
+                                  />
+                                </td>
+                                <td>Rhona Davidson</td>
+                                <td>Integration Specialist</td>
+                                <td>Tokyo</td>
+                                <td>55</td>
+                                <td>2010-10-14</td>
+                                <td>$327,900</td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <input
+                                    type="checkbox"
+                                    name="selected_students[]"
+                                    value="student_id"
+                                  />
+                                </td>
+                                <td>Colleen Hurst</td>
+                                <td>Javascript Developer</td>
+                                <td>San Francisco</td>
+                                <td>39</td>
+                                <td>2009-09-15</td>
+                                <td>$205,500</td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <input
+                                    type="checkbox"
+                                    name="selected_students[]"
+                                    value="student_id"
+                                  />
+                                </td>
+                                <td>Sonya Frost</td>
+                                <td>Software Engineer</td>
+                                <td>Edinburgh</td>
+                                <td>23</td>
+                                <td>2008-12-13</td>
+                                <td>$103,600</td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <input
+                                    type="checkbox"
+                                    name="selected_students[]"
+                                    value="student_id"
+                                  />
+                                </td>
+                                <td>Jena Gaines</td>
+                                <td>Office Manager</td>
+                                <td>London</td>
+                                <td>30</td>
+                                <td>2008-12-19</td>
+                                <td>$90,560</td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <input
+                                    type="checkbox"
+                                    name="selected_students[]"
+                                    value="student_id"
+                                  />
+                                </td>
+                                <td>Quinn Flynn</td>
+                                <td>Support Lead</td>
+                                <td>Edinburgh</td>
+                                <td>22</td>
+                                <td>2013-03-03</td>
+                                <td>$342,000</td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <input
+                                    type="checkbox"
+                                    name="selected_students[]"
+                                    value="student_id"
+                                  />
+                                </td>
+                                <td>Charde Marshall</td>
+                                <td>Regional Director</td>
+                                <td>San Francisco</td>
+                                <td>36</td>
+                                <td>2008-10-16</td>
+                                <td>$470,600</td>
+                              </tr>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
                       {/*   <DataTable columns={columns} data={data} />*/}

@@ -3158,7 +3158,7 @@ border-radius: 10rem;
 }
 
 .banner-collection-inner {
-  position: relative;
+
   margin-bottom: 63px;
 }
 .banner-collection-inner .img-bg {
@@ -3460,6 +3460,26 @@ border-radius: 10rem;
 }
 .add-nft-inner .propertise .propertise-list li {
   margin-right: 6px;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--primary-color7);
+  background-color: var(--primary-color22);
+  border: 1px solid var(--primary-color36);
+  border-radius: 18px;
+  padding: 8px 17px;
+  display: inline-block;
+}
+.add-nft-inner .propertise .propertise-list li input {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 20px;
+  color: var(--primary-color7);
+  background-color: var(--primary-color22);
+  border:none;
+  border-radius: 18px;
+  padding: 8px 17px;
+  display: inline-block;
 }
 .add-nft-inner .propertise .propertise-list li a {
   font-weight: 700;

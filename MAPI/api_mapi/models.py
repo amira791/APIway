@@ -88,6 +88,10 @@ class APIendpoint(models.Model):
     link= models.TextField
     api = models.ForeignKey(API, on_delete=models.DO_NOTHING )
     version = models.ForeignKey(APIversion, on_delete=models.DO_NOTHING )
+    description = models.TextField( help_text="Brief description of the endPoint")
+    externalDocURL = models.TextField( help_text="External link to more information")
+    externalDocDescription = models.TextField( help_text="Brief label for external link")
+   
     def __str__(self):
         return self.title
 class Type(models.Model):
@@ -108,7 +112,7 @@ class Endpoint_parameter(models.Model):
 class Functionnality(models.Model):
     id_funct= models.AutoField(primary_key=True)
     functName = models.CharField(max_length=100)
-    funct_descrip = models.CharField(max_length=100)
+ 
     def __str__(self):
         return self.functName
 
