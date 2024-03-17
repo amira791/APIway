@@ -50,11 +50,7 @@ REST_FRAMEWORK = {
     ]
 }
 
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=3),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
-    'ROTATE_REFRESH_TOKENS': True,  # Recommended for security
-}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

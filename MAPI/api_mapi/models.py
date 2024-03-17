@@ -1,7 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractBaseUser
 
-class Fournisseur(User):
+
+class Fournisseur(AbstractBaseUser):
     id_fournisseur = models.AutoField(primary_key=True)
     FR_first_name = models.CharField(max_length=100)
     FR_last_name = models.CharField(max_length=100)
@@ -10,10 +11,13 @@ class Fournisseur(User):
     FRpassword = models.CharField(max_length=100)
     FRphone = models.CharField(max_length=100)
 
+    USERNAME_FIELD = 'FRemail'  # Définir le champ de nom d'utilisateur
+    PASSWORD_FIELD = 'FRpassword'
+
     def __str__(self):
         return self.FRusername
     
-class Admin(User):
+class Admin(AbstractBaseUser):
     id_admin = models.AutoField(primary_key=True)
     AdminEmail = models.CharField(max_length=100)
     AdminUsername = models.CharField(max_length=100)
@@ -24,14 +28,19 @@ class Admin(User):
     def __str__(self):
         return self.AdminUsername
 
-class Consommateur(User):
-    id_fournisseur = models.AutoField(primary_key=True)
+
+class Consommateur(AbstractBaseUser):
+    id_consommateur = models.AutoField(primary_key=True)
     CN_first_name = models.CharField(max_length=100)
     CN_last_name = models.CharField(max_length=100)
-    CNemail = models.CharField(max_length=100)
+    CNemail = models.CharField(max_length=100, unique=True)
     CNusername = models.CharField(max_length=100)
     CNpassword = models.CharField(max_length=100)
     CNphone = models.CharField(max_length=100)
+
+    USERNAME_FIELD = 'CNemail'  # Définir le champ de nom d'utilisateur
+    PASSWORD_FIELD = 'CNpassword'
+    REQUIRED_FIELDS = ['CNpassword','CNusername']  # Liste des champs requis en plus du nom d'utilisateur
 
     def __str__(self):
         return self.CNusername

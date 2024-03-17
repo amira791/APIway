@@ -6,15 +6,16 @@ class FournisseurSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fournisseur
         fields = '__all__'
-    def save(self,**kwargs):
-        
-        new_user = Fournisseur.objects.create(
-            FRusername= self.validated_data['username'],
-            FRemail=self.validated_data['email'],
-            FRpassword= self.validated_data['password'],)
-        new_user.save()
-        Token.objects.create(User=new_user)
-    
+
+    def create(self, validated_data):
+      
+     password = validated_data.pop('FRpassword')  # Remove password from validated data
+     user = Consommateur.objects.create(**validated_data)
+     user.set_password(password)  # Set password securely using Django's method
+     user.save()
+     return user
+
+
 class AdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = Admin
@@ -24,13 +25,14 @@ class ConsommateurSerializer(serializers.ModelSerializer):
     class Meta:
         model = Consommateur
         fields = '__all__'
-    def save(self,**kwargs):
-        new_user = Consommateur.objects.create(
-            CNusername= self.validated_data['username'],
-            CNemail=self.validated_data['email'],
-            CNpassword= self.validated_data['password'],)
-        new_user.save()
-        Token.objects.create(User=new_user)
+
+    def create(self, validated_data):
+     password = validated_data.pop('CNpassword')  # Remove password from validated data
+     user = Consommateur.objects.create(**validated_data)
+     user.set_password(password)  # Set password securely using Django's method
+     user.save()
+     return user
+
 
 class APIcategorySerializer(serializers.ModelSerializer):
     class Meta:
