@@ -1,6 +1,5 @@
 import React from 'react'
-import 'assets/css/style.css'
-import 'assets/css/responsive.css'
+
 
 export default function signupForm() {
   return (

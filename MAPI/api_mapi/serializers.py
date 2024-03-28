@@ -71,3 +71,14 @@ class AbonnementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Abonnement
         fields = '__all__'
+
+class TypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Type
+        fields = '__all__'
+        
+        
+class Endpoint_parameterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Endpoint_parameter
+        fields = '__all__'

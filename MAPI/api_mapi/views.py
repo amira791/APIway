@@ -3,6 +3,12 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import *
 from .serializers import *
+from django.shortcuts import render
+from rest_framework import viewsets
+from .models import Fournisseur, Consommateur
+from rest_framework.decorators import api_view
+
+
 
 @api_view(['POST'])
 def signup(request):
@@ -29,56 +35,124 @@ def signup(request):
 
     return Response({}, status=status.HTTP_405_METHOD_NOT_ALLOWED)  # Handle non-POST requests
 # Fournisseur View
-class FournisseurView(generics.CreateAPIView):
+class FournisseurView(viewsets.ModelViewSet):
     queryset = Fournisseur.objects.all()
     serializer_class = FournisseurSerializer
+    
 
 # Admin View
-class AdminView(generics.CreateAPIView):
+class AdminView(viewsets.ModelViewSet):
     queryset = Admin.objects.all()
     serializer_class = AdminSerializer
 
 # Consommateur View
-class ConsommateurView(generics.CreateAPIView):
+class ConsommateurView(viewsets.ModelViewSet):
     queryset = Consommateur.objects.all()
     serializer_class = ConsommateurSerializer
 
 # APIcategory View
-class APIcategoryView(generics.CreateAPIView):
+class APIcategoryView(viewsets.ModelViewSet):
     queryset = APIcategory.objects.all()
     serializer_class = APIcategorySerializer
 
 # API View
-class APIView(generics.CreateAPIView):
+class APIView(viewsets.ModelViewSet):
     queryset = API.objects.all()
     serializer_class = APISerializer
 
 # APIversion View
-class APIversionView(generics.CreateAPIView):
+class APIversionView(viewsets.ModelViewSet):
     queryset = APIversion.objects.all()
     serializer_class = APIversionSerializer
 
 # APIendpoint View
-class APIendpointView(generics.CreateAPIView):
+class APIendpointView(viewsets.ModelViewSet):
     queryset = APIendpoint.objects.all()
     serializer_class = APIendpointSerializer
 
 # Functionnality View
-class FunctionnalityView(generics.CreateAPIView):
+class FunctionnalityView(viewsets.ModelViewSet):
     queryset = Functionnality.objects.all()
     serializer_class = FunctionnalitySerializer
 
 # APIdocumentation View
-class APIdocumentationView(generics.CreateAPIView):
+class APIdocumentationView(viewsets.ModelViewSet):
     queryset = APIdocumentation.objects.all()
     serializer_class = APIdocumentationSerializer
 
 # Tarification View
-class TarificationView(generics.CreateAPIView):
+class TarificationView(viewsets.ModelViewSet):
     queryset = Tarification.objects.all()
     serializer_class = TarificationSerializer
 
 # Abonnement View
-class AbonnementView(generics.CreateAPIView):
+class AbonnementView(viewsets.ModelViewSet):
     queryset = Abonnement.objects.all()
     serializer_class = AbonnementSerializer
+    
+# Endpoint_parameter View
+class Endpoint_parameterView(viewsets.ModelViewSet):
+    queryset = Endpoint_parameter.objects.all()
+    serializer_class = Endpoint_parameterSerializer
+
+# Type View
+class TypeView(viewsets.ModelViewSet):
+    queryset = Type.objects.all()
+    serializer_class = TypeSerializer
+    
+
+
+
+# Accounts management view
+
+#Activate status
+@api_view(['POST'])
+def activate_user(request, id):
+    return manage_user_status(request, id, action='activate')
+
+#Deactivate status
+@api_view(['POST'])
+def deactivate_user(request, id):
+    return manage_user_status(request, id, action='deactivate')
+
+
+#Managing function
+def manage_user_status(request, id, action):
+    # Get user type from request data
+    user_type = request.data.get('type')
+    
+    # Check user type and retrieve the corresponding user object
+    if user_type == 'F':
+        user_model = Fournisseur
+        serializer_class = FournisseurSerializer
+        id_field = 'id_fournisseur'
+        status_field = 'FRstatus'
+    elif user_type == 'C':
+        user_model = Consommateur
+        serializer_class = ConsommateurSerializer
+        id_field = 'id_consommateur'
+        status_field = 'CNstatus'
+    else:
+        return Response({'error': 'Invalid user type'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    # Check if user exists
+    try:
+        user_instance = user_model.objects.get(**{id_field: id})
+    except user_model.DoesNotExist:
+        return Response({'error': f'{user_model.__name__} does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+    # Update user status based on the action
+    if action == 'activate':
+        new_status = 'Active'
+    elif action == 'deactivate':
+        new_status = 'Inactive'
+    else:
+        return Response({'error': 'Invalid action'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Update user status
+    setattr(user_instance, status_field, new_status)
+    user_instance.save()
+
+    # Serialize and return the updated user data
+    serializer = serializer_class(user_instance)
+    return Response(serializer.data, status=status.HTTP_200_OK)

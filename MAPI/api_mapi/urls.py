@@ -1,17 +1,27 @@
-from .views import *
-from django.urls import path, include
 
+from django.urls import path
+from .views import *
+from rest_framework import routers
+
+# Define the SimpleRouter
+router = routers.SimpleRouter()
+
+# Register the views with the router
+router.register(r'fournisseurs', FournisseurView, basename='fournisseur')
+router.register(r'admins', AdminView, basename='admin')
+router.register(r'consommateurs', ConsommateurView, basename='consommateur')
+router.register(r'apicategories', APIcategoryView, basename='apicategory')
+router.register(r'apis', APIView, basename='api')
+router.register(r'apiversions', APIversionView, basename='apiversion')
+router.register(r'apiendpoints', APIendpointView, basename='apiendpoint')
+router.register(r'functionnalities', FunctionnalityView, basename='functionnality')
+router.register(r'apidocumentations', APIdocumentationView, basename='apidocumentation')
+router.register(r'tarifications', TarificationView, basename='tarification')
+router.register(r'abonnements', AbonnementView, basename='abonnement')
+
+# Get the urlpatterns from the router
 urlpatterns = [
-   path('fournisseur/api', FournisseurView.as_view()),
-   path('admin/api', AdminView.as_view()),
-   path('consommateur/api', ConsommateurView.as_view()),
-   path('apicategory/api', APIcategoryView.as_view()),
-   path('api/api', APIView.as_view()),
-   path('apiversion/api', APIversionView.as_view()),
-   path('apiendpoint/api', APIendpointView.as_view()),
-   path('functionnality/api', FunctionnalityView.as_view()),
-   path('apidocumentation/api', APIdocumentationView.as_view()),
-   path('tarification/api', TarificationView.as_view()),
-   path('abonnement/api', AbonnementView.as_view()),
-   path('signup/',signup)
-]
+    path('activate/<int:id>/', activate_user, name='activate_user'),
+    path('deactivate/<int:id>/', deactivate_user, name='deactivate_user'),
+   
+    ] + router.urls

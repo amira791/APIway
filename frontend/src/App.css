@@ -36,3 +36,30 @@
     transform: rotate(360deg);
   }
 }
+
+/*****************************Datatable*****************************/
+.datatable-container {
+  margin: 70px; /* Add margin to create space around the table */
+}
+
+/* CSS for content wrapper */
+.content {
+  padding: 40px; /* Add padding to create space between the Navbar and the DataTable */
+  margin-top: 100px;
+}
+.purple-button {
+  background-color: purple;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.search-pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}

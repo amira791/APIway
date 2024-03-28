@@ -9,6 +9,7 @@ class Fournisseur(User):
     FRusername = models.CharField(max_length=100)
     FRpassword = models.CharField(max_length=100)
     FRphone = models.CharField(max_length=100)
+    FRstatus = models.CharField(max_length=100)
 
     def __str__(self):
         return self.FRusername
@@ -25,13 +26,14 @@ class Admin(User):
         return self.AdminUsername
 
 class Consommateur(User):
-    id_fournisseur = models.AutoField(primary_key=True)
+    id_consommateur = models.AutoField(primary_key=True)
     CN_first_name = models.CharField(max_length=100)
     CN_last_name = models.CharField(max_length=100)
     CNemail = models.CharField(max_length=100)
     CNusername = models.CharField(max_length=100)
     CNpassword = models.CharField(max_length=100)
     CNphone = models.CharField(max_length=100)
+    CNstatus = models.CharField(max_length=100)
 
     def __str__(self):
         return self.CNusername
@@ -87,6 +89,22 @@ class APIendpoint(models.Model):
     link= models.TextField
     api = models.ForeignKey(API, on_delete=models.DO_NOTHING )
     version = models.ForeignKey(APIversion, on_delete=models.DO_NOTHING )
+    def __str__(self):
+        return self.title
+
+class Type(models.Model):
+    id_type = models.AutoField(primary_key=True)
+    name= models.CharField(max_length=100)
+    def __str__(self):
+        return self.title
+
+class Endpoint_parameter(models.Model):
+    id_parameter = models.AutoField(primary_key=True)
+    id_endpoint = models.ForeignKey(API, on_delete=models.DO_NOTHING )
+    name= models.CharField(max_length=100)
+    type_id = models.ForeignKey(Type, on_delete=models.DO_NOTHING )
+    required = models.BooleanField
+    deleted = models.BooleanField
     def __str__(self):
         return self.title
 
