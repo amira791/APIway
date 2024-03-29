@@ -9,7 +9,7 @@ export default function ManipulateCat() {
     
     const getCategories = () =>  {
       setLoading(true);
-      API.get(`/apicategories`).then((res) =>
+      API.get(`/apicategories/`).then((res) =>
         {
           console.log(res.data);
           setCategories(res.data);

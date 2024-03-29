@@ -231,7 +231,7 @@
 }
 @media only screen and (max-width: 991px) {
   .dashboard-user.is-fixed {
-    position: unset;
+    position:fixed;
     width: unset;
     height: unset;
     top: unset;

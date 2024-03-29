@@ -2828,7 +2828,6 @@
   color: var(--primary-color5);
 }
 .tf-tab .content-tab .content-inner {
-  display: none;
 }
  form .search-form2 {
   position: relative;
@@ -4328,7 +4327,7 @@ border-radius: 10rem;
   width: 16%;
 }
 .dashboard-content.inventory .inner-content .table-ranking .col-rankingg:nth-child(3) {
-  width: 19%;
+  width: 29%;
 }
 .dashboard-content.inventory .inner-content .table-ranking .col-rankingg:nth-child(4) {
   width: 16.4%;
@@ -4379,7 +4378,7 @@ border-radius: 10rem;
   width: 16.6%;
 }
 .dashboard-content.inventory .inner-content .table-ranking .content-ranking .col-rankingg:nth-child(3) {
-  width: 19.5%;
+  width: 30%;
 }
 .dashboard-content.inventory .inner-content .table-ranking .content-ranking .col-rankingg:nth-child(4) {
   width: 17.2%;

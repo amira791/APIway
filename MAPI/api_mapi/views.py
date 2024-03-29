@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from .models import *
 from .serializers import *
+from rest_framework.parsers import MultiPartParser, FormParser
 
 # Fournisseur View
 class FournisseurView(viewsets.ModelViewSet):
@@ -27,6 +28,8 @@ class APIcategoryView(viewsets.ModelViewSet):
 class APIView(viewsets.ModelViewSet):
     queryset = API.objects.all()
     serializer_class = APISerializer
+    parser_classes = (MultiPartParser, FormParser)
+
 
 # APIversion View
 class APIversionView(viewsets.ModelViewSet):

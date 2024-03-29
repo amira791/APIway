@@ -99,27 +99,11 @@ const AddAPIPage = () => {
 
 
   return (
-    <body>
-      <div className="wrapper">
-        <div className="page clearfix">
-          <Navbar />
-          <section className="page-title">
-            <div className="tf-container">
-              <div className="row">
-                <div className="col-md-12">
-                  <ul className="breadcrumbs">
-                    <li>
-                      <a href="index-2.html">---</a>
-                    </li>
-                    <li>---</li>
-                    <li>--</li>
-                  </ul>
-
-                  <h4 className="page-title-heading">Add New API</h4>
-                </div>
-              </div>
-            </div>
-          </section>
+   
+      
+        <div>
+          
+  
           <div class="row tf-container">
             <div class="col-md-12">
               <div class="top-menu">
@@ -594,18 +578,10 @@ const AddAPIPage = () => {
             </div>
           </section>
         </div>
-        <Footer />
-        <div
-          className="modal fade popup"
-          id="popup_bid"
-          tabIndex="-1"
-          aria-modal="true"
-          role="dialog"
-        >
-          {/* Modal content for bidding */}
-        </div>
-      </div>
-    </body>
+        
+
+    
+    
   );
 };
 

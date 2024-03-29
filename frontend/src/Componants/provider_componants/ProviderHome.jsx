@@ -1,10 +1,12 @@
 import Footer from "../global_componants/footer";
 import Navbar from "../global_componants/navbar";
-
-
+import AddAPIPage from "../provider_componants/AddApi";
+import ProvAPIList from "../provider_componants/ListProvAPI";
+import React, { useState } from "react";
+import APIAjout from "../../hooks/APIHook";
 const ProviderHomePage = () => {
     return (
-        <body className="body header-fixed">
+        <div className="body header-fixed">
 
            
             <div className="preload preload-container">
@@ -57,15 +59,15 @@ const ProviderHomePage = () => {
                                         </div>
                                         <div className="dashboard-filter">
                                             <ul className="filter-menuu menu-tab">
-                                                <li className="active dashboard"><a href="addAPI"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                                <li className="active dashboard"><a href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                                     <path className="svg-fill" d="M17.3722 6.47085C17.7995 7.0155 17.3282 7.70964 16.6359 7.70964H2.66602C2.11373 7.70964 1.66602 7.26192 1.66602 6.70964V5.3513C1.66602 3.31797 3.31602 1.66797 5.34935 1.66797H7.28268C8.64102 1.66797 9.06602 2.10964 9.60768 2.83464L10.7744 4.38464C11.0327 4.7263 11.066 4.76797 11.5493 4.76797H13.8744C15.2932 4.76797 16.5581 5.43348 17.3722 6.47085Z" fill="#3749E9"/>
                                                     <path className="svg-fill" d="M17.3194 8.95704C17.8704 8.95704 18.3175 9.40269 18.3194 9.95365L18.3327 13.8739C18.3327 16.3323 16.3327 18.3323 13.8743 18.3323H6.12435C3.66602 18.3323 1.66602 16.3323 1.66602 13.8739V9.95724C1.66602 9.40496 2.11372 8.95725 2.666 8.95724L17.3194 8.95704Z" fill="#3749E9"/>
-                                                    </svg> Create API</a>
+                                                    </svg> My APIs</a>
                                                 </li>
                                                 <li><a href="#" > <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                                     <path className="svg-fill" d="M18.3329 9.14297V10.8596C18.3329 11.318 17.9662 11.693 17.4995 11.7096H15.8662C14.9662 11.7096 14.1412 11.0513 14.0662 10.1513C14.0162 9.6263 14.2162 9.13464 14.5662 8.79297C14.8745 8.4763 15.2995 8.29297 15.7662 8.29297H17.4995C17.9662 8.30964 18.3329 8.68464 18.3329 9.14297Z" fill="#3749E9"/>
                                                     <path className="svg-fill" d="M17.0587 12.9596H15.867C14.2837 12.9596 12.9503 11.768 12.817 10.2513C12.742 9.38464 13.0587 8.51797 13.692 7.9013C14.2253 7.3513 14.967 7.04297 15.767 7.04297H17.0587C17.3003 7.04297 17.5003 6.84297 17.4753 6.6013C17.292 4.5763 15.9503 3.19297 13.9587 2.95964C13.7587 2.9263 13.5503 2.91797 13.3337 2.91797H5.83366C5.60033 2.91797 5.37533 2.93464 5.15866 2.96797C3.03366 3.23464 1.66699 4.81797 1.66699 7.08464V12.918C1.66699 15.218 3.53366 17.0846 5.83366 17.0846H13.3337C15.667 17.0846 17.2753 15.6263 17.4753 13.4013C17.5003 13.1596 17.3003 12.9596 17.0587 12.9596ZM10.8337 8.1263H5.83366C5.49199 8.1263 5.20866 7.84297 5.20866 7.5013C5.20866 7.15964 5.49199 6.8763 5.83366 6.8763H10.8337C11.1753 6.8763 11.4587 7.15964 11.4587 7.5013C11.4587 7.84297 11.1753 8.1263 10.8337 8.1263Z" fill="#3749E9"/>
-                                                    </svg> Wallet</a></li>
+                                                    </svg> Build API</a></li>
                                                 <li><a href="#" ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                                     <path className="svg-fill" d="M14.4916 13.0583L11.1249 10H8.86657L5.4999 13.0583C4.55823 13.9083 4.2499 15.2167 4.70823 16.4C5.16657 17.575 6.28323 18.3333 7.54157 18.3333H12.4499C13.7166 18.3333 14.8249 17.575 15.2832 16.4C15.7416 15.2167 15.4332 13.9083 14.4916 13.0583ZM11.5166 15.1167H8.48323C8.16657 15.1167 7.91657 14.8583 7.91657 14.55C7.91657 14.2417 8.1749 13.9833 8.48323 13.9833H11.5166C11.8332 13.9833 12.0832 14.2417 12.0832 14.55C12.0832 14.8583 11.8249 15.1167 11.5166 15.1167Z" fill="#3749E9"/>
                                                     <path className="svg-fill" d="M15.2919 3.6013C14.8335 2.4263 13.7169 1.66797 12.4585 1.66797H7.54188C6.28355 1.66797 5.16688 2.4263 4.70855 3.6013C4.25855 4.78464 4.56688 6.09297 5.50855 6.94297L8.87521 10.0013H11.1335L14.5002 6.94297C15.4335 6.09297 15.7419 4.78464 15.2919 3.6013ZM11.5169 6.0263H8.48355C8.16688 6.0263 7.91688 5.76797 7.91688 5.45964C7.91688 5.1513 8.17522 4.89297 8.48355 4.89297H11.5169C11.8335 4.89297 12.0835 5.1513 12.0835 5.45964C12.0835 5.76797 11.8252 6.0263 11.5169 6.0263Z" fill="#3749E9"/>
@@ -91,165 +93,13 @@ const ProviderHomePage = () => {
                                 <div className="col-xl-9 col-lg-12 col-md-12 overflow-table">
                                     <div className="dashboard-content inventory content-tab">
                                         <div className="inner-content inventory">
-                                            <h4 className="title-dashboard">Inventory</h4>
-                                            <div className="table-ranking top">
-                                                <div className="title-ranking">
-                                                    <div className="col-rankingg"><a href="#">Name</a></div>
-                                                    <div className="col-rankingg"><a href="#">Category</a></div>
-                                                    <div className="col-rankingg"><a href="#">Blockchain</a></div>
-                                                    <div className="col-rankingg"><a href="#">Bid</a></div>
-                                                    <div className="col-rankingg"><a href="#">Views</a></div>
-                                                    <div className="col-rankingg"><a href="#">Auction</a></div>
-                                                </div>
-                                            </div>
-                                            <div className="table-ranking ">
-                                                <div className="content-ranking">
-                                                    <div className="col-rankingg"><div className="image"><img src="assets/images/product/product4.jpg" alt="Image"/></div></div>
-                                                    <div className="col-rankingg">Art</div>
-                                                    <div className="col-rankingg coin"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M11.7619 0V8.13257L5.74624 10.8216L11.7619 8.13418V15.1949L4.89084 11.204L4.89062 11.2041L4.8907 11.2039L4.89062 11.2038L4.89077 11.2038L11.7619 0ZM11.7637 0L18.6357 11.2038L18.6359 11.2038L18.6359 11.2039L18.6359 11.2041L18.6357 11.204L11.7637 15.1949V8.13418L17.7802 10.8216L11.7637 8.13257V0ZM11.7626 16.4746V22.0005L4.88672 12.4844L11.7626 16.4746ZM11.7637 22.0005V16.4736L18.6359 12.4844L11.7637 22.0005Z" fill="#6B8CEF"/>
-                                                        </svg>Ethereum</div>
-                                                    <div className="col-rankingg">0.45 Flow</div>
-                                                    <div className="col-rankingg">4,915</div>
-                                                    <div className="col-rankingg nofication"> <i className="fas fa-circle"></i> Running</div>
-                                                    <div className="col-rankingg dot"><a href="#"><i className="far fa-ellipsis-h"></i></a></div>
-                                                </div>
-                                                <div className="content-ranking">
-                                                    <div className="col-rankingg"><div className="image"><img src="assets/images/product/product5.jpg" alt="Image"/></div></div>
-                                                    <div className="col-rankingg">Photography</div>
-                                                    <div className="col-rankingg coin"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
-                                                        <g clipPath="url(#clip0_2202_134581)">
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M12.1684 0.967074C11.5544 0.690158 10.8241 0.711542 10.2133 0.986319C9.35057 1.34387 8.48287 1.68816 7.61524 2.03242C6.94437 2.29861 6.27353 2.56478 5.60509 2.83706C5.47747 2.89018 5.34671 2.93943 5.21546 2.98886C4.74977 3.16426 4.27805 3.34192 3.9192 3.70309C3.57336 4.07456 3.38669 4.55139 3.20262 5.02161C3.16418 5.11981 3.12585 5.21772 3.0862 5.31433C2.59336 6.4803 2.10528 7.64835 1.61703 8.8168C1.49907 9.0991 1.3811 9.38141 1.26305 9.66373C1.22694 9.74834 1.18912 9.83257 1.15125 9.91691C1.01111 10.229 0.870242 10.5428 0.8125 10.8837V11.5444C0.817735 11.5871 0.825132 11.6491 0.832727 11.7126C0.841853 11.7891 0.851264 11.8678 0.857555 11.9186L0.929852 11.9325C1.05184 12.2803 1.1973 12.6185 1.34268 12.9565C1.40334 13.0975 1.46398 13.2385 1.5229 13.3802C1.63995 13.6417 1.74898 13.9069 1.85803 14.1722C1.95007 14.3961 2.04212 14.62 2.139 14.8417C2.27416 15.1514 2.40273 15.4642 2.53132 15.7771C2.61405 15.9784 2.69679 16.1798 2.7813 16.3803C2.94161 16.7278 3.09249 17.0795 3.22975 17.4366C3.46969 18.1476 3.88043 18.8255 4.56568 19.1655C5.1032 19.359 5.63862 19.56 6.15413 19.8113L6.41084 19.8369L6.42132 19.915C7.42929 20.2699 8.41736 20.6805 9.40018 21.0996C9.45257 21.1124 9.5584 21.137 9.61079 21.1488C9.825 21.2445 10.0412 21.3338 10.2575 21.4232C10.4253 21.4925 10.5932 21.5618 10.7602 21.6342C11.5062 21.77 12.2145 21.492 12.882 21.183C13.1639 21.0477 13.4574 20.9421 13.7509 20.8365C14.0279 20.7369 14.3049 20.6372 14.5721 20.5126C14.5941 20.5055 14.6259 20.4947 14.6588 20.4835C14.6997 20.4697 14.7423 20.4552 14.7701 20.4463C15.8389 20.0005 16.917 19.575 18.0004 19.1633C18.4017 18.9228 18.7978 18.6213 18.9896 18.1722C19.3663 17.3313 19.7199 16.4795 20.0736 15.6277C20.2136 15.2903 20.3537 14.9529 20.4952 14.6161C20.6496 14.2119 20.8249 13.8158 21.0002 13.4197C21.2867 12.7724 21.5733 12.125 21.7683 11.4418V11.0954C21.5159 10.2348 21.1596 9.41477 20.8032 8.59468C20.5928 8.11063 20.3825 7.62654 20.1935 7.13406C20.011 6.72911 19.8432 6.31731 19.6755 5.90556C19.4292 5.30087 19.183 4.69629 18.89 4.11365C18.569 3.50366 17.911 3.24976 17.3084 3.01726C17.2699 3.00239 17.2316 2.98762 17.1936 2.97284C16.285 2.60487 15.3736 2.24322 14.462 1.88153C13.697 1.57799 12.932 1.27443 12.1684 0.967074ZM8.71521 5.9249C9.20348 5.54748 9.79653 5.33472 10.3938 5.21925C11.8355 4.99579 13.3737 5.23742 14.6394 5.99761C14.9202 6.15905 15.2167 6.34616 15.3592 6.65622C15.6317 7.22823 15.178 8.00338 14.5441 7.99161C14.2389 8.03363 13.9816 7.87381 13.7301 7.71754C13.6552 7.67099 13.5807 7.62475 13.5057 7.58426C12.635 7.05823 11.583 6.85615 10.5876 7.05074C10.0951 7.16728 9.65717 7.51904 9.48114 8.00979C9.41409 8.38614 9.39942 8.83305 9.66556 9.13777C9.99036 9.55346 10.4983 9.72566 10.9806 9.88912C11.049 9.91233 11.117 9.93537 11.1838 9.95889C11.4494 10.0367 11.7199 10.107 11.9914 10.1775C12.9913 10.4371 14.004 10.7 14.828 11.3584C15.5395 11.8845 15.8905 12.8008 15.8517 13.6818C15.8842 14.6739 15.4525 15.6747 14.6803 16.2852C13.8431 16.9566 12.7544 17.2047 11.7066 17.178C10.2418 17.2047 8.79799 16.6925 7.60455 15.8415C7.32375 15.6416 7.03456 15.3529 7.04084 14.9776C7.00103 14.4323 7.51549 13.9341 8.04358 13.9694C8.33991 13.9678 8.57124 14.1468 8.79847 14.3227C8.87655 14.3831 8.95415 14.4432 9.03374 14.4954C10.0155 15.2 11.2613 15.4951 12.4464 15.3133C12.8362 15.2321 13.2291 15.076 13.4973 14.7648C13.9877 14.2751 13.9804 13.3471 13.4261 12.9098C12.8338 12.4604 12.1007 12.281 11.3927 12.1078C11.3579 12.0993 11.3232 12.0908 11.2886 12.0823C11.244 12.0705 11.1993 12.0587 11.1544 12.0469C10.0924 11.7675 8.97439 11.4734 8.16407 10.6752C7.61503 10.1257 7.39185 9.32487 7.42957 8.55614C7.38033 7.52973 7.89584 6.51188 8.71521 5.9249Z" fill="#7310C1"/>
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M9.92521 5.02941C11.3644 4.80485 12.8997 5.04767 14.1632 5.81162C14.4435 5.97386 14.7395 6.16189 14.8817 6.47349C15.1536 7.04832 14.7008 7.82731 14.068 7.81549C13.6727 7.87029 13.3578 7.58341 13.0315 7.40612C12.1624 6.87749 11.1123 6.67441 10.1187 6.86996C9.62713 6.98708 9.18994 7.34058 9.01423 7.83376C8.94729 8.21197 8.93265 8.66109 9.19831 8.96732C9.56856 9.44438 10.1773 9.60232 10.7138 9.7925C11.9553 10.1589 13.3055 10.3577 14.3514 11.199C15.0616 11.7276 15.412 12.6484 15.3733 13.5338C15.4057 14.5309 14.9748 15.5366 14.204 16.1501C13.3683 16.8249 12.2816 17.0741 11.2357 17.0473C9.77355 17.0741 8.33231 16.5595 7.14103 15.7042C6.86073 15.5033 6.57206 15.2132 6.57834 14.836C6.53859 14.2881 7.05213 13.7874 7.57926 13.8228C7.9767 13.8207 8.257 14.1462 8.56763 14.3514C9.54764 15.0595 10.7912 15.3561 11.9741 15.1734C12.3632 15.0918 12.7554 14.9349 13.0232 14.6222C13.5126 14.1301 13.5053 13.1975 12.952 12.758C12.3318 12.2842 11.5568 12.109 10.8184 11.9264C9.71917 11.6341 8.54253 11.3483 7.69954 10.5124C7.15149 9.96012 6.92871 9.15535 6.96637 8.38281C6.91721 7.35132 7.43179 6.32843 8.24968 5.73855C8.73707 5.35927 9.32905 5.14545 9.92521 5.02941Z" fill="#FEFEFE"/>
-                                                        </g>
-                                                        <defs>
-                                                        <clipPath id="clip0_2202_134581">
-                                                        <rect width="22" height="22" fill="white" transform="translate(0.761719)"/>
-                                                        </clipPath>
-                                                        </defs>
-                                                        </svg>Stellite</div>
-                                                    <div className="col-rankingg">0.45 Flow</div>
-                                                    <div className="col-rankingg">4,915</div>
-                                                    <div className="col-rankingg"> </div>
-                                                    <div className="col-rankingg dot"><a href="#"><i className="far fa-ellipsis-h"></i></a></div>
-                                                </div>
-                                                <div className="content-ranking">
-                                                    <div className="col-rankingg"><div className="image"><img src="assets/images/product/product6.jpg" alt="Image"/></div></div>
-                                                    <div className="col-rankingg">Art</div>
-                                                    <div className="col-rankingg coin"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
-                                                        <path d="M13.2819 22C11.8098 22 10.7378 21.622 10.0641 20.8659C9.39134 20.1102 9.05451 19.2952 9.05451 18.4217C9.05451 18.1024 9.11307 17.8337 9.23052 17.6152C9.34515 17.3999 9.51139 17.2214 9.71225 17.0985C9.91571 16.9724 10.1661 16.9096 10.4638 16.9096C10.7614 16.9096 11.0115 16.9724 11.2153 17.0985C11.4187 17.2244 11.5793 17.3969 11.6966 17.6152C11.814 17.8337 11.8727 18.1024 11.8727 18.4217C11.8727 18.8082 11.7867 19.1229 11.6145 19.3667C11.442 19.6103 11.2386 19.7697 11.0037 19.8457C11.2076 20.1477 11.5285 20.3619 11.9668 20.4879C12.4052 20.6225 12.8435 20.6896 13.2819 20.6896C13.8924 20.6896 14.4443 20.5132 14.9376 20.1606C15.4307 19.8075 15.7949 19.2869 16.0298 18.5981C16.2647 17.9094 16.3821 17.128 16.3821 16.2542C16.3821 15.3051 16.2527 14.4942 15.9946 13.8225C15.7438 13.1421 15.3721 12.638 14.8788 12.3103C14.4007 11.9874 13.8468 11.8171 13.2819 11.8191C12.9059 11.8191 12.4366 11.9871 11.8727 12.3232L10.8393 12.8775V12.3232L15.4895 5.67021H9.05451V12.5748C9.05451 13.1462 9.17195 13.6166 9.40684 13.9863C9.64172 14.356 10.0017 14.5407 10.4874 14.5407C10.8626 14.5407 11.2231 14.4064 11.5676 14.1372C11.9144 13.8659 12.216 13.5338 12.4599 13.155C12.4912 13.0788 12.5304 13.0243 12.5774 12.9907C12.6195 12.9507 12.6737 12.9285 12.73 12.9279C12.816 12.9279 12.9177 12.9741 13.0354 13.0667C13.145 13.2007 13.1998 13.3562 13.1998 13.5326C13.1863 13.6514 13.1666 13.7692 13.1408 13.8856C12.8749 14.524 12.5068 15.0111 12.0371 15.347C11.5797 15.6791 11.0394 15.8548 10.4874 15.8512C9.09367 15.8512 8.13055 15.5571 7.59837 14.9694C7.06619 14.381 6.79993 13.5829 6.79993 12.5752V5.67021H3.51172V4.38475H6.79993V1.46182L6.0484 0.654721V0H8.23246L9.05419 0.453375V4.38475L17.5561 4.35975L18.4018 5.26682L13.188 10.8614C13.5037 10.7263 13.8361 10.6415 14.1745 10.6093C14.7381 10.6093 15.3721 10.8026 16.0767 11.1891C16.7892 11.567 17.3372 12.0881 17.7205 12.7512C18.1042 13.4066 18.3507 14.0367 18.4605 14.6414C18.5779 15.2465 18.6367 15.7838 18.6367 16.2542C18.6367 17.3297 18.4251 18.329 18.0026 19.2535C17.5799 20.1772 16.9379 20.8659 16.0767 21.3197C15.2155 21.7734 14.2838 22 13.2819 22Z" fill="#2C7DF7"/>
-                                                        </svg>Tezos</div>
-                                                    <div className="col-rankingg">0.45 Flow</div>
-                                                    <div className="col-rankingg">4,915</div>
-                                                    <div className="col-rankingg nofication"> <i className="fas fa-circle"></i> Running</div>
-                                                    <div className="col-rankingg dot"><a href="#"><i className="far fa-ellipsis-h"></i></a></div>
-                                                </div>
-                                                <div className="content-ranking">
-                                                    <div className="col-rankingg"><div className="image"><img src="assets/images/product/product9.jpg" alt="Image"/></div></div>
-                                                    <div className="col-rankingg">Art</div>
-                                                    <div className="col-rankingg coin"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M16.0138 5.65275C15.2277 5.65275 14.5905 6.29113 14.5905 7.07865V8.21954H19.2162V12.5686H14.5193V14.4223C14.5193 17.848 11.7474 20.625 8.32802 20.625C4.90869 20.625 2.13672 17.848 2.13672 14.4223C2.13672 10.9966 4.90869 8.21954 8.32802 8.21954H10.3206V7.07865C10.3206 3.92866 12.8695 1.375 16.0138 1.375H21.3867V5.65275H16.0138ZM10.3203 8.25586V12.5694H14.519V8.25586H10.3203ZM6.40625 14.423C6.40625 13.3598 7.26655 12.498 8.32767 12.498H10.2492V14.423C10.2492 15.4862 9.38889 16.348 8.32767 16.348C7.26655 16.348 6.40625 15.4862 6.40625 14.423Z" fill="#03DB80"/>
-                                                        </svg>Flow</div>
-                                                    <div className="col-rankingg">0.45 Flow</div>
-                                                    <div className="col-rankingg">4,915</div>
-                                                    <div className="col-rankingg"></div>
-                                                    <div className="col-rankingg dot"><a href="#"><i className="far fa-ellipsis-h"></i></a></div>
-                                                </div>
-                                                <div className="content-ranking">
-                                                    <div className="col-rankingg"><div className="image"><img src="assets/images/product/product7.jpg" alt="Image"/></div></div>
-                                                    <div className="col-rankingg">Collections</div>
-                                                    <div className="col-rankingg coin"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M15.0938 4.46826V0.515625C19.6588 1.96675 22.7579 6.20623 22.7621 10.9983C22.7538 15.7862 19.6546 20.0172 15.0938 21.4684V17.5326C17.5522 16.2797 19.0976 13.7572 19.0976 10.9983C19.0934 8.2395 17.548 5.72112 15.0938 4.46826ZM0.761719 10.9974C0.765907 6.20952 3.86928 1.97425 8.4301 0.527344V4.45888C5.97169 5.70753 4.42629 8.23434 4.42629 10.9932C4.43048 13.752 5.97588 16.2704 8.4301 17.5232V21.4759C3.86509 20.0247 0.761719 15.7895 0.761719 10.9974Z" fill="#3D92EF"/>
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M11.7591 0C10.9508 0.00421839 10.1467 0.101241 9.35938 0.282632V4.07918C10.13 3.80499 10.9425 3.66578 11.7591 3.66156C12.5758 3.66578 13.3883 3.80499 14.1589 4.07497V0.274195C13.3716 0.097023 12.5674 0.00421839 11.7591 0ZM11.7591 7.16797C10.8838 7.16797 10.0378 7.47169 9.35938 8.02008V13.9807C10.0378 14.5291 10.888 14.8328 11.7591 14.8328C12.6345 14.8328 13.4804 14.5291 14.1589 13.9807V8.02008C13.4804 7.47169 12.6345 7.16797 11.7591 7.16797ZM11.767 18.3395C12.5836 18.3353 13.3961 18.1961 14.1667 17.9219V21.7184C13.3794 21.8998 12.5753 21.9968 11.767 22.0011C10.9587 21.9968 10.1545 21.9083 9.36719 21.7269V17.9261C10.1378 18.1961 10.9503 18.3353 11.767 18.3395Z" fill="#81BFFF"/>
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M9.35938 9.99983C10.1509 9.89859 10.955 9.84797 11.7633 9.84375C12.5716 9.84797 13.3757 9.89859 14.1631 9.99561V21.7354C13.3757 21.8366 12.5716 21.8873 11.7633 21.8915C10.955 21.8873 10.1467 21.8366 9.35938 21.7396V9.99983Z" fill="#81BFFF"/>
-                                                        </svg>IO Coin</div>
-                                                    <div className="col-rankingg">0.45 Flow</div>
-                                                    <div className="col-rankingg">4,915</div>
-                                                    <div className="col-rankingg nofication"> <i className="fas fa-circle"></i> Running</div>
-                                                    <div className="col-rankingg dot"><a href="#"><i className="far fa-ellipsis-h"></i></a></div>
-                                                </div>
-                                                <div className="content-ranking">
-                                                    <div className="col-rankingg"><div className="image"><img src="assets/images/product/product11.jpg" alt="Image"/></div></div>
-                                                    <div className="col-rankingg">Photography</div>
-                                                    <div className="col-rankingg coin"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
-                                                        <path fillRule="evenodd" clipRule="evenodd" d="M16.0138 5.65275C15.2277 5.65275 14.5905 6.29113 14.5905 7.07865V8.21954H19.2162V12.5686H14.5193V14.4223C14.5193 17.848 11.7474 20.625 8.32802 20.625C4.90869 20.625 2.13672 17.848 2.13672 14.4223C2.13672 10.9966 4.90869 8.21954 8.32802 8.21954H10.3206V7.07865C10.3206 3.92866 12.8695 1.375 16.0138 1.375H21.3867V5.65275H16.0138ZM10.3203 8.25586V12.5694H14.519V8.25586H10.3203ZM6.40625 14.423C6.40625 13.3598 7.26655 12.498 8.32767 12.498H10.2492V14.423C10.2492 15.4862 9.38889 16.348 8.32767 16.348C7.26655 16.348 6.40625 15.4862 6.40625 14.423Z" fill="#03DB80"/>
-                                                        </svg>Flow</div>
-                                                    <div className="col-rankingg">0.45 Flow</div>
-                                                    <div className="col-rankingg">4,915</div>
-                                                    <div className="col-rankingg nofication"> <i className="fas fa-circle"></i> Running</div>
-                                                    <div className="col-rankingg dot"><a href="#"><i className="far fa-ellipsis-h"></i></a></div>
-                                                </div>
-                                                <div className="table-btn">
-                                                    <a href="#">Load more</a>
-                                                </div>
-                                            </div>
+                                            
+                                            <ProvAPIList/>
+
                                         </div>
                                         <div className="inner-content wallet">
-                                            <h4 className="title-dashboard">Connect Wallet</h4>
-                                            <div className="wallet-list">
-                                                <div className="tf-wallet">
-                                                    <div className="icon">
-                                                        <img src="assets/images/svg/icon-wallet-1.svg" alt="Image"/>
-                                                        <span className="label">BETA</span>
-                                                    </div>
-                                                    <h6 className="title"><a href="#"> Meta Mask</a></h6>
-                                                    <p className="content">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                                                </div>
-                                                <div className="tf-wallet">
-                                                    <div className="icon">
-                                                        <img src="assets/images/svg/icon-wallet-2.svg" alt="Image"/>
-                                                    </div>
-                                                    <h6 className="title"><a href="#">Bitski</a> </h6>
-                                                    <p className="content">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                                                </div>
-                                                <div className="tf-wallet">
-                                                    <div className="icon">
-                                                        <img src="assets/images/svg/icon-wallet-3.svg" alt="Image"/>
-                                                        <span className="label">BETA</span>
-                                                    </div>
-                                                    <h6 className="title"><a href="#">Wallet Connect</a> </h6>
-                                                    <p className="content">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                                                </div>
-                                                <div className="tf-wallet">
-                                                    <div className="icon">
-                                                        <img src="assets/images/svg/icon-wallet-4.svg" alt="Image"/>
-                                                        
-                                                    </div>
-                                                    <h6 className="title"><a href="#"> Coin Base</a></h6>
-                                                    <p className="content">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                                                </div>
-                                                <div className="tf-wallet">
-                                                    <div className="icon">
-                                                        <img src="assets/images/svg/icon-wallet-5.svg" alt="Image"/>
-                                                        <span className="label">BETA</span>
-                                                    </div>
-                                                    <h6 className="title"><a href="#"> Authereum</a></h6>
-                                                    <p className="content">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                                                </div>
-                                                <div className="tf-wallet">
-                                                    <div className="icon">
-                                                        <img src="assets/images/svg/icon-wallet-6.svg" alt="Image"/>
-                                                        <span className="label">BETA</span>
-                                                    </div>
-                                                    <h6 className="title"><a href="#">Kaikas</a> </h6>
-                                                    <p className="content">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                                                </div>
-                                                <div className="tf-wallet">
-                                                    <div className="icon">
-                                                        <img src="assets/images/svg/icon-wallet-7.svg" alt="Image"/>
-                                                    </div>
-                                                    <h6 className="title"><a href="#">Torus</a> </h6>
-                                                    <p className="content">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                                                </div>
-                                                <div className="tf-wallet">
-                                                    <div className="icon">
-                                                        <img src="assets/images/svg/icon-wallet-8.svg" alt="Image"/>
-                                                        <span className="label">BETA</span>
-                                                    </div>
-                                                    <h6 className="title"><a href="#"> Fortmatic</a></h6>
-                                                    <p className="content">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                                                </div>
-                                            </div>
+                                            <h4 className="title-dashboard">Create New API</h4>
+                                            <AddAPIPage/>
                                         </div>
                                         <div className="inner-content history">
                                             <h4 className="title-dashboard">History</h4>
@@ -743,7 +593,7 @@ const ProviderHomePage = () => {
             <script src="assets/js/shortcodes.js"></script>
             <script src="assets/js/main.js"></script>
 
-        </body>
+        </div>
 
     );
 };
