@@ -17,6 +17,9 @@ router.register(r'functionnalities', FunctionnalityView, basename='functionnalit
 router.register(r'apidocumentations', APIdocumentationView, basename='apidocumentation')
 router.register(r'tarifications', TarificationView, basename='tarification')
 router.register(r'abonnements', AbonnementView, basename='abonnement')
-
+router.register(r'types', TypeView, basename='types')
+router.register(r'apiheaders', ApiHeaderView, basename='apiheaders')
+router.register(r'apiquery', ApiQueryParamView, basename='apiquery')
+router.register(r'apiendpointbody', ApiEndpointBodyView, basename='apiendpointbody')
 # Get the urlpatterns from the router
 urlpatterns = router.urls

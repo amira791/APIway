@@ -67,3 +67,18 @@ class Endpoint_parameterView(viewsets.ModelViewSet):
 class TypeView(viewsets.ModelViewSet):
     queryset = Type.objects.all()
     serializer_class = TypeSerializer
+    
+# Type View
+class ApiHeaderView(viewsets.ModelViewSet):
+    queryset = ApiHeader.objects.all()
+    serializer_class = ApiHeaderSerializer
+    
+# ApiQueryParam View
+class ApiQueryParamView(viewsets.ModelViewSet):
+    queryset = ApiQueryParam.objects.all()
+    serializer_class = ApiQueryParamSerializer
+    
+# ApiEndpointBody View
+class ApiEndpointBodyView(viewsets.ModelViewSet):
+    queryset = ApiEndpointBody.objects.all()
+    serializer_class = ApiEndpointBodySerializer

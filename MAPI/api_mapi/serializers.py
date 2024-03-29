@@ -66,3 +66,21 @@ class Endpoint_parameterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Endpoint_parameter
         fields = '__all__'
+
+
+      
+class ApiHeaderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ApiHeader
+        fields = '__all__'
+        
+      
+class ApiQueryParamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ApiQueryParam
+        fields = '__all__'
+
+class ApiEndpointBodySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ApiEndpointBody
+        fields = '__all__'

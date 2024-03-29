@@ -99,12 +99,41 @@ class Type(models.Model):
     name= models.CharField(max_length=100)
     def __str__(self):
         return self.name
+class ApiHeader(models.Model):
+    id_header =models.AutoField(primary_key=True)
+    key = models.CharField(max_length=255)
+    type_id = models.ForeignKey(Type, on_delete=models.DO_NOTHING )
+    example_value = models.CharField(max_length=255)
+    required = models.BooleanField(default=False)
+    endpoint = models.ForeignKey(APIendpoint, related_name='headers', on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name
 
+class ApiQueryParam(models.Model):
+    id_queryparams =models.AutoField(primary_key=True)
+    key = models.CharField(max_length=255)
+    type_id = models.ForeignKey(Type, on_delete=models.DO_NOTHING,default=1)
+    example_value = models.CharField(max_length=255)
+    endpoint = models.ForeignKey(APIendpoint, related_name='query_params', on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name
+
+class ApiEndpointBody(models.Model):
+    id_body =models.AutoField(primary_key=True)
+    media_type = models.CharField(max_length=255)
+    payload_name = models.CharField(max_length=255)
+    payload_description = models.TextField(verbose_name="Payload text", help_text="Payload text")
+    body_example = models.TextField(verbose_name="Example", help_text="Example of a body")
+    endpoint = models.ForeignKey(APIendpoint, related_name='body', on_delete=models.CASCADE)
+  
+    def __str__(self):
+        return self.name
+       
 class Endpoint_parameter(models.Model):
     id_parameter = models.AutoField(primary_key=True)
     id_endpoint = models.ForeignKey(API, on_delete=models.DO_NOTHING )
     name= models.CharField(max_length=100)
-    type_id = models.ForeignKey(Type, on_delete=models.DO_NOTHING )
+    type_id = models.ForeignKey(Type, on_delete=models.DO_NOTHING,default=1  )
     required = models.BooleanField
     deleted = models.BooleanField
     def __str__(self):
