@@ -84,3 +84,8 @@ class ApiEndpointBodySerializer(serializers.ModelSerializer):
     class Meta:
         model = ApiEndpointBody
         fields = '__all__'
+
+class BaseLinkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BaseLink
+        fields = '__all__'

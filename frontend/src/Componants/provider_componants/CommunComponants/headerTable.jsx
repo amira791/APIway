@@ -191,7 +191,7 @@ const ParamsTable = ({ data, params, onAddRow, onChange, onDelete, activeTab }) 
                 {types.map((type) => (
                   <option
                     key={type.id_type}
-                    value={type.name}
+                    value={type.id_type}
                     selected={newRow.type == type.name}
                   >
                     {type.name}

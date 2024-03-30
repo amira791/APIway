@@ -26,6 +26,7 @@ const AddAPIPage = () => {
   const [endpoints, setEndpoints] = useState([]);
   const [newFunctionality, setNewFunctionality] = useState("");
   const [functionalities, setFunctionalities] = useState([]);
+  const [baseURLs, setBaseURLs] = useState([]);
   const [activeFilter, setActiveFilter] = useState("#general-section");
   const [activeType, setActiveType] = useState("#endpoints-section");
   const [groups, setGroups] = useState([]);
@@ -43,17 +44,18 @@ const AddAPIPage = () => {
     categoryId: "",
     visibility: false,
     category: "",
-    baseURLs: [""],
+    website: "",
+ /*    baseURLs: [""], */
     logo: null,
   });
- /*  useEffect(() => {
+  /*  useEffect(() => {
     if (tableRef.current) {
       $("#example").DataTable();
     }
   }, [tableRef]);
  */
 
-  const handleDeleteEndpoint= (endpointId) => {
+  const handleDeleteEndpoint = (endpointId) => {
     const updatedEndpoints = [...endpoints];
     console.log("00" + endpointId);
     // Find the index of the endpoint to update
@@ -64,13 +66,12 @@ const AddAPIPage = () => {
     // Update the group of the endpoint at the found index
     /* if (endpointIndex !== -1) {
     } */
-  
-   
+
     updatedEndpoints.splice(endpointIndex, 1);
     setEndpoints(updatedEndpoints);
   };
 
-/****************************************************************************** */
+  /****************************************************************************** */
   const handleInputChange = (e) => {
     setNewFunctionality(e.target.value);
   };
@@ -111,10 +112,9 @@ const AddAPIPage = () => {
   };
 
   const handleAddGroup = (newGroup) => {
-    
     setGroups([...groups, newGroup]);
     console.log(endpoints);
-   // $("#example2").DataTable().destroy();
+    // $("#example2").DataTable().destroy();
   };
 
   const handleChange = (e) => {
@@ -147,15 +147,18 @@ const AddAPIPage = () => {
     setShowGroupForm(true);
   };
   const [editedRowIndex, setEditedRowIndex] = useState(null);
+
+
   const handleChanges = (e, index) => {
     const { value } = e.target;
-    setFormData((prevState) => {
-      const updatedURLs = [...prevState.baseURLs];
-      updatedURLs[index] = value; // Update the URL at the specified index
-      return { ...prevState, baseURLs: updatedURLs };
-    });
+    const updatedURLs = [...baseURLs];
+    updatedURLs[index] = value; // Update the URL at the specified index
+    setBaseURLs(updatedURLs);
   };
 
+  const handleAddURL = () => {
+    setBaseURLs([...baseURLs, '']); // Add an empty string for the new URL
+  };
   const handleLogoChange = (e) => {
     const file = e.target.files[0];
     setFormData((prevState) => ({
@@ -179,7 +182,7 @@ const AddAPIPage = () => {
     // Your submission logic goes here
 
     alert(formData.apiName);
-    addNewAPI(formData, functionalities);
+    addNewAPI(formData, functionalities,baseURLs,endpoints);
   };
   const handleRemoveEndpointFromGroup = (endpointId) => {
     const updatedEndpoints = endpoints.map((endpoint) => {
@@ -215,13 +218,13 @@ const AddAPIPage = () => {
     }
   };
 
-  const handleAddURL = () => {
+/*   const handleAddURL = () => {
     setFormData((prevState) => ({
       ...prevState,
       baseURLs: [...prevState.baseURLs, ""], // Add an empty string for the new URL
     }));
   };
-
+ */
   const handleAddToGroup = (index) => {
     setEditedRowIndex(index);
     setGroupchoice(true);
@@ -229,7 +232,7 @@ const AddAPIPage = () => {
   const getRandomColor = () => {
     return "#" + Math.floor(Math.random() * 16777215).toString(16);
   };
-/* 
+  /* 
   useEffect(() => {
     if (tableRef.current) {
       $(tableRef.current).DataTable();
@@ -274,18 +277,15 @@ const AddAPIPage = () => {
     if (tableRef.current && !$.fn.DataTable.isDataTable("#example")) {
       $(tableRef.current).DataTable();
     }
-    
+
     // Destroy DataTable when component unmounts to avoid memory leaks
-    
   }, []);
 
   useEffect(() => {
     // Update DataTable when endpoints change
-   $(tableRef.current).DataTable();
-      
-    
-  }, [endpoints,groups]);
- /*  useEffect(() => {
+    $(tableRef.current).DataTable();
+  }, [endpoints, groups]);
+  /*  useEffect(() => {
     // Update DataTable when endpoints change
    $(tableRef.current).DataTable();
       
@@ -588,23 +588,18 @@ const AddAPIPage = () => {
                                   <div class="widget widget-category sc-product style2">
                                     <div>
                                       <h6 className="widget-title">Website</h6>
-                                    
-                                     
-                                        <fieldset >
-                                        
-                                          <input
-                                            type="text"
-                                            placeholder="https://"
-                                           /*  onChange={(e) =>
-                                              handleChanges(e, index)
-                                            } */
-                                          />
-                                        </fieldset>
-                                   
-                                      
+
+                                      <fieldset>
+                                        <input
+                                          id="website"
+                                          type="text"
+                                          placeholder="https://"
+                                          onChange={handleChange}
+                                        />
+                                      </fieldset>
                                     </div>
                                   </div>
-                                  <div class="widget widget-category sc-product style2">
+                                  <div className="widget widget-category sc-product style2">
                                     <div>
                                       <h6 className="widget-title">Base URL</h6>
                                       <p>
@@ -612,35 +607,23 @@ const AddAPIPage = () => {
                                         override URLs, and select a load
                                         balancer
                                       </p>
-                                      {formData.baseURLs.map((url, index) => (
+                                      {baseURLs.map((url, index) => (
                                         <fieldset key={index}>
                                           <label>URL {index + 1}</label>
                                           <input
                                             type="text"
                                             placeholder="Api base"
+                                            value={url}
                                             onChange={(e) =>
                                               handleChanges(e, index)
                                             }
                                           />
                                         </fieldset>
                                       ))}
-                                         <button
+                                      <button
                                         type="button"
                                         onClick={handleAddURL}
                                       >
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          width="22"
-                                          height="22"
-                                          fill="currentColor"
-                                          class="bi bi-plus-lg"
-                                          viewBox="0 0 16 16"
-                                        >
-                                          <path
-                                            fill-rule="evenodd"
-                                            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
-                                          />
-                                        </svg>{" "}
                                         Add URL
                                       </button>
                                     </div>
@@ -692,7 +675,6 @@ const AddAPIPage = () => {
                                 >
                                   <i class="far fa-plus"></i> Create Group
                                 </a>
-                            
                               </div>
                             </div>
                             {showForm && (
@@ -722,7 +704,7 @@ const AddAPIPage = () => {
                                       Endpoints
                                     </a>
                                   </li>
-                                {/*   <li
+                                  {/*   <li
                                     className={
                                       activeType === "#group-section"
                                         ? "active"
@@ -788,12 +770,13 @@ const AddAPIPage = () => {
                             }}
                           >
                             <h3>Endpoints</h3>
-                            <EndpointTable endpoints={endpoints}
-                            onDelete={handleDeleteEndpoint}
-                            onAddTogroup={handleAddEndpointToGroup}
-                            groups={groups}
-                            onRemoveFromGroup  ={handleRemoveEndpointFromGroup}
-                            handleAdding={handleAddToGroup}
+                            <EndpointTable
+                              endpoints={endpoints}
+                              onDelete={handleDeleteEndpoint}
+                              onAddTogroup={handleAddEndpointToGroup}
+                              groups={groups}
+                              onRemoveFromGroup={handleRemoveEndpointFromGroup}
+                              handleAdding={handleAddToGroup}
                             />
                           </div>
                         </div>

@@ -82,3 +82,7 @@ class ApiQueryParamView(viewsets.ModelViewSet):
 class ApiEndpointBodyView(viewsets.ModelViewSet):
     queryset = ApiEndpointBody.objects.all()
     serializer_class = ApiEndpointBodySerializer
+# BaseLink View
+class BaseLinkView(viewsets.ModelViewSet):
+    queryset = BaseLink.objects.all()
+    serializer_class = BaseLinkSerializer

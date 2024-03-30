@@ -20,17 +20,13 @@ const AddEndpointForm = ({ onSave }) => {
   const [endpointPath, setEndpointPath] = useState("/");
   const [headers, setHeaders] = useState([]);
   const [queryParams, setQueryParams] = useState([]);
-  const [rqtTrans, setRqtTrans] = useState([]);
-  const [rpsTrans, setRpsTrans] = useState([]);
+  
 
   const [body, setBody] = useState({
-    mediaType: "",
+    mediaType: "application/json",
     payloadName: "",
     payloadValue: "",
   });
-  const [requestTransformations, setRequestTransformations] = useState("");
-  const [responseTransformations, setResponseTransformations] = useState("");
-
   const [dynamicTabs, setDynamicTabs] = useState([]);
 
   const handleEndpointPathChange = (e) => {
@@ -66,6 +62,7 @@ const AddEndpointForm = ({ onSave }) => {
       params: dynamicTabs,
       headers: headers,
       queryParams: queryParams,
+      body:body,
       group: null 
     };
 
@@ -108,12 +105,7 @@ const AddEndpointForm = ({ onSave }) => {
   const handleAddQueryParam = (newRow) => {
     setQueryParams([...queryParams, newRow]);
   };
-  const handleAddrqtTrans = (newRow) => {
-    setRqtTrans([...rqtTrans, newRow]);
-  };
-  const handleAddRpsTrans = (newRow) => {
-    setRpsTrans([...rpsTrans, newRow]);
-  };
+
   const handleBodyChange = (e) => {
     setBody(e.target.value);
   };
@@ -129,17 +121,7 @@ const AddEndpointForm = ({ onSave }) => {
     updatedQueryParams[index] = value;
     setQueryParams(updatedQueryParams);
   };
-  const handlerqtTransChange = (index, value) => {
-    const updatedrqtTrans = [...rqtTrans];
-    updatedrqtTrans[index] = value;
-    setRqtTrans(updatedrqtTrans);
-  };
-
-  const handlerpsTransChange = (index, value) => {
-    const updatedrpsTrans = [...rpsTrans];
-    updatedrpsTrans[index] = value;
-    setRpsTrans(updatedrpsTrans);
-  };
+  
 
   const handleDeleteHeader = (index) => {
     const updatedHeaders = [...headers];
@@ -153,17 +135,7 @@ const AddEndpointForm = ({ onSave }) => {
     setQueryParams(updatedQueryParams);
   };
 
-  const handleDeleterqtTran = (index) => {
-    const updatedrqtTrans = [...rqtTrans];
-    updatedrqtTrans.splice(index, 1);
-    setRqtTrans(updatedrqtTrans);
-  };
-
-  const handleDeleterpsTrans = (index) => {
-    const updatedrpsTrans = [...rpsTrans];
-    updatedrpsTrans.splice(index, 1);
-    setRpsTrans(updatedrpsTrans);
-  };
+ 
   return (
     <div className="ant-spin-container">
       <section className="sc-wQkWr kawync">
@@ -382,7 +354,7 @@ const AddEndpointForm = ({ onSave }) => {
                   <label>Media Type</label>
                   <select
                     value={body.mediaType}
-                    onChange={(e) =>
+                    onClick={(e) =>
                       setBody({ ...body, mediaType: e.target.value })
                     }
                   >

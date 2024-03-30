@@ -50,12 +50,17 @@ class API(models.Model):
     terms_of_use = models.TextField(verbose_name="Terms of Use", help_text="Terms and conditions for API usage")
     logo = models.ImageField(upload_to="assets/images/", verbose_name="Logo")
     visibility = models.BooleanField(default=False, verbose_name="Visibility")
-    base_link = models.TextField(verbose_name="Base Link", help_text="Base link for API endpoints")
+    website = models.URLField(verbose_name="Website", help_text="API website")
     """ pricing_plans = models.ManyToManyField('Tarification', verbose_name="Pricing Plans") """
 
     def __str__(self):
         return self.api_name
+class BaseLink(models.Model):
+    baselink_id = models.AutoField(primary_key=True)
+    url = models.TextField(verbose_name="Base Link URL", help_text="Base link for API endpoints")
 
+    def __str__(self):
+        return self.url
 class APIversion(models.Model):
     id_version = models.AutoField(primary_key=True)
     num_version= models.CharField(max_length=100)
@@ -71,6 +76,7 @@ class APIversion(models.Model):
     date_version = models.DateField(auto_now=True)
     api = models.ForeignKey(API, on_delete=models.DO_NOTHING )
     functions = models.ManyToManyField('Functionnality')
+    base_links = models.ManyToManyField('BaseLink', verbose_name="Base Links")
     def __str__(self):
         return self.num_version
     
@@ -86,7 +92,7 @@ class APIendpoint(models.Model):
     )
     method = models.CharField(max_length=20, choices=CHOICES, null=True)  
     link= models.TextField
-    api = models.ForeignKey(API, on_delete=models.DO_NOTHING )
+    group=models.CharField(max_length=255,default="",  null=True)
     version = models.ForeignKey(APIversion, on_delete=models.DO_NOTHING )
     description = models.TextField( help_text="Brief description of the endPoint")
     externalDocURL = models.TextField( help_text="External link to more information")
@@ -134,8 +140,8 @@ class Endpoint_parameter(models.Model):
     id_endpoint = models.ForeignKey(API, on_delete=models.DO_NOTHING )
     name= models.CharField(max_length=100)
     type_id = models.ForeignKey(Type, on_delete=models.DO_NOTHING,default=1  )
-    required = models.BooleanField
-    deleted = models.BooleanField
+    required = models.BooleanField(default=False)
+    deleted = models.BooleanField(default=False)
     def __str__(self):
         return self.title
 class Functionnality(models.Model):
