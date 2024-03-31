@@ -127,7 +127,7 @@ class Abonnement(models.Model):
 class APIForum(models.Model):
     id_forum = models.AutoField(primary_key=True)
     api = models.ForeignKey(API,on_delete= models.CASCADE)
-    title = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
     description = models.TextField()
 
     def __str__(self):
@@ -135,7 +135,7 @@ class APIForum(models.Model):
     
 class Thread(models.Model):
     id_thread = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=200)
+    content = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
     forum = models.ForeignKey(APIForum, on_delete=models.CASCADE)
     creator = models.ForeignKey(Consommateur, on_delete=models.CASCADE)
