@@ -47,6 +47,24 @@ class APIdocumentationView(generics.CreateAPIView):
     queryset = APIdocumentation.objects.all()
     serializer_class = APIdocumentationSerializer
 
+#API Forum View
+class APIForumView(generics.CreateAPIView):
+    queryset = APIForum.objects.all()
+    serializer_class = APIForumSerializer
+    http_method_names = ['post', 'get']
+
+# Forum Thread View
+class ThreadView(generics.CreateAPIView):
+    queryset = Thread.objects.all()
+    serializer_class = ThreadSerializer
+    http_method_names = ['post', 'get']
+
+# Forum Post View
+class PostView(generics.CreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    http_method_names = ['post', 'get']
+    
 # Tarification View
 class TarificationView(generics.CreateAPIView):
     queryset = Tarification.objects.all()

@@ -45,7 +45,23 @@ class APIdocumentationSerializer(serializers.ModelSerializer):
     class Meta:
         model = APIdocumentation
         fields = '__all__'
+class APIForumSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = APIForum
+        fields = '__all__'
 
+class ThreadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Thread
+        fields = '__all__'
+    #to-do
+        # define the craetor as connected user , current user
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = '__all__'
+        #to-do
+        # define the craetor as connected user , current user
 class TarificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tarification

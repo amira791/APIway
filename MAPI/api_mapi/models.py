@@ -22,7 +22,7 @@ class Admin(models.Model):
         return self.AdminUsername
 
 class Consommateur(models.Model):
-    id_fournisseur = models.AutoField(primary_key=True)
+    id_consommateur = models.AutoField(primary_key=True)
     CN_first_name = models.CharField(max_length=100)
     CN_last_name = models.CharField(max_length=100)
     CNemail = models.CharField(max_length=100)
@@ -123,3 +123,32 @@ class Abonnement(models.Model):
 
     def __str__(self):
         return self.id_subscription
+    
+class APIForum(models.Model):
+    id_forum = models.AutoField(primary_key=True)
+    api = models.ForeignKey(API,on_delete= models.CASCADE)
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
+    
+class Thread(models.Model):
+    id_thread = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    forum = models.ForeignKey(APIForum, on_delete=models.CASCADE)
+    creator = models.ForeignKey(Consommateur, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+class Post(models.Model):
+    id_post = models.AutoField(primary_key=True)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(Consommateur, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.message
