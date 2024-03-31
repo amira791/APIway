@@ -11,6 +11,7 @@ import {
   Switch,
 } from "react-router-dom";
 import Home from "./components/home";
+import Forum from './components/forum/Forum';
 
 class Root extends Component {
   render() {
@@ -19,6 +20,7 @@ class Root extends Component {
         <Router>
           <Routes>
             <Route exact path="/" element={<Home />} />
+            <Route path='/forum' element = {<Forum />}></Route>
           </Routes>
         </Router>
       </div>
