@@ -2,6 +2,7 @@ import React , {useEffect} from 'react'
 import useForum from '../../hooks/useForum';
 import { Flex, Spacer , Avatar , Box , Text , HStack , Button,LinkBox , LinkOverlay} from '@chakra-ui/react'
 import { TimeIcon , ChatIcon } from '@chakra-ui/icons'
+import formatTime from '../../utils/formatTime'
 
 export default function ThreadList({forum_id}) {
 
@@ -20,20 +21,19 @@ export default function ThreadList({forum_id}) {
              <Flex margin={40} key={thread.id_thread} onClick={console.log('clicked')}>
               <Avatar   bg='teal.500' margin='10' size='lg' showBorder  name='Oshigaki Kisame'/>
               <Box margin={20}>
-                <Text>Username</Text> 
-             
-               <LinkOverlay href='forum/thread'>
+                <Text>{thread.creator.CNusername}</Text> 
                 <Text>{thread.content}</Text>
-               </LinkOverlay>
                 <HStack>
                   <TimeIcon />
-                  <Text size='sm'>{thread.created_at} </Text>
+                  <Text size='sm'>{formatTime(thread.created_at)}</Text>
                 </HStack> 
               </Box>
               <Spacer />
               <HStack alignItems='center' >
+               <LinkOverlay href='forum/thread'>
                 <ChatIcon/>
                 <Text>{10} comments</Text>
+               </LinkOverlay>
               </HStack>
            </Flex>
         </LinkBox>

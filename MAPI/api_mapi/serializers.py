@@ -51,6 +51,7 @@ class APIForumSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ThreadSerializer(serializers.ModelSerializer):
+    creator = ConsommateurSerializer()  
     class Meta:
         model = Thread
         fields = '__all__'
