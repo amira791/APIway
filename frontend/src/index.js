@@ -11,7 +11,8 @@ import {
   Switch,
 } from "react-router-dom";
 import Home from "./components/home";
-import ForumList from './components/forum/ForumList';
+import ForumPage from './components/pages/ForumPage';
+import ThreadPage from './components/pages/ThreadPage'
 
 class Root extends Component {
   render() {
@@ -20,7 +21,8 @@ class Root extends Component {
         <Router>
           <Routes>
             <Route exact path="/" element={<Home />} />
-            <Route path='forum' element = {<ForumList />}></Route>
+            <Route path='forum' element = {<ForumPage />}/>
+            <Route path='forum/thread' element={<ThreadPage/>}/>
           </Routes>
         </Router>
       </div>

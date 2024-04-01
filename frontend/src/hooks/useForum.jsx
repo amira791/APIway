@@ -41,7 +41,8 @@ export default function useForum() {
 
   const getThread = (id)=>{
     fetchData(`http://127.0.0.1:8000/api_mapi/threads/${id}/`, setThread);
-  }
+  };
+  
 
   return {
     getForum,

@@ -1,8 +1,7 @@
 import React from 'react';
-import Forum from './Forum';
-import useForum from '../../hooks/useForum';
+import Forum from '../forum/Forum';
 
-export default function ForumList() {
+export default function ForumPage() {
   return (
     <>
       <h1>Forum</h1>
