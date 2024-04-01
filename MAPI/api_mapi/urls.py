@@ -22,4 +22,7 @@ router.register(r'tarifications', TarificationView, basename='tarification')
 router.register(r'abonnements', AbonnementView, basename='abonnement')
 
 # Get the urlpatterns from the router
-urlpatterns = router.urls
+urlpatterns =  router.urls  + [
+    path('apiforum/<int:forum_id>/threads/', ThreadView.as_view({'get': 'list'}), name='forum_threads'),
+    path('threads/<int:thread_id>/posts/', PostView.as_view({'get': 'list'}), name='thread_posts')
+]

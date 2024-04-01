@@ -131,7 +131,7 @@ class APIForum(models.Model):
     description = models.TextField()
 
     def __str__(self):
-        return self.title
+        return self.name
     
 class Thread(models.Model):
     id_thread = models.AutoField(primary_key=True)
@@ -141,7 +141,7 @@ class Thread(models.Model):
     creator = models.ForeignKey(Consommateur, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.title
+        return self.content
 
 class Post(models.Model):
     id_post = models.AutoField(primary_key=True)

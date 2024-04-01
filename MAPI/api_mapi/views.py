@@ -57,10 +57,25 @@ class ThreadView(viewsets.ModelViewSet):
     queryset = Thread.objects.all()
     serializer_class = ThreadSerializer
 
+    def get_queryset(self):
+        queryset = self.queryset
+        forum_id = self.kwargs.get('forum_id')
+        if forum_id:
+            queryset = queryset.filter(forum_id=forum_id)
+        return queryset
+
 # Forum Post View
 class PostView(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+    def get_queryset(self):
+        queryset = self.queryset
+        thread_id = self.kwargs.get('thread_id')
+        if thread_id:
+            queryset = queryset.filter(thread_id=thread_id)
+        return queryset
+    
 # Tarification View
 class TarificationView(viewsets.ModelViewSet):
     queryset = Tarification.objects.all()
