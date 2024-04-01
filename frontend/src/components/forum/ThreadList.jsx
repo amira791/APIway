@@ -29,12 +29,14 @@ export default function ThreadList({forum_id}) {
                 </HStack> 
               </Box>
               <Spacer />
+              <LinkOverlay href='forum/thread'>
               <HStack alignItems='center' >
-               <LinkOverlay href='forum/thread'>
+              
                 <ChatIcon/>
-                <Text>{10} comments</Text>
-               </LinkOverlay>
+                <Text>{thread.num_posts} comments</Text>
+            
               </HStack>
+              </LinkOverlay>
            </Flex>
         </LinkBox>
        ))}

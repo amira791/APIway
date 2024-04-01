@@ -52,9 +52,13 @@ class APIForumSerializer(serializers.ModelSerializer):
 
 class ThreadSerializer(serializers.ModelSerializer):
     creator = ConsommateurSerializer()  
+    num_posts = serializers.SerializerMethodField()
     class Meta:
         model = Thread
         fields = '__all__'
+        
+    def get_num_posts(self, obj):
+        return Post.objects.filter(thread=obj.id_thread).count()
     #to-do
         # define the craetor as connected user , current user
 class PostSerializer(serializers.ModelSerializer):
