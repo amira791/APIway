@@ -8,7 +8,7 @@ export default function Forum({ forum_id }) {
 
   useEffect(() => {
     // Fetch forum data when component mounts
-    getForum(forum_id); // Assuming you want to fetch forum with ID 1
+    getForum(forum_id);
     setTimeout(5000)
   }, [forum_id]);
   return (
@@ -26,7 +26,7 @@ export default function Forum({ forum_id }) {
           <Button>  New Ticket </Button>
         </HStack> 
         <Box>
-          <ThreadList forum_id={forum_id}/>
+          <ThreadList key={forum_id} forum_id={forum_id}/>
         </Box>
          
        </Flex>

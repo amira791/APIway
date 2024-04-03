@@ -10,9 +10,9 @@ import {
   Routes,
   Switch,
 } from "react-router-dom";
-import Home from "./components/home";
+import Home from "./components/pages/home";
 import ForumPage from './components/pages/ForumPage';
-import ThreadPage from './components/pages/ThreadPage'
+import ThreadPage from './components/pages/ThreadPage';
 
 class Root extends Component {
   render() {
@@ -22,7 +22,7 @@ class Root extends Component {
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route path='forum' element = {<ForumPage />}/>
-            <Route path='forum/thread' element={<ThreadPage/>}/>
+            <Route path='forum/threads/:thread_id' element={<ThreadPage/>}/>
           </Routes>
         </Router>
       </div>
