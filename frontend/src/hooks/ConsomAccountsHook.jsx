@@ -18,6 +18,8 @@ export default function useManageAccountsC() {
                 setLoading(false);
             });
     }, []);
+
+    
     const activateStatus = async (userId) => {
         try {
           const response = await axios.post(`http://127.0.0.1:8000/activate/${userId}/`, {
@@ -30,9 +32,9 @@ export default function useManageAccountsC() {
           console.error('Error activating status:', error);
           setError(error); // Update error state for UI display
         }
-      };
+    };
     
-      const deactivateStatus = async (userId) => {
+    const deactivateStatus = async (userId) => {
         try {
           const response = await axios.post(`http://127.0.0.1:8000/deactivate/${userId}/`, {
             type: "C" // Include user type in the request body
@@ -44,11 +46,11 @@ export default function useManageAccountsC() {
           console.error('Error deactivating status:', error);
           setError(error); // Update error state for UI display
         }
-      };
+    };
 
 
 
-      const fetchConsomsData = () => {
+    const fetchConsomsData = () => {
         axios.get('http://127.0.0.1:8000/consommateurs/')
             .then(response => {
                 console.log('Fetched Data:', response.data);

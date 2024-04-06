@@ -4,6 +4,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import React, { Component } from "react";
 import './styles/tailwind.css';
+import './styles/SearchApi.css';
+
 import {
   BrowserRouter as Router,
   HashRouter,
@@ -14,6 +16,7 @@ import {
 import Home from "./components/home";
 import FourAccountManag from "./components/admin/fourAccountManag";
 import ConsomAccountManag from "./components/admin/consAccountManag";
+import SearchApi from "./components/RechercherAPI";
 import AdminHome from "./components/admin/adminHomePage";
 
 class Root extends Component {
@@ -26,6 +29,7 @@ class Root extends Component {
             <Route exact path="/adminhome" element={<AdminHome />} />
             <Route exact path='/fourAccounts' element = {<FourAccountManag />} />
             <Route exact path='/consomAccounts' element = {<ConsomAccountManag />} />
+            <Route exact path="/searchApi" element={<SearchApi  />} />
           </Routes>
         </Router>
       </div>

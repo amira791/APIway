@@ -6,14 +6,7 @@ class FournisseurSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fournisseur
         fields = '__all__'
-    def save(self,**kwargs):
-        
-        new_user = Fournisseur.objects.create(
-            FRusername= self.validated_data['username'],
-            FRemail=self.validated_data['email'],
-            FRpassword= self.validated_data['password'],)
-        new_user.save()
-        Token.objects.create(User=new_user)
+    
     
 class AdminSerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,13 +17,7 @@ class ConsommateurSerializer(serializers.ModelSerializer):
     class Meta:
         model = Consommateur
         fields = '__all__'
-    def save(self,**kwargs):
-        new_user = Consommateur.objects.create(
-            CNusername= self.validated_data['username'],
-            CNemail=self.validated_data['email'],
-            CNpassword= self.validated_data['password'],)
-        new_user.save()
-        Token.objects.create(User=new_user)
+    
 
 class APIcategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -38,9 +25,12 @@ class APIcategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class APISerializer(serializers.ModelSerializer):
+    category_label = serializers.CharField(source='category.label', read_only=True)
+    logo = serializers.ImageField(required=False)
     class Meta:
         model = API
-        fields = '__all__'
+        fields = ['id_api', 'api_name', 'description', 'provider', 'category', 'category_label', 'terms_of_use', 'logo', 'visibility', 'website']
+
 
 class APIversionSerializer(serializers.ModelSerializer):
     class Meta:

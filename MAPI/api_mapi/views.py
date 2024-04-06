@@ -7,6 +7,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from .models import Fournisseur, Consommateur
 from rest_framework.decorators import api_view
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 
@@ -59,6 +60,8 @@ class APIcategoryView(viewsets.ModelViewSet):
 class APIView(viewsets.ModelViewSet):
     queryset = API.objects.all()
     serializer_class = APISerializer
+    parser_classes = (MultiPartParser, FormParser)
+
 
 # APIversion View
 class APIversionView(viewsets.ModelViewSet):
@@ -156,3 +159,12 @@ def manage_user_status(request, id, action):
     # Serialize and return the updated user data
     serializer = serializer_class(user_instance)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+# Search API by Name | Description 
+@api_view(['POST'])
+def search_api(request):
+
+    query = request.data.get('query', '')
+    results = API.objects.filter(api_name__icontains=query) | API.objects.filter(description__icontains=query) | API.objects.filter(category__label__icontains=query)
+    serializer = APISerializer(results, many=True) 
+    return Response(serializer.data)

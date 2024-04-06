@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component'; // Or your chosen library
 import { Button } from '@chakra-ui/react';
 
-const FourDataTable = ({ columns, data,onSelectedRowsChange }) => {
+const FourDataTable = ({ columns, data , clearSelRows ,onSelectedRowsChange }) => {
   const [filterText, setFilterText] = useState('');
   const [filteredData, setFilteredData] = useState(data);
   const [currentPage, setCurrentPage] = useState(1);
@@ -94,6 +94,8 @@ const FourDataTable = ({ columns, data,onSelectedRowsChange }) => {
     <div>
       <FilterInput value={filterText} onChange={handleFilter} placeholder="Search..." />
       <DataTable
+        clearSelectedRows={clearSelRows}
+        selectableRowsNoSelectAll = {true}
         columns={columns}
         data={pageData} 
         pagination
@@ -137,5 +139,5 @@ const FilterInput = ({ value, onChange }) => (
       placeholder="Search..."
       className="border border-gray-300 rounded-tl-md rounded-tr-md  pl-10 focus:outline-none focus:border-blue-500 hover:bg-gray-200"
       style={{ backgroundColor: '#1a1a11' }} // Adjust background color here
-    />);
+  />);
 

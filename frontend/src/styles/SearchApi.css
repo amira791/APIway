@@ -1,0 +1,33 @@
+:root {
+    --scrollbar-track-color: #222; /* Dark background color for scrollbar track */
+    --scrollbar-thumb-color: #444; /* Color of the scrollbar thumb */
+}
+
+/* Webkit/Blink */
+::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-color);
+    border-radius: 4px; /* Border radius of the scrollbar thumb */
+}
+
+/* Firefox */
+::-moz-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+::-moz-scrollbar-track {
+    background: var(--scrollbar-track-color);
+}
+
+::-moz-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-color);
+    border-radius: 4px; /* Border radius of the scrollbar thumb */
+}
+

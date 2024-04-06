@@ -8,6 +8,7 @@ import { Button } from '@chakra-ui/react'; // Import Chakra UI Button or your pr
 const FourAccountManag = () => {
   const { fournisseurs, loading, error, activateStatus, deactivateStatus, fetchFournisseursData } = useManageAccountsF();
   const [selectedRows, setSelectedRows] = useState([]);
+  const [clearSelRows , setClearSelRows] = useState(false);
 
   const customStatusCell = (row) => {
     const status = row.FRstatus.toLowerCase();
@@ -36,16 +37,18 @@ const FourAccountManag = () => {
       activateStatus(userId);
     }
     setSelectedRows([]); // Use the state updater function
-    console.log("selectedRows ; ",selectedRows); // Log selectedRows after clearing
+    setClearSelRows(true);
+    console.log("selectedRows in activate ",selectedRows); // Log selectedRows after clearing
   };
 
-  const handleDeactivateStatus = () => {
+ const handleDeactivateStatus = () => {
     for (const userId of selectedRows) {
        deactivateStatus(userId);
     }
     fetchFournisseursData();
-    setSelectedRows(prevSelectedRows => []); // Use the state updater function
-    console.log("selectedRows ; ",selectedRows); // Log selectedRows after clearing
+    setSelectedRows([]); // Use the state updater function
+    setClearSelRows(true);
+    console.log("selectedRows in activate ",selectedRows); // Log selectedRows after clearing
   };
 
 // Then, you can log the updated state inside the component re-render
@@ -270,8 +273,8 @@ const data = [
           </Button>
         </div>
         {/* Passing the columns and data props to the DataTable component */}
-        <TheDataTable columns={columns} data={fournisseurs} selectedRows={selectedRows} onSelectedRowsChange={setSelectedRows} />
-      </div>
+        <TheDataTable columns={columns} data={fournisseurs} clearSelRows={clearSelRows} selectedRows={selectedRows} onSelectedRowsChange={setSelectedRows} />
+       </div>
   );
 };
 

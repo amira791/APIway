@@ -43,7 +43,7 @@
 }
 
 /* CSS for content wrapper */
-.content {
+.contentDiv {
   padding: 40px; /* Add padding to create space between the Navbar and the DataTable */
   margin-top: 100px;
 }

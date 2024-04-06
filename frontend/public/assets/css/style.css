@@ -452,7 +452,7 @@ input {
 }
 
 button,
-input,
+
 select,
 textarea {
   font-size: 100%;
@@ -612,7 +612,7 @@ input[type=color] {
 
 /* Input focus */
 textarea:focus,
-input[type=text]:focus,
+
 input[type=password]:focus,
 input[type=datetime]:focus,
 input[type=datetime-local]:focus,
@@ -634,7 +634,7 @@ input[type=color]:focus {
 }
 
 textarea::placeholder,
-input[type=text]::placeholder,
+
 input[type=password]::placeholder,
 input[type=datetime]::placeholder,
 input[type=datetime-local]::placeholder,
@@ -2513,3 +2513,4 @@ header.absolute {
 }
 
 /*# sourceMappingURL=style.css.map */
+
