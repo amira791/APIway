@@ -34,8 +34,6 @@ export default function Thread({ thread_id }) {
         created_by: 1
      }
     e.preventDefault(); // Prevent default form submission behavior
-    // Handle form submission logic
-    console.log('Form submitted');
     addNewPost(newPost)
   };
 
@@ -50,36 +48,37 @@ export default function Thread({ thread_id }) {
         <VStack align='flex-start'>
           <HStack>
             <Avatar bg='teal.500' margin='10' size='lg' showBorder
-              // name={thread.creator?.CNusername}/>
-              name='Mekki Soumeya' />
+              name={thread.creator?.CNusername}
+               //name='Mekki Soumeya'
+              />
+             
+              
 
             <VStack spacing={0} justifyContent='center'>
               <Text>
-                {/* {thread.creator?.CNusername} */}
-                Soumi
+                {thread.creator?.CNusername}
               </Text>
               <Text size='sm'>
-                {/* {formatTime(thread.created_at)} */}
-                2 days ago
+                {formatTime(thread.created_at)}
               </Text>
             </VStack>
           </HStack>
           <Text>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae veritatis nobis ut beatae fugit? Fuga alias excepturi id cumque doloremque qui quibusdam! Iure quasi incidunt totam minus facilis corporis soluta.
-            {/* {thread.content} */}
+            {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae veritatis nobis ut beatae fugit? Fuga alias excepturi id cumque doloremque qui quibusdam! Iure quasi incidunt totam minus facilis corporis soluta.*/}
+            {thread.content} 
           </Text>
         </VStack>
 
         <Text fontWeight='bold'>
-          {/* {thread.num_posts} */}
-          10  Comments</Text>
+         {thread.num_posts}
+         </Text>
         <VStack align='flex-start'>
           {posts.map(post => (
             <Post key={post.id_post} post={post} />
           ))}
         </VStack>
 
-        <form onSubmit={handleFormSubmit}> {/* Changed Form to form */}
+        <form onSubmit={handleFormSubmit}>
           <FormControl>
             <FormLabel>Comment</FormLabel>
             <Input
