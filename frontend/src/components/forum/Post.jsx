@@ -7,7 +7,7 @@ export default function Post({ post }) {
   return (
     <>
       <Flex flexDirection='column' justifyContent='center' >
-        <Avatar bg='teal.500' margin='10' size='lg' showBorder name={post.created_by.CNusername} />
+        <Avatar className='avatar' bg='teal.500' margin='10' size='lg' showBorder name={post.created_by.CNusername} />
         <Box>
           <Text>{post.created_by.CNusername}</Text>
           <Text>{post.message}</Text>

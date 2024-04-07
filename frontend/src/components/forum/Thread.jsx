@@ -16,14 +16,11 @@ export default function Thread({ thread_id }) {
 
   useEffect(() => {
     getThread(thread_id);
-    setTimeout(5000)
-    console.log(thread)
   }, [thread_id]);
 
   useEffect(() => {
     // Fetch posts for each thread when threads data changes
     getThreadPosts(thread_id);
-    setTimeout(5000)
   }, [thread_id]);
 
 
@@ -47,7 +44,7 @@ export default function Thread({ thread_id }) {
 
         <VStack align='flex-start'>
           <HStack>
-            <Avatar bg='teal.500' margin='10' size='lg' showBorder
+            <Avatar className='avatar' bg='teal.500' margin='10' size='lg' showBorder
               name={thread.creator?.CNusername}
                //name='Mekki Soumeya'
               />
@@ -87,7 +84,7 @@ export default function Thread({ thread_id }) {
               placeholder='Enter your comment here'
             />
           </FormControl>
-          <Button mt={4} colorScheme='teal' type='submit'>
+          <Button mt={4} colorScheme='teal' type='submit' >
             Submit
           </Button>
         </form>

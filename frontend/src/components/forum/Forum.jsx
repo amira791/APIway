@@ -18,7 +18,6 @@ export default function Forum({ forum_id }) {
   useEffect(() => {
     // Fetch forum data when component mounts
     getForum(forum_id);
-    setTimeout(5000)
   }, [forum_id]);
 
 

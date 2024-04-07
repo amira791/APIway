@@ -10,15 +10,13 @@ export default function ThreadList({ forum_id }) {
 
   useEffect(() => {
     getForumThreads(forum_id);
-    setTimeout(5000)
-    console.log(threads)
   }, [forum_id]);
 
   return (
     <>
       {threads.map(thread => (
-        <LinkBox borderWidth='1px' rounded='md'>
-          <Flex margin={40} key={thread.id_thread} >
+        <LinkBox key={thread.id_thread}borderWidth='1px' rounded='md'>
+          <Flex margin={40}  >
             <Avatar bg='teal.500' margin='10' size='lg' showBorder name={thread.creator.CNusername} />
             <Box margin={20}>
               <Text>{thread.creator.CNusername}</Text>
