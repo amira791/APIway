@@ -18,11 +18,13 @@ router.register(r'apidocumentations', APIdocumentationView, basename='apidocumen
 router.register(r'apiforum',APIForumView,basename='apiforum')
 router.register(r'threads',ThreadView,basename='threads')
 router.register(r'posts',PostView,basename='posts')
+router.register(r'tickets',TicketView,basename='tickets')
 router.register(r'tarifications', TarificationView, basename='tarification')
 router.register(r'abonnements', AbonnementView, basename='abonnement')
 
 # Get the urlpatterns from the router
 urlpatterns =  router.urls  + [
     path('apiforum/<int:forum_id>/threads/', ThreadView.as_view({'get': 'list'}), name='forum_threads'),
-    path('threads/<int:thread_id>/posts/', PostView.as_view({'get': 'list'}), name='thread_posts')
+    path('threads/<int:thread_id>/posts/', PostView.as_view({'get': 'list'}), name='thread_posts'),
+    path('apis/<int:api_id>/tickets/', TicketView.as_view({'get': 'list'}), name='api_tickets')
 ]

@@ -1,8 +1,10 @@
 import React, { useEffect,useRef,  useState } from 'react';
-import ThreadList from './ThreadList';
-import useForum from '../../hooks/useForum';
 import { Flex, Spacer ,Input, Box , Button , Heading , Text , HStack ,FormControl,FormLabel,Modal, ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody, ModalCloseButton,useDisclosure 
 } from '@chakra-ui/react'
+
+import useTicket from '../../hooks/useTicket';
+import useForum from '../../hooks/useForum';
+import ThreadList from './ThreadList';
 
 export default function Forum({ forum_id }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -10,6 +12,7 @@ export default function Forum({ forum_id }) {
   const finalRef = useRef(null)
 
   const { addNewThread, getForum,forum , error, loading } = useForum();
+  const { addNewTicket } = useTicket();
   const [message,setMessage] = useState()
 
   useEffect(() => {
@@ -27,6 +30,15 @@ export default function Forum({ forum_id }) {
       }
        addNewThread(thread)
   }
+
+  const handleNewTicket = () => {
+    const ticket = {
+      issue: "My new issue",
+      api_id: 1,
+      created_by: 1,
+  }
+   addNewTicket(ticket)
+}
   return (
     <>
       <Flex
@@ -39,7 +51,7 @@ export default function Forum({ forum_id }) {
         </Box>
         <HStack alignSelf={'flex-end'} >
           <Button onClick={onOpen}>New Discution</Button>
-          <Button>  New Ticket </Button>
+          <Button onClick={handleNewTicket}>  New Ticket </Button>
         </HStack> 
         <Box>
           <ThreadList key={forum_id} forum_id={forum_id}/>

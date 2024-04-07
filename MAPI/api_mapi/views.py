@@ -80,7 +80,19 @@ class PostView(viewsets.ModelViewSet):
         if thread_id:
             queryset = queryset.filter(thread_id=thread_id)
         return queryset
-    
+
+#Ticket View
+class TicketView(viewsets.ModelViewSet):
+    queryset = Ticket.objects.all()
+    serializer_class = TicketSerializer
+
+    def get_queryset(self):
+        queryset = self.queryset
+        api_id = self.kwargs.get('api_id')
+        if api_id:
+            queryset = queryset.filter(api_id=api_id)
+        return queryset 
+
 # Tarification View
 class TarificationView(viewsets.ModelViewSet):
     queryset = Tarification.objects.all()

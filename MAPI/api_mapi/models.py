@@ -152,3 +152,11 @@ class Post(models.Model):
 
     def __str__(self):
         return self.message
+    
+class Ticket(models.Model):
+    ticket_id = models.AutoField(primary_key=True)
+    api_id = models.ForeignKey(API, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(Consommateur, on_delete=models.CASCADE)
+    issue = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=[('open', 'Open'), ('closed', 'Closed')], default='open')

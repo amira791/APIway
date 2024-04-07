@@ -77,6 +77,12 @@ class PostSerializer(serializers.ModelSerializer):
         fields = '__all__'
         #to-do
         # define the craetor as connected user , current user
+
+class TicketSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ticket
+        fields = '__all__'
+
 class TarificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tarification
