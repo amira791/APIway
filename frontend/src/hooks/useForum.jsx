@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useToast } from '@chakra-ui/react'
 import API from '../API';
 
 export default function useForum() {
+  const toast = useToast()
+  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null); // Initialize error state with null
   const [forum, setForum] = useState([]);
@@ -43,8 +46,67 @@ export default function useForum() {
     fetchData(`http://127.0.0.1:8000/api_mapi/threads/${id}/`, setThread);
   };
   
+  const addNewThread = (thread)=>{
+    fetch('http://localhost:8000/api_mapi/threads/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(thread),
+    })
+      .then(() => {
+        toast({
+          title: 'Discussion ajoutee',
+          description: "La discussion a ete ajoutee avec succes",
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        })
+        
+      })
+      .catch((error) => {
+        setError(error);
+        toast({
+          title: 'Une erreur est survenue',
+          description: error.message,
+          status: 'error',
+          duration: 5000,
+        })
+      })
+  };
+
+  const addNewPost = (post)=>{
+    fetch('http://localhost:8000/api_mapi/posts/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(post),
+    })
+      .then(() => {
+        toast({
+          title: 'Comment ajoute',
+          description: "Le comment a ete ajoute avec succes",
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        })
+        
+      })
+      .catch((error) => {
+        setError(error);
+        toast({
+          title: 'Une erreur est survenue',
+          description: error.message,
+          status: 'error',
+          duration: 5000,
+        })
+      })
+  };
 
   return {
+    addNewThread,
+    addNewPost,
     getForum,
     getForumThreads,
     getThread,

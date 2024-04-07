@@ -1,13 +1,17 @@
-import React, { useEffect } from 'react'
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { Link , Form} from "react-router-dom";
 import useForum from '../../hooks/useForum';
 import Post from './Post';
-import { Flex, Avatar, Box, Text, HStack, VStack } from '@chakra-ui/react'
+import { Flex, Avatar, Button,Input, Text, HStack, VStack,
+  FormControl,
+  FormLabel
+} from '@chakra-ui/react'
 import { ChevronLeftIcon } from '@chakra-ui/icons'
 import formatTime from '../../utils/formatTime';
 
 export default function Thread({ thread_id }) {
-  const { getThread, getThreadPosts, thread, posts, error, loading } = useForum();
+  const [message,setMessage]=useState()
+  const { addNewPost,getThread, getThreadPosts, thread, posts, error, loading } = useForum();
 
 
   useEffect(() => {
@@ -21,6 +25,19 @@ export default function Thread({ thread_id }) {
     getThreadPosts(thread_id);
     setTimeout(5000)
   }, [thread_id]);
+
+
+  const handleFormSubmit = (e) => {
+    const newPost ={
+        message: message,
+        thread: thread_id,  
+        created_by: 1
+     }
+    e.preventDefault(); // Prevent default form submission behavior
+    // Handle form submission logic
+    console.log('Form submitted');
+    addNewPost(newPost)
+  };
 
   return (
     <>
@@ -48,9 +65,7 @@ export default function Thread({ thread_id }) {
             </VStack>
           </HStack>
           <Text>
-            Bla kfhkjfhwkjfhwkjfhw
-            fjhgfjhgfkwgfhwfjhwgfjwhgfjgwfjwgjhw
-            wfjwhgfkwgfhjqgjwgfjwfgwjfgwjfgwjhfgwjfgwfjhw
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae veritatis nobis ut beatae fugit? Fuga alias excepturi id cumque doloremque qui quibusdam! Iure quasi incidunt totam minus facilis corporis soluta.
             {/* {thread.content} */}
           </Text>
         </VStack>
@@ -64,6 +79,19 @@ export default function Thread({ thread_id }) {
           ))}
         </VStack>
 
+        <form onSubmit={handleFormSubmit}> {/* Changed Form to form */}
+          <FormControl>
+            <FormLabel>Comment</FormLabel>
+            <Input
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder='Enter your comment here'
+            />
+          </FormControl>
+          <Button mt={4} colorScheme='teal' type='submit'>
+            Submit
+          </Button>
+        </form>
       </Flex>
     </>
   )
