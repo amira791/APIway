@@ -55,7 +55,11 @@ class APIForumView(viewsets.ModelViewSet):
 # Forum Thread View
 class ThreadView(viewsets.ModelViewSet):
     queryset = Thread.objects.all()
-    serializer_class = ThreadSerializer
+
+    def get_serializer_class(self):
+        if self.action in ['create', 'update', 'partial_update']:
+            return ThreadWriteSerializer  # Use ThreadWriteSerializer for write operations
+        return ThreadReadSerializer  # Use ThreadReadSerializer for read operations
 
     def get_queryset(self):
         queryset = self.queryset
@@ -63,6 +67,7 @@ class ThreadView(viewsets.ModelViewSet):
         if forum_id:
             queryset = queryset.filter(forum_id=forum_id)
         return queryset
+
 
 # Forum Post View
 class PostView(viewsets.ModelViewSet):

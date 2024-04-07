@@ -50,15 +50,25 @@ class APIForumSerializer(serializers.ModelSerializer):
         model = APIForum
         fields = '__all__'
 
-class ThreadSerializer(serializers.ModelSerializer):
-    creator = ConsommateurSerializer()  
+class ThreadReadSerializer(serializers.ModelSerializer):
+    creator = ConsommateurSerializer()  # Include all details of Consommateur for read operation
     num_posts = serializers.SerializerMethodField()
+
     class Meta:
         model = Thread
         fields = '__all__'
         
     def get_num_posts(self, obj):
         return Post.objects.filter(thread=obj.id_thread).count()
+
+
+class ThreadWriteSerializer(serializers.ModelSerializer):
+    creator = serializers.PrimaryKeyRelatedField(queryset=Consommateur.objects.all())  # Use only the ID for write operation
+
+    class Meta:
+        model = Thread
+        fields = '__all__'
+
     #to-do
         # define the craetor as connected user , current user
 class PostSerializer(serializers.ModelSerializer):
