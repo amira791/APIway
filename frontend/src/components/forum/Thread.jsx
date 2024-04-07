@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { Link , Form} from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 import useForum from '../../hooks/useForum';
 import Post from './Post';
-import { Flex, Avatar, Button,Input, Text, HStack, VStack,
+import {
+  Flex, Avatar, Button, Input, Text, HStack, VStack,
   FormControl,
   FormLabel
 } from '@chakra-ui/react'
-import { ChevronLeftIcon } from '@chakra-ui/icons'
+import { ChevronLeftIcon, TimeIcon } from '@chakra-ui/icons'
 import formatTime from '../../utils/formatTime';
 
 export default function Thread({ thread_id }) {
-  const [message,setMessage]=useState()
-  const { addNewPost,getThread, getThreadPosts, thread, posts, error, loading } = useForum();
+  const [message, setMessage] = useState()
+  const { addNewPost, getThread, getThreadPosts, thread, posts, error, loading } = useForum();
 
 
   useEffect(() => {
@@ -25,11 +26,11 @@ export default function Thread({ thread_id }) {
 
 
   const handleFormSubmit = (e) => {
-    const newPost ={
-        message: message,
-        thread: thread_id,  
-        created_by: 1
-     }
+    const newPost = {
+      message: message,
+      thread: thread_id,
+      created_by: 1
+    }
     e.preventDefault(); // Prevent default form submission behavior
     addNewPost(newPost)
   };
@@ -37,57 +38,66 @@ export default function Thread({ thread_id }) {
   return (
     <>
       <Flex flexDirection='column' justifyContent='flex-start' m={30}>
-        <HStack>
-          <ChevronLeftIcon />
-          <Link to={`/forum`}>Back to all threads</Link>
-        </HStack>
 
-        <VStack align='flex-start'>
-          <HStack>
-            <Avatar className='avatar' bg='teal.500' margin='10' size='lg' showBorder
-              name={thread.creator?.CNusername}
-               //name='Mekki Soumeya'
-              />
-             
-              
+        <NavLink
+          to='/forum'
+          display="list-item"
+          place-items="center"
+          padding-left="1px"
+          margin="10px"
+        > <ChevronLeftIcon /> Back to all threads</NavLink>
 
-            <VStack spacing={0} justifyContent='center'>
-              <Text>
-                {thread.creator?.CNusername}
-              </Text>
-              <Text size='sm'>
-                {formatTime(thread.created_at)}
-              </Text>
-            </VStack>
-          </HStack>
-          <Text>
-            {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae veritatis nobis ut beatae fugit? Fuga alias excepturi id cumque doloremque qui quibusdam! Iure quasi incidunt totam minus facilis corporis soluta.*/}
-            {thread.content} 
-          </Text>
-        </VStack>
+        <br />
 
-        <Text fontWeight='bold'>
-         {thread.num_posts}
-         </Text>
-        <VStack align='flex-start'>
-          {posts.map(post => (
-            <Post key={post.id_post} post={post} />
-          ))}
-        </VStack>
+        <div className='history-filter'>
+          <div className='history-content'>
+            <div className='inner tf-filter-container'>
+              <div className="history-content"></div>                <div className="history-details tf-loadmore 3d" style={{ width: '100vh' }}>
+                <div className="authorr" style={{ width: '100vh' }}>
+                  <div className="avatar">
+                    <img src="assets/images/author/history-at5.jpg" alt="images" />
+                  </div>
+                  <div className="content">
+                    <a href="#" className="name">{thread.creator?.CNusername}</a>
+                    <div className="description"> {thread.content}</div>
+                    <div className="date">
+                      <span> <TimeIcon /></span>
+                      <span className="month"> {formatTime(thread.created_at)}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <form onSubmit={handleFormSubmit}>
-          <FormControl>
-            <FormLabel>Comment</FormLabel>
-            <Input
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder='Enter your comment here'
-            />
-          </FormControl>
-          <Button mt={4} colorScheme='teal' type='submit' >
-            Submit
-          </Button>
-        </form>
+        <h5 class="heading">{thread.num_posts} Comments</h5>
+
+
+        <div className='history-filter'>
+          <div className='history-content'>
+            <div className='inner tf-filter-container'>
+              <div className="history-content">
+                {posts.map(post => (
+                  <Post key={post.id_post} post={post} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="comments">
+          <h5 class="heading">Add A Comment</h5>
+          <form onSubmit={handleFormSubmit} method="post" id="commentform" class="comment-form">
+            <fieldset class="message">
+              <textarea
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                id="message" name="message" rows="4" placeholder="Message" tabindex="4" aria-required="true" required="" />
+            </fieldset>
+            <div class="btn-submit"><button class="tf-button" type="submit">Send comment</button></div>
+          </form>
+        </div>
+
       </Flex>
     </>
   )

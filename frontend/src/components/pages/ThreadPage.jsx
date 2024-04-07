@@ -8,9 +8,7 @@ export default function ThreadPage() {
 
     return(
      <>
-        <div className='is_dark'>
          <Thread key={thread_id} thread_id={thread_id} />
-        </div>
      </>
     );
      

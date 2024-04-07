@@ -17,9 +17,9 @@ function Root() {
       <Router>
         <Routes>
           <Route exact path="/" element={<HomeSection />} />
-          <Route path="/forum" element={<ForumPage />} />
+          <Route path="/forum" element={<ForumPage />}/>
           <Route path="/forum/threads/:thread_id" element={<ThreadPage />} />
-          <Route path='/fournisseur' element={<ProviderHomePage/>}></Route>
+          <Route path='/fournisseur' element={<ProviderHomePage/>} />
         </Routes>
       </Router>
     </div>

@@ -49,44 +49,33 @@ export default function Forum({ forum_id }) {
           <Text>{forum.description}</Text>
         </Box>
         <HStack alignSelf={'flex-end'} >
-          <Button onClick={onOpen}>New Discution</Button>
+        <div class="product-button">
+          <a href="#" data-toggle="modal" data-target="#popup_bid" class="tf-button"> <span class="icon-btn-product"></span>New Discussion</a>
+        </div>
+          {/* <Button onClick={onOpen}>New Discution</Button> */}
           <Button onClick={handleNewTicket}>  New Ticket </Button>
         </HStack> 
         <Box>
           <ThreadList key={forum_id} forum_id={forum_id}/>
         </Box>
        </Flex>
-    
-    <Box>
-    <Modal
-        size="md"
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
-      >
-        <ModalOverlay />
-        <ModalContent >
-          <ModalHeader>Ajouter une nouvelle discussion </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-          <FormControl isRequired >
-              <FormLabel>Message</FormLabel>
-              <Input 
-                   value={message} 
-                   onChange={(e) => setMessage(e.target.value) }
-                   placeholder='Message' />
-            </FormControl>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={handleNewDiscussion}>
-              Save
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </Box>
+  {/*************************modal to create new conversation **************************/}
+    <div class="modal fade popup" id="popup_bid" tabindex="-1" aria-modal="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body space-y-20 pd-40">
+                    <h3>Ajouter une nouvelle discussion</h3>
+                    <br /> 
+                    <label htmlFor="">Message</label>
+                    <input type="text" class="form-control" 
+                      value={message} 
+                      onChange={(e) => setMessage(e.target.value) } />
+                      <br />
+                    <a onClick={handleNewDiscussion} class="button-popup" data-toggle="modal" data-target="#popup_bid_success" data-dismiss="modal" aria-label="Close">Save</a>
+                </div>
+            </div>
+        </div>
+   </div>
       
       </>
   );
