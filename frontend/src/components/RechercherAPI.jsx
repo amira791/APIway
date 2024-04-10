@@ -9,8 +9,10 @@ const SearchApi = () => {
     const { searchResults,APIs,Categories,fetchApiCategories,fetchApiSearchResults,setSearchResults } = useApi();
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
+    const [searchFilter, setSearchFilter] = useState('Name'); // Default search filter
     const [selectedCategoryLabel, setSelectedCategoryLabel] = useState(null);
     const categoryListRef = useRef(null); // Create a ref
+    const [hoveredButton, setHoveredButton] = useState('');
 
     useEffect(() => {
         setSearchResults(APIs); // Set initial search results to all APIs
@@ -34,10 +36,9 @@ const SearchApi = () => {
         }
     }, []);
 
-    const handleSearch = async (e) => {
+    const handleSearch = async () => {
         setSelectedCategoryLabel('API Categories');
-       fetchApiSearchResults({ query: searchQuery });
-      
+        fetchApiSearchResults({ query: searchQuery, filter: searchFilter }); // Pass search filter
     };
 
     const handleCategoryClick = async (categoryLabel) => {
@@ -45,6 +46,14 @@ const SearchApi = () => {
         setSelectedCategoryLabel(categoryLabel);
         fetchApiSearchResults({ query: categoryLabel });
     };
+
+    const handleButtonClick = (filter) => {
+        setSearchFilter(filter);
+        setHoveredButton(filter);
+    };
+
+   
+
 
 
     return (
@@ -98,7 +107,52 @@ const SearchApi = () => {
                         <section className="tf-baner-live-auction style-2">
                             <div className="tf-container">
                                 <div className="mt-6 mb-20 flex flex-col items-center">
-                                    <h6 className="widget-title text-5xl mb-16">Search APIs By : Name/Description</h6>
+
+                                    
+                                <div className="mt-6 mb-10 flex justify-center items-center">
+                                    <h6 className="widget-title text-5xl mb-16">Search APIs By :</h6>
+                                    <div className="filter-menu ml-4 flex">
+                                    <ul className="flex mb-14">
+                                    <li>
+                                        <button
+                                            className={`btn ${searchFilter === 'Name' || hoveredButton === 'Name' ? 'active' : ''} `}
+                                            onClick={() => handleButtonClick('Name')}
+                                            
+                                           
+                                        >
+                                            Name
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button
+                                            className={`btn ${searchFilter === 'Description' || hoveredButton === 'Description' ? 'active' : ''}`}
+                                            onClick={() => handleButtonClick('Description')}
+                                            
+                                            
+                                        >
+                                            Description
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button
+                                            className={`btn ${searchFilter === 'Functionalities' || hoveredButton === 'Functionalities' ? 'active' : ''}`}
+                                            onClick={() => handleButtonClick('Functionalities')}
+                                            
+                                            
+                                        >
+                                            Functionalities
+                                        </button>
+                                    </li>
+
+                                    </ul>
+                                    </div>
+                                </div>
+
+
+                                    
+
+
+
                                     <form onSubmit={handleSearch} className="border border-gray-300 w-full max-w-7xl flex">
                                         <input
                                             type="text"
@@ -138,7 +192,7 @@ const SearchApi = () => {
                                                 <ul ref={categoryListRef} className="max-h-80 overflow-y-auto">
                                                     {Categories.map(category =>
                                                         <li key={category.id_category}>
-                                                            <a href="#" onClick={() => handleCategoryClick(category.label)}>{category.label}</a>
+                                                            <p onClick={() => handleCategoryClick(category.label)}>{category.label}</p>
                                                         </li>
                                                     )}
                                                 </ul>

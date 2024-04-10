@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from .models import *
 from .serializers import *
 from django.shortcuts import render
+from django.db.models import Q
 from rest_framework import viewsets
 from .models import Fournisseur, Consommateur
 from rest_framework.decorators import api_view
@@ -160,11 +161,31 @@ def manage_user_status(request, id, action):
     serializer = serializer_class(user_instance)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-# Search API by Name | Description 
+
+
+# Search API by Name, Description, or Functionalities
 @api_view(['POST'])
 def search_api(request):
-
     query = request.data.get('query', '')
-    results = API.objects.filter(api_name__icontains=query) | API.objects.filter(description__icontains=query) | API.objects.filter(category__label__icontains=query)
-    serializer = APISerializer(results, many=True) 
+    search_field = request.data.get('filter')
+
+    # Check if search_field parameter is provided
+    if not search_field:
+        return Response({'error': 'search_field parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Define the fields to search based on the selected search field
+    if search_field == 'Name':
+        search_query = Q(api_name__icontains=query)
+    elif search_field == 'Description':
+        search_query = Q(description__icontains=query)
+    elif search_field == 'Functionalities':
+        # Modify the search query to search within the functionalities of API versions
+        search_query = Q(apiversion__functions__functName__icontains=query)
+    else:
+        # Handle invalid search field
+        return Response({'error': 'Invalid search field'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Filter results based on the search query
+    results = API.objects.filter(search_query).distinct()  # Ensure distinct results
+    serializer = APISerializer(results, many=True)
     return Response(serializer.data)

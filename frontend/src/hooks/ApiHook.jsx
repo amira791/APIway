@@ -33,20 +33,20 @@ export default function useApi() {
             });
     };
 
-    const fetchApiSearchResults =  (queryParams) => {
-       
-        axios.post('http://127.0.0.1:8000/api/search/', queryParams)
+    const fetchApiSearchResults = (queryParams) => {
+    axios.post('http://127.0.0.1:8000/api/search/', queryParams)
         .then(response => {
+            console.log('QueryParams:', queryParams);
             console.log('Fetched Searched APIs:', response.data);
             setSearchResults(response.data);
         })
-            
+
         .catch(error => {
             console.error('Error fetching search results:', error);
             setError(error);
         });
-    };
-   
+};
+
 
     return {
         searchResults,

@@ -31,3 +31,6 @@
     border-radius: 4px; /* Border radius of the scrollbar thumb */
 }
 
+.btn {
+    @apply py-3 px-6 rounded-full bg-gray-500 text-black text-xl hover:bg-black ;
+}
