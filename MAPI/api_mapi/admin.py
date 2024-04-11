@@ -1,6 +1,13 @@
 from django.contrib import admin
-from .models import *
-# Register your models here.
-admin.site.register(Consommateur)
-admin.site.register(Fournisseur)
+from .models import Fournisseur, Consommateur, APIcategory, API, APIversion, APIendpoint, Functionnality, APIdocumentation, Tarification, Abonnement
 
+admin.site.register(Fournisseur)
+admin.site.register(Consommateur)
+admin.site.register(APIcategory)
+admin.site.register(API)
+admin.site.register(APIversion)
+admin.site.register(APIendpoint)
+admin.site.register(Functionnality)
+admin.site.register(APIdocumentation)
+admin.site.register(Tarification)
+admin.site.register(Abonnement)

@@ -1,0 +1,39 @@
+POST http://127.0.0.1:8000/signin/
+Content-Type: application/json
+
+{ "username": "fournisseur1", "password": "Pass1234" }
+
+###
+
+POST http://127.0.0.1:8000/signup/
+Content-Type: application/json
+
+{
+  "type": "F",
+  "FRusername": "fournisseur1",
+  "password": "Pass1234",
+  "FRemail": "fournisseur1@mail.com",
+  "FR_first_name": "FirstName",  
+  "FR_last_name": "LastName",    
+  "FRphone": "1234567890"      
+}
+
+
+###
+
+POST http://127.0.0.1:8000/signup/
+Content-Type: application/json
+
+{
+  "type": "C",
+  "CNusername": "consommateur1",
+  "password": "Pass1234",
+  "CNemail": "consommateur1@mail.com",
+  "CN_first_name": "FirstName",
+  "CN_last_name": "LastName",
+  "CNphone": "1234567890"
+}
+
+
+###
+

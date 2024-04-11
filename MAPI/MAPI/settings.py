@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -89,13 +90,12 @@ WSGI_APPLICATION = 'MAPI.wsgi.application'
 
 DATABASES = {
     'default': {
-
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mapi',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST':'localhost',
-        'PORT':'3306',
+        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.mysql'),  # Default to MySQL if DB_ENGINE is not set
+        'NAME': os.getenv('DB_NAME', 'mapi'),  # Default database name is 'mapi'
+        'USER': os.getenv('DB_USER', 'root'),  # Default database user is 'default_user'
+        'PASSWORD': os.getenv('DB_PASSWORD', '1234'),  # Default database password is 'default_password'
+        'HOST': os.getenv('DB_HOST', 'localhost'),  # Default database host is 'localhost'
+        'PORT': os.getenv('DB_PORT', '3306'),  # Default database port is '3306' (MySQL default port)
     }
 }
 
@@ -144,3 +144,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
 )
+
+
+
+

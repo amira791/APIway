@@ -1,38 +1,54 @@
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 from .models import *
+from django.contrib.auth.hashers import make_password
 
 class FournisseurSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)  # To handle password securely
+
     class Meta:
         model = Fournisseur
-        fields = '__all__'
+        fields = ['id_fournisseur', 'FR_first_name', 'FR_last_name', 'FRemail', 'FRusername', 'password', 'FRphone']
+        extra_kwargs = {
+            'id_fournisseur': {'read_only': True},
+            'FRemail': {'required': True},
+            'FRusername': {'required': True},
+        }
 
     def create(self, validated_data):
-      
-     password = validated_data.pop('FRpassword')  # Remove password from validated data
-     user = Consommateur.objects.create(**validated_data)
-     user.set_password(password)  # Set password securely using Django's method
-     user.save()
-     return user
+        password = validated_data.pop('password')
+        instance = self.Meta.model(**validated_data)
+        instance.set_password(password)
+        instance.save()
+        return instance
+
+
+
+
+class ConsommateurSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)  # To handle password securely
+
+    class Meta:
+        model = Consommateur
+        fields = ['id_consommateur', 'CN_first_name', 'CN_last_name', 'CNemail', 'CNusername', 'password', 'CNphone']
+        extra_kwargs = {
+            'id_consommateur': {'read_only': True},
+            'CNemail': {'required': True},
+            'CNusername': {'required': True},
+        }
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        instance = self.Meta.model(**validated_data)
+        instance.set_password(password)
+        instance.save()
+        return instance
 
 
 class AdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = Admin
         fields = '__all__'
-
-class ConsommateurSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Consommateur
-        fields = '__all__'
-
-    def create(self, validated_data):
-     password = validated_data.pop('CNpassword')  # Remove password from validated data
-     user = Consommateur.objects.create(**validated_data)
-     user.set_password(password)  # Set password securely using Django's method
-     user.save()
-     return user
-
 
 class APIcategorySerializer(serializers.ModelSerializer):
     class Meta:

@@ -7,31 +7,84 @@ from .models import *
 from .serializers import *
 
 
+# @api_view(['POST'])
+# def signup(request):
+
+#     if request.method == 'POST':
+#         # Check user type and use corresponding serializer
+#         if request.data['type'] == "F":
+#             serializer = FournisseurSerializer(data=request.data)
+#         elif request.data['type'] == "C":
+#             serializer = ConsommateurSerializer(data=request.data)
+#         else:
+#             return Response({'error': 'Invalid user type'}, status=status.HTTP_400_BAD_REQUEST)
+
+#         # Validate data and return errors if any
+#         if not serializer.is_valid():
+#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#         # Save user and retrieve token (logic might need adjustment)
+#         user  =serializer.save()
+#         refresh = RefreshToken.for_user(user)
+#         return Response({
+#                 'refresh': str(refresh),
+#                 'access': str(refresh.access_token),
+#         }, status=status.HTTP_201_CREATED)
+#     return Response({}, status=status.HTTP_405_METHOD_NOT_ALLOWED)  # Handle non-POST requests
+
+#######################     old sign up     ##################################
+# @api_view(['POST'])
+# def signup(request):
+
+#     if request.method == 'POST':
+#         # Check user type and use corresponding serializer
+#         if request.data['type'] == "F":
+#             serializer = FournisseurSerializer(data=request.data)
+#         elif request.data['type'] == "C":
+#             serializer = ConsommateurSerializer(data=request.data)
+#         else:
+#             return Response({'error': 'Invalid user type'}, status=status.HTTP_400_BAD_REQUEST)
+
+#         # Validate data and return errors if any
+#         if not serializer.is_valid():
+#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#         # Save user and retrieve token (logic might need adjustment)
+#         user = serializer.save()  # This line saves the user using the serializer
+
+#         # The following lines may need adjustment based on your authentication method
+#         refresh = RefreshToken.for_user(user)  # Assuming you are using SimpleJWT
+#         return Response({
+#             'refresh': str(refresh),
+#             'access': str(refresh.access_token),
+#         }, status=status.HTTP_201_CREATED)
+#     return Response({}, status=status.HTTP_405_METHOD_NOT_ALLOWED)  # Handle non-POST requests
+
+
 @api_view(['POST'])
 def signup(request):
-
     if request.method == 'POST':
-        # Check user type and use corresponding serializer
-        if request.data['type'] == "F":
-            serializer = FournisseurSerializer(data=request.data)
-        elif request.data['type'] == "C":
-            serializer = ConsommateurSerializer(data=request.data)
-        else:
+        user_type = request.data.get('type')
+        if user_type not in ('F', 'C'):
             return Response({'error': 'Invalid user type'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Validate data and return errors if any
-        if not serializer.is_valid():
+        required_fields = ['password', 'FRemail', 'FRphone'] if user_type == 'F' else ['password', 'CNemail', 'CNphone']
+        missing_fields = [field for field in required_fields if field not in request.data]
+        if missing_fields:
+            return Response({'error': f"Missing fields: {', '.join(missing_fields)}"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Select the serializer based on user_type
+        serializer_class = FournisseurSerializer if user_type == 'F' else ConsommateurSerializer
+
+        serializer = serializer_class(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            return Response({'success': 'User created successfully'}, status=status.HTTP_201_CREATED)
+        else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-        # Save user and retrieve token (logic might need adjustment)
-        user  =serializer.save()
-        refresh = RefreshToken.for_user(user)
-        return Response({
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
-        }, status=status.HTTP_201_CREATED)
-    return Response({}, status=status.HTTP_405_METHOD_NOT_ALLOWED)  # Handle non-POST requests
-
+    else:
+        return Response({'error': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    
 
 @api_view(['POST'])
 def signin(request):
