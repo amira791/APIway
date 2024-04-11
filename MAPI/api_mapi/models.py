@@ -44,7 +44,7 @@ class APIcategory(models.Model):
 class API(models.Model):
     id_api = models.AutoField(primary_key=True)
     api_name = models.CharField(max_length=100)
-    description = models.CharField(max_length=100, help_text="Brief description of the API")
+    description = models.CharField(max_length=255, help_text="Brief description of the API")
     provider = models.ForeignKey(Fournisseur, on_delete=models.DO_NOTHING, verbose_name="Provider")
     category = models.ForeignKey(APIcategory, on_delete=models.DO_NOTHING, verbose_name="Category")
     terms_of_use = models.TextField(verbose_name="Terms of Use", help_text="Terms and conditions for API usage")
@@ -78,7 +78,7 @@ class APIversion(models.Model):
     functions = models.ManyToManyField('Functionnality')
     base_links = models.ManyToManyField('BaseLink', verbose_name="Base Links")
     def __str__(self):
-        return self.num_version
+        return self.id_version
     
 class APIendpoint(models.Model):
     id_endpoint = models.AutoField(primary_key=True)
@@ -100,29 +100,29 @@ class APIendpoint(models.Model):
    
     def __str__(self):
         return self.title
-class Type(models.Model):
-    id_type = models.AutoField(primary_key=True)
+class TypeParam(models.Model):
+    id_TypeParam = models.AutoField(primary_key=True)
     name= models.CharField(max_length=100)
     def __str__(self):
         return self.name
 class ApiHeader(models.Model):
     id_header =models.AutoField(primary_key=True)
     key = models.CharField(max_length=255)
-    type_id = models.ForeignKey(Type, on_delete=models.DO_NOTHING )
+    type_id = models.ForeignKey(TypeParam, on_delete=models.DO_NOTHING )
     example_value = models.CharField(max_length=255)
     required = models.BooleanField(default=False)
     endpoint = models.ForeignKey(APIendpoint, related_name='headers', on_delete=models.CASCADE)
     def __str__(self):
-        return self.name
+        return self.key
 
 class ApiQueryParam(models.Model):
     id_queryparams =models.AutoField(primary_key=True)
     key = models.CharField(max_length=255)
-    type_id = models.ForeignKey(Type, on_delete=models.DO_NOTHING,default=1)
+    type_id = models.ForeignKey(TypeParam, on_delete=models.DO_NOTHING,default=1)
     example_value = models.CharField(max_length=255)
     endpoint = models.ForeignKey(APIendpoint, related_name='query_params', on_delete=models.CASCADE)
     def __str__(self):
-        return self.name
+        return self.key
 
 class ApiEndpointBody(models.Model):
     id_body =models.AutoField(primary_key=True)
@@ -133,17 +133,17 @@ class ApiEndpointBody(models.Model):
     endpoint = models.ForeignKey(APIendpoint, related_name='body', on_delete=models.CASCADE)
   
     def __str__(self):
-        return self.name
+        return self.key
        
 class Endpoint_parameter(models.Model):
     id_parameter = models.AutoField(primary_key=True)
     id_endpoint = models.ForeignKey(API, on_delete=models.DO_NOTHING )
     name= models.CharField(max_length=100)
-    type_id = models.ForeignKey(Type, on_delete=models.DO_NOTHING,default=1  )
+    type_id = models.ForeignKey(TypeParam, on_delete=models.DO_NOTHING,default=1  )
     required = models.BooleanField(default=False)
     deleted = models.BooleanField(default=False)
     def __str__(self):
-        return self.title
+        return self.name
 class Functionnality(models.Model):
     id_funct= models.AutoField(primary_key=True)
     functName = models.CharField(max_length=100)
@@ -158,14 +158,44 @@ class APIdocumentation(models.Model):
     def __str__(self):
         return self.id_doc
     
-class Tarification(models.Model):
-    id_tarif= models.AutoField(primary_key=True)
-    type = models.CharField(max_length=100)
+
+class PricingModel(models.Model):
+    id_model= models.AutoField(primary_key=True)
+    api = models.ForeignKey(API, on_delete=models.DO_NOTHING )
+    name = models.CharField(max_length=255)
     CHOICES = (
-        ('Month', 'Month'),
-        ('Year', 'Year'),
+         ('Daily', 'Daily'),
+        ('Monthly', 'Monthly'),
+        ('Yearly', 'Yearly'),
     )
     period = models.CharField(max_length=100, choices=CHOICES)
+    description = models.TextField( help_text="Brief description of the pricing model")
+    is_active = models.BooleanField(default=True)   
+    def __str__(self):
+        return self.id_model
+
+
+class TypeTarif(models.Model):
+    id_TypeTarif = models.AutoField(primary_key=True)
+    name= models.CharField(max_length=100)
+    def __str__(self):
+        return self.name   
+class Tarification(models.Model):
+    id_tarif= models.AutoField(primary_key=True)
+    pricingModel = models.ForeignKey(PricingModel, on_delete=models.DO_NOTHING )
+    type = models.ForeignKey(TypeTarif, on_delete=models.DO_NOTHING )
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    recommended=models.BooleanField(default=False, verbose_name="Recommended")
+    features = models.TextField()
+    Quota_CHOICES = (
+        ('Daily', 'Daily'),
+        ('Monthly', 'Monthly'),
+        ('Yearly', 'Yearly'),
+    )
+    quota_type = models.CharField(max_length=100, choices=Quota_CHOICES)
+
+    quota_limit = models.IntegerField()
+    rate_limit = models.IntegerField()
     def __str__(self):
         return self.id_tarif
 

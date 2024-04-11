@@ -9,7 +9,7 @@ export default function ManipulateTypes() {
     
     const getTypes = () =>  {
    
-      API.get(`/types`).then((res) =>
+      API.get(`/types_param`).then((res) =>
         {
           console.log(res.data);
           setTypes(res.data);

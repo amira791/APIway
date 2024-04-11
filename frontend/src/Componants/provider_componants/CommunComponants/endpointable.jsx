@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 const useStyles = makeStyles({
     tableHeader: {
-      fontSize: '1.2rem', // Adjust the font size as needed
+      fontSize: '20px', // Adjust the font size as needed
       fontWeight: 'bold', // You can adjust other typography styles here
     },
     tableCell: {
@@ -53,8 +53,7 @@ const EndpointTable = ({ endpoints,onDelete,onAddTogroup ,groups,onRemoveFromGro
      accessorKey: 'action',
         Cell: ({ cell }) => (
             <div>
-            <button onClick={() => onDelete(cell.row.original.name)}>Delete</button>
-            {cell.row.original.group != null ? (
+             {cell.row.original.group != null ? (
               <button onClick={() => handleRemove(cell.row.original.name)}>Remove from Group</button>
             ) : (
               <div>
@@ -71,6 +70,9 @@ const EndpointTable = ({ endpoints,onDelete,onAddTogroup ,groups,onRemoveFromGro
                 <button onClick={() => handleConfirm()}>Confirm</button>
               </div>
             )}
+
+              <button style={{display:"flex",justifyContent:"center",alignItems:"center", gap:"5%", marginTop:"3%"}} onClick={() => onDelete(cell.row.original.name)}> <i class="fa-solid fa-trash"></i> Delete</button>
+         
           </div>
         ),
       },
@@ -82,7 +84,7 @@ const EndpointTable = ({ endpoints,onDelete,onAddTogroup ,groups,onRemoveFromGro
     data: endpoints, // Use your actual endpoints data here
     muiTableBodyCellProps:{
         sx: {
-            fontSize: '30px',
+            fontSize: '20px',
           },
     },
   muiTableProps:{

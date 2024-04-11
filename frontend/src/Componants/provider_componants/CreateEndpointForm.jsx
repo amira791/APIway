@@ -280,7 +280,7 @@ const AddEndpointForm = ({ onSave }) => {
                         <th>Type</th>
                         <th>Example Value</th>
                         <th>Required</th>
-                        <th>Actions</th>
+                      
                       </tr>
                     </thead>
                     <tbody>
@@ -307,10 +307,7 @@ const AddEndpointForm = ({ onSave }) => {
                           <td>
                             <input type="checkbox" name="selected_students[]" />
                           </td>
-                          <td>
-                            <button>Edit</button>
-                            <button>Delete</button>
-                          </td>
+                        
                         </tr>
                       ))}
                     </tbody>
@@ -324,7 +321,7 @@ const AddEndpointForm = ({ onSave }) => {
 
                 <ParamsTable
                   data={headers}
-                  params={["Key", "Type", "Value", "Required"]}
+                  params={["Key", "Type", "Example value", "Required"]}
                   onChange={handleHeaderChange}
                   onAddRow={handleAddHeader}
                   onDelete={handleDeleteHeader}
@@ -339,7 +336,7 @@ const AddEndpointForm = ({ onSave }) => {
 
                   <ParamsTable
                     data={queryParams}
-                    params={["Key", "Type", "Value", "Required"]}
+                    params={["Key", "Type", "Example value", "Required"]}
                     onAddRow={handleAddQueryParam}
                     onChange={handleQueryParamChange}
                     onDelete={handleDeleteQueryParam}
@@ -406,21 +403,22 @@ const AddEndpointForm = ({ onSave }) => {
         </section>
       </div>
 
-      <div className="action-btn-wrapper">
+      <div className="action-btn-wrapper" style={{marginBottom:"3%"}}>
         <button
           data-id="saveEndpoint"
           type="button"
           className="ant-btn ant-btn-primary"
           onClick={handleSubmit}
         >
-          <span>save</span>
+        <i class="fa-solid fa-bookmark"></i>  <span>save</span>
         </button>
         <button
           data-id="cancelSaveEndpointButton"
           type="button"
           className="ant-btn"
+          style={{backgroundColor:"red"}}
         >
-          <span>cancel</span>
+        <i class="fa-solid fa-xmark"></i>  <span>cancel</span>
         </button>
       </div>
     </div>

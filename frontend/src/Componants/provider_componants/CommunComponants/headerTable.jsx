@@ -215,7 +215,7 @@ const ParamsTable = ({ data, params, onAddRow, onChange, onDelete, activeTab }) 
               {newRow.required}
             </td>
             <td>
-              <button onClick={handleConfirmRow}>Confirm</button>
+              <button style={{width:"5%",display:"flex",alignItems:"center",justifyContent:"center",backgroundColor:"green"}} onClick={handleConfirmRow}>Confirm</button>
             </td>
           </tr>
         </tbody>

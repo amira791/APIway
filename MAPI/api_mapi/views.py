@@ -65,8 +65,8 @@ class Endpoint_parameterView(viewsets.ModelViewSet):
 
 # Type View
 class TypeView(viewsets.ModelViewSet):
-    queryset = Type.objects.all()
-    serializer_class = TypeSerializer
+    queryset = TypeParam.objects.all()
+    serializer_class = TypeParamSerializer
     
 # Type View
 class ApiHeaderView(viewsets.ModelViewSet):
@@ -86,3 +86,17 @@ class ApiEndpointBodyView(viewsets.ModelViewSet):
 class BaseLinkView(viewsets.ModelViewSet):
     queryset = BaseLink.objects.all()
     serializer_class = BaseLinkSerializer
+# BaseLink View
+class BaseLinkView(viewsets.ModelViewSet):
+    queryset = BaseLink.objects.all()
+    serializer_class = BaseLinkSerializer
+# TypeTarif View
+class TypeTarifView(viewsets.ModelViewSet):
+    queryset = TypeTarif.objects.all()
+    serializer_class = TypeTarifSerializer
+    
+# PricingModel View
+class PricingModelView(viewsets.ModelViewSet):
+    queryset = PricingModel.objects.all()
+    serializer_class = PricingModelSerializer
+

@@ -56,12 +56,25 @@ class AbonnementSerializer(serializers.ModelSerializer):
         model = Abonnement
         fields = '__all__'
         
-class TypeSerializer(serializers.ModelSerializer):
+class TypeParamSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Type
+        model = TypeParam
         fields = '__all__'
         
-        
+class TypeTarifSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TypeTarif
+        fields = '__all__'
+
+class TarificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tarification
+        fields = '__all__'
+class PricingModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PricingModel
+        fields = '__all__'
+                    
 class Endpoint_parameterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Endpoint_parameter

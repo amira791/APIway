@@ -12,6 +12,8 @@ import CreateEndpointForm from "./CreateEndpointForm.jsx";
 import TextEditor from "./CommunComponants/textEditor.jsx";
 import AddGroupForm from "./CreateGroupEndpoint.jsx";
 import EndpointTable from "./CommunComponants/endpointable.jsx";
+import Monetizing from "./Monetize.jsx";
+import PlansAjout from "../../Hooks/MonetizationHook.jsx";
 
 const AddAPIPage = () => {
   $.noConflict();
@@ -19,6 +21,9 @@ const AddAPIPage = () => {
   /**************From hooks****************************/
   const { categories } = ManipulateCat();
   const { addNewAPI } = APIAjout();
+  const { addApiModels } = PlansAjout();
+  const [Models, setModels] = useState([]); // Define and manage the Models array in the parent component
+
   /*****************************************************/
   const [groupColors, setGroupColors] = useState({});
   const [showForm, setShowForm] = useState(false);
@@ -45,7 +50,7 @@ const AddAPIPage = () => {
     visibility: false,
     category: "",
     website: "",
- /*    baseURLs: [""], */
+    /*    baseURLs: [""], */
     logo: null,
   });
   /*  useEffect(() => {
@@ -148,7 +153,6 @@ const AddAPIPage = () => {
   };
   const [editedRowIndex, setEditedRowIndex] = useState(null);
 
-
   const handleChanges = (e, index) => {
     const { value } = e.target;
     const updatedURLs = [...baseURLs];
@@ -157,7 +161,7 @@ const AddAPIPage = () => {
   };
 
   const handleAddURL = () => {
-    setBaseURLs([...baseURLs, '']); // Add an empty string for the new URL
+    setBaseURLs([...baseURLs, ""]); // Add an empty string for the new URL
   };
   const handleLogoChange = (e) => {
     const file = e.target.files[0];
@@ -171,9 +175,14 @@ const AddAPIPage = () => {
     const categoryId = e.target.value;
 
     alert(categoryId);
+   
     setFormData((prevState) => ({
       ...prevState,
       categoryId: categoryId,
+    }));
+    setFormData((prevState) => ({
+      ...prevState,
+      category: categories.at(categoryId),
     }));
   };
 
@@ -182,7 +191,7 @@ const AddAPIPage = () => {
     // Your submission logic goes here
 
     alert(formData.apiName);
-    addNewAPI(formData, functionalities,baseURLs,endpoints);
+    addNewAPI(formData, functionalities, baseURLs, endpoints, Models);
   };
   const handleRemoveEndpointFromGroup = (endpointId) => {
     const updatedEndpoints = endpoints.map((endpoint) => {
@@ -218,7 +227,7 @@ const AddAPIPage = () => {
     }
   };
 
-/*   const handleAddURL = () => {
+  /*   const handleAddURL = () => {
     setFormData((prevState) => ({
       ...prevState,
       baseURLs: [...prevState.baseURLs, ""], // Add an empty string for the new URL
@@ -301,13 +310,14 @@ const AddAPIPage = () => {
             <div className="tf-container">
               <div className="row">
                 <div className="col-md-12">
-                  <h4 className="page-title-heading">Add New API</h4>
-                </div>
+                  </div>
               </div>
             </div>
           </section>
           <div class="row tf-container">
             <div class="col-md-12">
+            <h4 className="page-title-heading" style={{marginBottom:"5%"}}>Add New API</h4>
+               
               <div class="top-menu">
                 <ul className="filter-menu">
                   <li
@@ -402,7 +412,7 @@ const AddAPIPage = () => {
                               <option value="">Select Category</option>
                               {categories.map((category) => (
                                 <option
-                                  key={category.id}
+                                  key={category.label}
                                   value={category.id_category}
                                 >
                                   {category.label}
@@ -498,12 +508,56 @@ const AddAPIPage = () => {
                                   </p>
                                 </div>
                                 <div className="list">
+                                 
+                                  <div class="widget widget-category sc-product style2">
+                                    <div>
+                                      <h6 className="widget-title" style={{marginBottom:"3%"}}>Website</h6>
+
+                                      <fieldset>
+                                        <input
+                                          id="website"
+                                          type="text"
+                                          placeholder="https://"
+                                          onChange={handleChange}
+                                        />
+                                      </fieldset>
+                                    </div>
+                                  </div>
+                                  <div className="widget widget-category sc-product style2">
+                                    <div>
+                                      <h6 className="widget-title">Base URL</h6>
+                                      <p style={{margin:"3%"}}>
+                                        Add a base URL, configure multiple URLs,
+                                        override URLs, and select a load
+                                        balancer
+                                      </p>
+                                      {baseURLs.map((url, index) => (
+                                        <fieldset key={index}>
+                                          <label>URL {index + 1}</label>
+                                          <input
+                                            type="text"
+                                            placeholder="Api base"
+                                            value={url}
+                                            onChange={(e) =>
+                                              handleChanges(e, index)
+                                            }
+                                          />
+                                        </fieldset>
+                                      ))}
+                                      <button
+                                        type="button"
+                                        onClick={handleAddURL}
+                                      >
+                                        Add URL
+                                      </button>
+                                    </div>
+                                  </div>
                                   <div className="col-xl-12 col-lg-12 col-md-12">
                                     <div>
-                                      <h5 className="title-preview">
+                                      <h5 className="title-preview" >
                                         API Visibility
                                       </h5>
-                                      <p>
+                                      <p style={{margin:"3%"}}>
                                         Switching your API visibility to{" "}
                                         {formData.visibility
                                           ? "Public"
@@ -573,8 +627,8 @@ const AddAPIPage = () => {
                                               />
                                               <span class="btn-checkbox"></span>
                                             </span>
-                                            <span>
-                                              {" "}
+                                            <span style={{fontSize:"20px"}} >
+                                           
                                               I confirm that I own or have
                                               rights to publish this API
                                               according to the Hub{" "}
@@ -583,49 +637,6 @@ const AddAPIPage = () => {
                                           </label>
                                         )}
                                       </div>
-                                    </div>
-                                  </div>
-                                  <div class="widget widget-category sc-product style2">
-                                    <div>
-                                      <h6 className="widget-title">Website</h6>
-
-                                      <fieldset>
-                                        <input
-                                          id="website"
-                                          type="text"
-                                          placeholder="https://"
-                                          onChange={handleChange}
-                                        />
-                                      </fieldset>
-                                    </div>
-                                  </div>
-                                  <div className="widget widget-category sc-product style2">
-                                    <div>
-                                      <h6 className="widget-title">Base URL</h6>
-                                      <p>
-                                        Add a base URL, configure multiple URLs,
-                                        override URLs, and select a load
-                                        balancer
-                                      </p>
-                                      {baseURLs.map((url, index) => (
-                                        <fieldset key={index}>
-                                          <label>URL {index + 1}</label>
-                                          <input
-                                            type="text"
-                                            placeholder="Api base"
-                                            value={url}
-                                            onChange={(e) =>
-                                              handleChanges(e, index)
-                                            }
-                                          />
-                                        </fieldset>
-                                      ))}
-                                      <button
-                                        type="button"
-                                        onClick={handleAddURL}
-                                      >
-                                        Add URL
-                                      </button>
                                     </div>
                                   </div>
                                 </div>
@@ -647,7 +658,7 @@ const AddAPIPage = () => {
                             : "none",
                       }}
                     >
-                      <h4 className="page-title-heading title">Definitions</h4>
+                     {/*  <h4 className="page-title-heading title">Definitions</h4> */}
 
                       <h3>Endpoints</h3>
                       <p className="sub mb22">
@@ -684,81 +695,6 @@ const AddAPIPage = () => {
                               <AddGroupForm onSave={handleAddGroup} />
                             )}
                           </div>
-                          <div class="row tf-container">
-                            <div class="col-md-12">
-                              <div class="top-menu">
-                                <ul className="filter-menu">
-                                  <li
-                                    className={
-                                      activeType === "#endpoints-section"
-                                        ? "active"
-                                        : ""
-                                    }
-                                  >
-                                    <a
-                                      href="#"
-                                      onClick={() =>
-                                        handleTypeClick("#endpoints-section")
-                                      }
-                                    >
-                                      Endpoints
-                                    </a>
-                                  </li>
-                                  {/*   <li
-                                    className={
-                                      activeType === "#group-section"
-                                        ? "active"
-                                        : ""
-                                    }
-                                  >
-                                    <a
-                                      href="#"
-                                      onClick={() =>
-                                        handleTypeClick("#group-section")
-                                      }
-                                    >
-                                      Groups
-                                    </a>
-                                  </li> */}
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                          <div
-                            id="group-section"
-                            style={{
-                              display:
-                                activeType === "#group-section"
-                                  ? "block"
-                                  : "none",
-                            }}
-                          >
-                            <h3>Groups</h3>
-                            {/* <table
-                              ref={tableRef2}
-                              id="example2"
-                              className="display"
-                              style={{ width: "100%" }}
-                            >
-                              <thead>
-                                <tr>
-                                  <th>Group Name</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {groups.map((group, index) => (
-                                  <tr
-                                    key={index}
-                                    style={{
-                                      backgroundColor: groupColors[group.name],
-                                    }}
-                                  >
-                                    <td>{group.name}</td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table> */}
-                          </div>
 
                           <div
                             id="endpoints-section"
@@ -769,7 +705,6 @@ const AddAPIPage = () => {
                                   : "none",
                             }}
                           >
-                            <h3>Endpoints</h3>
                             <EndpointTable
                               endpoints={endpoints}
                               onDelete={handleDeleteEndpoint}
@@ -813,7 +748,8 @@ const AddAPIPage = () => {
                   }}
                   class="tf-section tf-create-and-sell"
                 >
-                  <div class="tf-container">
+                  <Monetizing Models={Models} setModels={setModels} />
+                  {/*   <div class="tf-container">
                     <div class="row">
                       <div class="col-md-12">
                         <div class="tf-heading style-2 mb40 wow fadeInUp">
@@ -917,9 +853,15 @@ const AddAPIPage = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </section>
-                <div className="col-xl-3 col-lg-4 col-md-6">
+                <div
+                  className="col-xl-3 col-lg-4 col-md-6"
+                  style={{
+                    display:
+                      activeFilter === "#monetize-section" ? "none" : "block",
+                  }}
+                >
                   <h5 className="title-preview">API Preview</h5>
                   <div className="sc-product style1">
                     <div className="top">
@@ -930,26 +872,30 @@ const AddAPIPage = () => {
                         <a href="#" className="heart-icon"></a>
                       </div>
                     </div>
-                    <div className="features">
-                      <div className="product-media">
-                        <img src={formData.logo} alt="images" />
+                    <div class="features">
+                      <div class="product-media">
+                        {formData.logo && (
+                          <div className="avatar">
+                            <img
+                              src={URL.createObjectURL(formData.logo)}
+                              alt="Uploaded Logo"
+                            />
+                          </div>
+                        )}{" "}
                       </div>
-                      <div className="featured-countdown">
-                        <span
-                          className="js-countdown"
-                          data-timer="55555"
-                          data-labels=" ,  h , m , s "
-                        ></span>
-                      </div>
-                      <div className="rain-drop1">
+                    
+                      <div class="rain-drop1">
                         <img src="assets/images/icon/rain1.svg" alt="images" />
                       </div>
-                      <div className="rain-drop2">
+                      <div class="rain-drop2">
                         <img src="assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
                     <div className="bottom">
                       <div className="details-product">
+                        {/*    
+                        
+                        functionalities
                         <div className="author">
                           {formData.logo && (
                             <div className="avatar">
@@ -966,31 +912,29 @@ const AddAPIPage = () => {
                               <a href="#">Carly Webster </a>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div className="current-bid">
-                          <div className="subtitle">Current bid</div>
-                          <div className="price">
-                            <span className="cash">5 ETH</span>
-                            <span className="icon">
-                              <img
-                                src="assets/images/icon/ethe.svg"
-                                alt="images"
-                              />
-                            </span>
+                       {/* {formData.categoryId &&  (<div className="subtitle">{formData.category}</div>)} 
+                       */}    <div className="price">
+                            <span className="cash">The API is:  {formData.visibility?"Visible": "Not visible"}</span>
+                          
+                          </div>
+                          <div className="author">
+                         
+                          <div className="content">
+                            
+                            <div className=" tag" style={{ textDecorationLine: "underline" ,fontSize:"20px",marginBottom:"3%"}} >Functionalities:</div>
+                           {functionalities && <div className="name">
+                            
+                             {
+                             functionalities.map((funct)=>
+                             <a href="#" style={{display:"block" ,fontSize:"17px"}}>-{funct} </a>)}
+                            </div>}
                           </div>
                         </div>
+                        </div>
                       </div>
-                      <div className="product-button">
-                        <a
-                          href="#"
-                          data-toggle="modal"
-                          data-target="#popup_bid"
-                          className="tf-button"
-                        >
-                          {" "}
-                          <span className="icon-btn-product"></span> Place Bid
-                        </a>
-                      </div>
+                     
                     </div>
                   </div>
                 </div>

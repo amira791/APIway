@@ -1741,8 +1741,7 @@ header.absolute {
   border-color: #3749E9;
 }
 .page-title-heading {
-  margin-top: 7% ;
-  margin-left: 10%;
+ 
   color: var(--primary-color5);
 
 }
@@ -2581,3 +2580,13 @@ header.absolute {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+#general-section label{
+ font-size: 25px;
+ margin-bottom: 3%;
+}
+
+#general-section input{
+  font-size: 21px;
+  margin-bottom: 3%;
+ }
