@@ -46,6 +46,21 @@ export default function useApi() {
             setError(error);
         });
 };
+    const fetchAPIVersions =  (sortby) => {
+        axios.post('http://127.0.0.1:8000/api/versions/', sortby )
+
+            .then(response => {
+                console.log('sortBy:', sortby);
+                console.log('Fetched Searched APIs:', response.data);
+                setSearchResults(response.data);
+            })
+    
+            .catch(error => {
+                console.error('Error fetching search results:', error);
+                setError(error);
+            });
+           
+};
 
 
     return {
@@ -54,6 +69,7 @@ export default function useApi() {
         APIs,
         setSearchResults,
         fetchApiCategories,
-        fetchApiSearchResults
+        fetchApiSearchResults,
+        fetchAPIVersions
     };
 }

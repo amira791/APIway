@@ -6,13 +6,16 @@ import Card from './global_components/Card';
 import useApi from '../hooks/ApiHook';
 
 const SearchApi = () => {
-    const { searchResults,APIs,Categories,fetchApiCategories,fetchApiSearchResults,setSearchResults } = useApi();
+    const { searchResults,APIs,Categories,fetchApiCategories,fetchApiSearchResults,setSearchResults,fetchAPIVersions } = useApi();
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchFilter, setSearchFilter] = useState('Name'); // Default search filter
     const [selectedCategoryLabel, setSelectedCategoryLabel] = useState(null);
     const categoryListRef = useRef(null); // Create a ref
+    const orderListRef = useRef(null); // Create a ref
     const [hoveredButton, setHoveredButton] = useState('');
+    const [currentPage, setCurrentPage] = useState(1); // Current page number
+    const itemsPerPage = 8; // Number of APIs per page
 
     useEffect(() => {
         setSearchResults(APIs); // Set initial search results to all APIs
@@ -34,17 +37,30 @@ const SearchApi = () => {
             categoryList.style.scrollbarThumbColor = 'var(--scrollbar-thumb-color)'; /* For Webkit/Blink */
 
         }
+        const orederList = orderListRef.current;
+        if (orederList) {
+            
+            orederList.style.overflowY = 'auto';
+            orederList.style.scrollbarWidth = 'thin'; /* For Firefox */
+            orederList.style.scrollbarColor = 'var(--scrollbar-track-color) var(--scrollbar-thumb-color)'; /* For Firefox */
+            orederList.style.scrollbarTrackColor = 'var(--scrollbar-track-color)'; /* For Webkit/Blink */
+            orederList.style.scrollbarThumbColor = 'var(--scrollbar-thumb-color)'; /* For Webkit/Blink */
+
+        }
     }, []);
 
     const handleSearch = async () => {
-        setSelectedCategoryLabel('API Categories');
-        fetchApiSearchResults({ query: searchQuery, filter: searchFilter }); // Pass search filter
+       
+        fetchApiSearchResults({ query: searchQuery, filter: searchFilter, category: selectedCategoryLabel, page: 1 });
     };
 
     const handleCategoryClick = async (categoryLabel) => {
-
         setSelectedCategoryLabel(categoryLabel);
-        fetchApiSearchResults({ query: categoryLabel });
+        fetchApiSearchResults({ query: categoryLabel, filter: 'Category', page: 1 });
+    };
+
+    const handleSortByClick = async (sortby) => {
+        fetchAPIVersions({ sortby: sortby });
     };
 
     const handleButtonClick = (filter) => {
@@ -52,10 +68,36 @@ const SearchApi = () => {
         setHoveredButton(filter);
     };
 
-   
+    const handleButtonHover = (filter) => {
+        setHoveredButton(filter);
+    };
 
+    const handleButtonBlur = () => {
+        setHoveredButton('');
+    };
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (!event.target.closest('.filter-menu')) {
+                setHoveredButton('');
+            }
+        };
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
 
+    // Calculate total number of pages
+    const totalPages = Math.ceil(searchResults.length / itemsPerPage);
+
+    // Get the APIs to be displayed on the current page
+    const indexOfLastApi = currentPage * itemsPerPage;
+    const indexOfFirstApi = indexOfLastApi - itemsPerPage;
+    const currentApis = searchResults.slice(indexOfFirstApi, indexOfLastApi);
+
+    // Function to change page
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
     return (
         <div className="body header-fixed">
             <div className="preload preload-container">
@@ -113,38 +155,38 @@ const SearchApi = () => {
                                     <h6 className="widget-title text-5xl mb-16">Search APIs By :</h6>
                                     <div className="filter-menu ml-4 flex">
                                     <ul className="flex mb-14">
-                                    <li>
-                                        <button
-                                            className={`btn ${searchFilter === 'Name' || hoveredButton === 'Name' ? 'active' : ''} `}
-                                            onClick={() => handleButtonClick('Name')}
-                                            
-                                           
-                                        >
-                                            Name
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            className={`btn ${searchFilter === 'Description' || hoveredButton === 'Description' ? 'active' : ''}`}
-                                            onClick={() => handleButtonClick('Description')}
-                                            
-                                            
-                                        >
-                                            Description
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            className={`btn ${searchFilter === 'Functionalities' || hoveredButton === 'Functionalities' ? 'active' : ''}`}
-                                            onClick={() => handleButtonClick('Functionalities')}
-                                            
-                                            
-                                        >
-                                            Functionalities
-                                        </button>
-                                    </li>
-
+                                        <li>
+                                            <button
+                                                className={`btn ${searchFilter === 'Name' || hoveredButton === 'Name' ? 'active' : ''}`}
+                                                onClick={() => handleButtonClick('Name')}
+                                                onMouseEnter={() => handleButtonHover('Name')}
+                                                onMouseLeave={handleButtonBlur}
+                                            >
+                                                Name
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button
+                                                className={`btn ${searchFilter === 'Description' || hoveredButton === 'Description' ? 'active' : ''}`}
+                                                onClick={() => handleButtonClick('Description')}
+                                                onMouseEnter={() => handleButtonHover('Description')}
+                                                onMouseLeave={handleButtonBlur}
+                                            >
+                                                Description
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button
+                                                className={`btn ${searchFilter === 'Functionalities' || hoveredButton === 'Functionalities' ? 'active' : ''}`}
+                                                onClick={() => handleButtonClick('Functionalities')}
+                                                onMouseEnter={() => handleButtonHover('Functionalities')}
+                                                onMouseLeave={handleButtonBlur}
+                                            >
+                                                Functionalities
+                                            </button>
+                                        </li>
                                     </ul>
+
                                     </div>
                                 </div>
 
@@ -160,7 +202,7 @@ const SearchApi = () => {
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
                                          
-                                            className="py-3 px-4 outline-none rounded-l-full rounded-r-none flex-grow focus:ring-1/2 focus:ring-blue-500"
+                                            className="py-3 px-4 outline-none rounded-l-full rounded-r-none text-white flex-grow focus:ring-1/2 focus:ring-blue-500"
                                             style={{ width: 'calc(100% - 4.5rem)', marginRight: '-1px' }}
                                         />
                                         <button
@@ -174,22 +216,17 @@ const SearchApi = () => {
                                 </div>
                                 <div className="row ">
                                     <div className="col-md-12">
-                                        <div className="top-menu">
-                                            <ul className="filter-menu">
-                                                <li className="active"><a href="#" data-filter=".3d">3D MODEL</a></li>
-                                                <li><a href="#" data-filter=".anime">ANIME/MANGA</a></li>
-                                                <li><a href="#" data-filter=".cyber">CYBER PUNK</a></li>
-                                                <li><a href="#" data-filter=".pixel">PIXEL ART </a></li>
-                                                <li><a href="#" data-filter=".music">MUSIC </a></li>
-                                                <li><a href="#" data-filter=".abstract">ABSTRACT </a></li>
-                                                <li><a href="#" data-filter=".2d">2D ARTS </a></li>
-                                            </ul>
 
-                                            
+                                        <div className="top-menu">
+
                                             <div id="item_category" className="dropdown">
+                                            <h6 className="widget-title text-4xl mb-2 mr-8">Filter APIs By :</h6>
                                                 <a href="#" className="btn-selector nolink">{selectedCategoryLabel || 'API Categories'}</a>
                                                 {/* Attach the ref to the ul element */}
                                                 <ul ref={categoryListRef} className="max-h-80 overflow-y-auto">
+                                                    <li>
+                                                        <p onClick={() => handleCategoryClick("All")}>ALL</p>
+                                                    </li>
                                                     {Categories.map(category =>
                                                         <li key={category.id_category}>
                                                             <p onClick={() => handleCategoryClick(category.label)}>{category.label}</p>
@@ -197,13 +234,23 @@ const SearchApi = () => {
                                                     )}
                                                 </ul>
                                             </div>
+                                            <div id="item_category2" className="dropdown">
+                                                <a href="#" className="btn-selector nolink">Filter by date</a>
+                                                <ul ref={orderListRef} className="max-h-80 overflow-y-auto">
+                                                    <li><span onClick={() => handleSortByClick('recent')}>Recently Created</span></li>
+                                                    <li><span onClick={() => handleSortByClick('oldest')}>Oldest</span></li>
+                                                    <li><span>Recently Sold</span></li> 
+                                                </ul>
+                                            </div>
+
+                                           
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className="row tf-filter-container">
-                                    {searchResults.length > 0 ? (
-                                        searchResults.map(api => (
+                                    {currentApis.length > 0 ? (
+                                        currentApis.map(api => (
                                             <Card
                                                 key={api.id_api}
                                                 apiName={api.api_name}
@@ -216,14 +263,21 @@ const SearchApi = () => {
                                         ))
                                     ) : (
                                         <div className="col-md-12 text-center mt-4">
-                                            <p className='text-5xl text-gray-500 mb-16'>No results found...!</p>
+                                            <i className="icon-fl-search-filled text-7xl text-gray-500 "></i>
+                                            <p className='text-5xl text-gray-500 mb-16 mt-6'>No results found...!</p>
                                         </div>
                                     )}
                                 </div>
-                                <div className="col-md-12">
-                                    <div className="btn-loadmore mt6">
-                                        <a href="#" className="tf-button loadmore">Load More</a>
-                                    </div>
+                                <div className="pagination-container">
+                                    <ul className="pagination">
+                                        {Array.from({ length: totalPages }, (_, index) => index + 1).map(number => (
+                                            <li key={number} className="page-item">
+                                                <a onClick={() => paginate(number)} href="#" className="page-link">
+                                                    {number}
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
                             </div>
                         </section>

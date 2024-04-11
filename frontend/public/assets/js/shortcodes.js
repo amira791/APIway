@@ -165,39 +165,32 @@
 
     var tfFilter = function () {
         $(".tf-filter").each(function () {
-        // if ( $().isotope ) {
-            
             var $container = $(this).find('.tf-filter-container').isotope({
                 itemSelector: '.tf-loadmore',
                 layoutMode: 'fitRows',
                 percentPosition: true,
             });
-
-            
+    
             $container.imagesLoaded().progress( function() {
                 $container.isotope('layout');
             });
             
             $container.isotope({ filter: ".3d" });
-        
-            $(this).find('.filter-menu li ').on( 'click', function(e) {
-                e.preventDefault();
-                var filterValue = $( this ).find('a').attr('data-filter');
-                $container.isotope({ filter: filterValue });
-            });
     
-            $(this).find('.filter-menu').each( function() {
-                $(this).find('.filter-menu li ').removeClass('active');
-                $('.filter-menu li ').on( 'click', function() {  
-                    $(this).closest('.filter-menu').find('li ').removeClass('active');
-                    $(this).addClass('active');
-                
-                });
+            $(this).find('.filter-menu li ').on('click', function(e) {
+                e.preventDefault();
+                var filterValue = $(this).find('a').attr('data-filter');
+                $container.isotope({ filter: filterValue });
+                // Remove active class from all buttons
+                $(this).closest('.filter-menu').find('li ').removeClass('active');
+                // Add active class to the clicked button
+                $(this).addClass('active');
             });
-        // };
-    });
+        });
+    };
+    
         
-    } 
+    
 
     var tfTabs = function(){
         $('.tf-tab').each(function(){
@@ -459,7 +452,7 @@
         tfFilter();
         tfTabs();
         tfAccordionWidget();
-        addClassBoard();
+       
         tfTabs2();
         btn_option();
         tfFixedSidebar();

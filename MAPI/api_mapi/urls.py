@@ -24,5 +24,6 @@ urlpatterns = [
     path('activate/<int:id>/', activate_user, name='activate_user'),
     path('deactivate/<int:id>/', deactivate_user, name='deactivate_user'),
     path('api/search/', search_api, name='search_api'),
+    path('api/versions/', api_versions_view, name='api-versions'),
    
     ] + router.urls

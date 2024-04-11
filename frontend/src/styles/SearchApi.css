@@ -34,3 +34,38 @@
 .btn {
     @apply py-3 px-6 rounded-full bg-gray-500 text-black text-xl hover:bg-black ;
 }
+/* Pagination ---------------------------------------------------------------*/
+/* Add these styles to your CSS file or component */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination li a {
+    display: inline-block;
+    padding: 10px 15px;
+    border: 1px solid #3e00a1;
+    border-radius: 25px;
+    color: #060606;
+    text-decoration: none;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    background-color: #6B7280;
+}
+
+.pagination li a:hover {
+    background-color: #3e00a1;
+    color: #ffffff;
+}

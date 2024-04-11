@@ -5,10 +5,16 @@ from .models import *
 from .serializers import *
 from django.shortcuts import render
 from django.db.models import Q
+from django.http import JsonResponse
 from rest_framework import viewsets
 from .models import Fournisseur, Consommateur
+from django.db.models import Min, Max
+from django.db.models import OuterRef, Subquery
+from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.pagination import PageNumberPagination
+
 
 
 
@@ -36,6 +42,8 @@ def signup(request):
         return Response({"token": token.key, "user": user, "type": request.data['type']}, status=status.HTTP_201_CREATED)
 
     return Response({}, status=status.HTTP_405_METHOD_NOT_ALLOWED)  # Handle non-POST requests
+
+
 # Fournisseur View
 class FournisseurView(viewsets.ModelViewSet):
     queryset = Fournisseur.objects.all()
@@ -62,6 +70,7 @@ class APIView(viewsets.ModelViewSet):
     queryset = API.objects.all()
     serializer_class = APISerializer
     parser_classes = (MultiPartParser, FormParser)
+   
 
 
 # APIversion View
@@ -107,20 +116,20 @@ class TypeView(viewsets.ModelViewSet):
 
 
 
-# Accounts management view
+# Accounts management view *****************************************************************************
 
-#Activate status
+#Activate status-------------------------------------------------------
 @api_view(['POST'])
 def activate_user(request, id):
     return manage_user_status(request, id, action='activate')
 
-#Deactivate status
+#Deactivate status-----------------------------------------------------
 @api_view(['POST'])
 def deactivate_user(request, id):
     return manage_user_status(request, id, action='deactivate')
 
 
-#Managing function
+#Managing function-----------------------------------------------------
 def manage_user_status(request, id, action):
     # Get user type from request data
     user_type = request.data.get('type')
@@ -162,12 +171,12 @@ def manage_user_status(request, id, action):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-
-# Search API by Name, Description, or Functionalities
+# Search API by Name, Description, or Functionalities **************************************************************
 @api_view(['POST'])
 def search_api(request):
     query = request.data.get('query', '')
     search_field = request.data.get('filter')
+    category_label = request.data.get('category')
 
     # Check if search_field parameter is provided
     if not search_field:
@@ -178,14 +187,42 @@ def search_api(request):
         search_query = Q(api_name__icontains=query)
     elif search_field == 'Description':
         search_query = Q(description__icontains=query)
+    elif search_field == 'Category':
+        if query == 'All':
+            search_query = Q()  # Empty query, which means all APIs will be included
+        else:
+            search_query = Q(category__label__icontains=query)
     elif search_field == 'Functionalities':
-        # Modify the search query to search within the functionalities of API versions
         search_query = Q(apiversion__functions__functName__icontains=query)
+
     else:
-        # Handle invalid search field
         return Response({'error': 'Invalid search field'}, status=status.HTTP_400_BAD_REQUEST)
 
-    # Filter results based on the search query
-    results = API.objects.filter(search_query).distinct()  # Ensure distinct results
+    # Filter results based on the search query and category label
+    if category_label and category_label != 'All':
+        results = API.objects.filter(search_query, category__label=category_label).distinct()
+    else:
+        results = API.objects.filter(search_query).distinct()
+
     serializer = APISerializer(results, many=True)
+    return Response(serializer.data)
+
+
+
+# Sorting APIs*************************************************************************************************************
+@api_view(['POST'])
+def api_versions_view(request):
+    sortby = request.data.get('sortby')  # Get sort parameter from frontend
+    
+    if sortby == 'recent':
+       apis = API.objects.annotate(latest_version_date=Max('apiversion__date_version')).order_by('-latest_version_date')
+    
+    elif  sortby == 'oldest':
+          apis = API.objects.annotate(latest_version_date=Max('apiversion__date_version')).order_by('latest_version_date')
+
+    else:
+        # Default sorting, no sorting by versions
+        apis = API.objects.all()
+
+    serializer = APISerializer(apis, many=True)
     return Response(serializer.data)
