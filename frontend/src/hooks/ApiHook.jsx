@@ -7,12 +7,27 @@ export default function useApi() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [searchResults, setSearchResults] = useState([]);
+    const [functionalities, setFunctionalities] = useState([]);
+    const [suggestions, setSuggestions] = useState([]);
 
     useEffect(() => {
         setLoading(true);
         axios.get('http://127.0.0.1:8000/apis/')
             .then(response => {
                 setAPIs(response.data);
+                setLoading(false);
+            })
+            .catch(error => {
+                setError(error);
+                setLoading(false);
+            });
+    }, []);
+
+    useEffect(() => {
+        setLoading(true);
+        axios.get('http://127.0.0.1:8000/functionnalities/')
+            .then(response => {
+                setFunctionalities(response.data);
                 setLoading(false);
             })
             .catch(error => {
@@ -61,15 +76,43 @@ export default function useApi() {
             });
            
 };
+    const fetchApiSuggestions = (query, suggestionType) => {
+        let filteredSuggestions = [];
+        console.log("Query",query);
+        console.log("suggestionType",suggestionType);
+        console.log("APIs",APIs);
+        switch (suggestionType) {
+            case 'Name':
+                
+                filteredSuggestions = APIs.filter(api => api.api_name.toLowerCase().includes(query.toLowerCase()));
+                console.log("filteredSuggestions",filteredSuggestions);
+                break;
+            case 'Description':
+                filteredSuggestions = APIs.filter(api => api.description.toLowerCase().includes(query.toLowerCase()));
+                console.log("filteredSuggestions",filteredSuggestions);
+                break;
+            case 'Functionalities':
+                filteredSuggestions = functionalities.filter(func => func.functName.toLowerCase().includes(query.toLowerCase()));
+                console.log("filteredSuggestions",filteredSuggestions);
+                break;
+            default:
+                break;
+        }
+
+        setSuggestions(filteredSuggestions);
+};
 
 
     return {
         searchResults,
         Categories,
         APIs,
+        functionalities,
+        suggestions,
         setSearchResults,
         fetchApiCategories,
         fetchApiSearchResults,
-        fetchAPIVersions
+        fetchAPIVersions,
+        fetchApiSuggestions
     };
 }

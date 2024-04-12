@@ -6,7 +6,7 @@ import Card from './global_components/Card';
 import useApi from '../hooks/ApiHook';
 
 const SearchApi = () => {
-    const { searchResults,APIs,Categories,fetchApiCategories,fetchApiSearchResults,setSearchResults,fetchAPIVersions } = useApi();
+    const { searchResults,APIs,Categories, suggestions, fetchApiSuggestions, fetchApiCategories,fetchApiSearchResults,setSearchResults,fetchAPIVersions } = useApi();
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchFilter, setSearchFilter] = useState('Name'); // Default search filter
@@ -16,6 +16,8 @@ const SearchApi = () => {
     const [hoveredButton, setHoveredButton] = useState('');
     const [currentPage, setCurrentPage] = useState(1); // Current page number
     const itemsPerPage = 8; // Number of APIs per page
+    const [showSuggestions, setShowSuggestions] = useState(false);
+   
 
     useEffect(() => {
         setSearchResults(APIs); // Set initial search results to all APIs
@@ -28,26 +30,23 @@ const SearchApi = () => {
     useEffect(() => {
         // Access the current property of the ref to get the DOM element
         const categoryList = categoryListRef.current;
-        if (categoryList) {
-            
-            categoryList.style.overflowY = 'auto';
-            categoryList.style.scrollbarWidth = 'thin'; /* For Firefox */
-            categoryList.style.scrollbarColor = 'var(--scrollbar-track-color) var(--scrollbar-thumb-color)'; /* For Firefox */
-            categoryList.style.scrollbarTrackColor = 'var(--scrollbar-track-color)'; /* For Webkit/Blink */
-            categoryList.style.scrollbarThumbColor = 'var(--scrollbar-thumb-color)'; /* For Webkit/Blink */
+        const orderList = orderListRef.current;
+        
+        const styleScrollbar = (element) => {
+            if (element) {
+                element.style.overflowY = 'auto';
+                element.style.scrollbarWidth = 'thin'; /* For Firefox */
+                element.style.scrollbarColor = 'var(--scrollbar-track-color) var(--scrollbar-thumb-color)'; /* For Firefox */
+                element.style.scrollbarTrackColor = 'var(--scrollbar-track-color)'; /* For Webkit/Blink */
+                element.style.scrollbarThumbColor = 'var(--scrollbar-thumb-color)'; /* For Webkit/Blink */
+            }
+        };
 
-        }
-        const orederList = orderListRef.current;
-        if (orederList) {
-            
-            orederList.style.overflowY = 'auto';
-            orederList.style.scrollbarWidth = 'thin'; /* For Firefox */
-            orederList.style.scrollbarColor = 'var(--scrollbar-track-color) var(--scrollbar-thumb-color)'; /* For Firefox */
-            orederList.style.scrollbarTrackColor = 'var(--scrollbar-track-color)'; /* For Webkit/Blink */
-            orederList.style.scrollbarThumbColor = 'var(--scrollbar-thumb-color)'; /* For Webkit/Blink */
-
-        }
+        styleScrollbar(categoryList);
+        styleScrollbar(orderList);
     }, []);
+
+    
 
     const handleSearch = async () => {
        
@@ -82,6 +81,37 @@ const SearchApi = () => {
                 setHoveredButton('');
             }
         };
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
+
+    const handleSuggestionClick = (suggestion) => {
+        let suggestionContent = '';
+        if (searchFilter === 'Name') {
+            suggestionContent = suggestion.api_name;
+        } else if (searchFilter === 'Description') {
+            suggestionContent = suggestion.description;
+        } else if (searchFilter === 'Functionalities') {
+            suggestionContent = suggestion.functName;
+        }
+        setSearchQuery(suggestionContent);
+        setShowSuggestions(false); // Hide suggestion list after clicking on a suggestion
+        fetchApiSearchResults({ query: searchQuery, filter: searchFilter, category: selectedCategoryLabel, page: 1 });
+    };
+
+    const handleClickOutside = (event) => {
+        if (
+            !event.target.closest('.search-bar') &&
+            !event.target.closest('.suggestions-list') &&
+            !event.target.classList.contains('suggestion-item') // Exclude clicks inside the suggestion items
+        ) {
+            setShowSuggestions(false);
+        }
+    };
+    
+    useEffect(() => {
         document.addEventListener('click', handleClickOutside);
         return () => {
             document.removeEventListener('click', handleClickOutside);
@@ -195,24 +225,50 @@ const SearchApi = () => {
 
 
 
-                                    <form onSubmit={handleSearch} className="border border-gray-300 w-full max-w-7xl flex">
-                                        <input
-                                            type="text"
-                                            placeholder="Search..."
-                                            value={searchQuery}
-                                            onChange={(e) => setSearchQuery(e.target.value)}
-                                         
-                                            className="py-3 px-4 outline-none rounded-l-full rounded-r-none text-white flex-grow focus:ring-1/2 focus:ring-blue-500"
-                                            style={{ width: 'calc(100% - 4.5rem)', marginRight: '-1px' }}
-                                        />
-                                        <button
-                                            type="submit"
-                                            className="btn-search product-button px-4 bg-gray-700 text-white rounded-l-none rounded-r-"
-                                            style={{ height: '47px', marginLeft: '-1px' }}
-                                        >
-                                            <i className="icon-fl-search-filled"></i>
-                                        </button>
-                                    </form>
+                                <form
+                                    onSubmit={handleSearch}
+                                    className={`border border-gray-300 w-full max-w-7xl relative `}
+                                    id="subscribe-form"
+                                    onClick={handleClickOutside} // Add click event listener to handle click outside the form
+                                >
+                                    <input
+                                     id= {`${searchQuery !== '' && showSuggestions ? 'form-with-suggestions' : ''}`}
+                                        type="text"
+                                        placeholder="Search..."
+                                        value={searchQuery}
+                                        onChange={(e) => {
+                                            setSearchQuery(e.target.value);
+                                            setShowSuggestions(true);
+                                            // Call a function to fetch suggestions based on the input value
+                                            fetchApiSuggestions(e.target.value, searchFilter);
+                                        }}
+                                        className={`${searchQuery !== '' && showSuggestions ? 'form-with-suggestions' : ''} py-3 px-4 outline-none rounded-l-full rounded-r-none text-white flex-grow focus:ring-1/2 focus:ring-blue-500 search-bar`}
+                                        style={{ width: 'calc(100% - 4.5rem)', marginRight: '-1px' }}
+                                    />
+                                    <button
+                                        type="submit"
+                                        className={`btn-search product-button px-4 bg-gray-700 text-white rounded-l-none rounded-r- ${searchQuery !== '' ? 'btn-with-suggestions' : ''}`}
+                                        style={{ height: '48px', marginLeft: '-2px'}}
+                                    >
+                                        <i className="icon-fl-search-filled"></i>
+                                    </button>
+
+                                    {/* Suggestions list */}
+                                    {searchQuery !== '' && showSuggestions && (
+                                        <ul className="suggestions-list">
+                                            {suggestions.map((suggestion, index) => (
+                                                <li key={index} className="suggestion-item" onClick={() => handleSuggestionClick(suggestion)}>
+                                                    {/* Render suggestion content based on searchFilter */}
+                                                    {searchFilter === 'Name' && suggestion.api_name}
+                                                    {searchFilter === 'Description' && suggestion.description}
+                                                    {searchFilter === 'Functionalities' && suggestion.functName}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </form>
+
+                                <br />
                                 </div>
                                 <div className="row ">
                                     <div className="col-md-12">
@@ -223,7 +279,7 @@ const SearchApi = () => {
                                             <h6 className="widget-title text-4xl mb-2 mr-8">Filter APIs By :</h6>
                                                 <a href="#" className="btn-selector nolink">{selectedCategoryLabel || 'API Categories'}</a>
                                                 {/* Attach the ref to the ul element */}
-                                                <ul ref={categoryListRef} className="max-h-80 overflow-y-auto">
+                                                <ul ref={categoryListRef} className="max-h-80 ">
                                                     <li>
                                                         <p onClick={() => handleCategoryClick("All")}>ALL</p>
                                                     </li>
@@ -236,7 +292,7 @@ const SearchApi = () => {
                                             </div>
                                             <div id="item_category2" className="dropdown">
                                                 <a href="#" className="btn-selector nolink">Filter by date</a>
-                                                <ul ref={orderListRef} className="max-h-80 overflow-y-auto">
+                                                <ul ref={orderListRef} className="max-h-80 ">
                                                     <li><span onClick={() => handleSortByClick('recent')}>Recently Created</span></li>
                                                     <li><span onClick={() => handleSortByClick('oldest')}>Oldest</span></li>
                                                     <li><span>Recently Sold</span></li> 
