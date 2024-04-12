@@ -247,7 +247,7 @@ const SearchApi = () => {
                                     />
                                     <button
                                         type="submit"
-                                        className={`btn-search product-button px-4 bg-gray-700 text-white rounded-l-none rounded-r- ${searchQuery !== '' ? 'btn-with-suggestions' : ''}`}
+                                        className={`btn-search product-button px-4 bg-gray-700 text-white rounded-l-none rounded-r- ${searchQuery !== ''  && showSuggestions  ? 'btn-with-suggestions' : ''}`}
                                         style={{ height: '48px', marginLeft: '-2px'}}
                                     >
                                         <i className="icon-fl-search-filled"></i>
