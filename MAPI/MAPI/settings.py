@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os 
+from dotenv import load_dotenv
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,7 +31,21 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    
+]
+CORS_ALLOWED_HEADERS = [
+    'token',  
+    'content-type',
+    'Authorization',
+    
+]
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+
+
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -38,17 +54,29 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api_mapi.apps.ApiMapiConfig',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'rest_framework_simplejwt',
+    'api_mapi.apps.ApiMapiConfig',
+    # 'api_mapi',
 ]
 
 
+# from api_mapi.models import UserBase
+
+# AUTH_USER_MODEL = 'api_mapi.UserBase'
+
+
+
+
+
+
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
+    'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ]
+        'rest_framework.authentication.TokenAuthentication',
+    ),
 }
 
 
@@ -61,6 +89,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'corsheaders.middleware.CorsMiddleware'
 ]
 
@@ -147,4 +176,8 @@ CORS_ORIGIN_WHITELIST = (
 
 
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),  
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),    
+}
 

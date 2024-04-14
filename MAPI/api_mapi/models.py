@@ -1,47 +1,83 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, AbstractUser
+from django.contrib.auth.models import Group, Permission
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.db import models
 
-class Fournisseur(AbstractBaseUser):
+class UserManager(BaseUserManager):
+    def create_user(self, email, username, password=None, **extra_fields):
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, username=username, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, username, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self.create_user(email, username, password, **extra_fields)
+
+class UserBase(AbstractBaseUser, PermissionsMixin):
+    email = models.CharField(max_length=100, unique=True)
+    username = models.CharField(max_length=100, unique=True)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+
+    objects = UserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+
+    def __str__(self):
+        return self.username
+
+    class Meta:
+        abstract = True
+
+class Fournisseur(UserBase):
     id_fournisseur = models.AutoField(primary_key=True)
-    FR_first_name = models.CharField(max_length=100)
-    FR_last_name = models.CharField(max_length=100)
-    FRemail = models.CharField(max_length=100, unique=True)
-    FRusername = models.CharField(max_length=100, unique=True)
-    password = models.CharField(max_length=100)  # Renamed to 'password' with db_column
-    FRphone = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
 
-    USERNAME_FIELD = 'FRemail'
-    REQUIRED_FIELDS = ['password','FRusername']
+    groups = models.ManyToManyField(Group, related_name='fournisseur_groups')
+    user_permissions = models.ManyToManyField(Permission, related_name='fournisseur_user_permissions')
 
     def __str__(self):
-        return self.FRusername
-    
-class Admin(AbstractBaseUser):
+        return self.username  
+
+class Admin(UserBase):
     id_admin = models.AutoField(primary_key=True)
-    AdminEmail = models.CharField(max_length=100)
-    AdminUsername = models.CharField(max_length=100)
-    AdminEmail = models.CharField(max_length=100)
-    AdminUsername = models.CharField(max_length=100)
-    AdminPassword = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+    username = models.CharField(max_length=100)
+
+    groups = models.ManyToManyField(Group, related_name='admin_groups')
+    user_permissions = models.ManyToManyField(Permission, related_name='admin_user_permissions')
 
     def __str__(self):
-        return self.AdminUsername
+        return self.username  
 
-
-class Consommateur(AbstractBaseUser):
+class Consommateur(UserBase):
     id_consommateur = models.AutoField(primary_key=True)
-    CN_first_name = models.CharField(max_length=100)
-    CN_last_name = models.CharField(max_length=100)
-    CNemail = models.CharField(max_length=100, unique=True)
-    CNusername = models.CharField(max_length=100, unique=True)
-    password = models.CharField(max_length=100)
-    CNphone = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
 
-    USERNAME_FIELD = 'CNemail'  # Définir le champ de nom d'utilisateur
-    REQUIRED_FIELDS = ['password','CNusername']  # Liste des champs requis en plus du nom d'utilisateur
+    groups = models.ManyToManyField(Group, related_name='consommateur_groups')
+    user_permissions = models.ManyToManyField(Permission, related_name='consommateur_user_permissions')
 
     def __str__(self):
-        return self.CNusername
+        return self.username  
+  
+
 
 class APIcategory(models.Model):
     id_category = models.AutoField(primary_key=True)

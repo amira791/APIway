@@ -3,52 +3,50 @@ from rest_framework.authtoken.models import Token
 from .models import *
 from django.contrib.auth.hashers import make_password
 
+
+from rest_framework import serializers
+from django.core.exceptions import ValidationError
+from .models import Fournisseur, Admin, Consommateur
+
+class UniqueUsernameValidator:
+    def __call__(self, value):
+        if Fournisseur.objects.filter(username=value).exists() or \
+           Admin.objects.filter(username=value).exists() or \
+           Consommateur.objects.filter(username=value).exists():
+            raise ValidationError('This username is already in use.')
+
+class UniqueEmailValidator:
+    def __call__(self, value):
+        if Fournisseur.objects.filter(email=value).exists() or \
+           Admin.objects.filter(email=value).exists() or \
+           Consommateur.objects.filter(email=value).exists():
+            raise ValidationError('This email address is already in use.')
+
 class FournisseurSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)  # To handle password securely
+    username = serializers.CharField(validators=[UniqueUsernameValidator()])
+    email = serializers.EmailField(validators=[UniqueEmailValidator()])
 
     class Meta:
         model = Fournisseur
-        fields = ['id_fournisseur', 'FR_first_name', 'FR_last_name', 'FRemail', 'FRusername', 'password', 'FRphone']
-        extra_kwargs = {
-            'id_fournisseur': {'read_only': True},
-            'FRemail': {'required': True},
-            'FRusername': {'required': True},
-        }
+        fields = ['email', 'username', 'password', 'first_name', 'last_name', 'phone']
 
-    def create(self, validated_data):
-        password = validated_data.pop('password')
-        instance = self.Meta.model(**validated_data)
-        instance.set_password(password)
-        instance.save()
-        return instance
+class AdminSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(validators=[UniqueUsernameValidator()])
+    email = serializers.EmailField(validators=[UniqueEmailValidator()])
 
-
-
+    class Meta:
+        model = Admin
+        fields = ['email', 'username', 'password']
 
 class ConsommateurSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)  # To handle password securely
+    username = serializers.CharField(validators=[UniqueUsernameValidator()])
+    email = serializers.EmailField(validators=[UniqueEmailValidator()])
 
     class Meta:
         model = Consommateur
-        fields = ['id_consommateur', 'CN_first_name', 'CN_last_name', 'CNemail', 'CNusername', 'password', 'CNphone']
-        extra_kwargs = {
-            'id_consommateur': {'read_only': True},
-            'CNemail': {'required': True},
-            'CNusername': {'required': True},
-        }
-
-    def create(self, validated_data):
-        password = validated_data.pop('password')
-        instance = self.Meta.model(**validated_data)
-        instance.set_password(password)
-        instance.save()
-        return instance
+        fields = ['email', 'username', 'password', 'first_name', 'last_name', 'phone']
 
 
-class AdminSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Admin
-        fields = '__all__'
 
 class APIcategorySerializer(serializers.ModelSerializer):
     class Meta:

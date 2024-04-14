@@ -61,20 +61,61 @@ from .serializers import *
 #     return Response({}, status=status.HTTP_405_METHOD_NOT_ALLOWED)  # Handle non-POST requests
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# @api_view(['POST'])
+# def signup(request):
+#     if request.method == 'POST':
+#         user_type = request.data.get('type')
+#         if user_type not in ('F', 'C'):
+#             return Response({'error': 'Invalid user type'}, status=status.HTTP_400_BAD_REQUEST)
+
+#         required_fields = ['password', 'FRemail', 'FRphone'] if user_type == 'F' else ['password', 'CNemail', 'CNphone']
+#         missing_fields = [field for field in required_fields if field not in request.data]
+#         if missing_fields:
+#             return Response({'error': f"Missing fields: {', '.join(missing_fields)}"}, status=status.HTTP_400_BAD_REQUEST)
+
+#         # Select the serializer based on user_type
+#         serializer_class = FournisseurSerializer if user_type == 'F' else ConsommateurSerializer
+
+#         serializer = serializer_class(data=request.data)
+#         if serializer.is_valid():
+#             user = serializer.save()
+#             return Response({'success': 'User created successfully'}, status=status.HTTP_201_CREATED)
+#         else:
+#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     else:
+#         return Response({'error': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    
+
 @api_view(['POST'])
 def signup(request):
     if request.method == 'POST':
         user_type = request.data.get('type')
-        if user_type not in ('F', 'C'):
+        if user_type not in ('F', 'A', 'C'):
             return Response({'error': 'Invalid user type'}, status=status.HTTP_400_BAD_REQUEST)
 
-        required_fields = ['password', 'FRemail', 'FRphone'] if user_type == 'F' else ['password', 'CNemail', 'CNphone']
-        missing_fields = [field for field in required_fields if field not in request.data]
-        if missing_fields:
-            return Response({'error': f"Missing fields: {', '.join(missing_fields)}"}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Select the serializer based on user_type
-        serializer_class = FournisseurSerializer if user_type == 'F' else ConsommateurSerializer
+        if user_type == 'F':
+            serializer_class = FournisseurSerializer
+        elif user_type == 'A':
+            serializer_class = AdminSerializer
+        else:
+            serializer_class = ConsommateurSerializer
 
         serializer = serializer_class(data=request.data)
         if serializer.is_valid():
@@ -84,7 +125,6 @@ def signup(request):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response({'error': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-    
 
 @api_view(['POST'])
 def signin(request):
