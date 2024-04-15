@@ -58,14 +58,14 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'rest_framework_simplejwt',
-    'api_mapi.apps.ApiMapiConfig',
-    # 'api_mapi',
+    # 'api_mapi.apps.ApiMapiConfig',
+    'api_mapi',
 ]
 
 
 # from api_mapi.models import UserBase
 
-# AUTH_USER_MODEL = 'api_mapi.UserBase'
+AUTH_USER_MODEL = 'api_mapi.UserBase'
 
 
 

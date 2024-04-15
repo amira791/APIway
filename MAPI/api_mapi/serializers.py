@@ -1,52 +1,38 @@
 from rest_framework import serializers
-from rest_framework.authtoken.models import Token
 from .models import *
-from django.contrib.auth.hashers import make_password
-
-
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from django.core.exceptions import ValidationError
-from .models import Fournisseur, Admin, Consommateur
 
-class UniqueUsernameValidator:
-    def __call__(self, value):
-        if Fournisseur.objects.filter(username=value).exists() or \
-           Admin.objects.filter(username=value).exists() or \
-           Consommateur.objects.filter(username=value).exists():
-            raise ValidationError('This username is already in use.')
+User = get_user_model()
 
-class UniqueEmailValidator:
-    def __call__(self, value):
-        if Fournisseur.objects.filter(email=value).exists() or \
-           Admin.objects.filter(email=value).exists() or \
-           Consommateur.objects.filter(email=value).exists():
-            raise ValidationError('This email address is already in use.')
+class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ['id', 'email', 'username', 'first_name', 'last_name', 'phone', 'password']
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        user = User.objects.create(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
 
 class FournisseurSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(validators=[UniqueUsernameValidator()])
-    email = serializers.EmailField(validators=[UniqueEmailValidator()])
-
     class Meta:
         model = Fournisseur
-        fields = ['email', 'username', 'password', 'first_name', 'last_name', 'phone']
+        fields = ['id_fournisseur', 'user']
 
 class AdminSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(validators=[UniqueUsernameValidator()])
-    email = serializers.EmailField(validators=[UniqueEmailValidator()])
-
     class Meta:
         model = Admin
-        fields = ['email', 'username', 'password']
+        fields = ['id_admin', 'user']
 
 class ConsommateurSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(validators=[UniqueUsernameValidator()])
-    email = serializers.EmailField(validators=[UniqueEmailValidator()])
-
     class Meta:
         model = Consommateur
-        fields = ['email', 'username', 'password', 'first_name', 'last_name', 'phone']
-
-
+        fields = ['id_consommateur', 'user']
 
 class APIcategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -87,3 +73,5 @@ class AbonnementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Abonnement
         fields = '__all__'
+
+
