@@ -3,19 +3,27 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ManipulateCat from "../../hooks/CategoryHook";
 import APIAjout from "../../hooks/APIHook";
+import VersionTable from "../provider_componants/APIversions";
 const ProvAPIList = () => {
     const { providerAPIs } = ManipulateProv();
     const [showUpdateSection, setShowUpdateSection] = useState(false);
+    const [showVersionsSection, setShowVersionsSection] = useState(false);
     const [selectedAPI, setSelectedAPI] = useState(null);
-    const [logoFile, setLogoFile] = useState(null);
     const handleUpdateClick = (api) => {
       setSelectedAPI(api);
       setShowUpdateSection(true);
-      
     };
 
     const handleReturnClick = () => {
       setShowUpdateSection(false);
+    };
+
+    const handleReturnClick2 = () => {
+        setShowVersionsSection(false);
+    };
+    const handleVersions = (api) => {
+        setSelectedAPI(api);
+        setShowVersionsSection(true);
     };
     const { categories } = ManipulateCat();
     const { updateAPI } = APIAjout();
@@ -51,11 +59,11 @@ const ProvAPIList = () => {
         }));
     };
     
-    console.log("formdata",formData);
+   // console.log("formdata",formData);
     const handleSubmit = (e) => {
       e.preventDefault();
-      // Your submission logic goes here
-      console.log("submittedForm",formData);
+
+      //console.log("submittedForm",formData);
       updateAPI(selectedAPI.id_api,formData);
     };
   
@@ -65,17 +73,17 @@ const ProvAPIList = () => {
         <div>
             <div
                 id="apis-section"
-                style={{ display: !showUpdateSection ? "block" : "none" }}
+                style={{ display: !showUpdateSection && !showVersionsSection ? "block" : "none" }}
             > 
                 <h4 className="title-dashboard">API List</h4>
                 <div className="table-ranking top">
                     <div className="title-ranking">
-                        <div className="col-rankingg"><a href="#">Logo</a></div>
-                        <div className="col-rankingg"><a href="#">Name</a></div>
-                        <div className="col-rankingg"><a href="#">Base Link</a></div>
-                        <div className="col-rankingg"><a href="#">Category</a></div>
-                        <div className="col-rankingg"><a href="#">Visibility</a></div>
-                        <div className="col-rankingg"><a href="#">Action</a></div>
+                        <div className="col-rankingg">Logo</div>
+                        <div className="col-rankingg">Name</div>
+                        <div className="col-rankingg">WebSite</div>
+                        <div className="col-rankingg">Category</div>
+                        <div className="col-rankingg">Visibility</div>
+                        <div className="col-rankingg">Action</div>
                     </div>
                 </div>
                 <div className="table-ranking">
@@ -93,9 +101,12 @@ const ProvAPIList = () => {
                         <div className="col-rankingg">{api.website}</div>
                         <div className="col-rankingg">{api.category_label}</div>
                         <div className="col-rankingg">{api.visibility ? 'Visible' : 'Not Visible'}</div>
-                        <div className="col-rankingg">
-                            <button onClick={() => handleUpdateClick(api)} title="Update API">   
+                        <div className="col-rankingg" style={{ display: 'flex', gap: '10px' }}>
+                            <button className="update_btn"onClick={() => handleUpdateClick(api)} title="Update API">   
                                 <i className="fa-solid fa-pencil"></i>
+                            </button>
+                            <button className="update_btn" onClick={() => handleVersions(api)} title="Manage versions">   
+                                <i class="fa-solid fa-code-compare"></i>
                             </button>
                         </div>
                     </div>
@@ -288,6 +299,20 @@ const ProvAPIList = () => {
                         </div>
                     </section>
                     </div>
+                </div>
+            )}
+            </div>
+            <div>
+            {showVersionsSection && (
+                <div id="versions-section">
+                    <div>
+                        <h4 className="title-dashboard" style={{ display: "inline-block", marginRight: "600px" }}>Manage Versions</h4>
+                        <button onClick={handleReturnClick2} title="Return to APIs"><i class="fa-solid fa-right-from-bracket"></i></button>
+                    </div>
+                    <div className="manage-versions">
+                        <VersionTable selectedAPI={selectedAPI} />
+                    </div>
+
                 </div>
             )}
             </div>

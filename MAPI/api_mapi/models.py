@@ -58,19 +58,18 @@ class API(models.Model):
 
 class APIversion(models.Model):
     id_version = models.AutoField(primary_key=True)
-    num_version= models.CharField(max_length=100)
+    num_version= models.CharField(max_length=100, null=True)
     CHOICES = (
-        ('Alpha', 'Alpha'),  
-        ('Beta', 'Beta'),
-        ('Stable', 'Stable'),
+        ('Active', 'Active'),
+        ('Draft', 'Draft'),
         ('Deprecated', 'Deprecated'),
-        ('Obsolete', 'Obsolete'),
     )
     state = models.CharField(max_length=50, choices=CHOICES)
     description = models.TextField
     date_version = models.DateField(auto_now=True)
-    api = models.ForeignKey(API, on_delete=models.DO_NOTHING )
-    functions = models.ManyToManyField('Functionnality')
+    api = models.ForeignKey(API, on_delete=models.DO_NOTHING, null=True )
+    current = models.BooleanField(default=False, verbose_name="Current Version", null = True)
+    functions = models.ManyToManyField('Functionnality', null=True)
     def __str__(self):
         return self.num_version
     
