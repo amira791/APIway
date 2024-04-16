@@ -1,7 +1,6 @@
 import React, { useEffect,useRef,  useState } from 'react';
 import { Flex, Spacer ,Input, Box , Button , Heading , Text , HStack ,FormControl,FormLabel,Modal, ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody, ModalCloseButton,useDisclosure 
 } from '@chakra-ui/react'
-
 import useTicket from '../../hooks/useTicket';
 import useForum from '../../hooks/useForum';
 import ThreadList from './ThreadList';
@@ -40,6 +39,7 @@ export default function Forum({ forum_id }) {
 }
   return (
     <>
+          
       <Flex
         margin={50}
         flexDirection={'column'}
@@ -59,6 +59,7 @@ export default function Forum({ forum_id }) {
           <ThreadList key={forum_id} forum_id={forum_id}/>
         </Box>
        </Flex>
+
   {/*************************modal to create new conversation **************************/}
     <div class="modal fade popup" id="popup_bid" tabindex="-1" aria-modal="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -76,7 +77,7 @@ export default function Forum({ forum_id }) {
             </div>
         </div>
    </div>
-      
+ 
       </>
   );
 }

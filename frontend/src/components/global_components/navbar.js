@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+function LightMode() {
+    window.switchTheme(); 
+ }  
 
 class Navbar extends Component {
 
@@ -116,7 +119,7 @@ class Navbar extends Component {
                                         </g>
                                         </svg>
                                         </span>
-                                    <a href="#" onClick="{switchTheme()}" className="mode-switch">
+                                        <a href="#" onClick={LightMode} className="mode-switch">
                                         <img id="img-mode" src="assets/images/icon/moon.png" alt="Image"></img>
                                     </a>
                                 </div>  
