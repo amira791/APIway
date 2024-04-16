@@ -6322,12 +6322,12 @@ border-radius: 10rem;
   width: 37%;
   padding-top: 59px;
 }
-.tf-slider-item.style-6 .content-inner .heading {
+.tf-slider-item.style-6 .content-inner .title {
   font-size: 80px;
   line-height: 96px;
   max-width: 600px;
 }
-.tf-slider-item.style-6 .content-inner .heading span {
+.tf-slider-item.style-6 .content-inner .title span {
   background: linear-gradient(to right, rgb(93, 53, 255) 0%, rgb(24, 136, 239) 50%, rgb(247, 56, 251) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -6504,7 +6504,7 @@ border-radius: 10rem;
 .tf-slider .swiper-slide .sub-heading {
   transform: translateY(300px);
 }
-.tf-slider .swiper-slide-active .heading, .tf-slider .swiper-slide-active .sub-heading, .tf-slider .swiper-slide-active .btn-slider, .tf-slider .swiper-slide-active form {
+.tf-slider .swiper-slide-active .heading,.tf-slider .swiper-slide-active .title, .tf-slider .swiper-slide-active .sub-heading, .tf-slider .swiper-slide-active .btn-slider, .tf-slider .swiper-slide-active form {
   opacity: 1;
   transform: translateY(0);
   transition-delay: 300ms;

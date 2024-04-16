@@ -2590,3 +2590,28 @@ header.absolute {
   font-size: 21px;
   margin-bottom: 3%;
  }
+
+ .tf-product-category {
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.tf-product-category img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.category a {
+  color: #333;
+  text-decoration: none;
+}
+
+.category a:hover {
+  color: #555;
+}

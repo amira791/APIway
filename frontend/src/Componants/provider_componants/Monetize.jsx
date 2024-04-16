@@ -756,7 +756,7 @@ const Monetizing = ({Models ,setModels}) => {
                   class="button-popup"
                   data-dismiss="modal"
                   aria-label="Close"
-                 
+                  style={{backgroundColor:"red"}}
                   onClick={() => deletePlan(editedPlan.modelIndex)}
                 >
                 <i class="fa-solid fa-trash"></i>
