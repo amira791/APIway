@@ -16,7 +16,11 @@ const SearchApi = () => {
     const [currentPage, setCurrentPage] = useState(1); // Current page number
     const itemsPerPage = 8; // Number of APIs per page
     const [showSuggestions, setShowSuggestions] = useState(false);
-   
+    const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken'))
+    useEffect(() => {
+        console.log("accessToken:", accessToken);
+       // setAccessToken(1);
+    }, []);
 
     useEffect(() => {
         setSearchResults(APIs); // Set initial search results to all APIs
@@ -46,9 +50,8 @@ const SearchApi = () => {
     }, []);
 
     
-
-    const handleSearch = async () => {
-       
+    const handleSearch = async (event) => {
+        event.preventDefault();
         fetchApiSearchResults({ query: searchQuery, filter: searchFilter, category: selectedCategoryLabel, page: 1 });
     };
 
@@ -129,9 +132,6 @@ const SearchApi = () => {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     return (
         <div className="body header-fixed">
-            <div className="preload preload-container">
-                <div className="preload-logo"></div>
-            </div>
             <div id="wrapper" className="wrapper-style">
                 <div id="page" className="clearfix">
                     <Navbar />
@@ -215,7 +215,7 @@ const SearchApi = () => {
 
 
                                 <form
-                                    onSubmit={handleSearch}
+                                    onSubmit={(event) => handleSearch(event)}
                                     className={`border border-gray-300 w-full max-w-7xl relative `}
                                     id="subscribe-form"
                                     onClick={handleClickOutside} // Add click event listener to handle click outside the form
@@ -304,6 +304,7 @@ const SearchApi = () => {
                                                 termsOfUse={api.terms_of_use}
                                                 website={api.website}
                                                 categoryLabel={api.category_label}
+                                                token={accessToken}
                                             />
                                         ))
                                     ) : (
