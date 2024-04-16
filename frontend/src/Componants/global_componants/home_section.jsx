@@ -145,12 +145,9 @@ const HomeSection = () => {
                                               Price
                                             </div>
                                             <div class="price">
-                                             
+                                              <span class="cash">$70.00</span>
                                               <span class="icon">
-                                                <img
-                                                  src="assets/images/icon/ethe.svg"
-                                                  alt="images"
-                                                />
+                                             
                                               </span>
                                             </div>
                                           </div>
@@ -278,10 +275,7 @@ const HomeSection = () => {
                                             <div class="price">
                                               <span class="cash">$70.00</span>
                                               <span class="icon">
-                                                <img
-                                                  src="assets/images/icon/ethe.svg"
-                                                  alt="images"
-                                                />
+                                             
                                               </span>
                                             </div>
                                           </div>
@@ -409,10 +403,7 @@ const HomeSection = () => {
                                             <div class="price">
                                               <span class="cash">$99.99</span>
                                               <span class="icon">
-                                                <img
-                                                  src="assets/images/icon/ethe.svg"
-                                                  alt="images"
-                                                />
+                                             
                                               </span>
                                             </div>
                                           </div>
@@ -582,7 +573,7 @@ const HomeSection = () => {
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                          <img src="assets/images/slider/slider-13.png" alt="images" />
+                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -649,7 +640,7 @@ const HomeSection = () => {
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                          <img src="assets/images/slider/slider-13.png" alt="images" />
+                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -716,9 +707,9 @@ const HomeSection = () => {
                     </div>
                     <div class="bottom-style2">
                       <div class="price">
-                        <div class="icon">
-                          <img src="assets/images/slider/slider-13.png" alt="images" />
-                        </div>
+                      <div class="icon">
+                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
+                    </div>
                         <div class="content">
                          
                           <div class="cash">Price: $61.99</div>
@@ -785,7 +776,7 @@ const HomeSection = () => {
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                          <img src="assets/images/slider/slider-13.png" alt="images" />
+                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -853,7 +844,7 @@ const HomeSection = () => {
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                          <img src="assets/images/slider/slider-13.png" alt="images" />
+                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -921,7 +912,7 @@ const HomeSection = () => {
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                          <img src="assets/images/slider/slider-13.png" alt="images" />
+                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -988,7 +979,7 @@ const HomeSection = () => {
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                          <img src="assets/images/slider/slider-13.png" alt="images" />
+                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -1055,7 +1046,7 @@ const HomeSection = () => {
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                          <img src="assets/images/slider/slider-13.png" alt="images" />
+                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -1122,7 +1113,7 @@ const HomeSection = () => {
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                          <img src="assets/images/slider/slider-13.png" alt="images" />
+                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -1189,7 +1180,7 @@ const HomeSection = () => {
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                          <img src="assets/images/slider/slider-13.png" alt="images" />
+                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -1256,7 +1247,7 @@ const HomeSection = () => {
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                          <img src="assets/images/slider/slider-13.png" alt="images" />
+                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -1323,7 +1314,7 @@ const HomeSection = () => {
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                          <img src="assets/images/slider/slider-13.png" alt="images" />
+                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -1788,7 +1779,7 @@ const HomeSection = () => {
             <div class="col-lg-3 col-md-6">
                 <div class="tf-create wow fadeInUp"  data-wow-delay="0.2s">
                     <div class="icon">
-                        <img src="assets/images/svg/icon-create-1.svg" alt="Image"/>
+                        <img src="assets/images/svg/icon-create-5.svg" alt="Image"/>
                     </div>
                     <h6 class="title"><a href="#">API Exploitation</a></h6>
                     <p class="content">Search, explore, and integrate APIs seamlessly, unlocking endless possibilities for your projects and endeavors.</p>
@@ -1806,7 +1797,7 @@ const HomeSection = () => {
             <div class="col-lg-3 col-md-6">
                 <div class="tf-create wow fadeInUp"  data-wow-delay="0.6s">
                     <div class="icon">
-                        <img src="assets/images/svg/icon-create-3.svg" alt="Image"/>
+                        <img src="assets/images/svg/icon-create-6.svg" alt="Image"/>
                     </div>
                     <h6 class="title"><a href="#">API Documentation</a> </h6>
                     <p class="content">Unlock the power of clear documentation! Publish comprehensive API docs effortlessly with our platform.</p>
@@ -1815,7 +1806,7 @@ const HomeSection = () => {
             <div class="col-lg-3 col-md-6">
                 <div class="tf-create wow fadeInUp"  data-wow-delay="0.8s">
                     <div class="icon">
-                        <img src="assets/images/svg/icon-create-4.svg" alt="Image"/>
+                        <img src="assets/images/svg/icon-create-9.svg" alt="Image"/>
                     </div>
                     <h6 class="title"><a href="#">API Testing & Monitoring</a></h6>
                     <p class="content">Seamlessly test functionality, performance, and reliability to guarantee a smooth user experience.</p>
