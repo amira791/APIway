@@ -60,7 +60,7 @@ export default function useApi() {
             console.error('Error fetching search results:', error);
             setError(error);
         });
-};
+    };
     const fetchAPIVersions =  (sortby) => {
         axios.post('http://127.0.0.1:8000/api/versions/', sortby )
 

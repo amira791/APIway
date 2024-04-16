@@ -1,5 +1,4 @@
 import React, { useState, useEffect,useRef } from 'react';
-import axios from 'axios';
 import Navbar from './global_components/navbar';
 import Footer from './global_components/footer';
 import Card from './global_components/Card';
@@ -155,27 +154,17 @@ const SearchApi = () => {
                             <div className="tf-container">
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <div className="banner-liver-auction-wrap">
-                                            <div className="content">
-                                                <div className="heading">
-                                                    <h2 className="title text-3xl">Big Boss #1238</h2>
-                                                    <span className="label">Coming soon</span>
-                                                </div>
-                                                <div className="price">
-                                                    <span className="icon"><i className="fab fa-ethereum"></i></span>
-                                                    <span>5 ETH</span>
-                                                </div>
-                                                <p className="sub-heading">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-                                            </div>
-                                            <div className="image">
-                                                <img src="assets/images/img-banner-explore.png" alt="Image" className="img1" />
-                                                <img src="assets/images/img-banner-live-auction-2.png" alt="Image" className="img2" />
-                                            </div>
+                                        <div className="image" style={{ maxHeight: "300px", overflow: "hidden", borderRadius: "15px" }}>
+                                            <video autoPlay muted loop style={{ width: "100%" }}>
+                                                <source src="assets/images/explore3.mp4" type="video/mp4" />
+                                                Your browser does not support the video tag.
+                                            </video>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </section>
+
                         <section className="tf-baner-live-auction style-2">
                             <div className="tf-container">
                                 <div className="mt-6 mb-20 flex flex-col items-center">

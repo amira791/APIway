@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+function LightMode() {
+    // Call the function from your JS file
+    window.switchTheme(); // Assuming your function is defined globally
+ }
 class Navbar extends Component {
-
+    
     render() {
         let publicUrl = process.env.PUBLIC_URL+'/'
 		let CustomClass = this.props.CustomClass ? this.props.CustomClass : ''
@@ -76,7 +79,7 @@ class Navbar extends Component {
                                         </li>
 
                                         <li className="menu-item">
-                                            <a href="add-NFT.html">Create</a>
+                                            <a href="addAPI">Create</a>
                             
                                         </li>
                                                                                 
@@ -116,7 +119,7 @@ class Navbar extends Component {
                                         </g>
                                         </svg>
                                         </span>
-                                    <a href="#" onClick="{switchTheme()}" className="mode-switch">
+                                    <a href="#" onClick={LightMode} className="mode-switch">
                                         <img id="img-mode" src="assets/images/icon/moon.png" alt="Image"></img>
                                     </a>
                                 </div>  
