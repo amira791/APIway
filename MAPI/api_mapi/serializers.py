@@ -1,22 +1,52 @@
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
+from django.contrib.auth import get_user_model
 from .models import *
+User = get_user_model()
+
+class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ['id', 'email', 'username', 'first_name', 'last_name', 'phone', 'password']
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        user = User.objects.create(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
 
 class FournisseurSerializer(serializers.ModelSerializer):
     class Meta:
         model = Fournisseur
-        fields = '__all__'
-    
-    
+        fields = ['id_fournisseur', 'user']
+
 class AdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = Admin
-        fields = '__all__'
+        fields = ['id_admin', 'user']
 
 class ConsommateurSerializer(serializers.ModelSerializer):
     class Meta:
         model = Consommateur
-        fields = '__all__'
+        fields = ['id_consommateur', 'user']
+# class FournisseurSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Fournisseur
+#         fields = '__all__'
+    
+    
+# class AdminSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Admin
+#         fields = '__all__'
+
+# class ConsommateurSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Consommateur
+#         fields = '__all__'
     
 
 class APIcategorySerializer(serializers.ModelSerializer):

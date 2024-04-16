@@ -43,12 +43,17 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt',
+    'rest_framework.authtoken',
 ]
 
+# from api_mapi.models import UserBase
+
+AUTH_USER_MODEL = 'api_mapi.UserBase'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ]
 }
 
@@ -160,6 +165,11 @@ CORS_ORIGIN_WHITELIST = (
 
 
 APPEND_SLASH = False
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),  
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),    
+}
 
 """ CORS_ORIGIN_ALLOW_ALL = True
 

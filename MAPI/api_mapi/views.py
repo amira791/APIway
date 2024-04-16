@@ -14,34 +14,70 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.pagination import PageNumberPagination
+from django.contrib.auth import get_user_model
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 
 
 
+User = get_user_model()
 
 @api_view(['POST'])
 def signup(request):
-    if request.method == 'POST':
-        # Check user type and use corresponding serializer
-        if request.data['type'] == "F":
-            serializer = FournisseurSerializer(data=request.data)
-        elif request.data['type'] == "C":
-            serializer = ConsommateurSerializer(data=request.data)
-        else:
-            return Response({'error': 'Invalid user type'}, status=status.HTTP_400_BAD_REQUEST)
+    user_type = request.data.get('user_type')
+    user_data = request.data.get('user')
 
-        # Validate data and return errors if any
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # Validate user_type
+    if user_type not in ['fournisseur', 'admin', 'consommateur']:
+        return Response({'error': 'Invalid user_type'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Save user and retrieve token (logic might need adjustment)
-        serializer.save()
-        user = serializer.instance  # Access the saved user object
-        token = Token.objects.get(user=user)  # Create or retrieve token
+    # Create user and related model based on user_type
+    serializer = UserSerializer(data=user_data)
+    if serializer.is_valid():
+        user = serializer.save()
 
-        # Return successful response with user details and token
-        return Response({"token": token.key, "user": user, "type": request.data['type']}, status=status.HTTP_201_CREATED)
+        if user_type == 'fournisseur':
+            Fournisseur.objects.create(user=user)
+        elif user_type == 'admin':
+            Admin.objects.create(user=user)
+        elif user_type == 'consommateur':
+            Consommateur.objects.create(user=user)
 
-    return Response({}, status=status.HTTP_405_METHOD_NOT_ALLOWED)  # Handle non-POST requests
+        return Response({'success': 'User created successfully'}, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def signin(request):
+    username_or_email = request.data.get('username_or_email')
+    password = request.data.get('password')
+
+    if username_or_email is None or password is None:
+        return Response({'error': 'Please provide both username/email and password'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Check if the input is an email address
+    is_email = '@' in username_or_email
+
+    if is_email:
+        user = UserBase.objects.filter(email=username_or_email).first()
+    else:
+        user = UserBase.objects.filter(username=username_or_email).first()
+
+    if user is None:
+        return Response({'error': 'User does not exist'}, status=status.HTTP_401_UNAUTHORIZED)
+
+    if not user.check_password(password):
+        return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+    refresh = RefreshToken.for_user(user)
+    access = AccessToken.for_user(user)
+
+    serialized_user = UserSerializer(user).data
+
+    return Response({
+        'refresh': str(refresh),
+        'access': str(access),
+        'user': serialized_user
+    }, status=status.HTTP_200_OK)
 
 
 # Fournisseur View
