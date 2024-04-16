@@ -48,8 +48,8 @@ const SearchApi = () => {
 
     
 
-    const handleSearch = async () => {
-       
+    const handleSearch = async (event) => {
+        event.preventDefault();
         fetchApiSearchResults({ query: searchQuery, filter: searchFilter, category: selectedCategoryLabel, page: 1 });
     };
 
@@ -226,7 +226,7 @@ const SearchApi = () => {
 
 
                                 <form
-                                    onSubmit={handleSearch}
+                                    onSubmit={(event) => handleSearch(event)}
                                     className={`border border-gray-300 w-full max-w-7xl relative `}
                                     id="subscribe-form"
                                     onClick={handleClickOutside} // Add click event listener to handle click outside the form
