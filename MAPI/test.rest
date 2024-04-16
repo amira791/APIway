@@ -1,7 +1,7 @@
 POST http://127.0.0.1:8000/signin/
 Content-Type: application/json
 
-{ "username_or_email": "admin1@example.com", "password": "1234" }
+{ "username_or_email": "consommateur2", "password": "1234" }
 
 ###
 
@@ -11,8 +11,8 @@ Content-Type: application/json
 {
   "user_type": "fournisseur",
   "user": {
-    "email": "fournisseur1@example.com",
-    "username": "fournisseur1",
+    "email": "fournisseur2@example.com",
+    "username": "fournisseur2",
     "first_name": "John",
     "last_name": "Doe",
     "phone": "1234567890",
@@ -29,8 +29,8 @@ Content-Type: application/json
 {
   "user_type": "consommateur",
   "user": {
-    "email": "consommateur1@example.com",
-    "username": "consommateur1",
+    "email": "consommateur2@example.com",
+    "username": "consommateur2",
     "first_name": "John",
     "last_name": "Doe",
     "phone": "1234567890",

@@ -19,42 +19,67 @@ class UserBase(AbstractUser):
 
     def __str__(self):
         return self.username
+    
 
-class Fournisseur(models.Model):
+
+class UserProfileBase(models.Model):
+    user = models.OneToOneField(UserBase, on_delete=models.CASCADE)
+    groups = models.ManyToManyField(Group)
+    user_permissions = models.ManyToManyField(Permission)
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return self.user.username
+
+class Fournisseur(UserProfileBase):
     id_fournisseur = models.AutoField(primary_key=True)
 
-    groups = models.ManyToManyField(Group, related_name='fournisseur_groups')
-    user_permissions = models.ManyToManyField(Permission, related_name='fournisseur_user_permissions')
-
-    # One-to-one relationship with UserBase
-    user = models.OneToOneField(UserBase, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.user.username
-
-class Admin(models.Model):
+class Admin(UserProfileBase):
     id_admin = models.AutoField(primary_key=True)
 
-    groups = models.ManyToManyField(Group, related_name='admin_groups')
-    user_permissions = models.ManyToManyField(Permission, related_name='admin_user_permissions')
-
-    # One-to-one relationship with UserBase
-    user = models.OneToOneField(UserBase, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.user.username
-
-class Consommateur(models.Model):
+class Consommateur(UserProfileBase):
     id_consommateur = models.AutoField(primary_key=True)
 
-    groups = models.ManyToManyField(Group, related_name='consommateur_groups')
-    user_permissions = models.ManyToManyField(Permission, related_name='consommateur_user_permissions')
 
-    # One-to-one relationship with UserBase
-    user = models.OneToOneField(UserBase, on_delete=models.CASCADE)
+# class Fournisseur(models.Model):
+#     id_fournisseur = models.AutoField(primary_key=True)
 
-    def __str__(self):
-        return self.user.username
+#     groups = models.ManyToManyField(Group, related_name='fournisseur_groups')
+#     user_permissions = models.ManyToManyField(Permission, related_name='fournisseur_user_permissions')
+
+#     # One-to-one relationship with UserBase
+#     user = models.OneToOneField(UserBase, on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return self.user.username
+
+# class Admin(models.Model):
+#     id_admin = models.AutoField(primary_key=True)
+
+#     groups = models.ManyToManyField(Group, related_name='admin_groups')
+#     user_permissions = models.ManyToManyField(Permission, related_name='admin_user_permissions')
+
+#     # One-to-one relationship with UserBase
+#     user = models.OneToOneField(UserBase, on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return self.user.username
+
+# class Consommateur(models.Model):
+#     id_consommateur = models.AutoField(primary_key=True)
+
+#     groups = models.ManyToManyField(Group, related_name='consommateur_groups')
+#     user_permissions = models.ManyToManyField(Permission, related_name='consommateur_user_permissions')
+
+#     # One-to-one relationship with UserBase
+#     user = models.OneToOneField(UserBase, on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return self.user.username
+
+
   
 
 
