@@ -1,0 +1,59 @@
+POST http://127.0.0.1:8000/signin/
+Content-Type: application/json
+
+{ "username_or_email": "consommateur2", "password": "1234" }
+
+###
+
+POST http://127.0.0.1:8000/signup/
+Content-Type: application/json
+
+{
+  "user_type": "fournisseur",
+  "user": {
+    "email": "fournisseur2@example.com",
+    "username": "fournisseur2",
+    "first_name": "John",
+    "last_name": "Doe",
+    "phone": "1234567890",
+    "password": "1234"
+  }
+}
+
+
+###
+
+POST http://127.0.0.1:8000/signup/
+Content-Type: application/json
+
+{
+  "user_type": "consommateur",
+  "user": {
+    "email": "consommateur2@example.com",
+    "username": "consommateur2",
+    "first_name": "John",
+    "last_name": "Doe",
+    "phone": "1234567890",
+    "password": "1234"
+  }
+}
+
+###
+
+POST http://127.0.0.1:8000/signup/
+Content-Type: application/json
+
+{
+  "user_type": "admin",
+  "user": {
+    "email": "admin1@example.com",
+    "username": "admin1",
+    "first_name": "John",
+    "last_name": "Doe",
+    "phone": "1234567890",
+    "password": "1234"
+  }
+}
+
+
+###

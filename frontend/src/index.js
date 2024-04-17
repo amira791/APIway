@@ -19,6 +19,7 @@ import ConsomAccountManag from "./components/admin/consAccountManag";
 import SearchApi from "./components/RechercherAPI";
 import AdminHome from "./components/admin/adminHomePage";
 import ApiDetails from './components/ApiDetails'
+import LoginPage from './components/auth_components/login';
 
 class Root extends Component {
   render() {
@@ -26,12 +27,12 @@ class Root extends Component {
       <div id="App">
         <Router>
           <Routes>
-            <Route exact path="/api" element={<Home />} />
+            <Route exact path="/" element={<Home />} />
             <Route exact path="/adminhome" element={<AdminHome />} />
             <Route exact path='/fourAccounts' element = {<FourAccountManag />} />
             <Route exact path='/consomAccounts' element = {<ConsomAccountManag />} />
             <Route exact path="/searchApi" element={<SearchApi  />} />
-            <Route path='/ApiDetail/:api_id' element={<ApiDetails />}/>
+            <Route exact path="/login" element={<LoginPage  />} />
           </Routes>
         </Router>
       </div>

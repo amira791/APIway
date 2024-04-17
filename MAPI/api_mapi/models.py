@@ -1,42 +1,81 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, AbstractUser
+from django.contrib.auth.models import Group, Permission
 
-class Fournisseur(User):
-    id_fournisseur = models.AutoField(primary_key=True)
-    FR_first_name = models.CharField(max_length=100)
-    FR_last_name = models.CharField(max_length=100)
-    FRemail = models.CharField(max_length=100)
-    FRusername = models.CharField(max_length=100)
-    FRpassword = models.CharField(max_length=100)
-    FRphone = models.CharField(max_length=100)
-    FRstatus = models.CharField(max_length=100)
+class UserBase(AbstractUser):
+    email = models.CharField(max_length=100, unique=True)
+    username = models.CharField(max_length=100, unique=True)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
 
     def __str__(self):
-        return self.FRusername
+        return self.username
     
-class Admin(User):
+
+
+class UserProfileBase(models.Model):
+    user = models.OneToOneField(UserBase, on_delete=models.CASCADE, null=True)
+    groups = models.ManyToManyField(Group)
+    user_permissions = models.ManyToManyField(Permission)
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return self.user.username
+
+class Fournisseur(UserProfileBase):
+    id_fournisseur = models.AutoField(primary_key=True)
+
+class Admin(UserProfileBase):
     id_admin = models.AutoField(primary_key=True)
-    AdminEmail = models.CharField(max_length=100)
-    AdminUsername = models.CharField(max_length=100)
-    AdminEmail = models.CharField(max_length=100)
-    AdminUsername = models.CharField(max_length=100)
-    AdminPassword = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.AdminUsername
-
-class Consommateur(User):
+class Consommateur(UserProfileBase):
     id_consommateur = models.AutoField(primary_key=True)
-    CN_first_name = models.CharField(max_length=100)
-    CN_last_name = models.CharField(max_length=100)
-    CNemail = models.CharField(max_length=100)
-    CNusername = models.CharField(max_length=100)
-    CNpassword = models.CharField(max_length=100)
-    CNphone = models.CharField(max_length=100)
-    CNstatus = models.CharField(max_length=100)
+# class Fournisseur(User):
+#     id_fournisseur = models.AutoField(primary_key=True)
+#     FR_first_name = models.CharField(max_length=100)
+#     FR_last_name = models.CharField(max_length=100)
+#     FRemail = models.CharField(max_length=100)
+#     FRusername = models.CharField(max_length=100)
+#     FRpassword = models.CharField(max_length=100)
+#     FRphone = models.CharField(max_length=100)
+#     FRstatus = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.CNusername
+#     def __str__(self):
+#         return self.FRusername
+    
+# class Admin(User):
+#     id_admin = models.AutoField(primary_key=True)
+#     AdminEmail = models.CharField(max_length=100)
+#     AdminUsername = models.CharField(max_length=100)
+#     AdminEmail = models.CharField(max_length=100)
+#     AdminUsername = models.CharField(max_length=100)
+#     AdminPassword = models.CharField(max_length=100)
+
+#     def __str__(self):
+#         return self.AdminUsername
+
+# class Consommateur(User):
+#     id_consommateur = models.AutoField(primary_key=True)
+#     CN_first_name = models.CharField(max_length=100)
+#     CN_last_name = models.CharField(max_length=100)
+#     CNemail = models.CharField(max_length=100)
+#     CNusername = models.CharField(max_length=100)
+#     CNpassword = models.CharField(max_length=100)
+#     CNphone = models.CharField(max_length=100)
+#     CNstatus = models.CharField(max_length=100)
+
+#     def __str__(self):
+#         return self.CNusername
 
 class APIcategory(models.Model):
     id_category = models.AutoField(primary_key=True)
