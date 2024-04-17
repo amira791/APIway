@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "antd": "^5.15.3",
+    "bootstrap": "^5.3.3",
+    "cors": "^2.8.5",
+    "jquery": "^3.7.1",
+    "react-mde": "^11.5.0",
+    "reactstrap": "^9.2.2"
+  }
+}
