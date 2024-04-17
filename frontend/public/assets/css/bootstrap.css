@@ -4762,13 +4762,13 @@ html {
   
   .page-item:first-child .page-link {
     margin-left: 0;
-    border-bottom-left-radius: 0.25rem;
+  
     border-top-left-radius: 0.25rem;
   }
   
   .page-item:last-child .page-link {
     border-bottom-right-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
+   
   }
   
   .page-item.active .page-link {

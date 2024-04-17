@@ -165,39 +165,32 @@
 
     var tfFilter = function () {
         $(".tf-filter").each(function () {
-        // if ( $().isotope ) {
-            
             var $container = $(this).find('.tf-filter-container').isotope({
                 itemSelector: '.tf-loadmore',
                 layoutMode: 'fitRows',
                 percentPosition: true,
             });
-
-            
+    
             $container.imagesLoaded().progress( function() {
                 $container.isotope('layout');
             });
             
             $container.isotope({ filter: ".3d" });
-        
-            $(this).find('.filter-menu li ').on( 'click', function(e) {
-                e.preventDefault();
-                var filterValue = $( this ).find('a').attr('data-filter');
-                $container.isotope({ filter: filterValue });
-            });
     
-            $(this).find('.filter-menu').each( function() {
-                $(this).find('.filter-menu li ').removeClass('active');
-                $('.filter-menu li ').on( 'click', function() {  
-                    $(this).closest('.filter-menu').find('li ').removeClass('active');
-                    $(this).addClass('active');
-                
-                });
+            $(this).find('.filter-menu li ').on('click', function(e) {
+                e.preventDefault();
+                var filterValue = $(this).find('a').attr('data-filter');
+                $container.isotope({ filter: filterValue });
+                // Remove active class from all buttons
+                $(this).closest('.filter-menu').find('li ').removeClass('active');
+                // Add active class to the clicked button
+                $(this).addClass('active');
             });
-        // };
-    });
+        });
+    };
+    
         
-    } 
+    
 
     var tfTabs = function(){
         $('.tf-tab').each(function(){
@@ -459,7 +452,7 @@
         tfFilter();
         tfTabs();
         tfAccordionWidget();
-        addClassBoard();
+       
         tfTabs2();
         btn_option();
         tfFixedSidebar();
@@ -470,4 +463,30 @@
 
 })(jQuery);
 
+var dropdown = function(id){
+    var obj = $(id+'.dropdown');
+    var btn = obj.find('.btn-selector');
+    var dd = obj.find('ul');
+    var opt = dd.find('li');
+   
+
+    dd.hide();
+    obj.on("mouseenter", function() {
+        dd.show();
+        dd.addClass('show');
+        $(this).css("z-index",1000);
+    }).on("mouseleave", function() {
+        dd.hide();
+        $(this).css("z-index","auto")
+        dd.removeClass('show');
+    })
+    
+    opt.on("click", function() {
+        dd.hide();
+        var txt = $(this).text();
+        opt.removeClass("active");
+        $(this).addClass("active");
+        btn.text(txt);
+    });
+}
 

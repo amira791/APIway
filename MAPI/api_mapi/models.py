@@ -1,37 +1,81 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, AbstractUser
+from django.contrib.auth.models import Group, Permission
 
-class Fournisseur(models.Model):
-    id_fournisseur = models.AutoField(primary_key=True)
-    FR_first_name = models.CharField(max_length=100)
-    FR_last_name = models.CharField(max_length=100)
-    FRemail = models.CharField(max_length=100)
-    FRusername = models.CharField(max_length=100)
-    FRpassword = models.CharField(max_length=100)
-    FRphone = models.CharField(max_length=100)
+class UserBase(AbstractUser):
+    email = models.CharField(max_length=100, unique=True)
+    username = models.CharField(max_length=100, unique=True)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
 
     def __str__(self):
-        return self.FRusername
+        return self.username
     
-class Admin(models.Model):
+
+
+class UserProfileBase(models.Model):
+    user = models.OneToOneField(UserBase, on_delete=models.CASCADE, null=True)
+    groups = models.ManyToManyField(Group)
+    user_permissions = models.ManyToManyField(Permission)
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return self.user.username
+
+class Fournisseur(UserProfileBase):
+    id_fournisseur = models.AutoField(primary_key=True)
+
+class Admin(UserProfileBase):
     id_admin = models.AutoField(primary_key=True)
-    AdminEmail = models.CharField(max_length=100)
-    AdminUsername = models.CharField(max_length=100)
-    AdminPassword = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.AdminUsername
-
-class Consommateur(models.Model):
+class Consommateur(UserProfileBase):
     id_consommateur = models.AutoField(primary_key=True)
-    CN_first_name = models.CharField(max_length=100)
-    CN_last_name = models.CharField(max_length=100)
-    CNemail = models.CharField(max_length=100)
-    CNusername = models.CharField(max_length=100)
-    CNpassword = models.CharField(max_length=100)
-    CNphone = models.CharField(max_length=100)
+# class Fournisseur(User):
+#     id_fournisseur = models.AutoField(primary_key=True)
+#     FR_first_name = models.CharField(max_length=100)
+#     FR_last_name = models.CharField(max_length=100)
+#     FRemail = models.CharField(max_length=100)
+#     FRusername = models.CharField(max_length=100)
+#     FRpassword = models.CharField(max_length=100)
+#     FRphone = models.CharField(max_length=100)
+#     FRstatus = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.CNusername
+#     def __str__(self):
+#         return self.FRusername
+    
+# class Admin(User):
+#     id_admin = models.AutoField(primary_key=True)
+#     AdminEmail = models.CharField(max_length=100)
+#     AdminUsername = models.CharField(max_length=100)
+#     AdminEmail = models.CharField(max_length=100)
+#     AdminUsername = models.CharField(max_length=100)
+#     AdminPassword = models.CharField(max_length=100)
+
+#     def __str__(self):
+#         return self.AdminUsername
+
+# class Consommateur(User):
+#     id_consommateur = models.AutoField(primary_key=True)
+#     CN_first_name = models.CharField(max_length=100)
+#     CN_last_name = models.CharField(max_length=100)
+#     CNemail = models.CharField(max_length=100)
+#     CNusername = models.CharField(max_length=100)
+#     CNpassword = models.CharField(max_length=100)
+#     CNphone = models.CharField(max_length=100)
+#     CNstatus = models.CharField(max_length=100)
+
+#     def __str__(self):
+#         return self.CNusername
 
 class APIcategory(models.Model):
     id_category = models.AutoField(primary_key=True)
@@ -43,12 +87,15 @@ class APIcategory(models.Model):
 
 class API(models.Model):
     id_api = models.AutoField(primary_key=True)
-    api_name = models.CharField(max_length=100)
-    description = models.CharField(max_length=100)
-    price = models.FloatField
-    provider = models.ForeignKey(Fournisseur, on_delete=models.DO_NOTHING )
-    category = models.ForeignKey(APIcategory, on_delete=models.DO_NOTHING )
-    pricingPlans = models.ManyToManyField('Tarification')  
+    api_name = models.CharField(max_length=100, blank = True)
+    description = models.CharField(max_length=100, help_text="Brief description of the API", blank = True)
+    provider = models.ForeignKey(Fournisseur, on_delete=models.DO_NOTHING, verbose_name="Provider", null = True)
+    category = models.ForeignKey(APIcategory, on_delete=models.DO_NOTHING, related_name="Category", null = True)
+    terms_of_use = models.TextField(verbose_name="Terms of Use", help_text="Terms and conditions for API usage", blank = True)
+    logo = models.ImageField(upload_to="assets/images/", verbose_name="Logo", null = True)
+    visibility = models.BooleanField(default=False, verbose_name="Visibility", null = True)
+    website = models.TextField(verbose_name="Web Site", help_text="Base link for API ", blank = True)
+    
     def __str__(self):
         return self.api_name
     
@@ -84,6 +131,22 @@ class APIendpoint(models.Model):
     link= models.TextField
     api = models.ForeignKey(API, on_delete=models.DO_NOTHING )
     version = models.ForeignKey(APIversion, on_delete=models.DO_NOTHING )
+    def __str__(self):
+        return self.title
+
+class Type(models.Model):
+    id_type = models.AutoField(primary_key=True)
+    name= models.CharField(max_length=100)
+    def __str__(self):
+        return self.title
+
+class Endpoint_parameter(models.Model):
+    id_parameter = models.AutoField(primary_key=True)
+    id_endpoint = models.ForeignKey(API, on_delete=models.DO_NOTHING )
+    name= models.CharField(max_length=100)
+    type_id = models.ForeignKey(Type, on_delete=models.DO_NOTHING )
+    required = models.BooleanField
+    deleted = models.BooleanField
     def __str__(self):
         return self.title
 
