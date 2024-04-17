@@ -294,25 +294,32 @@ const SearchApi = () => {
                                 </div>
 
                                 <div className="row tf-filter-container">
-                                    {currentApis.length > 0 ? (
-                                        currentApis.map(api => (
+                                {currentApis.length > 0 ? (
+                                    currentApis.map(api => {
+                                        const logoFileName = api.logo.replace(/^.*[\\\/]/, '');
+                                        console.log("logoFileName",logoFileName);
+                                       
+                                        const imagePath = `/assets/images/${logoFileName}`;
+                                        return (
                                             <Card
+                                            
                                                 key={api.id_api}
+                                                idApi={api.id_api}
                                                 apiName={api.api_name}
                                                 description={api.description}
-                                                logo={api.logo}
+                                                logo={imagePath}
                                                 termsOfUse={api.terms_of_use}
                                                 website={api.website}
                                                 categoryLabel={api.category_label}
-                                                token={accessToken}
                                             />
-                                        ))
-                                    ) : (
-                                        <div className="col-md-12 text-center mt-4">
-                                            <i className="icon-fl-search-filled text-7xl text-gray-500 "></i>
-                                            <p className='text-5xl text-gray-500 mb-16 mt-6'>No results found...!</p>
-                                        </div>
-                                    )}
+                                        );
+                                    })
+                                ) : (
+                                    <div className="col-md-12 text-center mt-4">
+                                        <i className="icon-fl-search-filled text-7xl text-gray-500 "></i>
+                                        <p className='text-5xl text-gray-500 mb-16 mt-6'>No results found...!</p>
+                                    </div>
+                                )}
                                 </div>
                                 <div className="pagination-container">
                                     <ul className="pagination">

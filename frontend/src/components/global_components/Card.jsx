@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
 const Card = ({ apiName, description, logo, termsOfUse, website, categoryLabel, token }) => {
     const navigate = useNavigate();
     const [showLoginPrompt, setShowLoginPrompt] = useState(false);
@@ -30,8 +30,8 @@ const Card = ({ apiName, description, logo, termsOfUse, website, categoryLabel, 
                     </div>
                 </div>
                 <div className="features">
-                    <div className="product-media">
-                        <img src="assets/images/apiLogo.jpg" alt="API Logo" />
+                    <div className="product-media" style={{height:'200px'}}>
+                        <img src={logo} alt="API Logo" style={{height:'100%', width:'100%', objectFit:'cover'}} />
                     </div>
                 </div>
                 <div className="bottom">
@@ -53,10 +53,10 @@ const Card = ({ apiName, description, logo, termsOfUse, website, categoryLabel, 
                         </div>
                     </div>
                     <div className="product-button">
-                        <a href="#" data-toggle="modal" data-target="#popup_bid" className="tf-button flex items-center">
-                            <span className="fas fa-info-circle" style={{ marginRight: '-15px' }}></span>
+                        <Link className='tf-button flex items-center' to={`/ApiDetail/`}>
+                          <span className="fas fa-info-circle" style={{ marginRight: '-15px' }}></span>
                            See Details
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

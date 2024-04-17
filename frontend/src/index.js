@@ -33,6 +33,7 @@ class Root extends Component {
             <Route exact path='/consomAccounts' element = {<ConsomAccountManag />} />
             <Route exact path="/searchApi" element={<SearchApi  />} />
             <Route exact path="/login" element={<LoginPage  />} />
+            <Route path='/ApiDetail' element={<ApiDetails/>}></Route>
           </Routes>
         </Router>
       </div>
