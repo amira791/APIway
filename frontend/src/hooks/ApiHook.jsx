@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export default function useApi() {
     const [APIs, setAPIs] = useState([]);
+    const [Api, setApi] = useState([]);
     const [Categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -35,6 +36,21 @@ export default function useApi() {
                 setLoading(false);
             });
     }, []);
+
+    
+    
+    const fetchApi = async (id) => {
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/apis/${id}/`);
+            console.log('Fetched Data:', response.data);
+            setApi(response.data);
+            console.log('Api:', Api);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setError(error);
+        }
+    };
+    
 
     const fetchApiCategories = () => {
         axios.get('http://127.0.0.1:8000/apicategories/')
@@ -106,9 +122,11 @@ export default function useApi() {
     return {
         searchResults,
         Categories,
+        Api,
         APIs,
         functionalities,
         suggestions,
+        fetchApi,
         setSearchResults,
         fetchApiCategories,
         fetchApiSearchResults,

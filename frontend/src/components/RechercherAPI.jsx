@@ -25,6 +25,7 @@ const SearchApi = () => {
 
     useEffect(() => {
         fetchApiCategories();
+        
     }, []);
 
     useEffect(() => {
@@ -48,8 +49,8 @@ const SearchApi = () => {
 
     
 
-    const handleSearch = async () => {
-       
+    const handleSearch = async (event) => {
+        event.preventDefault();
         fetchApiSearchResults({ query: searchQuery, filter: searchFilter, category: selectedCategoryLabel, page: 1 });
     };
 
@@ -126,6 +127,14 @@ const SearchApi = () => {
     const indexOfFirstApi = indexOfLastApi - itemsPerPage;
     const currentApis = searchResults.slice(indexOfFirstApi, indexOfLastApi);
 
+
+
+
+    //------------------------------------------------------
+    const [logos, setLogos] = useState({}); // State to store imported logos
+
+   
+    
     // Function to change page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     return (
@@ -226,7 +235,7 @@ const SearchApi = () => {
 
 
                                 <form
-                                    onSubmit={handleSearch}
+                                   onSubmit={(event) => handleSearch(event)}
                                     className={`border border-gray-300 w-full max-w-7xl relative `}
                                     id="subscribe-form"
                                     onClick={handleClickOutside} // Add click event listener to handle click outside the form
@@ -305,24 +314,33 @@ const SearchApi = () => {
                                 </div>
 
                                 <div className="row tf-filter-container">
-                                    {currentApis.length > 0 ? (
-                                        currentApis.map(api => (
+                                {currentApis.length > 0 ? (
+                                    currentApis.map(api => {
+                                        const logoFileName = api.logo.replace(/^.*[\\\/]/, '');
+                                        console.log("logoFileName",logoFileName);
+                                       
+                                        const imagePath = `/assets/images/${logoFileName}`;
+                                        return (
                                             <Card
+                                            
                                                 key={api.id_api}
+                                                idApi={api.id_api}
                                                 apiName={api.api_name}
                                                 description={api.description}
-                                                logo={api.logo}
+                                                logo={imagePath}
                                                 termsOfUse={api.terms_of_use}
                                                 website={api.website}
                                                 categoryLabel={api.category_label}
                                             />
-                                        ))
-                                    ) : (
-                                        <div className="col-md-12 text-center mt-4">
-                                            <i className="icon-fl-search-filled text-7xl text-gray-500 "></i>
-                                            <p className='text-5xl text-gray-500 mb-16 mt-6'>No results found...!</p>
-                                        </div>
-                                    )}
+                                        );
+                                    })
+                                ) : (
+                                    <div className="col-md-12 text-center mt-4">
+                                        <i className="icon-fl-search-filled text-7xl text-gray-500 "></i>
+                                        <p className='text-5xl text-gray-500 mb-16 mt-6'>No results found...!</p>
+                                    </div>
+                                )}
+
                                 </div>
                                 <div className="pagination-container">
                                     <ul className="pagination">
