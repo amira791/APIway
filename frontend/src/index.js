@@ -18,6 +18,7 @@ import FourAccountManag from "./components/admin/fourAccountManag";
 import ConsomAccountManag from "./components/admin/consAccountManag";
 import SearchApi from "./components/RechercherAPI";
 import AdminHome from "./components/admin/adminHomePage";
+import ApiDetails from './components/ApiDetails'
 
 class Root extends Component {
   render() {
@@ -30,6 +31,7 @@ class Root extends Component {
             <Route exact path='/fourAccounts' element = {<FourAccountManag />} />
             <Route exact path='/consomAccounts' element = {<ConsomAccountManag />} />
             <Route exact path="/searchApi" element={<SearchApi  />} />
+            <Route path='/ApiDetail/:api_id' element={<ApiDetails />}/>
           </Routes>
         </Router>
       </div>
