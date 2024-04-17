@@ -15,7 +15,7 @@ class Footer extends Component {
                         <div className="col-xl-4 col-lg-3 col-md-3">
                             <div className="widget widget-infor">
                                 <div className="logo">
-                                    <img id="logo_footer" src="assets/images/logo/logo_dark.png" alt="Image" />
+                                    <img id="logo_footer"  style={{paddingTop:"10%",width:"80%"}} src="assets/images/logo/MAPI_logo_White.png" alt="Image" />
                                 </div>
                                 <p className="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
                                 <ul className="social-item">
@@ -37,22 +37,14 @@ class Footer extends Component {
                                     <h6 className="widget-title">Maketplace</h6>
                                     <ul >
                                         <li><a href="#">Explore</a></li>
-                                        <li><a href="#">Item Detail</a></li>
-                                        <li><a href="#">Live Auditon</a></li>
+                                    
                                     </ul>
                                 </div>
-                                <div className="menu menu-2">
-                                    <h6 className="widget-title">Stats</h6>
-                                    <ul >
-                                        <li><a href="#">Ranking</a></li>
-                                        <li><a href="#">Ativity</a></li>
-                                        <li><a href="#">Auther</a></li>
-                                    </ul>
-                                </div>
+                                
                                 <div className="menu menu-3">
-                                    <h6 className="widget-title">Resoure</h6>
+                                    <h6 className="widget-title">Ressources</h6>
                                     <ul >
-                                        <li><a href="#">Blogs</a></li>
+                                        <li><a href="#">Contact</a></li>
                                         <li><a href="#">Help and Center</a></li>
                                         <li><a href="#">FaQs</a></li>
                                     </ul>

@@ -5,7 +5,35 @@ function LightMode() {
     window.switchTheme(); // Assuming your function is defined globally
  }
 class Navbar extends Component {
-    
+    constructor(props) {
+        super(props);
+        this.state = {
+            menuItems: [
+                { name: "Home", url: "#", active: true },
+                { name: "Explore", url: "explore" },
+                { name: "Help Center", url: "help-center.html" },
+                { name: "FAQ", url: "faq.html" },
+                { name: "Contact", url: "contact.html" }
+            ]
+        };
+    }
+
+    componentDidMount() {
+        // Update the menu items with the current URL
+        this.updateCurrentMenuItem();
+    }
+
+    updateCurrentMenuItem = () => {
+        const currentUrl = window.location.href;
+        const updatedMenuItems = this.state.menuItems.map(item => {
+            if (item.url === currentUrl) {
+                return { ...item, active: true };
+            } else {
+                return { ...item, active: false };
+            }
+        });
+        this.setState({ menuItems: updatedMenuItems });
+    };
     render() {
         let publicUrl = process.env.PUBLIC_URL+'/'
 		let CustomClass = this.props.CustomClass ? this.props.CustomClass : ''
@@ -18,90 +46,25 @@ class Navbar extends Component {
                                 <div id="site-logo" className="clearfix">
                                     <div id="site-logo-inner">
                                         <a href="index-2.html" rel="home" className="main-logo">
-                                            <img id="logo_header" src="assets/images/logo/logo_dark.png" alt="Image"></img>
+                                            <img id="logo_header" style={{paddingTop:"10%",translate:"-100px",width:"80%"}} src="assets/images/logo/MAPI_logo_White.png" alt="Image"></img>
                                         </a>
                                     </div>
                                 </div>
                                 
-                            <div className="header-center">
-                                <nav id="main-nav" className="main-nav">
-                                    <ul id="menu-primary-menu" className="menu">
-                                        <li className="menu-item menu-item-has-children current-menu-item">
-                                            <a href="#">Home</a>
-                                            <ul className="sub-menu">
-                                                <li className="menu-item "><a href="index-2.html">Home 1</a></li>
-                                                <li className="menu-item"><a href="home2.html">Home 2</a></li>
-                                                <li className="menu-item"><a href="home3.html">Home 3</a></li>
-                                                <li className="menu-item current-item"><a href="home4.html">Home 4</a></li>
-                                                <li className="menu-item"><a href="home5.html">Home 5</a></li>
-                                                <li className="menu-item"><a href="home6.html">Home 6</a></li>
-                                            </ul>
-                                        </li>
-                                        <li className="menu-item menu-item-has-children">
-                                            <a href="#">Explore</a>
-                                            <ul className="sub-menu">
-                                                <li className="menu-item"><a href="explore-grid.html">Explore</a></li>
-                                                <li className="menu-item"><a href="explore-banner.html">Explore 2</a></li>
-                                                <li className="menu-item"><a href="explore-sidebar-3-item.html">Explore 3 Item</a></li>
-                                                <li className="menu-item"><a href="explore-sidebar-4-item.html">Explore 4 Item</a></li>
-                                                <li className="menu-item"><a href="collection.html">Collection</a></li>
-                                                <li className="menu-item"><a href="live-auction.html">Live Auction</a></li>
-                                                <li className="menu-item"><a href="live-auction-2.html">Live Auction 2</a></li>
-                                                <li className="menu-item"><a href="item-details.html">Item Details</a></li>
-                                                <li className="menu-item"><a href="item-details-2.html">Item Details 2</a></li>
-                                            </ul>
-                                        </li>
-                                        
-
-                                        <li className="menu-item menu-item-has-children">
-                                            <a href="#">Pages</a>
-                                            <ul className="sub-menu">
-                                                <li className="menu-item">
-                                                    <a href="#">Dashboard </a>
-                                                    <ul className="sub-menu menu-item-has-children right-sub-menu ">
-                                                        <li className="menu-item"><a href="inventory.html">Dashboard Inventory</a></li>
-                                                        <li className="menu-item"><a href="wallet-board.html">Dashboard Wallet</a></li>
-                                                        <li className="menu-item"><a href="history-board.html">Dashboard History</a></li>
-                                                        <li className="menu-item"><a href="follow-board.html">Dashboard Following</a></li>
-                                                        <li className="menu-item"><a href="favorite-board.html">Dashboard Favorites</a></li>
-                                                        <li className="menu-item"><a href="edit-profile-board.html">Dashboard Edit Profile 1</a></li>
-                                                        <li className="menu-item"><a href="edit-profile-board2.html">Dashboard Edit Profile 2</a></li>
-                                                    </ul>
+                                <div className="header-center">
+                                    <nav id="main-nav" className="main-nav">
+                                        <ul id="menu-primary-menu" className="menu">
+                                            {this.state.menuItems.map((item, index) => (
+                                                <li key={index} className={`menu-item ${item.active ? 'current-menu-item' : ''}`}>
+                                                    <a href={item.url}>{item.name}</a>
                                                 </li>
-                                                <li className="menu-item"><a href="ranking.html">Ranking</a></li>
-                                                <li className="menu-item"><a href="help-center.html">Help Center</a></li>
-                                                <li className="menu-item"><a href="faq.html">FAQ</a></li>
-                                                <li className="menu-item"><a href="connect-wallet.html">Connect Wallet</a></li>
-                                                <li className="menu-item"><a href="login.html">Login</a></li>
-                                                <li className="menu-item"><a href="signup.html">Sign Up</a></li>
-                                                
-                                            </ul>
-                                        </li>
+                                            ))}
+                                        </ul>
+                                    </nav>
+                                </div>
 
-                                        <li className="menu-item">
-                                            <a href="addAPI">Create</a>
-                            
-                                        </li>
-                                                                                
-                                        <li className="menu-item menu-item-has-children ">
-                                            <a href="#">Blog</a>
-                                            <ul className="sub-menu">
-                                                <li className="menu-item "><a href="blog.html">Blog 1</a></li>
-                                                <li className="menu-item "><a href="blog2.html">Blog 2</a></li>
-                                                <li className="menu-item"><a href="blog-details.html">Blog Details 1</a></li> 
-                                                <li className="menu-item"><a href="blog-details2.html">Blog Details 2</a></li>                                        
-                                            </ul>
-                                        </li>
-                                        
-                                        <li className="menu-item">
-                                            <a href="contact.html">Contact</a>                                        
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
 
                                 <div className="header-right">
-                                    <a href="connect-wallet.html" className="tf-button "><span>Connect Wallet</span></a>
                                     <span className="user "><svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <mask id="mask0_2981_49321" style={{ WebkitMaskType: 'alpha' }} maskUnits="userSpaceOnUse" x="0" y="11" width="16" height="7">
                                         <path fillRule="evenodd" clipRule="evenodd" d="M0 11.2949H15.1998V18.0009H0V11.2949Z" fill="white"/>
