@@ -60,7 +60,7 @@ class LoginPage extends Component {
                                                 <a className="forgot-pass" href="https://themesflat.co/login">Fogot password?</a>
                                             </div>
                                             <div className="title-login">if you don't have an account</div>
-                                            <div className="button-gg"><a href="#" ><i class="fa-solid fa-user-plus"></i>Sign up</a></div>
+                                            <div className="button-gg"><a href="#" ><i className="fa-solid fa-user-plus"></i>Sign up</a></div>
                                            
                                             
                                             <button className="submit" type="submit">Login</button>

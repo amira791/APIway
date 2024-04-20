@@ -195,7 +195,7 @@ const ProviderHomePage = () => {
                                                         <div className="history-details tf-loadmore 3d cyber music">
                                                             <div className="authorr">
                                                                 <div className="avatar">
-                                                                    <img src="assets/images/author/history-at5.jpg" alt="images"/>
+                                                                    <img src="assets/images/author/apiLogo.png" alt="images"/>
                                                                 </div>
                                                                 <div className="content">
                                                                     <a href="#" className="name">Cyber Punk Gaming</a>

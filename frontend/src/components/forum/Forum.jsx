@@ -15,7 +15,6 @@ export default function Forum({ forum_id }) {
   const [message,setMessage] = useState()
 
   useEffect(() => {
-    // Fetch forum data when component mounts
     getForum(forum_id);
   }, [forum_id]);
 
@@ -26,7 +25,7 @@ export default function Forum({ forum_id }) {
        forum: forum_id, 
        creator: 2 // current user 
       }
-       addNewThread(thread)
+    addNewThread(thread)
   }
 
   const handleNewTicket = () => {
@@ -49,8 +48,8 @@ export default function Forum({ forum_id }) {
           <Text>{forum.description}</Text>
         </Box>
         <HStack alignSelf={'flex-end'} >
-        <div class="product-button">
-          <a href="#" data-toggle="modal" data-target="#popup_bid" class="tf-button"> <span class="icon-btn-product"></span>New Discussion</a>
+        <div className="product-button">
+          <a href="#" data-toggle="modal" data-target="#popup_bid" className="tf-button"> <span className="icon-btn-product"></span>New Discussion</a>
         </div>
           {/* <Button onClick={onOpen}>New Discution</Button> */}
           <Button onClick={handleNewTicket}>  New Ticket </Button>
@@ -61,18 +60,18 @@ export default function Forum({ forum_id }) {
        </Flex>
 
   {/*************************modal to create new conversation **************************/}
-    <div class="modal fade popup" id="popup_bid" tabindex="-1" aria-modal="true" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body space-y-20 pd-40">
+    <div className="modal fade popup" id="popup_bid" tabIndex="-1" aria-modal="true" role="dialog">
+        <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+                <div className="modal-body space-y-20 pd-40">
                     <h3>Ajouter une nouvelle discussion</h3>
                     <br /> 
                     <label htmlFor="">Message</label>
-                    <input type="text" class="form-control" 
+                    <input type="text" className="form-control" 
                       value={message} 
                       onChange={(e) => setMessage(e.target.value) } />
                       <br />
-                    <a onClick={handleNewDiscussion} class="button-popup" data-toggle="modal" data-target="#popup_bid_success" data-dismiss="modal" aria-label="Close">Save</a>
+                    <a onClick={handleNewDiscussion} className="button-popup" data-toggle="modal" data-target="#popup_bid_success" data-dismiss="modal" aria-label="Close">Save</a>
                 </div>
             </div>
         </div>

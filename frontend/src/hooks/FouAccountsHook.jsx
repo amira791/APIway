@@ -8,7 +8,7 @@ export default function useManageAccountsF() {
 
     useEffect(() => {
         setLoading(true);
-        axios.get('http://127.0.0.1:8000/fournisseurs/')
+        axios.get('http://127.0.0.1:5000/fournisseurs/')
             .then(response => {
                 console.log('Fetched Data:', response.data);
                 setFournisseurs(response.data);
@@ -23,7 +23,7 @@ export default function useManageAccountsF() {
 
     const activateStatus = async (userId) => {
         try {
-          const response = await axios.post(`http://127.0.0.1:8000/activate/${userId}/`, {
+          const response = await axios.post(`http://127.0.0.1:5000/activate/${userId}/`, {
             type: "F" // Include user type in the request body
           });
           console.log(response.data.message);
@@ -36,7 +36,7 @@ export default function useManageAccountsF() {
 
       const deactivateStatus = async (userId) => {
         try {
-          const response = await axios.post(`http://127.0.0.1:8000/deactivate/${userId}/`, {
+          const response = await axios.post(`http://127.0.0.1:5000/deactivate/${userId}/`, {
             type: "F" // Include user type in the request body
           });
           console.log(response.data.message);
@@ -48,7 +48,7 @@ export default function useManageAccountsF() {
       };
 
     const fetchFournisseursData = () => {
-        axios.get('http://127.0.0.1:8000/fournisseurs/')
+        axios.get('http://127.0.0.1:5000/fournisseurs/')
             .then(response => {
                 console.log('Fetched Data:', response.data);
                 setFournisseurs(response.data);

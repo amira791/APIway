@@ -55,7 +55,7 @@ export default function Thread({ thread_id }) {
               <div className="history-content"></div>                <div className="history-details tf-loadmore 3d" style={{ width: '100vh' }}>
                 <div className="authorr" style={{ width: '100vh' }}>
                   <div className="avatar">
-                    <img src="assets/images/author/history-at5.jpg" alt="images" />
+                    <img src="assets/images/author/apiLogo.png" alt="images" />
                   </div>
                   <div className="content">
                     <a href="#" className="name">{thread.creator?.CNusername}</a>
@@ -71,7 +71,7 @@ export default function Thread({ thread_id }) {
           </div>
         </div>
 
-        <h5 class="heading">{thread.num_posts} Comments</h5>
+        <h5 className="heading">{thread.num_posts} Comments</h5>
 
 
         <div className='history-filter'>
@@ -86,15 +86,15 @@ export default function Thread({ thread_id }) {
           </div>
         </div>
         <div id="comments">
-          <h5 class="heading">Add A Comment</h5>
-          <form onSubmit={handleFormSubmit} method="post" id="commentform" class="comment-form">
-            <fieldset class="message">
+          <h5 className="heading">Add A Comment</h5>
+          <form onSubmit={handleFormSubmit} method="post" id="commentform" className="comment-form">
+            <fieldset className="message">
               <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                id="message" name="message" rows="4" placeholder="Message" tabindex="4" aria-required="true" required="" />
+                id="message" name="message" rows="4" placeholder="Message" tabIndex="4" aria-required="true" required="" />
             </fieldset>
-            <div class="btn-submit"><button class="tf-button" type="submit">Send comment</button></div>
+            <div className="btn-submit"><button className="tf-button" type="submit">Send comment</button></div>
           </form>
         </div>
 

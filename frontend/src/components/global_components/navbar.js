@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 function LightMode() {
-<<<<<<< HEAD
     window.switchTheme(); 
  }  
-
-=======
-    // Call the function from your JS file
-    window.switchTheme(); // Assuming your function is defined globally
- }
->>>>>>> main
 class Navbar extends Component {
     constructor(props) {
         super(props);
@@ -88,11 +81,8 @@ class Navbar extends Component {
                                         </g>
                                         </svg>
                                         </span>
-<<<<<<< HEAD
+
                                         <a href="#" onClick={LightMode} className="mode-switch">
-=======
-                                    <a href="#" onClick={LightMode} className="mode-switch">
->>>>>>> main
                                         <img id="img-mode" src="assets/images/icon/moon.png" alt="Image"></img>
                                     </a>
                                 </div>  

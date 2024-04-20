@@ -8,7 +8,7 @@ export default function useManageAccountsC() {
 
     useEffect(() => {
         setLoading(true);
-        axios.get('http://127.0.0.1:8000/consommateurs/')
+        axios.get('http://127.0.0.1:5000/consommateurs/')
             .then(response => {
                 setConsommateurs(response.data);
                 setLoading(false);
@@ -22,7 +22,7 @@ export default function useManageAccountsC() {
     
     const activateStatus = async (userId) => {
         try {
-          const response = await axios.post(`http://127.0.0.1:8000/activate/${userId}/`, {
+          const response = await axios.post(`http://127.0.0.1:5000/activate/${userId}/`, {
             type: "C" // Include user type in the request body
           });
           console.log(response.data.message);
@@ -36,7 +36,7 @@ export default function useManageAccountsC() {
     
     const deactivateStatus = async (userId) => {
         try {
-          const response = await axios.post(`http://127.0.0.1:8000/deactivate/${userId}/`, {
+          const response = await axios.post(`http://127.0.0.1:5000/deactivate/${userId}/`, {
             type: "C" // Include user type in the request body
           });
            console.log(response.data.message);
@@ -51,7 +51,7 @@ export default function useManageAccountsC() {
 
 
     const fetchConsomsData = () => {
-        axios.get('http://127.0.0.1:8000/consommateurs/')
+        axios.get('http://127.0.0.1:5000/consommateurs/')
             .then(response => {
                 console.log('Fetched Data:', response.data);
                 setConsommateurs(response.data);

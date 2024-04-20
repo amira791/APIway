@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component'; // Or your chosen library
-import { Button } from '@chakra-ui/react';
 
 const ConsomDataTable = ({ columns, data,onSelectedRowsChange }) => {
   const [filterText, setFilterText] = useState('');

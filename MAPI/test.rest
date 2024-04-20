@@ -1,11 +1,11 @@
-POST http://127.0.0.1:8000/signin/
+POST http://127.0.0.1:5000/signin/
 Content-Type: application/json
 
 { "username_or_email": "consommateur2", "password": "1234" }
 
 ###
 
-POST http://127.0.0.1:8000/signup/
+POST http://127.0.0.1:5000/signup/
 Content-Type: application/json
 
 {
@@ -23,7 +23,7 @@ Content-Type: application/json
 
 ###
 
-POST http://127.0.0.1:8000/signup/
+POST http://127.0.0.1:5000/signup/
 Content-Type: application/json
 
 {
@@ -40,7 +40,7 @@ Content-Type: application/json
 
 ###
 
-POST http://127.0.0.1:8000/signup/
+POST http://127.0.0.1:5000/signup/
 Content-Type: application/json
 
 {

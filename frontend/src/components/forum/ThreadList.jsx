@@ -23,7 +23,7 @@ export default function ThreadList({ forum_id }) {
                 <div className="history-details tf-loadmore 3d" style={{ width: '100vh' }}>
                   <div className="authorr" style={{ width: '100vh' }}>
                     <div className="avatar">
-                      <img src="assets/images/author/history-at5.jpg" alt="images" />
+                      <img src="assets/images/author/apiLogo.png" alt="images" />
                     </div>
                     <div className="content">
                       <a href="#" className="name">{thread.creator.CNusername}</a>
