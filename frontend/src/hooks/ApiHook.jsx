@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { BASEURL,fetchData, postData } from './API';
 
-
-
 export default function useApi() {
     const [APIs, setAPIs] = useState([]);
+    const [Api,setAPI] = useState([]);
     const [Categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -12,17 +11,9 @@ export default function useApi() {
     const [functionalities, setFunctionalities] = useState([]);
     const [suggestions, setSuggestions] = useState([]);
 
+    
     useEffect(() => {
-        setLoading(true);
-        fetchData(`${BASEURL}apis/`)
-            .then(data => {
-                setAPIs(data);
-                setLoading(false);
-            })
-            .catch(error => {
-                setError(error);
-                setLoading(false);
-            });
+        fetchData(`${BASEURL}apis/`,setAPIs,setLoading,setError)
     }, []);
 
     useEffect(() => {
@@ -38,14 +29,11 @@ export default function useApi() {
             });
     }, []);
 
+    const fetchApi =(id)=>{
+        fetchData(`${BASEURL}apis/${id}/`,setAPI,setLoading,setError)
+    }
     const fetchApiCategories = () => {
-        fetchData(`${BASEURL}apicategories/`)
-            .then(data => {
-                setCategories(data);
-            })
-            .catch(error => {
-                setError(error);
-            });
+        fetchData(`${BASEURL}apicategories/`,setCategories,setLoading,setError)
     };
 
     const fetchApiSearchResults = (queryParams) => {
@@ -79,8 +67,10 @@ export default function useApi() {
         searchResults,
         Categories,
         APIs,
+        Api,
         functionalities,
         suggestions,
+        fetchApi,
         setSearchResults,
         fetchApiCategories,
         fetchApiSearchResults,

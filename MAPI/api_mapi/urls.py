@@ -17,7 +17,7 @@ router.register(r'functionnalities', FunctionnalityView, basename='functionnalit
 router.register(r'apidocumentations', APIdocumentationView, basename='apidocumentation')
 router.register(r'apiforum',APIForumView,basename='apiforum')
 router.register(r'threads',ThreadView,basename='threads')
-router.register(r'posts',PostView,basename='posts')
+router.register(r'comments',CommentView,basename='comments')
 router.register(r'tickets',TicketView,basename='tickets')
 router.register(r'tarifications', TarificationView, basename='tarification')
 router.register(r'abonnements', AbonnementView, basename='abonnement')
@@ -25,7 +25,7 @@ router.register(r'abonnements', AbonnementView, basename='abonnement')
 # Get the urlpatterns from the router
 urlpatterns = [
     path('apiforum/<int:forum_id>/threads/', ThreadView.as_view({'get': 'list'}), name='forum_threads'),
-    path('threads/<int:thread_id>/posts/', PostView.as_view({'get': 'list'}), name='thread_posts'),
+    path('threads/<int:thread_id>/comments/', CommentView.as_view({'get': 'list'}), name='thread_comments'),
     path('apis/<int:api_id>/tickets/', TicketView.as_view({'get': 'list'}), name='api_tickets'),
     path('activate/<int:id>/', activate_user, name='activate_user'),
     path('deactivate/<int:id>/', deactivate_user, name='deactivate_user'),

@@ -51,8 +51,9 @@ export default function Forum({ forum_id }) {
         <div className="product-button">
           <a href="#" data-toggle="modal" data-target="#popup_bid" className="tf-button"> <span className="icon-btn-product"></span>New Discussion</a>
         </div>
-          {/* <Button onClick={onOpen}>New Discution</Button> */}
-          <Button onClick={handleNewTicket}>  New Ticket </Button>
+        <div className="product-button">
+          <a href="#" data-toggle="modal" data-target="#popup_bid" className="tf-button"> <span className="icon-btn-product"></span>New Ticket</a>
+        </div>
         </HStack> 
         <Box>
           <ThreadList key={forum_id} forum_id={forum_id}/>

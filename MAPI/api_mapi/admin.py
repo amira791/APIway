@@ -10,5 +10,5 @@ admin.site.register(Fournisseur)
 admin.site.register(API)
 admin.site.register(APIForum)
 admin.site.register(Thread)
-admin.site.register(Post)
+admin.site.register(Comment)
 

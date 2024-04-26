@@ -20,7 +20,7 @@ export default function useForum() {
     };
 
     const getThreadPosts = (id) => {
-        fetchData(`${BASEURL}threads/${id}/posts/`, setPosts, setLoading, setError);
+        fetchData(`${BASEURL}threads/${id}/comments/`, setPosts, setLoading, setError);
     };
 
     const getThread = (id) => {
@@ -35,7 +35,7 @@ export default function useForum() {
     };
 
     const addNewPost = (new_post) => {
-        postData(`${BASEURL}posts/`, new_post, {
+        postData(`${BASEURL}comments/`, new_post, {
             title: 'Comment ajoute',
             description: 'Le comment a ete ajoute avec succes',
         }, toast, setError);

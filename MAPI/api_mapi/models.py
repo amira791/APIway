@@ -40,42 +40,6 @@ class Admin(UserProfileBase):
 
 class Consommateur(UserProfileBase):
     id_consommateur = models.AutoField(primary_key=True)
-# class Fournisseur(User):
-#     id_fournisseur = models.AutoField(primary_key=True)
-#     FR_first_name = models.CharField(max_length=100)
-#     FR_last_name = models.CharField(max_length=100)
-#     FRemail = models.CharField(max_length=100)
-#     FRusername = models.CharField(max_length=100)
-#     FRpassword = models.CharField(max_length=100)
-#     FRphone = models.CharField(max_length=100)
-#     FRstatus = models.CharField(max_length=100)
-
-#     def __str__(self):
-#         return self.FRusername
-    
-# class Admin(User):
-#     id_admin = models.AutoField(primary_key=True)
-#     AdminEmail = models.CharField(max_length=100)
-#     AdminUsername = models.CharField(max_length=100)
-#     AdminEmail = models.CharField(max_length=100)
-#     AdminUsername = models.CharField(max_length=100)
-#     AdminPassword = models.CharField(max_length=100)
-
-#     def __str__(self):
-#         return self.AdminUsername
-
-# class Consommateur(User):
-#     id_consommateur = models.AutoField(primary_key=True)
-#     CN_first_name = models.CharField(max_length=100)
-#     CN_last_name = models.CharField(max_length=100)
-#     CNemail = models.CharField(max_length=100)
-#     CNusername = models.CharField(max_length=100)
-#     CNpassword = models.CharField(max_length=100)
-#     CNphone = models.CharField(max_length=100)
-#     CNstatus = models.CharField(max_length=100)
-
-#     def __str__(self):
-#         return self.CNusername
 
 class APIcategory(models.Model):
     id_category = models.AutoField(primary_key=True)
@@ -206,12 +170,12 @@ class Thread(models.Model):
     def __str__(self):
         return self.content
 
-class Post(models.Model):
-    id_post = models.AutoField(primary_key=True)
+class Comment(models.Model):
+    id_comment = models.AutoField(primary_key=True)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
-    created_by = models.ForeignKey(Consommateur, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(UserBase, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.message

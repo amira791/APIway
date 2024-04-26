@@ -97,7 +97,7 @@ class ThreadReadSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
     def get_num_posts(self, obj):
-        return Post.objects.filter(thread=obj.id_thread).count()
+        return Comment.objects.filter(thread=obj.id_thread).count()
 
 
 class ThreadWriteSerializer(serializers.ModelSerializer):
@@ -111,7 +111,7 @@ class ThreadWriteSerializer(serializers.ModelSerializer):
         # define the craetor as connected user , current user
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Post
+        model = Comment
         fields = '__all__'
         #to-do
         # define the craetor as connected user , current user

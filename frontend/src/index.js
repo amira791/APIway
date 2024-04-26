@@ -30,7 +30,7 @@ function Root() {
             <Route exact path='/consomAccounts' element = {<ConsomAccountManag />} />
             <Route exact path="/searchApi" element={<SearchApi  />} />
             <Route exact path="/login" element={<LoginPage  />} />
-            <Route path='/ApiDetail' element={<ApiDetails/>}></Route>
+            <Route path='/ApiDetail/:api_id' element={<ApiDetails/>}></Route>
           <Route path="/forum" element={<ForumPage />}/>
           <Route path="/forum/threads/:thread_id" element={<ThreadPage />} />
           <Route path='/fournisseur' element={<ProviderHomePage/>} />

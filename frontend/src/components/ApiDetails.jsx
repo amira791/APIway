@@ -1,32 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom'; // Update this line
-import Navbar from './global_components/navbar';
-import Footer from './global_components/footer';
-import Card from './global_components/Card';
+import { useParams } from 'react-router-dom'; 
 import useApi from '../hooks/ApiHook';
 import { Link } from 'react-router-dom';
 
 const ApiDetails = () => {
-    // const { Api ,fetchApi } = useApi();
-    const { logo } = useParams(); // Get API ID from URL params
+    const { Api ,fetchApi } = useApi();
+    const { api_id } = useParams(); // Get API ID from URL params
     const [apiDetails, setApiDetails] = useState(null);
 
+     useEffect(() => {
+        console.log("id",api_id);
+        fetchApi(api_id);
+     }, [api_id]);
 
-    // useEffect(() => {
-    //     // Fetch API details using the API ID
-    //     axios.get(`http://127.0.0.1:5000/apis/${id}`)
-    //       .then(response => {
-    //         setApiDetails(response.data);
-    //       })
-    //       .catch(error => {
-    //         console.error('Error fetching API details:', error);
-    //       });
-    //   }, [id]);
-    //  useEffect(() => {
-    //     console.log("id",api_id);
-    //     fetchApi(api_id);
-    //  }, [api_id]);
+     useEffect(() => {
+        console.log("api fetched",Api);
+     }, [Api]);
 
     // const logoFileName = Api.logo.replace(/^.*[\\\/]/, '');
     // console.log("logoFileName",logoFileName);
@@ -78,7 +67,7 @@ const ApiDetails = () => {
                                                 </div></div>
                                         </div>
                                     </div>
-                                    <h2 class="title-detail">Wicked Cranium #4449</h2>
+                                    <h2 class="title-detail">{Api.api_name}Wicked Cranium #4449</h2>
                                     <p class="except">A Collection Of 10,000 Undead NFTs Minted On The Ethereum Blockchain. Each Unique Deadfella Is Randomly Generated From A Combination.</p>
                                     <div class="tf-tab">
                                         <ul class="menu-tab ">

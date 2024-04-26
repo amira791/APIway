@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-const Card = ({ apiName, description, logo, termsOfUse, website, categoryLabel, token }) => {
+const Card = ({ idApi ,apiName, description, logo, termsOfUse, website, categoryLabel, token }) => {
     const navigate = useNavigate();
     const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
@@ -53,7 +53,7 @@ const Card = ({ apiName, description, logo, termsOfUse, website, categoryLabel, 
                         </div>
                     </div>
                     <div className="product-button">
-                        <Link className='tf-button flex items-center' to={`/ApiDetail/`}>
+                        <Link className='tf-button flex items-center' to={`/ApiDetail/${idApi}`}>
                           <span className="fas fa-info-circle" style={{ marginRight: '-15px' }}></span>
                            See Details
                         </Link>

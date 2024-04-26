@@ -152,8 +152,8 @@ class ThreadView(viewsets.ModelViewSet):
 
 
 # Forum Post View
-class PostView(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
+class CommentView(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
     serializer_class = PostSerializer
 
     def get_queryset(self):

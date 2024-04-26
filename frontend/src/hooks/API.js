@@ -1,8 +1,8 @@
-const BASEURL = "http://127.0.0.1:5000/api_mapi/"
+const BASEURL = "http://127.0.0.1:8000/api_mapi/"
 
 const setHeaders = () => ({
     'Accept': 'application/json',
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
 });
 
 const fetchData = async (url, setter, setLoading, setError) => {
