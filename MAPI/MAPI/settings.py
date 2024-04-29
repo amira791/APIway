@@ -46,9 +46,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
 ]
 
-# from api_mapi.models import UserBase
-
-AUTH_USER_MODEL = 'api_mapi.UserBase'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -102,11 +99,11 @@ DATABASES = {
     'default': {
 
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'search',
+        'NAME': 'mapi',
         'USER': 'root',
         'PASSWORD': '',
         'HOST':'localhost',
-        'PORT':'3306'
+        'PORT':'3307'
     }
 }
 

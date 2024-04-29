@@ -1,4 +1,3 @@
-
 from django.urls import path
 from .views import *
 from rest_framework import routers
@@ -18,14 +17,15 @@ router.register(r'functionnalities', FunctionnalityView, basename='functionnalit
 router.register(r'apidocumentations', APIdocumentationView, basename='apidocumentation')
 router.register(r'tarifications', TarificationView, basename='tarification')
 router.register(r'abonnements', AbonnementView, basename='abonnement')
+router.register(r'types_param', TypeView, basename='types_param')
+router.register(r'types_tarif', TypeTarifView, basename='types_tarif')
+router.register(r'apiheaders', ApiHeaderView, basename='apiheaders')
+router.register(r'apiquery', ApiQueryParamView, basename='apiquery')
+router.register(r'apiendpointbody', ApiEndpointBodyView, basename='apiendpointbody')
+router.register(r'baselink', BaseLinkView, basename='baselink')
+router.register(r'pricing_model', PricingModelView, basename='pricing_model')
+router.register(r'endpoint_parameter', Endpoint_parameterView, basename='endpoint_parameter')
+router.register(r'responseexample', ResponseExampleView, basename='responseexample')
 
 # Get the urlpatterns from the router
-urlpatterns = [
-    path('activate/<int:id>/', activate_user, name='activate_user'),
-    path('deactivate/<int:id>/', deactivate_user, name='deactivate_user'),
-    path('api/search/', search_api, name='search_api'),
-    path('api/versions/', api_versions_view, name='api-versions'),
-    path('signup/',signup),
-    path('signin/',signin)
-   
-    ] + router.urls
+urlpatterns = router.urls

@@ -216,7 +216,7 @@
   .tf-slider-item.style-6 .image {
     display: none;
   }
-  .tf-slider-item.style-6 .content-inner .heading {
+  .tf-slider-item.style-6 .content-inner .title {
     max-width: 100%;
   }
   .tf-slider-item.style-6 .image .sc-product {
@@ -479,11 +479,11 @@
   .tf-slider-item.style-5 {
     padding: 120px 0 60px;
   }
-  .tf-slider-item.style-6 .content-inner .heading {
+  .tf-slider-item.style-6 .content-inner .title {
     font-size: 56px;
     line-height: 65px;
   }
-  .tf-slider-item.style-5 .content-inner .heading {
+  .tf-slider-item.style-5 .content-inner .title {
     font-size: 60px;
   }
   .tf-slider-item.style-5 .content-inner .img-star.star-1 {
@@ -586,17 +586,17 @@
   .tf-slider-item.style-5 .image .slider-card-product .swiper-button-prev {
     right: 60px;
   }
-  .tf-slider-item.style-6 .content-inner .heading {
+  .tf-slider-item.style-6 .content-inner .title{
     font-size: 59px;
   }
 }
 @media only screen and (max-width: 400px) {
-  .tf-slider-item.style-6 .content-inner .heading {
+  .tf-slider-item.style-6 .content-inner .title{
     font-size: 56px;
   }
 }
 @media only screen and (max-width: 385px) {
-  .tf-slider-item.style-6 .content-inner .heading {
+  .tf-slider-item.style-6 .content-inner .title{
     font-size: 53px;
   }
 }
