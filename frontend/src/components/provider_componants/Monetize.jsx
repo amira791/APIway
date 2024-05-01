@@ -29,7 +29,6 @@ const Monetizing = ({Models ,setModels}) => {
     Recommended: false,
     ratelimit: "1000",
     quotalimit: "",
-    quotatype: activeFilter,
     price: "",
     features: "",
   });
@@ -40,7 +39,6 @@ const Monetizing = ({Models ,setModels}) => {
     Recommended: false,
     ratelimit: "1000",
     quotalimit: "",
-    quotatype: activeFilter,
     price: "",
     features: "",
   });

@@ -197,15 +197,8 @@ class Tarification(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     recommended=models.BooleanField(default=False, verbose_name="Recommended")
     features = models.TextField()
-    Quota_CHOICES = (
-        ('Daily', 'Daily'),
-        ('Monthly', 'Monthly'),
-        ('Yearly', 'Yearly'),
-    )
-    quota_type = models.CharField(max_length=100, choices=Quota_CHOICES)
-
-    quota_limit = models.IntegerField()
-    rate_limit = models.IntegerField()
+    quota_limit = models.IntegerField() #Total limit
+    rate_limit = models.IntegerField() #Per hour
     def __str__(self):
         return self.id_tarif
 

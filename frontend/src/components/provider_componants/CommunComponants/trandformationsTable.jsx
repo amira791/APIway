@@ -87,7 +87,7 @@ const TransformationTable = ({ data, params, onAddRow, onChange, onDelete }) => 
                   </td>
                 ))}
                 <td>
-                  <button onClick={handleEditConfirm}>Confirm</button>
+                  <button className="confirmation-btn" onClick={handleEditConfirm}>Confirm</button>
                 </td>
               </tr>
             ) : (
@@ -139,7 +139,7 @@ const TransformationTable = ({ data, params, onAddRow, onChange, onDelete }) => 
                 </select>
             </td>
             <td>
-              <button onClick={handleConfirmRow}>Confirm</button>
+              <button className="confirmation-btn" onClick={handleConfirmRow}>Confirm</button>
             </td>
           </tr>
         </tbody>

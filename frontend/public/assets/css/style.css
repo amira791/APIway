@@ -2615,3 +2615,15 @@ header.absolute {
 .category a:hover {
   color: #555;
 }
+
+.confirmation-btn{
+  width:"5%";
+  display:"flex";
+  align-items:"center";
+  justify-content:"center";
+  background-color:"green"
+}
+
+.small-title{
+  margin-bottom: "3%" 
+}

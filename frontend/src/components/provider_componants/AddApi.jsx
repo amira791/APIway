@@ -14,6 +14,8 @@ import AddGroupForm from "./CreateGroupEndpoint.jsx";
 import EndpointTable from "./CommunComponants/endpointable.jsx";
 import Monetizing from "./Monetize.jsx";
 import PlansAjout from "../../hooks/MonetizationHook.jsx";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddAPIPage = () => {
   $.noConflict();
@@ -217,11 +219,45 @@ const AddAPIPage = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Your submission logic goes here
-
+  
+    // Check if any required field is missing or empty in formData
+    const requiredFields = ["apiName", "description","logo", "termOfUse", "category", "website"];
+    const missingFields = requiredFields.filter(field => !formData[field]);
+  
+    if (missingFields.length > 0) {
+      // Display toastify message indicating missing fields
+      toast.error(`Please fill in the following fields: ${missingFields.join(", ")}`);
+    
+      return; // Stop execution if any required field is missing
+    }
+  
+    // Check if any functionality, baseURL, endpoint, or model is null
+    if (functionalities.length === 0 || baseURLs.length === 0 || endpoints.length === 0 || Models.length === 0) {
+      // Construct message indicating which arrays are empty
+      let missingDataMessage = "";
+      if (functionalities.length === 0) {
+        missingDataMessage += "Functionalities, ";
+      }
+      if (baseURLs.length === 0) {
+        missingDataMessage += "Base URLs, ";
+      }
+      if (endpoints.length === 0) {
+        missingDataMessage += "Endpoints, ";
+      }
+      if (Models.length === 0) {
+        missingDataMessage += "Models, ";
+      }
+    
+      // Display toastify message indicating missing data
+      toast.error(`Please provide data for: ${missingDataMessage.slice(0, -2)}.`);
+      return; // Stop execution if any data array is empty
+    }
+  
+    // If all required data is present, proceed with submission logic
     alert(formData.apiName);
     addNewAPI(formData, functionalities, baseURLs, endpoints, Models);
   };
+  
   const handleRemoveEndpointFromGroup = (endpointId) => {
     const updatedEndpoints = endpoints.map((endpoint) => {
       if (endpoint.name === endpointId) {
@@ -423,6 +459,7 @@ const AddAPIPage = () => {
                         onSubmit={handleSubmit}
                         encType="multipart/form-data"
                       >
+                          <ToastContainer />
                         <fieldset>
                           <label>Name your API*</label>
                           <input
@@ -435,7 +472,7 @@ const AddAPIPage = () => {
                         <div>
                           <fieldset className="message">
                             <label>Choose a category*</label>
-                            <div className="form-select">
+                            <div class="form-select" >
                               <select
                                 id="categoryId"
                                 onChange={handleCategoryChange}
@@ -455,16 +492,20 @@ const AddAPIPage = () => {
                             </div>
                           </fieldset>
                           <label className="checkbox-item">
-                            <span className="custom-checkbox">
+                            <span className="custom-checkbox"   style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}>
                               <input
                                 type="checkbox"
                                 checked={isNewCategory}
                                 onChange={handleCheckboxChange}
                               />
                               <span className="btn-checkbox"></span>
+                              <p class="sub" style={{marginTop:"3%"}} >Your Category doesn't exist above ?</p>
                             </span>
-                            <p>Your Category doesn't exist above ?</p>
-                            <span>Add new category</span>
+                  
                           </label>
                           {isNewCategory && (
                             <div className="new-category">
@@ -553,6 +594,7 @@ const AddAPIPage = () => {
                                     onChange={handleLogoChange}
                                   />
                                   <img
+                                   
                                     src="assets/images/svg/drap-upload.svg"
                                     alt="Image"
                                   />
@@ -564,12 +606,10 @@ const AddAPIPage = () => {
                                 <div className="list">
                                   <div class="widget widget-category sc-product style2">
                                     <div>
-                                      <h6
-                                        className="widget-title"
-                                        style={{ marginBottom: "3%" }}
-                                      >
-                                        Website
-                                      </h6>
+                                      
+                                          <label  className="widget-title small-title">Website</label>
+                                        
+                                      
 
                                       <fieldset>
                                         <input
@@ -583,8 +623,8 @@ const AddAPIPage = () => {
                                   </div>
                                   <div className="widget widget-category sc-product style2">
                                     <div>
-                                      <h6 className="widget-title">Base URL</h6>
-                                      <p style={{ margin: "3%" }}>
+                                      <label className="widget-title ">Base URL</label>
+                                      <p className="small-title"  style={{padding:"2%"}}>
                                         Add a base URL, configure multiple URLs,
                                         override URLs, and select a load
                                         balancer
@@ -602,20 +642,21 @@ const AddAPIPage = () => {
                                           />
                                         </fieldset>
                                       ))}
-                                      <button
-                                        type="button"
-                                        onClick={handleAddURL}
-                                      >
-                                        Add URL
-                                      </button>
+                                        <div class="bottom-style2">
+                                        <div class="product-button">
+                                            <a onClick={handleAddURL} class="tf-button">  Add URL</a>
+                                        </div>
+                                </div>
+                                       
+                                   
                                     </div>
                                   </div>
                                   <div className="col-xl-12 col-lg-12 col-md-12">
-                                    <div>
-                                      <h5 className="title-preview">
-                                        API Visibility
-                                      </h5>
-                                      <p style={{ margin: "3%" }}>
+                                    <div> 
+                                      <fieldset>
+                                      <label> API Visibility</label>       
+                                        </fieldset>
+                                      <p className="small-title" style={{padding:"2%"}}>
                                         Switching your API visibility to{" "}
                                         {formData.visibility
                                           ? "Public"
@@ -641,12 +682,12 @@ const AddAPIPage = () => {
                                             </svg>
                                           </div>
                                           <div>
-                                            <h6 className="title-preview">
+                                            <label className="title-preview">
                                               API Project is{" "}
                                               {formData.visibility
                                                 ? "Public"
                                                 : "Private"}
-                                            </h6>
+                                            </label>
                                             <p>
                                               {formData.visibility
                                                 ? "It’s searchable and accessible"
@@ -685,7 +726,7 @@ const AddAPIPage = () => {
                                               />
                                               <span class="btn-checkbox"></span>
                                             </span>
-                                            <span style={{ fontSize: "20px" }}>
+                                            <span style={{ fontSize: "17px" }}>
                                               I confirm that I own or have
                                               rights to publish this API
                                               according to the Hub{" "}
@@ -703,7 +744,12 @@ const AddAPIPage = () => {
                             </div>
                           </div>
                         </div>
-                        <button type="submit">Submit</button>
+                 
+                       
+                    
+                    <div class="product-button">
+                        <button type="submit" class="tf-button">Submit</button>
+                        </div>
                       </form>
                     </div>
                     <div
@@ -806,111 +852,7 @@ const AddAPIPage = () => {
                   class="tf-section tf-create-and-sell"
                 >
                   <Monetizing Models={Models} setModels={setModels} />
-                  {/*   <div class="tf-container">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="tf-heading style-2 mb40 wow fadeInUp">
-                          <h4 class="heading">Choose your plan</h4>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-md-6">
-                        <div
-                          class="tf-create wow fadeInUp"
-                          data-wow-delay="0.2s"
-                        >
-                          <div class="icon">
-                            <img
-                              src="assets/images/svg/icon-create-1.svg"
-                              alt="Image"
-                            />
-                          </div>
-                          <h6 class="title">
-                            <a href="#"> BASIC</a>
-                          </h6>
-                          <div class="button-toggle">
-                            <input type="checkbox" id="switch" />
-                            <label for="switch"></label>
-                          </div>
-                          <p class="content">
-                            Sed Ut Perspiciatis Unde Omnis Iste Natus Error Sit
-                            Voluptatem Accusantium Doloremque
-                          </p>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-md-6">
-                        <div
-                          class="tf-create wow fadeInUp"
-                          data-wow-delay="0.4s"
-                        >
-                          <div class="icon">
-                            <img
-                              src="assets/images/svg/icon-create-2.svg"
-                              alt="Image"
-                            ></img>
-                          </div>
-                          <h6 class="title">
-                            <a href="#">PRO</a>{" "}
-                          </h6>
-                          <div class="button-toggle">
-                            <input type="checkbox" id="switch2" />
-                            <label for="switch2"></label>
-                          </div>
-                          <p class="content">
-                            Sed Ut Perspiciatis Unde Omnis Iste Natus Error Sit
-                            Voluptatem Accusantium Doloremque
-                          </p>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-md-6">
-                        <div
-                          class="tf-create wow fadeInUp"
-                          data-wow-delay="0.6s"
-                        >
-                          <div class="icon">
-                            <img
-                              src="assets/images/svg/icon-create-3.svg"
-                              alt="Image"
-                            />
-                          </div>
-                          <h6 class="title">
-                            <a href="#">ULTRA</a>{" "}
-                          </h6>
-                          <div class="button-toggle">
-                            <input type="checkbox" id="switch4" />
-                            <label for="switch4"></label>
-                          </div>
-                          <p class="content">
-                            Sed Ut Perspiciatis Unde Omnis Iste Natus Error Sit
-                            Voluptatem Accusantium Doloremque
-                          </p>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-md-6">
-                        <div
-                          class="tf-create wow fadeInUp"
-                          data-wow-delay="0.8s"
-                        >
-                          <div class="icon">
-                            <img
-                              src="assets/images/svg/icon-create-4.svg"
-                              alt="Image"
-                            />
-                          </div>
-                          <h6 class="title">
-                            <a href="#">MEGA</a>
-                          </h6>
-                          <div class="button-toggle">
-                            <input type="checkbox" id="switch5" />
-                            <label for="switch5"></label>
-                          </div>
-                          <p class="content">
-                            Sed Ut Perspiciatis Unde Omnis Iste Natus Error Sit
-                            Voluptatem Accusantium Doloremque
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div> */}
+              
                 </section>
                 <div
                   className="col-xl-3 col-lg-4 col-md-6"
@@ -950,29 +892,9 @@ const AddAPIPage = () => {
                     </div>
                     <div className="bottom">
                       <div className="details-product">
-                        {/*    
-                        
-                        functionalities
-                        <div className="author">
-                          {formData.logo && (
-                            <div className="avatar">
-                              <img
-                                src={URL.createObjectURL(formData.logo)}
-                                alt="Uploaded Logo"
-                              />
-                            </div>
-                          )}
-                          <div className="content">
-                            <div className="position">{formData.category}</div>
-                            <div className="name">
-                              {" "}
-                              <a href="#">Carly Webster </a>
-                            </div>
-                          </div>
-                        </div> */}
+                     
                         <div className="current-bid">
-                          {/* {formData.categoryId &&  (<div className="subtitle">{formData.category}</div>)}
-                           */}{" "}
+                  
                           <div className="price">
                             <span className="cash">
                               The API is:{" "}
@@ -1025,7 +947,7 @@ const AddAPIPage = () => {
           aria-modal="true"
           role="dialog"
         >
-          {/* Modal content for bidding */}
+     
         </div>
       </div>
     </body>

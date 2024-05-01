@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import axios from "axios"; // Import axios for making HTTP requests
 import { Button, Input, Checkbox, Switch, Radio, Select, Tabs } from "antd";
 import ManipulateTypes from "../../hooks/EndpointHook";
-import ParamsTable from "./CommunComponants/headerTable";
-import TransformationTable from "./CommunComponants/trandformationsTable";
-
+import ParamsTable from "./CommunComponants/paramTable";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const { Option } = Select;
 
 const { TabPane } = Tabs;
@@ -123,6 +123,17 @@ const AddEndpointForm = ({ onSave }) => {
 
   const handleSubmit = async () => {
     var formData ={}
+     // Check if all required fields are filled
+     const requiredFields = ["endpointName", "externalDocUrl", "externalDocDescription", "endpointPath"];
+     const emptyFields = requiredFields.filter(field => !eval(field) && eval(field) !== 0);
+   
+     if (emptyFields.length > 0) {
+       // Construct message indicating which fields are empty
+       const emptyFieldsMessage = emptyFields.join(", ");
+       toast.error(`Please fill in the following fields: ${emptyFieldsMessage}`);
+       return; // Stop execution if any required field is empty
+     }
+
     if (params.length === 1 && params[0].name == "" ) {
        formData = {
         name: endpointName,
@@ -637,6 +648,7 @@ const AddEndpointForm = ({ onSave }) => {
           className="ant-btn ant-btn-primary"
           onClick={handleSubmit}
         >
+            <ToastContainer />
           <i class="fa-solid fa-bookmark"></i> <span>save</span>
         </button>
         <button

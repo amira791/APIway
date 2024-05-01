@@ -1999,10 +1999,10 @@
   height: 120px;
   margin-bottom: 39px;
 }
-.tf-contact .comment-form .form-select {
+ .form-select {
   position: relative;
 }
-.tf-contact .comment-form .form-select i {
+ .form-select i {
   position: absolute;
   top: 20px;
   right: 23px;
@@ -3389,8 +3389,10 @@ border-radius: 10rem;
   display: none;
 }
 .add-nft-inner .drag-upload {
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 94px 0 80px;
+  padding: 10px 0 20px;
   background: var(--primary-color22);
   border-radius: 12px;
   margin-bottom: 34px;
@@ -3408,6 +3410,7 @@ border-radius: 10rem;
   z-index: 2;
 }
 .add-nft-inner .drag-upload img {
+margin-left: 45%;
   margin-bottom: 32px;
 }
 .add-nft-inner .drag-upload .title {
