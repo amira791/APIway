@@ -11,7 +11,7 @@ class Navbar extends Component {
                 { name: "Home", url: "/", active: true },
                 { name: "Explore", url: "searchApi" },
                 { name: "Help Center", url: "help-center.html" },
-                { name: "FAQ", url: "faq.html" },
+                { name: "FAQ", url: "/ticket" },
                 { name: "Contact", url: "contact.html" }
             ]
         };

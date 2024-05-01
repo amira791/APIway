@@ -1,8 +1,12 @@
- 
-import "./App.css";
- 
+
+import ReactEditor from "react-text-editor-kit";
+
 function App() {
-  return <div className="App"><h2>Welcome !</h2></div>;
+  return (
+    <div className="App">
+      <ReactEditor />
+    </div>
+  );
 }
- 
+
 export default App;

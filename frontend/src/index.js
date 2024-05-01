@@ -18,6 +18,8 @@ import SearchApi from "./components/RechercherAPI";
 import AdminHome from "./components/admin/adminHomePage";
 import ApiDetails from './components/ApiDetails'
 import LoginPage from './components/auth_components/login';
+import TicketForm from './components/tickets/TicketForm';
+import Ticket from './components/tickets/ticket';
 
 function Root() {
   return (
@@ -25,15 +27,17 @@ function Root() {
       <Router>
         <Routes>
           <Route exact path="/" element={<HomeSection />} />
-            <Route exact path="/adminhome" element={<AdminHome />} />
-            <Route exact path='/fourAccounts' element = {<FourAccountManag />} />
-            <Route exact path='/consomAccounts' element = {<ConsomAccountManag />} />
-            <Route exact path="/searchApi" element={<SearchApi  />} />
-            <Route exact path="/login" element={<LoginPage  />} />
-            <Route path='/ApiDetail/:api_id' element={<ApiDetails/>}></Route>
-          <Route path="/forum" element={<ForumPage />}/>
+          <Route exact path="/adminhome" element={<AdminHome />} />
+          <Route exact path='/fourAccounts' element={<FourAccountManag />} />
+          <Route exact path='/consomAccounts' element={<ConsomAccountManag />} />
+          <Route exact path="/searchApi" element={<SearchApi />} />
+          <Route exact path="/login" element={<LoginPage />} />
+          <Route path='/ApiDetail/:api_id' element={<ApiDetails />}></Route>
+          <Route path="/forum" element={<ForumPage />} />
           <Route path="/forum/threads/:thread_id" element={<ThreadPage />} />
-          <Route path='/fournisseur' element={<ProviderHomePage/>} />
+          <Route path="/tickets/new" element={<TicketForm />} />
+          <Route path='/ticket' element={<Ticket/>} />
+          <Route path='/fournisseur' element={<ProviderHomePage />} />
         </Routes>
       </Router>
     </div>
