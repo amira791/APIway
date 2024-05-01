@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api_mapi.apps.ApiMapiConfig',
+    'Consumer.apps.ConsumerConfig',
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt',
