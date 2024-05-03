@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import APIAjout from "../../hooks/APIHook2.jsx";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Monetizing = ({Models ,setModels}) => {
   // State to track the selected plan
@@ -11,11 +13,15 @@ const Monetizing = ({Models ,setModels}) => {
     Name: "",
     index: "",
   });
-
+  const availablePeriods = ["Daily", "Monthly", "Yearly"];
   const [activeFilter, setActiveFilter] = useState("Daily");
-/*   const [Models, setModels] = useState(Models); // Define Models state and setModels function
+  const [modificationOn, setModificationOn] = useState(false);
+  const { tarifTypes } = APIAjout();
+  const [subscriptionPrice, setSubscriptionPrice] = useState("");
+  const [rateLimitEnabled, setRateLimitEnabled] = useState(false);
+  const [rateLimit, setRateLimit] = useState("");
+  const [changedPeriod, setchangedPeriod] = useState(false);
 
- */
   const [Model, setModel] = useState({
     Name: "",
     Description: "",
@@ -26,8 +32,7 @@ const Monetizing = ({Models ,setModels}) => {
     Name: "",
     id: "",
     modelIndex: "",
-    Recommended: false,
-    ratelimit: "1000",
+    ratelimit: 1000,
     quotalimit: "",
     price: "",
     features: "",
@@ -36,28 +41,36 @@ const Monetizing = ({Models ,setModels}) => {
     Name: "",
     id: "",
     modelIndex: "",
-    Recommended: false,
+  
     ratelimit: "1000",
     quotalimit: "",
     price: "",
     features: "",
   });
-  const [modificationOn, setModificationOn] = useState(false);
-  const { tarifTypes } = APIAjout();
+
+  var filteredPeriods = Models? availablePeriods.filter(
+    (period) => !Models.some((model) => model.Period === period)
+  ):availablePeriods;
+  var isAddButtonDisabled = filteredPeriods.length === 0;
+  
   const handleModelChange = (key, value) => {
+    alert("done");
     setModel((prevModel) => ({ ...prevModel, [key]: value }));
   };
   const addModel = () => {
     if (!Model.Name || !Model.Description) {
-      alert("Please fill in all fields before adding the model.");
+      toast.error("Please fill in all fields before adding the model.");
       return;
     }
+  //  alert(activeFilter);
+    handleModelChange("Period", activeFilter);
     setModels((prevModels) => [...prevModels, Model]);
-
-    setActiveFilter("Daily");
+   //alert(filteredPeriods[0]);
+ setActiveFilter(filteredPeriods[0]);
     setModel({ Name: "", Description: "", Period: activeFilter, plans: [] });
     document.getElementById("model-name").value = "";
     document.getElementById("model-description").value = "";
+    setchangedPeriod(false);
     console.log(Models);
   };
   const handlePlanChange = (key, value) => {
@@ -74,7 +87,7 @@ const Monetizing = ({Models ,setModels}) => {
       !editedPlan.quotalimit ||
       !editedPlan.ratelimit
     ) {
-      alert("Please fill in all fields before editing the plan.");
+      toast.error("Please fill in all fields before editing the plan.");
       return;
     }
     const model = Models[indexModel];
@@ -88,8 +101,7 @@ const Monetizing = ({Models ,setModels}) => {
         Models[indexModel].plans[planIndex].quotalimit = editedPlan.quotalimit; // Modify quotalimit to "100"
         Models[indexModel].plans[planIndex].price = editedPlan.price; // Modify price to "1000"
         Models[indexModel].plans[planIndex].features = editedPlan.features; // Modify quotalimit to "100"
-        Models[indexModel].plans[planIndex].quotatype = editedPlan.quotatype; // Modify price to "1000"
-        Models[indexModel].plans[planIndex].ratelimit = editedPlan.ratelimit; // Modify quotalimit to "100"
+         Models[indexModel].plans[planIndex].ratelimit = editedPlan.ratelimit; // Modify quotalimit to "100"
         Models[indexModel].plans[planIndex].Recommended =
           editedPlan.Recommended; // Modify price to "1000"
       } else {
@@ -99,18 +111,16 @@ const Monetizing = ({Models ,setModels}) => {
       console.log("Model not found or has no plans.");
     }
 
-    setActiveFilter("Daily");
     setEditedPlan({
       Name: "",
       id: "",
-      Recommended: false,
       ratelimit: "",
       quotalimit: "",
-      quotatype: activeFilter,
+     
       price: "",
       features: "",
     });
-    document.getElementById("switch3").checked = false;
+    
     const rateLimitInput = document.getElementById("rate-limit");
     if (rateLimitInput) {
       document.getElementById("rate-limit").value = "";
@@ -131,35 +141,30 @@ const Monetizing = ({Models ,setModels}) => {
       const rateLimitInput = document.getElementById("rate-limit");
       if (rateLimitInput) {
         if (!newPlan.ratelimit) {
-          alert("Please fill in all fields before adding the plan.");
+          toast.error("Please fill in all fields before adding the plan.");
           return;
         }
       }
-      alert("Please fill in all fields before adding the plan.");
+      toast.error("Please fill in all fields before adding the plan.");
       return;
     }
-     if(!newPlan.quotatype)
-     {
-      newPlan.quotatype="Daily";
-     }
+  
     setModels((prevModels) => {
       const updatedModels = [...prevModels];
       updatedModels[indexModel].plans.push(newPlan);
       return updatedModels;
     });
 
-    setActiveFilter("Daily");
+    
     setNewPlan({
       Name: "",
       id: "",
-      Recommended: false,
       ratelimit: "",
       quotalimit: "",
-      quotatype: activeFilter,
       price: "",
       features: "",
     });
-    document.getElementById("switch3").checked = false;
+  
     document.getElementById("rate-limit").value = "";
     document.getElementById("quota-limit").value = "";
     document.getElementById("sub-price").value = "";
@@ -176,18 +181,16 @@ const Monetizing = ({Models ,setModels}) => {
         return !(plan.Name === editedPlan.Name && plan.id === editedPlan.id);
       });
 
-      setActiveFilter("Daily");
+   
       setEditedPlan({
         Name: "",
         id: "",
-        Recommended: false,
         ratelimit: "",
         quotalimit: "",
-        quotatype: activeFilter,
         price: "",
         features: "",
       });
-      document.getElementById("switch3").checked = false;
+      
       document.getElementById("rate-limit").value = "";
       document.getElementById("quota-limit").value = "";
       document.getElementById("sub-price").value = "";
@@ -204,7 +207,6 @@ const Monetizing = ({Models ,setModels}) => {
     });
     console.log("the modiffiedblan is");
     console.log(modifiedPlan);
-    setActiveFilter(modifiedPlan.quotatype);
     setEditedPlan(modifiedPlan);
 
     console.log(editedPlan);
@@ -222,7 +224,9 @@ const Monetizing = ({Models ,setModels}) => {
       if (plan) {
         // Access the 'quotalimit' property of the plan
         const quotalimit = plan.quotalimit;
-        const quotatype =plan.quotatype;
+        const quotatype =  Models[plan.modelIndex
+        ].Period
+console.log(Models[index].Period);
         console.log(quotatype);
         return (
           <a
@@ -235,6 +239,7 @@ const Monetizing = ({Models ,setModels}) => {
               activateModification(plan);
             }}
           >
+            
             {quotalimit }   <p>
                   {quotatype === "Yearly"
                     ? "/Year"
@@ -309,27 +314,12 @@ const Monetizing = ({Models ,setModels}) => {
     setSelectedPlan(plan);
   };
   const handleFilterClick = (filterId) => {
+    setchangedPeriod(true);
     setActiveFilter(filterId);
     handleModelChange("Period", filterId);
   };
-  const handlePlanFilterClick = (PlanfilterId) => {
-    setActiveFilter(PlanfilterId);
-    modificationOn
-      ? handlePlanEdit("quotatype", PlanfilterId)
-      : handlePlanChange("quotatype", PlanfilterId);
-  };
-  useEffect(() => {
-    console.log("ModificationOn:", modificationOn); // This will log the updated value
-    // Perform other actions that rely on the updated state
-  }, [modificationOn]);
-  useEffect(() => {
-    console.log("editedPlan:", editedPlan); // This will log the updated value
-    // Perform other actions that rely on the updated state
-  }, [editedPlan]);
-
-  const [subscriptionPrice, setSubscriptionPrice] = useState("");
-  const [rateLimitEnabled, setRateLimitEnabled] = useState(false);
-  const [rateLimit, setRateLimit] = useState("");
+   
+   
 
   const handleSubscriptionPriceChange = (e) => {
     const price = parseFloat(e.target.value);
@@ -346,6 +336,26 @@ const Monetizing = ({Models ,setModels}) => {
       setRateLimit("");
     }
   };
+  useEffect(() => {
+    console.log("ModificationOn:", modificationOn); // This will log the updated value
+    // Perform other actions that rely on the updated state
+  }, [modificationOn]);
+  useEffect(() => {
+    console.log("editedPlan:", editedPlan); // This will log the updated value
+    // Perform other actions that rely on the updated state
+  }, [editedPlan]);
+
+  useEffect(() => {
+    var filteredPeriods = availablePeriods.filter(
+    (period) => !Models.some((model) => model.Period === period)
+      );
+     isAddButtonDisabled = filteredPeriods.length === 0;
+    //alert(isAddButtonDisabled);
+
+    setActiveFilter(filteredPeriods[0]);
+    
+    }, [Models]);
+ 
 
   return (
     <div className="tf-container">
@@ -396,26 +406,16 @@ const Monetizing = ({Models ,setModels}) => {
                 <div class="col-md-12">
                   <div class="top-menu">
                     <ul className="filter-menu">
-                      <li className={activeFilter === "Daily" ? "active" : ""}>
-                        <a href="#" onClick={() => handleFilterClick("Daily")}>
-                          Daily
-                        </a>
-                      </li>
-                      <li
-                        className={activeFilter === "Monthly" ? "active" : ""}
-                      >
-                        <a
-                          href="#"
-                          onClick={() => handleFilterClick("Monthly")}
-                        >
-                          Monthly
-                        </a>
-                      </li>
-                      <li className={activeFilter === "Yearly" ? "active" : ""}>
-                        <a href="#" onClick={() => handleFilterClick("Yearly")}>
-                          Yearly
-                        </a>
-                      </li>
+                      {filteredPeriods.map((period) => (
+                <li
+                  key={period}
+                  className={activeFilter === period ? "active" : ""}
+                >
+                  <a href="#" onClick={() =>{setchangedPeriod(true); handleFilterClick(period)}}>
+                    {period}
+                  </a>
+                </li>
+              ))}
                     </ul>
                   </div>
                 </div>
@@ -430,9 +430,12 @@ const Monetizing = ({Models ,setModels}) => {
 
                 style={{background:"green",display:"flex",justifyContent:"space-around"}}
                 onClick={() => {
+                 if (changedPeriod) {  handleModelChange("Period", filteredPeriods[0])};
+    
                   addModel();
                 }}
               >
+
                <i class="fa-solid fa-check"></i> Confirm
               </a>
               <a
@@ -451,7 +454,7 @@ const Monetizing = ({Models ,setModels}) => {
           </div>
         </div>
       </div>
-
+ <ToastContainer />
       <section class="tf-ranking tf-filter">
         <div class="tf-container">
           <div class="table-ranking">
@@ -519,94 +522,7 @@ const Monetizing = ({Models ,setModels}) => {
                 </h3>
               </h3>
 
-              <p class="label-1">
-                Recommended badge:{" "}
-                <div class="button-toggle">
-                  <input
-                    type="checkbox"
-                    id="switch3"
-                    checked={modificationOn ? editedPlan.Recommended : false}
-                    onChange={(e) => {
-                      modificationOn
-                        ? handlePlanEdit("recommended", e.target.checked)
-                        : handlePlanChange("recommended", e.target.checked);
-                    }}
-                  />
-                  <label for="switch3"></label>
-                </div>
-              </p>
-              <p>
-                Will have a badge in Hub as “Recommended”. Only one plan might
-                have recommended status simultaneously.
-              </p>
-
-              <p class="label-1">Quota type:</p>
-              <div class="row tf-container">
-                <div class="col-md-12">
-                  <div class="top-menu">
-                    <ul className="filter-menu">
-                      <li className={activeFilter === "Daily" ? "active" : ""}>
-                        <a
-                          href="#"
-                          onClick={() => handlePlanFilterClick("Daily")}
-                        >
-                          Daily
-                        </a>
-                      </li>
-
-                      {Models[
-                        modificationOn
-                          ? editedPlan.modelIndex
-                          : newPlan.modelIndex
-                      ] && (
-                        <React.Fragment>
-                          {(Models[
-                            modificationOn
-                              ? editedPlan.modelIndex
-                              : newPlan.modelIndex
-                          ].Period === "Monthly" ||
-                            Models[
-                              modificationOn
-                                ? editedPlan.modelIndex
-                                : newPlan.modelIndex
-                            ].Period === "Yearly") && (
-                            <li
-                              className={
-                                activeFilter === "Monthly" ? "active" : ""
-                              }
-                            >
-                              <a
-                                href="#"
-                                onClick={() => handlePlanFilterClick("Monthly")}
-                              >
-                                Monthly
-                              </a>
-                            </li>
-                          )}
-                          {Models[
-                            modificationOn
-                              ? editedPlan.modelIndex
-                              : newPlan.modelIndex
-                          ].Period === "Yearly" && (
-                            <li
-                              className={
-                                activeFilter === "Yearly" ? "active" : ""
-                              }
-                            >
-                              <a
-                                href="#"
-                                onClick={() => handlePlanFilterClick("Yearly")}
-                              >
-                                Yearly
-                              </a>
-                            </li>
-                          )}
-                        </React.Fragment>
-                      )}
-                    </ul>
-                  </div>
-                </div>
-              </div>
+         
               <p class="label-1">Quota Limit :</p>
               <p></p>
               <div
@@ -628,11 +544,15 @@ const Monetizing = ({Models ,setModels}) => {
                   }}
                 />
                 <p>
-                  {activeFilter === "Yearly"
+                  {Models[newPlan.modelIndex]?
+                  
+                ( Models[newPlan.modelIndex].Period  === "Yearly"
                     ? "/Year"
-                    : activeFilter === "Monthly"
+                    : Models[newPlan.modelIndex].Period === "Monthly"
                     ? "/Month"
-                    : "/Day"}
+                    : "/Day"):("")
+                    
+                    }
                 </p>
               </div>
 
@@ -775,25 +695,20 @@ const Monetizing = ({Models ,setModels}) => {
         }}
       >
         {/*   <button>Add new plans model</button> */}
-        <div class="product-button">
-          <a
-            href="#"
-            data-toggle="modal"
-            data-target="#popup_bid"
-            class="tf-button"
-          >
+       {!isAddButtonDisabled? <div class="product-button">
+         <a
+          href="#"
+          data-toggle="modal"
+          data-target="#popup_bid"
+          className="tf-button"
+        
+        >
             {" "}
             <span class="icon-btn-product"><i class="fa-solid fa-file-invoice"></i></span> Add new plans model
           </a>
-        </div>
+        </div>:""}
       </div>
-      {/* selectedPlan && (
-        <div>
-          <h4>Selected Plan: {selectedPlan.}</h4>
-          <p>Price: ${selectedPlan.price} / month</p>
-          {/* You can display more details about the selected plan here *}
-        </div>
-      ) */}
+     
     </div>
   );
 };

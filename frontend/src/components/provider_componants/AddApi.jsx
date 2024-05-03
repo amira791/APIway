@@ -467,6 +467,7 @@ const AddAPIPage = () => {
                             type="text"
                             placeholder="E.G. Climat change API "
                             onChange={handleChange}
+                            required="required"
                           />
                         </fieldset>
                         <div>
@@ -474,9 +475,11 @@ const AddAPIPage = () => {
                             <label>Choose a category*</label>
                             <div class="form-select" >
                               <select
+                              
                                 id="categoryId"
                                 onChange={handleCategoryChange}
                                 disabled={isNewCategory} // Disable select if new category is being added
+                                
                               >
                                 <option value="">Select Category</option>
                                 {categories.map((category) => (
@@ -527,7 +530,7 @@ const AddAPIPage = () => {
                             placeholder="Description"
                             tabindex="4"
                             aria-required="true"
-                            required=""
+                            required="required"
                             onChange={handleChange}
                           ></textarea>
                         </fieldset>
@@ -557,6 +560,7 @@ const AddAPIPage = () => {
                                 onChange={handleInputChange}
                                 onKeyPress={handleInputKeyPress}
                                 placeholder="Add new functionality..."
+                               
                               />
                             </li>
                           </ul>
@@ -567,12 +571,13 @@ const AddAPIPage = () => {
                         </p>
 
                         <fieldset>
-                          <label>Terms of Use (optional)</label>
+                          <label>Terms of Use</label>
                           <input
                             id="termOfUse"
                             type="text"
                             placeholder="Terms of Use"
                             onChange={handleChange}
+                            required="required"
                           />
                         </fieldset>
                         <div className="tf-tab">
@@ -592,6 +597,7 @@ const AddAPIPage = () => {
                                     id="logo"
                                     accept="image/png, image/jpeg, image/jpg"
                                     onChange={handleLogoChange}
+                                    required="required"
                                   />
                                   <img
                                    
@@ -617,6 +623,7 @@ const AddAPIPage = () => {
                                           type="text"
                                           placeholder="https://"
                                           onChange={handleChange}
+                                          required="required"
                                         />
                                       </fieldset>
                                     </div>
@@ -639,6 +646,7 @@ const AddAPIPage = () => {
                                             onChange={(e) =>
                                               handleChanges(e, index)
                                             }
+                                            required="required"
                                           />
                                         </fieldset>
                                       ))}

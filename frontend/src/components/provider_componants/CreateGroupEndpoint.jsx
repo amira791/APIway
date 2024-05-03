@@ -12,9 +12,7 @@ const { TabPane } = Tabs;
 const AddGroupForm = ({ onSave }) => {
     const [groupName, setGroupName] = useState("");
     const [groupDescription, setGroupDescription] = useState("");
-    const [externalDocUrl, setExternalDocUrl] = useState("");
-    const [externalDocDescription, setExternalDocDescription] = useState("");
-  
+   
     const handleSubmit = () => {
       const formData = {
         name: groupName,
@@ -67,40 +65,7 @@ const AddGroupForm = ({ onSave }) => {
           </div>
         </div>
       </section>
-      <div className="sub-section">
-            <label>
-              <span>External Doc URL</span>
-            </label>
-            <div>
-              <input
-                required
-                name="url"
-                placeholder="External link to more information"
-                type="text"
-                data-id="external-doc-url"
-                className="ant-input"
-                value={externalDocUrl}
-                onChange={(e) => setExternalDocUrl(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="sub-section">
-            <label>
-              <span>External Doc Description</span>
-            </label>
-            <div>
-              <input
-                required
-                name="description"
-                placeholder="Brief label for external link"
-                type="text"
-                data-id="external-doc-description"
-                className="ant-input"
-                value={externalDocDescription}
-                onChange={(e) => setExternalDocDescription(e.target.value)}
-              />
-            </div>
-          </div>
+ 
         <button onClick={handleSubmit}>Add Group</button>
       </div>
     );

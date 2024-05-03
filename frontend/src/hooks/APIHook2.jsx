@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import PlansAjout from "./MonetizationHook";
 
 export default function APIAjout() {
-  const addNewAPI = async (
+ /*  const addNewAPI2 = async (
     formData,
     functionalities,
     baseLinks,
@@ -68,7 +68,7 @@ export default function APIAjout() {
                 },
               }
             )
-             /*  .then((response) => response.json()) */
+             /*  .then((response) => response.json()) 
               .then((response) => {
                 // Step 2: Retrieve Model ID
                 const modelId = response.data.id_model;
@@ -78,9 +78,7 @@ export default function APIAjout() {
                 model.plans.forEach((plan) => {
                   API.post(`/tarifications/`, {
                       price: plan.price,
-                      recommended: false,
                       features: plan.features,
-                      quota_type: plan.quotatype,
                       quota_limit: plan.quotalimit,
                       rate_limit: plan.ratelimit || null,
                       type: plan.id,
@@ -93,7 +91,7 @@ export default function APIAjout() {
                   }
                 
                 )
-                   /*  .then((response) => response.json()) */
+                   /*  .then((response) => response.json()) 
                     .then((planData) => {
                       console.log(
                         `Plan "${plan.Name}" added with ID ${planData.data.id_tarif}`
@@ -163,9 +161,8 @@ export default function APIAjout() {
               link: endpoint.path,
               version: apiversionId, // You need to set the version here
               description: endpoint.description,
-              externalDocURL: endpoint.externalDocUrl,
-              externalDocDescription: endpoint.externalDocDescription,
-            }).then((endpointResponse) => {
+              group:endpoint.group
+               }).then((endpointResponse) => {
               alert("done2");
               if (endpointResponse.status === 201) {
                 const endpointId = endpointResponse.data.id_endpoint; // Save the ID of the newly created API endpoint
@@ -280,7 +277,277 @@ export default function APIAjout() {
       .catch((error) => {
         console.error("Error:", error); // Handle error
       });
-  };
+  }; */
+
+
+  /*************************************************************************** */
+const addNewAPI = async (formData, functionalities, baseLinks, endpoints, Models) => {
+  try {
+    let apiId = await createAPI(formData);
+    await createModels(apiId, Models);
+    let functionalityIds = await createFunctionnalities(functionalities);
+  let baseLinkIds =  await createBaseLinks(baseLinks);
+  let apiversionId=  await createAPIVersions(apiId,functionalityIds, baseLinkIds);
+    await createEndpoints(apiId, endpoints);
+    alert("API created successfully!");
+  } catch (error) {
+    console.error("Error creating API:", error);
+    // Handle error
+  }
+};
+
+const createAPI = async (formData) => {
+  if (formData.categoryId === null) {
+    const categoryId = await createCategory(formData.category);
+    formData.categoryId = categoryId;
+  }
+  const response = await API.post(`/apis/`, {
+    api_name: formData.apiName,
+    description: formData.description,
+    terms_of_use: formData.termOfUse,
+    logo: formData.logo,
+    visibility: formData.visibility,
+    provider: formData.providerId,
+    category: formData.categoryId,
+    website: formData.website,
+  },
+  {
+    headers: {
+      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  if (response.status !== 201) {
+    throw new Error("Failed to create API");
+  }
+  return response.data.id_api;
+};
+
+const createCategory = async (categoryLabel) => {
+  try {
+    const response = await API.post(`/apicategories/`, { label: categoryLabel });
+    return response.data.id_category;
+  } catch (error) {
+    console.error("Error creating new category:", error);
+    throw error;
+  }
+};
+
+const createModels = async (apiId, models) => {
+  try {
+    // Logic to create models
+    for (const model of models) {
+      const modelResponse = await API.post(`/pricing_model/`, {
+        name: model.Name,
+        period: model.Period,
+        description: model.Description,
+        api: apiId,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const modelId = modelResponse.data.id_model;
+      for (const plan of model.plans) {
+        await API.post(`/tarifications/`, {
+          price: plan.price,
+          recommended: false,
+          features: plan.features,
+          quota_limit: plan.quotalimit,
+          rate_limit: plan.ratelimit || 10000,
+          type: plan.id,
+          pricingModel: modelId,
+        },{
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then((planData) => {
+          console.log(
+            `Plan "${plan.Name}" added with ID ${planData.data.id_tarif}`
+          );
+        })
+        .catch((error) =>
+          console.error("Error adding plan:", error)
+        );
+      }
+    }
+  } catch (error) {
+    console.error("Error creating models:", error);
+    throw error;
+  }
+};
+
+const createFunctionnalities = async (functionnalities) => {
+  try {
+    const functionalityResponses = await Promise.all(functionnalities.map(async (functName) => {
+      const response = await API.post(`/functionnalities/`, { functName });
+      return response.data.id_funct;
+    }));
+    return functionalityResponses;
+  } catch (error) {
+    console.error("Error creating functionnalities:", error);
+    throw error;
+  }
+};
+
+const createBaseLinks = async (baseLinks) => {
+  try {
+    const baseLinkResponses = await Promise.all(baseLinks.map(async (url) => {
+      const response = await API.post(`/baselink/`, { url });
+      return response.data.baselink_id;
+    }));
+    return baseLinkResponses;
+  } catch (error) {
+    console.error("Error creating base links:", error);
+    throw error;
+  }
+};
+const createAPIVersions = async (apiId, functionalityIds, baseLinkIds) => {
+  try {
+    const apiVersionsData = {
+      num_version: 1,
+      state: "Alpha",
+      api: apiId,
+      functions: functionalityIds,
+      base_links: baseLinkIds,
+    };
+    const response = await API.post(`/apiversions/`, apiVersionsData);
+    return response.data.id_version;
+  } catch (error) {
+    console.error("Error creating API versions:", error);
+    throw error;
+  }
+};
+const createEndpoints = async (apiVersionId, endpoints) => {
+  try {
+    const endpointPromises = endpoints.map(async (endpoint) => {
+      const endpointResponse = await API.post(`/apiendpoints/`, {
+        title: endpoint.name,
+        method: endpoint.method,
+        link: endpoint.path,
+        version: apiVersionId,
+        description: endpoint.description,
+        group: endpoint.group,
+      });
+      const endpointId = endpointResponse.data.id_endpoint;
+    
+      const paramsPromise = createParams(endpointResponse, endpointId, endpoint.params);
+      const headersPromise = createHeaders(endpointResponse, endpointId, endpoint.headers);
+      const queryParamsPromise = createQueryParams(endpointResponse, endpointId, endpoint.queryParams);
+      const bodyPromise = createBody(endpointResponse, endpointId, endpoint);
+       const responseExamplesPromise = createResponseExamples(endpointResponse, endpointId, endpoint.responseExamples);
+      
+      const allPromises = [headersPromise, queryParamsPromise, bodyPromise, paramsPromise, responseExamplesPromise];
+      
+      return executeAllPromises(allPromises);
+    });
+    return Promise.all(endpointPromises);
+  } catch (error) {
+    console.error("Error creating endpoints:", error);
+    throw error;
+  }
+};
+
+const createHeaders = (endpointResponse, endpointId, headers) => {
+  if (headers) {
+    const headersData = headers.map((header) => ({
+      key: header.key,
+      type_id: header.type,
+      example_value: header.value,
+      required: header.required,
+      endpoint: endpointId,
+    }));
+    return Promise.all(headersData.map((headerData) =>
+      API.post(`/apiheaders/`, headerData)
+    ));
+  }
+  return Promise.resolve();
+};
+
+const createQueryParams = (endpointResponse, endpointId, queryParams) => {
+  if (queryParams) {
+    const queryParamsData = queryParams.map((queryParam) => ({
+      key: queryParam.key,
+      type_id: queryParam.type,
+      example_value: queryParam.example_value,
+      endpoint: endpointResponse.data.id_endpoint,
+    }));
+    return Promise.all(queryParamsData.map((queryParamData) =>
+      API.post(`/apiquery/`, queryParamData)
+    ));
+  }
+  return Promise.resolve();
+};
+
+const createBody = (endpointResponse, endpointId, endpoint) => {
+  
+  let body = endpoint.body;
+   
+  if (body && body.payloadName && body.payloadValue && body.bodyExample) {
+     
+    const bodyDataToSend = {
+      media_type: body.mediaType,
+      payload_name: body.payloadName,
+      payload_description: body.payloadValue,
+      body_example: body.bodyExample,
+      endpoint: endpointId,
+    };
+    console.log("Body data to send:", bodyDataToSend); // Check if bodyDataToSend is constructed correctly
+    
+    return API.post(`/apiendpointbody/`, bodyDataToSend);
+  }
+  return Promise.resolve();
+};
+
+
+const createParams = (endpointResponse, endpointId, params) => {
+  if (params) {
+    const paramsData = params.map((param) => ({
+      id_endpoint: endpointResponse.data.id_endpoint,
+      name: param.name,
+      type_id: param.type,
+      example_value: param.value,
+      required: param.required,
+      deleted: false,
+    }));
+    alert(endpointResponse.data.id_endpoint);
+    return Promise.all(paramsData.map((paramData) =>
+      API.post(`/endpoint_parameter/`, paramData)
+    ));
+  }
+  return Promise.resolve();
+};
+
+const createResponseExamples = (endpointResponse, endpointId, responseExamples) => {
+  if (responseExamples) {
+    const responseExamplesData = responseExamples.map((example) => ({
+      code_status: example.codeStatus,
+      title: example.exampleName,
+      body: example.responseBody,
+      id_endpoint: endpointResponse.data.id_endpoint,
+    }));
+    alert(endpointId);
+    return Promise.all(responseExamplesData.map((exampleData) =>
+      API.post(`/responseexample/`, exampleData)
+    ));
+  }
+  return Promise.resolve();
+};
+
+const executeAllPromises = (allPromises) => {
+  return Promise.all(allPromises)
+    .then(() => {
+      console.log("All promises are resolved.");
+     
+    })
+    .catch((error) => {
+      console.error("An error occurred:", error);
+    
+    });
+};
+
+  
   const [tarifTypes, setTarifTypes] = useState([]);
 
   const getTarifType = () => {

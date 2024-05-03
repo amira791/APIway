@@ -14,9 +14,7 @@ const AddEndpointForm = ({ onSave }) => {
   const { types } = ManipulateTypes();
   const [endpointName, setEndpointName] = useState("");
   const [endpointDesc, setEndpointDesc] = useState("");
-  const [externalDocUrl, setExternalDocUrl] = useState("");
-  const [externalDocDescription, setExternalDocDescription] = useState("");
-  const [method, setMethod] = useState("GET");
+   const [method, setMethod] = useState("GET");
   const [endpointPath, setEndpointPath] = useState("/");
   const [headers, setHeaders] = useState([]);
   const [queryParams, setQueryParams] = useState([]);
@@ -25,6 +23,8 @@ const AddEndpointForm = ({ onSave }) => {
     mediaType: "application/json",
     payloadName: "",
     payloadValue: "",
+    bodyExample:""
+
   });
   const [dynamicTabs, setDynamicTabs] = useState([]);
   const [responseExamples, setResponseExamples] = useState([]);
@@ -124,7 +124,7 @@ const AddEndpointForm = ({ onSave }) => {
   const handleSubmit = async () => {
     var formData ={}
      // Check if all required fields are filled
-     const requiredFields = ["endpointName", "externalDocUrl", "externalDocDescription", "endpointPath"];
+     const requiredFields = ["endpointName","endpointDesc", "endpointPath"];
      const emptyFields = requiredFields.filter(field => !eval(field) && eval(field) !== 0);
    
      if (emptyFields.length > 0) {
@@ -133,15 +133,20 @@ const AddEndpointForm = ({ onSave }) => {
        toast.error(`Please fill in the following fields: ${emptyFieldsMessage}`);
        return; // Stop execution if any required field is empty
      }
-
+     const emptyFieldIndex = dynamicTabs.findIndex((tab, index) => {
+      return !params[index].value;
+    });
+  
+    if (emptyFieldIndex !== -1) {
+      toast.error("Please fill in all the fields in the params table.");
+      return; // Stop execution if any field is empty
+    }
     if (params.length === 1 && params[0].name == "" ) {
        formData = {
         name: endpointName,
         method: method,
         description: endpointDesc,
         path: endpointPath,
-        externalDocUrl: externalDocUrl,
-        externalDocDescription: externalDocDescription,
         params: null,
         headers: headers,
         queryParams: queryParams,
@@ -155,8 +160,6 @@ const AddEndpointForm = ({ onSave }) => {
       method: method,
       description: endpointDesc,
       path: endpointPath,
-      externalDocUrl: externalDocUrl,
-      externalDocDescription: externalDocDescription,
       params: params,
       headers: headers,
       queryParams: queryParams,
@@ -175,9 +178,7 @@ const AddEndpointForm = ({ onSave }) => {
       // Clear form fields
       setEndpointName("");
       setMethod("GET");
-      setExternalDocUrl("");
-      setExternalDocDescription("");
-      setEndpointPath("/");
+       setEndpointPath("/");
       setHeaders([]);
       setParams([ { name: "", type: "", value: "", required: false }]);
       setQueryParams([]);
@@ -186,22 +187,7 @@ const AddEndpointForm = ({ onSave }) => {
       console.error("Error saving endpoint:", error);
     }
   };
-  /* const handleAddToGroup = (endpoint) => {
-    // Logic to add the endpoint to the selected group
-    const updatedEndpoint = { ...endpoint, group: selectedGroup };
-    onSave(updatedEndpoint);
-  }; */
-  /*   const handlePathChange = (e) => {
-    setEndpointPath(e.target.value);
-  };
 
-  const handleHeadersChange = (e) => {
-    setHeaders(e.target.value);
-  };
-
-  const handleQueryParametersChange = (e) => {
-    setQueryParams(e.target.value);
-  }; */
 
   const handleAddHeader = (newRow) => {
     setHeaders([...headers, newRow]);
@@ -259,6 +245,7 @@ const AddEndpointForm = ({ onSave }) => {
               type="text"
               className="ant-input"
               value={endpointName}
+              required="required"
               onChange={(e) => setEndpointName(e.target.value)}
             />
           </div>
@@ -283,7 +270,7 @@ const AddEndpointForm = ({ onSave }) => {
                     value={endpointDesc}
                     onChange={(e) => setEndpointDesc(e.target.value)}
                     aria-required="true"
-                    required=""
+                    required="required"
                   ></textarea>
                 </fieldset>
               </div>
@@ -291,44 +278,7 @@ const AddEndpointForm = ({ onSave }) => {
           </div>
         </div>
       </section>
-      <div className="sc-eQdLTE jpYRrF">
-        <section className="external-doc-section ">
-          <div className="sub-section">
-            <label>
-              <span>External Doc URL</span>
-            </label>
-            <div>
-              <input
-                required
-                name="url"
-                placeholder="External link to more information"
-                type="text"
-                data-id="external-doc-url"
-                className="ant-input"
-                value={externalDocUrl}
-                onChange={(e) => setExternalDocUrl(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="sub-section">
-            <label>
-              <span>External Doc Description</span>
-            </label>
-            <div>
-              <input
-                required
-                name="description"
-                placeholder="Brief label for external link"
-                type="text"
-                data-id="external-doc-description"
-                className="ant-input"
-                value={externalDocDescription}
-                onChange={(e) => setExternalDocDescription(e.target.value)}
-              />
-            </div>
-          </div>
-        </section>
-      </div>
+     
       <section className="graphql-updater-section"></section>
       <div className="definition-inner-section">
         <section className="sc-wQkWr kawync">

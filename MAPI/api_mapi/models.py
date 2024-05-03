@@ -94,10 +94,7 @@ class APIendpoint(models.Model):
     link= models.TextField
     group=models.CharField(max_length=255,default="",  null=True)
     version = models.ForeignKey(APIversion, on_delete=models.DO_NOTHING )
-    description = models.TextField( help_text="Brief description of the endPoint")
-    externalDocURL = models.TextField( help_text="External link to more information")
-    externalDocDescription = models.TextField( help_text="Brief label for external link")
-   
+    description = models.TextField( help_text="Brief description of the endPoint")   
     def __str__(self):
         return self.title
 class TypeParam(models.Model):
@@ -137,7 +134,7 @@ class ApiEndpointBody(models.Model):
        
 class Endpoint_parameter(models.Model):
     id_parameter = models.AutoField(primary_key=True)
-    id_endpoint = models.ForeignKey(API, on_delete=models.DO_NOTHING )
+    id_endpoint = models.ForeignKey(APIendpoint, on_delete=models.DO_NOTHING )
     name= models.CharField(max_length=100)
     type_id = models.ForeignKey(TypeParam, on_delete=models.DO_NOTHING,default=1  )
     example_value = models.CharField(max_length=255)
@@ -153,7 +150,7 @@ class Functionnality(models.Model):
         return self.functName
 class ResponseExample(models.Model):
     id_response = models.AutoField(primary_key=True)
-    id_endpoint = models.ForeignKey(API, on_delete=models.DO_NOTHING )
+    id_endpoint = models.ForeignKey(APIendpoint, on_delete=models.DO_NOTHING )
     code_status = models.IntegerField()
     title = models.CharField(max_length=100)
     body = models.TextField()
@@ -195,7 +192,6 @@ class Tarification(models.Model):
     pricingModel = models.ForeignKey(PricingModel, on_delete=models.DO_NOTHING )
     type = models.ForeignKey(TypeTarif, on_delete=models.DO_NOTHING )
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    recommended=models.BooleanField(default=False, verbose_name="Recommended")
     features = models.TextField()
     quota_limit = models.IntegerField() #Total limit
     rate_limit = models.IntegerField() #Per hour

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ManipulateTypes from "../../../hooks/EndpointHook";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const ParamsTable = ({ data, params, onAddRow, onChange, onDelete, activeTab }) => {
   const [newRow, setNewRow] = useState({
     key: "",
@@ -17,7 +18,7 @@ const ParamsTable = ({ data, params, onAddRow, onChange, onDelete, activeTab }) 
 
   const handleConfirmRow = () => {
     if (!newRow.key || !newRow.type || !newRow.value) {
-      alert("Please fill in all fields before adding the row.");
+      toast.error("Please fill in all fields before adding the row.");
       return;
     }
     onAddRow(newRow);
@@ -102,6 +103,7 @@ const ParamsTable = ({ data, params, onAddRow, onChange, onDelete, activeTab }) 
                   </td>
                 ))}
                 <td>
+                <ToastContainer />
                   <button className="confirmation-btn" onClick={handleEditConfirm}>Confirm</button>
                 </td>
               </tr>
@@ -189,14 +191,13 @@ const ParamsTable = ({ data, params, onAddRow, onChange, onDelete, activeTab }) 
               >
                 <option value="">Select type</option>
                 {types.map((type) => (
-                  <option
-                    key={type.id_type}
-                    value={type.id_type}
-                    selected={newRow.type == type.name}
-                  >
-                    {type.name}
-                  </option>
-                ))}
+                                <option
+                                  key={type.id_TypeParam}
+                                  value={type.id_TypeParam}
+                                >
+                                  {type.name}
+                                </option>
+                              ))}
               </select>
             </td>
             <td>

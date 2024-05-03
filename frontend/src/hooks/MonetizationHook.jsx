@@ -3,17 +3,17 @@ import API from "../API";
 import { useState } from "react";
 
 export default function PlansAjout() {
-  const addApiModels = (idApi, Models) => {
+  const addApiModels = (apiId, Models) => {
     // Iterate over the Models array
     Models.forEach((model) => {
       // Step 1: Add Model Information
       API.post(
-        `pricing_model/`,
+        `/pricing_model/`,
         {
           name: model.Name,
           period: model.Period,
           description: model.Description,
-          api_id: idApi, // Include api_id
+          api: apiId, // Include api_id
         },
         {
           headers: {
@@ -21,34 +21,39 @@ export default function PlansAjout() {
           },
         }
       )
-        .then((response) => response.json())
-        .then((modelData) => {
+       /*  .then((response) => response.json()) */
+        .then((response) => {
           // Step 2: Retrieve Model ID
-          const modelId = modelData.id;
-
+          const modelId = response.data.id_model;
+       alert("doneee");
+       alert(modelId);
           // Step 3: Add Plans
           model.plans.forEach((plan) => {
-            fetch("tarifications/", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
+            API.post(`/tarifications/`, {
                 price: plan.price,
                 recommended: false,
                 features: plan.features,
-                quota_type: plan.quotatype,
                 quota_limit: plan.quotalimit,
                 rate_limit: plan.ratelimit || null,
-                type_id: plan.id,
-                pricingModel_id: modelId,
-              }),
-            })
-              .then((response) => response.json())
+                type: plan.id,
+                pricingModel: modelId,
+           
+            },{
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          
+          )
+             /*  .then((response) => response.json()) */
               .then((planData) => {
-                console.log(`Plan "${plan.Name}" added with ID ${planData.id}`);
+                console.log(
+                  `Plan "${plan.Name}" added with ID ${planData.data.id_tarif}`
+                );
               })
-              .catch((error) => console.error("Error adding plan:", error));
+              .catch((error) =>
+                console.error("Error adding plan:", error)
+              );
           });
         })
         .catch((error) => console.error("Error adding model:", error));
