@@ -1,17 +1,14 @@
-import React, { useEffect,useRef,  useState } from 'react';
-import { Flex, Spacer ,Input, Box , Button , Heading , Text , HStack ,FormControl,FormLabel,Modal, ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody, ModalCloseButton,useDisclosure 
+import React, { useEffect,  useState } from 'react';
+import {Link} from'react-router-dom'
+import { Flex, Box  , Heading , Text , HStack  
 } from '@chakra-ui/react'
-import useTicket from '../../hooks/useTicket';
 import useForum from '../../hooks/useForum';
 import ThreadList from './ThreadList';
 
 export default function Forum({ forum_id }) {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const initialRef = useRef(null)
-  const finalRef = useRef(null)
 
   const { addNewThread, getForum,forum , error, loading } = useForum();
-  const { addNewTicket } = useTicket();
+
   const [message,setMessage] = useState()
 
   useEffect(() => {
@@ -28,14 +25,7 @@ export default function Forum({ forum_id }) {
     addNewThread(thread)
   }
 
-  const handleNewTicket = () => {
-    const ticket = {
-      issue: "My new issue",
-      api_id: 1,
-      created_by: 1,
-  }
-   addNewTicket(ticket)
-}
+ 
   return (
     <>
           
@@ -51,7 +41,10 @@ export default function Forum({ forum_id }) {
         <div className="product-button">
           <a href="#" data-toggle="modal" data-target="#popup_bid" className="tf-button"> <span className="icon-btn-product"></span>New Discussion</a>
         </div>
-  
+        <div className="product-button">
+        <Link to={'/tickets/new'} className="tf-button"><span className="icon-btn-product"></span>New ticket </Link>
+        </div>
+       
         </HStack> 
         <Box>
           <ThreadList key={forum_id} forum_id={forum_id}/>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import useForum from '../../hooks/useForum';
+
 import { NavLink } from 'react-router-dom';
-import { Flex, Spacer, Avatar, Box, Text, HStack, Button, LinkBox, LinkOverlay, Divider } from '@chakra-ui/react'
 import { TimeIcon, ChatIcon } from '@chakra-ui/icons'
 import formatTime from '../../utils/formatTime'
 
@@ -27,7 +27,7 @@ export default function ThreadList({ forum_id }) {
                     </div>
                     <div className="content">
                       <a href="#" className="name">{thread.creator.CNusername}</a>
-                      <div className="description">{thread.content}</div>
+                      <div className="description">{thread.content.substring(0,70)}</div>
                       <div className="date">
                         <span> <TimeIcon mr={5} /></span>
                         <span className="month">{formatTime(thread.created_at)}</span>

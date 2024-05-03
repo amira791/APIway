@@ -19,7 +19,7 @@ import AdminHome from "./components/admin/adminHomePage";
 import ApiDetails from './components/ApiDetails'
 import LoginPage from './components/auth_components/login';
 import TicketForm from './components/tickets/TicketForm';
-import Ticket from './components/tickets/ticket';
+import TicketsPage from './components/pages/TicketsPage';
 
 function Root() {
   return (
@@ -36,7 +36,7 @@ function Root() {
           <Route path="/forum" element={<ForumPage />} />
           <Route path="/forum/threads/:thread_id" element={<ThreadPage />} />
           <Route path="/tickets/new" element={<TicketForm />} />
-          <Route path='/ticket' element={<Ticket/>} />
+          <Route path='/tickets' element={<TicketsPage/>} />
           <Route path='/fournisseur' element={<ProviderHomePage />} />
         </Routes>
       </Router>

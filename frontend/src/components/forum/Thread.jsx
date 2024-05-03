@@ -85,6 +85,7 @@ export default function Thread({ thread_id }) {
             </div>
           </div>
         </div>
+        
         <div id="comments">
           <h5 className="heading">Add A Comment</h5>
           <form onSubmit={handleFormSubmit} method="post" id="commentform" className="comment-form">

@@ -1,7 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-from django.contrib.auth.models import AbstractBaseUser, AbstractUser
+from django.contrib.auth.models import  AbstractUser
 from django.contrib.auth.models import Group, Permission
 
 class UserBase(AbstractUser):
@@ -162,7 +160,7 @@ class APIForum(models.Model):
     
 class Thread(models.Model):
     id_thread = models.AutoField(primary_key=True)
-    content = models.CharField(max_length=200)
+    content = models.CharField(max_length=500)
     created_at = models.DateTimeField(auto_now_add=True)
     forum = models.ForeignKey(APIForum, on_delete=models.CASCADE)
     creator = models.ForeignKey(Consommateur, on_delete=models.CASCADE)
