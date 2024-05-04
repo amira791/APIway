@@ -51,25 +51,18 @@ export default function useAuth() {
     const signIn = (data) => {
         setLoading(true);
         setError(null);
-        fetch("http://localhost:8000/signin/", {
+        fetch(`${BASEURL}signin/`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data)
         })
         .then((response) => response.json())
         .then((result) => {
-            setToken(result.access);
-            setUsername(result.user.username);
-            // setIsFournisseur(result.user.is_fournisseur);
-            // setIsConsommateur(result.user.is_consommateur);
             setLoading(false);
             dispatch({
-                type: 'LOGIN',
-                payload: {
-                    token: result.access,
-                    username: result.user.username
-                }
-            });
+                type: 'SET_AUTH_INFO',
+                payload: result
+              });
             toast({
                 title: 'User authenticated',
                 description: "User authenticated successfully",

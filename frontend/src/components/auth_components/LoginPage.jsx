@@ -1,91 +1,81 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react'
 import Navbar from '../global_components/navbar';
 import Footer from '../global_components/footer';
-class LoginPage extends Component {
+import useAuth from '../../hooks/useAuth'
 
 
-    render() {
+export default function LoginPage() {
+   
+    const [email,setEmail] = useState("")
+    const [username,setUsername]= useState("")
+    const [password,setPassword] = useState("")
 
-        let publicUrl = process.env.PUBLIC_URL+'/'
+    const { signIn} = useAuth()
 
-        return (
-            <body className="body header-fixed">
+   
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
 
-              
-                <div className="preload preload-container">
-                    <div className="preload-logo"></div>
-                </div>
-                
+        const user ={
+          username_or_email: username,
+          password: password
+        }
+         
+        console.log(user)
+        signIn(user)
+    };
 
-                <div id="wrapper" className="wrapper-style">
-                    <div id="page" className="clearfix">
-                        <Navbar />
+  return (
+    <>
+ <div id="wrapper" class="wrapper-style">
+        <div id="page" class="clearfix">
+        <Navbar />
 
-                        <section className="tf-page-title style-2">    
-                            <div className="tf-container">
-                                <div className="row">
-                                    <div className="col-md-12">
-
-                                        <ul className="breadcrumbs">
-                                            <li><a href="blog2.html">Home</a></li>
-                                            <li>Login</li>
-                                        </ul>
-                            
-                                    </div>
-                                </div>
-                            </div>                    
-                        </section>
-                            
-                        <section className="tf-login">
-                            <div className="tf-container">
-                                <div className="row justify-content-center">
-                                    <div className="col-md-12">
-                                        <div className="tf-heading style-5">
-                                            <h4 className="heading">Create, Sell Or APIs</h4>
-                                            <p className="sub-heading">Welcome to Apiway, the premier destination for APIs! Log in to your account for a better experience. </p>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-6 col-lg-8 col-md-12">
-                                        <form id="contactform">
-                                            <div className="title-login">login with account</div>
-                                            <fieldset><input id="name" name="name" tabindex="1" aria-required="true" required="" type="text" placeholder="User name"/></fieldset>
-                                            <fieldset className="mb24"> <input id="showpassword" name="password" tabindex="2" aria-required="true"  type="password" placeholder="Password" required=""/>
-                                            <span className="btn-show-pass "><i className="far fa-eye-slash"></i></span></fieldset>
-                                            <div className="forgot-pass-wrap">
-                                                <label>Remember for 30 days
-                                                    <input type="checkbox"/>
-                                                    <span className="btn-checkbox"></span>
-                                                </label>
-                                                <a className="forgot-pass" href="https://themesflat.co/login">Fogot password?</a>
-                                            </div>
-                                            <div className="title-login">if you don't have an account</div>
-                                            <div className="button-gg"><a href="#" ><i className="fa-solid fa-user-plus"></i>Sign up</a></div>
-                                           
-                                            
-                                            <button className="submit" type="submit">Login</button>
-                                        </form> 
-
-                                    
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                    
-                       <Footer/>
-
-               
-                    </div>
+            <section class="tf-page-title style-2">    
+                <div class="tf-container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="breadcrumbs">
+                                <li><a href="blog2.html">Home</a></li>
+                                <li>Sign In</li>
+                            </ul>
                    
+                        </div>
+                    </div>
+                </div>                    
+            </section>
+                
+            <section class="tf-login">
+                <div class="tf-container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12">
+                            <div class="tf-heading style-2">
+                                <h4 class="heading">Sign In To NFT</h4>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-9 col-md-12">
+                            <form onSubmit={handleFormSubmit}>
+                              {/* <fieldset><input value={email} onChange={(e)=> setEmail(e.target.value)} id="email" name="email" tabindex="1" aria-required="true" required="" type="text" placeholder="Email"/></fieldset> */}
+                              <fieldset><input value={username} onChange={(e)=> setUsername(e.target.value)} id="username" name="username" tabindex="1" aria-required="true" required="" type="text" placeholder="User name"/></fieldset>
+                              <fieldset> <input value={password} onChange={(e)=> setPassword(e.target.value)} id="showpassword" name="password" tabindex="2" aria-required="true"  type="password" placeholder="Password" required=""/>
+                              <span class="btn-show-pass"><i class="far fa-eye-slash"></i></span></fieldset>  
+                              <button class="submit button-gg" type="submit">Login</button> 
+                            </form>
+                        
+                            
+                        </div>
+                    </div>
                 </div>
-              
+            </section>
 
-                <a id="scroll-top"></a>
+      <Footer/>
 
-            </body>
-        )
-    }
+        </div>
+
+    </div>
+
+
+    <a id="scroll-top"></a>
+    </>
+  )
 }
-export default LoginPage

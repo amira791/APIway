@@ -11,7 +11,7 @@ export default function SignUpPage() {
     const [username,setUsername]= useState("")
     const [password,setPassword] = useState("")
 
-    const {signUp , signIn} = useAuth()
+    const {signUp } = useAuth()
 
    
     const handleFormSubmit = (e) => {
@@ -71,7 +71,7 @@ export default function SignUpPage() {
                                 <span class="btn-show-pass"><i class="far fa-eye-slash"></i></span></fieldset>
                                 <fieldset class="mb24"> <input id="showpassword2" name="password" tabindex="2" aria-required="true"  type="password" placeholder="Confirm password" required=""/>
                                     <span class="btn-show-pass2"><i class="far fa-eye-slash"></i></span></fieldset>
-                                    <button class="submit button-gg" type="submit">Login</button>
+                                    <button class="submit button-gg" type="submit">Sign Up</button>
 
                                 <div class="title-login">Or login with social</div>
                                 <div class="button-gg"><a href="#" ><i class="fab fa-facebook"></i>Facebook</a></div>

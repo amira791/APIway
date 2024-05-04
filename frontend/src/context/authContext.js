@@ -15,10 +15,10 @@ const initialState = {
 const authReducer = (state, action) => {
   switch (action.type) {
     case 'SET_AUTH_INFO':
-      const { user_type, user } = action.payload;
+      const { user_type, user,access } = action.payload;
       return {
         ...state,
-        token: user.token,
+        token: access,
         username: user.username,
         isFournisseur: user_type === 'fournisseur',
         isConsommateur: user_type === 'consommateur',
