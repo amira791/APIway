@@ -1,107 +1,23 @@
 import React from 'react'
-
+import Footer from '../global_components/footer'
+import Navbar from '../global_components/navbar'
 
 export default function signupForm() {
   return (
     <>
-    <body className="body header-fixed">
 
-
-    <div id="wrapper" className="wrapper-style">
-        <div id="page" className="clearfix">
-            <header className="header">
-                <div className="tf-container">
-                    <div className="row">
-                        <div className="col-md-12">                              
+    <div id="wrapper" class="wrapper-style">
+        <div id="page" class="clearfix">
+            <header class="header">
+                <div class="tf-container">
+                    <div class="row">
+                        <div class="col-md-12">                              
                             <div id="site-header-inner">                                 
-                                <div id="site-logo" className="clearfix">
-                                    <div id="site-logo-inner">
-                                        <a href="index-2.html" rel="home" className="main-logo">
-                                            <img id="logo_header" src="assets/images/logo/logo_dark.png" alt="Image"/>
-                                        </a>
-                                    </div>
-                                </div>
-                                
-                               <div className="header-center">
-                                <nav id="main-nav" className="main-nav">
-                                    <ul id="menu-primary-menu" className="menu">
-                                        <li className="menu-item menu-item-has-children ">
-                                            <a href="#">Home</a>
-                                            <ul className="sub-menu">
-                                                <li className="menu-item "><a href="index-2.html">Home 1</a></li>
-                                                <li className="menu-item"><a href="home2.html">Home 2</a></li>
-                                                <li className="menu-item"><a href="home3.html">Home 3</a></li>
-                                                <li className="menu-item"><a href="home4.html">Home 4</a></li>
-                                                <li className="menu-item"><a href="home5.html">Home 5</a></li>
-                                                <li className="menu-item"><a href="home6.html">Home 6</a></li>
-                                            </ul>
-                                        </li>
-                                        <li className="menu-item menu-item-has-children">
-                                            <a href="#">Explore</a>
-                                            <ul className="sub-menu">
-                                                <li className="menu-item"><a href="explore-grid.html">Explore</a></li>
-                                                <li className="menu-item"><a href="explore-banner.html">Explore 2</a></li>
-                                                <li className="menu-item"><a href="explore-sidebar-3-item.html">Explore 3 Item</a></li>
-                                                <li className="menu-item"><a href="explore-sidebar-4-item.html">Explore 4 Item</a></li>
-                                                <li className="menu-item"><a href="collection.html">Collection</a></li>
-                                                <li className="menu-item"><a href="live-auction.html">Live Auction</a></li>
-                                                <li className="menu-item"><a href="live-auction-2.html">Live Auction 2</a></li>
-                                                <li className="menu-item"><a href="item-details.html">Item Details</a></li>
-                                                <li className="menu-item"><a href="item-details-2.html">Item Details 2</a></li>
-                                            </ul>
-                                        </li>
-                                        
-
-                                        <li className="menu-item menu-item-has-children current-menu-item">
-                                            <a href="#">Pages</a>
-                                            <ul className="sub-menu">
-                                                <li className="menu-item">
-                                                    <a href="#">Dashboard </a>
-                                                    <ul className="sub-menu menu-item-has-children right-sub-menu ">
-                                                        <li className="menu-item"><a href="inventory.html">Dashboard Inventory</a></li>
-                                                        <li className="menu-item"><a href="wallet-board.html">Dashboard Wallet</a></li>
-                                                        <li className="menu-item"><a href="history-board.html">Dashboard History</a></li>
-                                                        <li className="menu-item"><a href="follow-board.html">Dashboard Following</a></li>
-                                                        <li className="menu-item"><a href="favorite-board.html">Dashboard Favorites</a></li>
-                                                        <li className="menu-item"><a href="edit-profile-board.html">Dashboard Edit Profile 1</a></li>
-                                                        <li className="menu-item"><a href="edit-profile-board2.html">Dashboard Edit Profile 2</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li className="menu-item"><a href="ranking.html">Ranking</a></li>
-                                                <li className="menu-item"><a href="help-center.html">Help Center</a></li>
-                                                <li className="menu-item"><a href="faq.html">FAQ</a></li>
-                                                <li className="menu-item"><a href="connect-wallet.html">Connect Wallet</a></li>
-                                                <li className="menu-item"><a href="login.html">Login</a></li>
-                                                <li className="menu-item current-item"><a href="signup.html">Sign Up</a></li>
-                                                
-                                            </ul>
-                                        </li>
-
-                                        <li className="menu-item">
-                                            <a href="add-NFT.html">Create</a>
-                            
-                                        </li>
-                                                                                
-                                        <li className="menu-item menu-item-has-children ">
-                                            <a href="#">Blog</a>
-                                            <ul className="sub-menu">
-                                                <li className="menu-item "><a href="blog.html">Blog 1</a></li>
-                                                <li className="menu-item "><a href="blog2.html">Blog 2</a></li>
-                                                <li className="menu-item"><a href="blog-details.html">Blog Details 1</a></li> 
-                                                <li className="menu-item"><a href="blog-details2.html">Blog Details 2</a></li>                                        
-                                            </ul>
-                                        </li>
-                                        
-                                        <li className="menu-item">
-                                            <a href="contact.html">Contact</a>                                        
-                                        </li>
-                                    </ul>
-                                </nav>
-                               </div>
-
-                                <div className="header-right">
-                                    <a href="connect-wallet.html" className="tf-button "><span>Connect Wallet</span></a>
-                                     <span className="user "><svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          
+                            <Navbar />
+                                <div class="header-right">
+                                    <a href="connect-wallet.html" class="tf-button "><span>Connect Wallet</span></a>
+                                     <span class="user "><svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <mask id="mask0_2981_49321" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="11" width="16" height="7">
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M0 11.2949H15.1998V18.0009H0V11.2949Z" fill="white"/>
                                         </mask>
@@ -118,12 +34,12 @@ export default function signupForm() {
                                         </g>
                                         </svg>
                                         </span>
-                                    <a href="#" onclick="switchTheme()" className="mode-switch">
+                                    <a href="#" onclick="switchTheme()" class="mode-switch">
                                         <img id="img-mode" src="assets/images/icon/moon.png" alt="Image"/>
                                     </a>
                                 </div>  
 
-                                <div className="mobile-button"><span></span></div>
+                                <div class="mobile-button"><span></span></div>
                             </div>
                         </div>
                     </div>
@@ -131,11 +47,11 @@ export default function signupForm() {
                 
             </header>
 
-            <section className="tf-page-title style-2">    
-                <div className="tf-container">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <ul className="breadcrumbs">
+            <section class="tf-page-title style-2">    
+                <div class="tf-container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="breadcrumbs">
                                 <li><a href="blog2.html">Home</a></li>
                                 <li>Sign Up</li>
                             </ul>
@@ -145,32 +61,32 @@ export default function signupForm() {
                 </div>                    
             </section>
                 
-            <section className="tf-login">
-                <div className="tf-container">
-                    <div className="row justify-content-center">
-                        <div className="col-md-12">
-                            <div className="tf-heading style-2">
-                                <h4 className="heading">Sign Up To NFT</h4>
+            <section class="tf-login">
+                <div class="tf-container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12">
+                            <div class="tf-heading style-2">
+                                <h4 class="heading">Sign Up To NFT</h4>
                             </div>
                         </div>
-                        <div className="col-xl-6 col-lg-9 col-md-12">
+                        <div class="col-xl-6 col-lg-9 col-md-12">
                             <form action="#" id="contactform">
-                                <fieldset><input id="name" name="name" tabIndex="1" aria-required="true" required="" type="text" placeholder="User name"/></fieldset>
-                               <fieldset> <input id="showpassword" name="password" tabIndex="2" aria-required="true"  type="password" placeholder="Password" required=""/>
-                                <span className="btn-show-pass"><i className="far fa-eye-slash"></i></span></fieldset>
-                                <fieldset className="mb24"> <input id="showpassword2" name="password" tabIndex="2" aria-required="true"  type="password" placeholder="Confirm password" required=""/>
-                                    <span className="btn-show-pass2"><i className="far fa-eye-slash"></i></span></fieldset>
-                                <div className="forgot-pass-wrap">
+                                <fieldset><input id="name" name="name" tabindex="1" aria-required="true" required="" type="text" placeholder="User name"/></fieldset>
+                               <fieldset> <input id="showpassword" name="password" tabindex="2" aria-required="true"  type="password" placeholder="Password" required=""/>
+                                <span class="btn-show-pass"><i class="far fa-eye-slash"></i></span></fieldset>
+                                <fieldset class="mb24"> <input id="showpassword2" name="password" tabindex="2" aria-required="true"  type="password" placeholder="Confirm password" required=""/>
+                                    <span class="btn-show-pass2"><i class="far fa-eye-slash"></i></span></fieldset>
+                                <div class="forgot-pass-wrap">
                                     <label>I agree to the terms and services
-                                        <input type="checkbox" />
-                                        <span className="btn-checkbox"></span>
+                                        <input type="checkbox"/>
+                                        <span class="btn-checkbox"></span>
                                     </label>
                                 </div>
-                                <div className="title-login">Or login with social</div>
-                                <div className="button-gg"><a href="#" ><i className="fab fa-facebook"></i>Facebook</a></div>
-                                <div className="button-gg mb33"><a href="#" ><i className="fab fa-google"></i>Google</a>
+                                <div class="title-login">Or login with social</div>
+                                <div class="button-gg"><a href="#" ><i class="fab fa-facebook"></i>Facebook</a></div>
+                                <div class="button-gg mb33"><a href="#" ><i class="fab fa-google"></i>Google</a>
                                 </div>
-                                <button className="submit" type="submit">Login</button>
+                                <button class="submit" type="submit">Login</button>
                             </form>
                         
                             
@@ -179,88 +95,14 @@ export default function signupForm() {
                 </div>
             </section>
 
-           
-           <footer className="footer">
-                <div className="tf-container">
-                    <div className="row">
-                        <div className="col-xl-4 col-lg-3 col-md-3">
-                            <div className="widget widget-infor">
-                                <div className="logo">
-                                    <img id="logo_footer" src="assets/images/logo/logo_dark.png" alt="Image" />
-                                </div>
-                                <p className="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
-                                <ul className="social-item">
-                                    <li><a href="#"><i className="fab fa-twitter"></i></a></li>
-                                    <li><a href="#"><i className="fab fa-facebook"></i></a></li>
-                                    <li><a href="#"><i className="fab fa-telegram-plane"></i></a></li>
-                                    <li><a href="#"><i className="fab fa-youtube"></i></a></li>
-                                    <li><a href="#"><i className="icon-fl-tik-tok-2"></i></a></li>
-                                    <li><a href="#"><i className="icon-fl-vt"></i></a></li>
-                                </ul>
-                                <p className="copy-right">Copyright © 2022 Themesflat. All Rights Reserved.
+      <Footer/>
 
-                                </p>
-                            </div>
-                        </div>
-                        <div className="col-xl-5 col-lg-5 col-md-5">
-                            <div className="widget widget-menu">
-                                <div className="menu menu-1">
-                                    <h6 className="widget-title">Maketplace</h6>
-                                    <ul >
-                                        <li><a href="#">Explore</a></li>
-                                        <li><a href="#">Item Detail</a></li>
-                                        <li><a href="#">Live Auditon</a></li>
-                                    </ul>
-                                </div>
-                                <div className="menu menu-2">
-                                    <h6 className="widget-title">Stats</h6>
-                                    <ul >
-                                        <li><a href="#">Ranking</a></li>
-                                        <li><a href="#">Ativity</a></li>
-                                        <li><a href="#">Auther</a></li>
-                                    </ul>
-                                </div>
-                                <div className="menu menu-3">
-                                    <h6 className="widget-title">Resoure</h6>
-                                    <ul >
-                                        <li><a href="#">Blogs</a></li>
-                                        <li><a href="#">Help and Center</a></li>
-                                        <li><a href="#">FaQs</a></li>
-                                    </ul>
-                                </div>
-                                <div className="menu menu-4">
-                                    <h6 className="widget-title">My account</h6>
-                                    <ul >
-                                        <li><a href="#">Profile</a></li>
-                                        <li><a href="#">My wallet</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-xl-3 col-lg-4 col-md-4">
-                            <div className="widget widget-subcribe">
-                                <h6 className="widget-title">Subscribe Us</h6>
-                                <p className="content">Signup for our newsletter to get the latest news in your inbox.</p>
-                                <form action="#" id="subscribe-form">
-                                    <input type="email" placeholder="Info@yourgmail.com" required="" id="subscribe-email" />
-                                    <button className="tf-button" type="submit" id="subscribe-button"><i className="icon-fl-send"></i></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-           </footer>
-
-       
         </div>
-       
+
     </div>
-    
+
 
     <a id="scroll-top"></a>
-    
-
-</body>
 </>
   )
 }

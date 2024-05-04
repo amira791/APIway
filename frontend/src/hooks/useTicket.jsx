@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useToast } from '@chakra-ui/react';
-import { BASEURL, fetchData, postData } from './API';
+import {BASEURL,fetchData, postData } from './API';
 
 export default function useTicket() {
     const toast = useToast();

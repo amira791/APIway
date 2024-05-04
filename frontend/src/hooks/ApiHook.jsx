@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BASEURL,fetchData, postData } from './API';
+import {BASEURL,fetchData, postData } from './API';
 
 export default function useApi() {
     const [APIs, setAPIs] = useState([]);

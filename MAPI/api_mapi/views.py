@@ -42,8 +42,16 @@ def signup(request):
             Admin.objects.create(user=user)
         elif user_type == 'consommateur':
             Consommateur.objects.create(user=user)
+        
+        access = AccessToken.for_user(user)
+        serialized_user = UserSerializer(user).data
 
-        return Response({'success': 'User created successfully'}, status=status.HTTP_201_CREATED)
+        return Response({
+            'success': 'User created successfully',
+            'access': str(access),
+            'user_type': user_type,
+            'user': serialized_user,
+        }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -77,7 +85,7 @@ def signin(request):
     return Response({
         'refresh': str(refresh),
         'access': str(access),
-        'user': serialized_user
+        'user': serialized_user,
     }, status=status.HTTP_200_OK)
 
 

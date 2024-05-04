@@ -12,7 +12,7 @@ class Navbar extends Component {
                 { name: "Explore", url: "searchApi" },
                 { name: "Help Center", url: "help-center.html" },
                 { name: "FAQ", url: "/tickets" },
-                { name: "Contact", url: "contact.html" }
+                { name: "Contact", url: "/signup" }
             ]
         };
     }

@@ -7,6 +7,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  Navigate
 } from 'react-router-dom';
 import ForumPage from './components/pages/ForumPage';
 import ThreadPage from './components/pages/ThreadPage';
@@ -17,11 +18,16 @@ import ConsomAccountManag from "./components/admin/consAccountManag";
 import SearchApi from "./components/RechercherAPI";
 import AdminHome from "./components/admin/adminHomePage";
 import ApiDetails from './components/ApiDetails'
-import LoginPage from './components/auth_components/login';
+import LoginPage from './components/auth_components/LoginPage';
 import TicketForm from './components/tickets/TicketForm';
 import TicketsPage from './components/pages/TicketsPage';
+import {AuthContextProvider} from './context/authContext'
+import {useAuthContext} from './hooks/useAuthContext'
+import SignUpPage from './components/auth_components/SignUpPage';
 
 function Root() {
+  const { isAuthenticated , isFournisseur } = useAuthContext();
+  
   return (
     <div id="App">
       <Router>
@@ -32,12 +38,13 @@ function Root() {
           <Route exact path='/consomAccounts' element={<ConsomAccountManag />} />
           <Route exact path="/searchApi" element={<SearchApi />} />
           <Route exact path="/login" element={<LoginPage />} />
+          <Route exact path="/signup" element={<SignUpPage/>}/>
           <Route path='/ApiDetail/:api_id' element={<ApiDetails />}></Route>
           <Route path="/forum" element={<ForumPage />} />
           <Route path="/forum/threads/:thread_id" element={<ThreadPage />} />
           <Route path="/tickets/new" element={<TicketForm />} />
           <Route path='/tickets' element={<TicketsPage/>} />
-          <Route path='/fournisseur' element={<ProviderHomePage />} />
+          <Route path='/fournisseur' element={isAuthenticated && isFournisseur? <ProviderHomePage /> : <Navigate to="/"/>} />
         </Routes>
       </Router>
     </div>
@@ -48,6 +55,9 @@ function Root() {
 // Use createRoot instead of ReactDOM.render
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Root />
+    <AuthContextProvider>
+     <Root />
+    </AuthContextProvider>
+   
   </React.StrictMode>
 );

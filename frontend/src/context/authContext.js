@@ -1,56 +1,71 @@
-import { useEffect } from "react";
-import { createContext , useReducer  } from "react";
+import { createContext, useEffect, useReducer } from "react";
 
 
+export const AuthContext = createContext();
 
-export const  AuthContext = createContext();
-
-
-
-export const authReducer = (state , action) => {
-    switch(action.type){
-        case 'LOGIN' :
-            return { 
+export const authReducer = (state, action) => {
+    switch (action.type) {
+        case 'LOGIN':
+            return {
                 ...state,
                 isAuthenticated: true,
+                isFournisseur: action.payload.user.is_fournisseur,
+                isConsommateur: action.payload.user.is_consommateur,
+                isAdmin :action.payload.user.is_admin,
                 token: action.payload.token,
-                username: action.payload.username
+                username: action.payload.user.username
             }
-        case 'LOGOUT' :
+        case 'LOGOUT':
             return {
                 ...state,
                 isAuthenticated: false,
+                isFournisseur: false,
+                isConsommateur: false,
+                isAdmin :false,
                 token: null,
-                username : null
+                username: null
             }
-        default :
+        default:
             return state
     }
 }
-export const AuthContextPrivider = ({children}) => {
 
-   const [state,dispatch] = useReducer(authReducer , {
-    isAuthenticated: false,
-    token: null,
-    username : null
-   });
+export const AuthContextProvider = ({ children }) => {
 
-   useEffect(()=>{
-    
-     const token = localStorage.getItem('jwtToken');
-     const username = localStorage.getItem('username');
-     if (token && username) {
-        dispatch({type : 'LOGIN' , payload: {token : token , username : username}})
-     }
-   },[])
+    const [state, dispatch] = useReducer(authReducer, {
+        isAuthenticated: null,
+        isFournisseur: null,
+        isConsommateur: null,
+        isAdmin :null,
+        token: null,
+        username: null
+    });
 
-   console.log('AuthContext state:' , state);
+    useEffect(() => {
+        const token = localStorage.getItem('jwtToken');
+        const username = localStorage.getItem('username');
+        const isFournisseur = localStorage.getItem('isFournisseur');
+        const isConsommateur = localStorage.getItem('isConsommateur');
+        const isAdmin = localStorage.getItem('isAdmin');
+        if (token && username) {
+            dispatch({
+                type: 'LOGIN',
+                payload: {
+                    token: token,
+                    user: {
+                        username: username,
+                        is_fournisseur: isFournisseur === 'true',
+                        is_consommateur: isConsommateur === 'true',
+                        is_admin: isAdmin === 'true'
+                    }
+                }
+            });
+        }
+    }, []);
 
-   return(
-     <AuthContext.Provider value={{ ...state , dispatch }}>
-        { children }
-    </AuthContext.Provider>
-   )
+    return (
+        <AuthContext.Provider value={{ ...state, dispatch }}>
+            {children}
+        </AuthContext.Provider>
+    );
 }
-
-
