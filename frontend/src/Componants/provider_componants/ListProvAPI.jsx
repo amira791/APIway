@@ -1,14 +1,19 @@
-import ManipulateProv from "../../hooks/ProviderHook";
+import ManipulateProv from "../../Hooks/ProviderHook";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import ManipulateCat from "../../hooks/CategoryHook";
-import APIAjout from "../../hooks/APIHook";
+import ManipulateCat from "../../Hooks/CategoryHook";
+import APIAjout from "../../Hooks/APIHook";
 import VersionTable from "../provider_componants/APIversions";
+import CustomPagination from "../global_componants/Pagination";
 const ProvAPIList = () => {
     const { providerAPIs } = ManipulateProv();
     const [showUpdateSection, setShowUpdateSection] = useState(false);
     const [showVersionsSection, setShowVersionsSection] = useState(false);
     const [selectedAPI, setSelectedAPI] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1); // Current page number
+    const itemsPerPage = 5; // Number of APIs per page
+    const totalAPIs = providerAPIs.length; // Total number of APIs
+    const totalPages = Math.ceil(totalAPIs / itemsPerPage); // Calculate total pages
     const handleUpdateClick = (api) => {
       setSelectedAPI(api);
       setShowUpdateSection(true);
@@ -66,7 +71,7 @@ const ProvAPIList = () => {
       //console.log("submittedForm",formData);
       updateAPI(selectedAPI.id_api,formData);
     };
-  
+
 
 
     return(
@@ -87,10 +92,10 @@ const ProvAPIList = () => {
                     </div>
                 </div>
                 <div className="table-ranking">
-                {providerAPIs.map((api) => {
+                {providerAPIs.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((api) => {
                   const logoFileNameWithExtension = api.logo.replace(/^.*[\\\/]/, '');
                   const logoFileName = logoFileNameWithExtension.split('%0D%0A')[0];
-                 
+                  
                  
                     return (
                     <div className="content-ranking" key={api.id_api}>
@@ -112,14 +117,17 @@ const ProvAPIList = () => {
                     </div>
                     );
                 })}
-                <div className="table-btn">
-                    <a href="#">Load more</a>
-                </div>
-                </div>
-                
 
+                </div>
+
+                <CustomPagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    handlePageChange={setCurrentPage}
+                />
 
             </div>
+
             <div>
             {showUpdateSection && (
                 <div id="update-section">
@@ -307,11 +315,10 @@ const ProvAPIList = () => {
                 <div id="versions-section">
                     <div>
                         <h4 className="title-dashboard" style={{ display: "inline-block", marginRight: "600px" }}>Manage Versions</h4>
-                        <button onClick={handleReturnClick2} title="Return to APIs"><i class="fa-solid fa-right-from-bracket"></i></button>
+                        {/* <button onClick={handleReturnClick2} title="Return to APIs"><i class="fa-solid fa-right-from-bracket"></i></button> */}
                     </div>
-                    <div className="manage-versions">
-                        <VersionTable selectedAPI={selectedAPI} />
-                    </div>
+                   
+                    <VersionTable selectedAPI={selectedAPI} onReturnClick={handleReturnClick2}/>  
 
                 </div>
             )}

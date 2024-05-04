@@ -12,6 +12,7 @@
     box-sizing: border-box;
     animation: 0.35s cubic-bezier(0.4, 0, 1, 1) 0s 1 normal none running drop-fade;
 }
+
 .versions_title {
     border-bottom: 1px solid #000;
 }
@@ -334,6 +335,10 @@
     height: 20px;
     width: 20px;
 }
+.radio1:hover {
+    border-color: rgb(51, 119, 225);
+    background-color: rgb(42, 113, 224);
+}
 .radio2 {
     box-sizing: border-box;
     width: 8px;
@@ -341,6 +346,9 @@
     border-radius: 50%;
   /*  background-color: rgb(255, 255, 255); */
     background-color: rgb(117, 117, 117); 
+}
+.radio2:hover {
+    background-color: rgb(255, 255, 255);
 }
 .switch_state_label {
     margin-left: 8px;
@@ -487,4 +495,26 @@
     border-radius: 50%;
     background-color: rgb(117, 117, 117);
     
+}
+.returnButtonContainer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px; /* Adjust as needed */
+}
+
+.returnToAPIlist {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+.CurrentVersionCheckBox{
+    margin-left: 50px;
+    display: flex;
+    align-items: center;
+    width: 350px;
 }
