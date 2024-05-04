@@ -21,7 +21,6 @@ export default function Thread({ thread_id }) {
   }, [thread_id]);
 
   useEffect(() => {
-    // Fetch posts for each thread when threads data changes
     getThreadComments(thread_id);
   }, [thread_id]);
 

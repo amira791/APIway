@@ -20,9 +20,13 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 class FournisseurSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
     class Meta:
         model = Fournisseur
         fields = ['id_fournisseur', 'user']
+
+    
 
 class AdminSerializer(serializers.ModelSerializer):
     class Meta:
@@ -34,22 +38,6 @@ class ConsommateurSerializer(serializers.ModelSerializer):
         model = Consommateur
         fields = ['id_consommateur', 'user']
         
-# class FournisseurSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Fournisseur
-#         fields = '__all__'
-    
-    
-# class AdminSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Admin
-#         fields = '__all__'
-
-# class ConsommateurSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Consommateur
-#         fields = '__all__'
-    
 
 class APIcategorySerializer(serializers.ModelSerializer):
     class Meta:

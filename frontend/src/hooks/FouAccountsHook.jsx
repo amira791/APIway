@@ -1,25 +1,27 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASEURL ,fetchData, postData } from './API';
 
 export default function useManageAccountsF() {
     const [fournisseurs, setFournisseurs] = useState([]);
+    const [fournisseur , setFournisseur] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        setLoading(true);
-        axios.get('http://127.0.0.1:5000/fournisseurs/')
-            .then(response => {
-                console.log('Fetched Data:', response.data);
-                setFournisseurs(response.data);
-                setLoading(false);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                setError(error);
-                setLoading(false);
-            });
-    }, []);
+    // useEffect(() => {
+    //     setLoading(true);
+    //     axios.get('http://127.0.0.1:5000/fournisseurs/')
+    //         .then(response => {
+    //             console.log('Fetched Data:', response.data);
+    //             setFournisseurs(response.data);
+    //             setLoading(false);
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching data:', error);
+    //             setError(error);
+    //             setLoading(false);
+    //         });
+    // }, []);
 
     const activateStatus = async (userId) => {
         try {
@@ -59,12 +61,18 @@ export default function useManageAccountsF() {
             });
     };
 
+    const getFournisseur = (id) => {
+      fetchData(`${BASEURL}fournisseurs/${id}/`, setFournisseur, setLoading, setError);
+  };
+
     return {
         fournisseurs,
+        fournisseur,
         loading,
         error,
         activateStatus,
         deactivateStatus,
-        fetchFournisseursData
+        fetchFournisseursData,
+        getFournisseur
     };
 }

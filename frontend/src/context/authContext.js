@@ -6,6 +6,7 @@ const AuthContext = createContext(null);
 const initialState = {
   token: localStorage.getItem('token') || null,
   username: localStorage.getItem('username') || null,
+  userId: localStorage.getItem('userId') || null,
   isFournisseur: localStorage.getItem('isFournisseur') === 'true',
   isConsommateur: localStorage.getItem('isConsommateur') === 'true',
   isAdmin: localStorage.getItem('isAdmin') === 'true'
@@ -20,6 +21,7 @@ const authReducer = (state, action) => {
         ...state,
         token: access,
         username: user.username,
+        userId : user.id,
         isFournisseur: user_type === 'fournisseur',
         isConsommateur: user_type === 'consommateur',
         isAdmin: user_type === 'admin'
@@ -28,7 +30,8 @@ const authReducer = (state, action) => {
       return {
         ...initialState,
         token: null,
-        username: null
+        username: null,
+        userId:null
       };
     default:
       return state;
@@ -43,6 +46,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem('token', authState.token);
     localStorage.setItem('username', authState.username);
+    localStorage.setItem('userId', authState.userId);
     localStorage.setItem('isFournisseur', authState.isFournisseur);
     localStorage.setItem('isConsommateur', authState.isConsommateur);
     localStorage.setItem('isAdmin', authState.isAdmin);

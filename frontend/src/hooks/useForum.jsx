@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useToast } from '@chakra-ui/react';
-import { fetchData, postData } from './API';
-import{BASEURL} from './API'
+import { BASEURL ,fetchData, postData } from './API';
 
 export default function useForum() {
     const toast = useToast();

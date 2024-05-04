@@ -3,20 +3,24 @@ import { useParams } from 'react-router-dom';
 import useApi from '../hooks/ApiHook';
 import { Link } from 'react-router-dom';
 import Forum from '../components/forum/Forum'
+import useManageAccountsF from '../hooks/FouAccountsHook'
+import { useAuthContext } from '../context/authContext';
 
 const ApiDetails = () => {
+
+    const { authState } = useAuthContext();
     const { Api ,fetchApi } = useApi();
     const { api_id } = useParams(); // Get API ID from URL params
     const [apiDetails, setApiDetails] = useState(null);
+    const {getFournisseur ,fournisseur} = useManageAccountsF()
+
 
      useEffect(() => {
-        console.log("id",api_id);
         fetchApi(api_id);
-     }, [api_id]);
+        getFournisseur(authState.userId)
+     }, [api_id,authState.userId]);
 
-     useEffect(() => {
-        console.log("api fetched",Api);
-     }, [Api]);
+
 
     // const logoFileName = Api.logo.replace(/^.*[\\\/]/, '');
     // console.log("logoFileName",logoFileName);
@@ -68,7 +72,7 @@ const ApiDetails = () => {
                                                 </div></div>
                                         </div>
                                     </div>
-                                    <h2 className="title-detail">{Api.api_name}Wicked Cranium #4449</h2>
+                                    <h2 className="title-detail">{Api.api_name} By {fournisseur.user?.first_name ? fournisseur.user.first_name : '\u00A0'}</h2>
                                     <p className="except">A Collection Of 10,000 Undead NFTs Minted On The Ethereum Blockchain. Each Unique Deadfella Is Randomly Generated From A Combination.</p>
                                     <div className="tf-tab">
                                         <ul className="menu-tab ">
