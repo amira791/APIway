@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import useForum from '../../hooks/useForum';
-import Post from './Post';
+import Comment from './Comment';
 import {
   Flex, Avatar, Button, Input, Text, HStack, VStack,
   FormControl,
@@ -12,7 +12,7 @@ import formatTime from '../../utils/formatTime';
 
 export default function Thread({ thread_id }) {
   const [message, setMessage] = useState()
-  const { addNewPost, getThread, getThreadPosts, thread, posts, error, loading } = useForum();
+  const { addNewComment, getThread, getThreadPosts, thread, comments, error, loading } = useForum();
 
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function Thread({ thread_id }) {
       created_by: 1
     }
     e.preventDefault(); // Prevent default form submission behavior
-    addNewPost(newPost)
+    addNewComment(newPost)
   };
 
   return (
@@ -78,8 +78,8 @@ export default function Thread({ thread_id }) {
           <div className='history-content'>
             <div className='inner tf-filter-container'>
               <div className="history-content">
-                {posts.map(post => (
-                  <Post key={post.id_post} post={post} />
+                {comments.map(comment => (
+                  <Comment key={comment.id_post} comment={comment} />
                 ))}
               </div>
             </div>

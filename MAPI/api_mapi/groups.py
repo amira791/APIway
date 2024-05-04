@@ -37,18 +37,18 @@ can_manage_groups = Permission.objects.create(
 
 # Permissions for Editors
 can_add_post = Permission.objects.create(
-    codename='can_add_post',
-    name='Can add post',
+    codename='can_add_comment',
+    name='Can add comment',
     content_type=content_type_user,
 )
 can_edit_post = Permission.objects.create(
-    codename='can_edit_post',
-    name='Can edit post',
+    codename='can_edit_comment',
+    name='Can edit comment',
     content_type=content_type_user,
 )
 can_delete_post = Permission.objects.create(
-    codename='can_delete_post',
-    name='Can delete post',
+    codename='can_delete_comment',
+    name='Can delete comment',
     content_type=content_type_user,
 )
 

@@ -1,19 +1,14 @@
 from rest_framework import generics , status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from .models import *
 from .serializers import *
-from django.shortcuts import render
 from django.db.models import Q
-from django.http import JsonResponse
 from rest_framework import viewsets
 from .models import Fournisseur, Consommateur
-from django.db.models import Min, Max
-from django.db.models import OuterRef, Subquery
-from django.shortcuts import render
-from rest_framework.decorators import api_view
+from django.db.models import  Max
 from rest_framework.parsers import MultiPartParser, FormParser
-from rest_framework.pagination import PageNumberPagination
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from django.contrib.auth import get_user_model
 

@@ -65,8 +65,8 @@ export default function SignUpPage() {
                             <form onSubmit={handleFormSubmit}>
                                <fieldset><input value={first_name} onChange={(e)=> setFirstName(e.target.value)} id="first_name" name="first_name" tabindex="1" aria-required="true" required="" type="text" placeholder="First name"/></fieldset>
                                <fieldset><input value={last_name} onChange={(e)=> setLastName(e.target.value)} id="last_name" name="last_name" tabindex="1" aria-required="true" required="" type="text" placeholder="Last name"/></fieldset>
-                               <fieldset><input value={username} onChange={(e)=> setUsername(e.target.value)} id="username" name="username" tabindex="1" aria-required="true" required="" type="text" placeholder="Email"/></fieldset>
-                               <fieldset><input value={email} onChange={(e)=> setEmail(e.target.value)} id="email" name="email" tabindex="1" aria-required="true" required="" type="text" placeholder="User name"/></fieldset>
+                               <fieldset><input value={username} onChange={(e)=> setUsername(e.target.value)} id="username" name="username" tabindex="1" aria-required="true" required="" type="text" placeholder="Username"/></fieldset>
+                               <fieldset><input value={email} onChange={(e)=> setEmail(e.target.value)} id="email" name="email" tabindex="1" aria-required="true" required="" type="text" placeholder="Email"/></fieldset>
                                <fieldset> <input value={password} onChange={(e)=> setPassword(e.target.value)} id="showpassword" name="password" tabindex="2" aria-required="true"  type="password" placeholder="Password" required=""/>
                                 <span class="btn-show-pass"><i class="far fa-eye-slash"></i></span></fieldset>
                                 <fieldset class="mb24"> <input id="showpassword2" name="password" tabindex="2" aria-required="true"  type="password" placeholder="Confirm password" required=""/>

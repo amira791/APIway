@@ -3,7 +3,7 @@ import { Flex, Spacer, Avatar, Box, Text, HStack, Button, LinkBox, LinkOverlay, 
 import { TimeIcon } from '@chakra-ui/icons'
 import formatTime from '../../utils/formatTime'
 
-export default function Post({ post }) {
+export default function Comment({ comment }) {
   return (
     <>
 
@@ -18,11 +18,11 @@ export default function Post({ post }) {
                       <img src="assets/images/author/apiLogo.png" alt="images" />
                     </div>
                   <div className="content">
-                    <a href="#" className="name">{post.created_by.CNusername}</a>
-                    <div className="description">{post.message}</div>
+                    <a href="#" className="name">{comment.created_by.CNusername}</a>
+                    <div className="description">{comment.message}</div>
                     <div className="date">
                       <span> <TimeIcon /></span>
-                      <span className="month">{formatTime(post.created_at)}</span>
+                      <span className="month">{formatTime(comment.created_at)}</span>
                     </div>
                   </div>
                 </div>
