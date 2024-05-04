@@ -1,71 +1,62 @@
-import { createContext, useEffect, useReducer } from "react";
+import React, { createContext, useReducer, useContext, useEffect } from 'react';
 
+const AuthContext = createContext(null);
 
-export const AuthContext = createContext();
+// Define the initial state
+const initialState = {
+  token: localStorage.getItem('token') || null,
+  username: localStorage.getItem('username') || null,
+  isFournisseur: localStorage.getItem('isFournisseur') === 'true',
+  isConsommateur: localStorage.getItem('isConsommateur') === 'true',
+  isAdmin: localStorage.getItem('isAdmin') === 'true'
+};
 
-export const authReducer = (state, action) => {
-    switch (action.type) {
-        case 'LOGIN':
-            return {
-                ...state,
-                isAuthenticated: true,
-                isFournisseur: action.payload.user.is_fournisseur,
-                isConsommateur: action.payload.user.is_consommateur,
-                isAdmin :action.payload.user.is_admin,
-                token: action.payload.token,
-                username: action.payload.user.username
-            }
-        case 'LOGOUT':
-            return {
-                ...state,
-                isAuthenticated: false,
-                isFournisseur: false,
-                isConsommateur: false,
-                isAdmin :false,
-                token: null,
-                username: null
-            }
-        default:
-            return state
-    }
-}
-
-export const AuthContextProvider = ({ children }) => {
-
-    const [state, dispatch] = useReducer(authReducer, {
-        isAuthenticated: null,
-        isFournisseur: null,
-        isConsommateur: null,
-        isAdmin :null,
+// Define the reducer function
+const authReducer = (state, action) => {
+  switch (action.type) {
+    case 'SET_AUTH_INFO':
+      const { user_type, user } = action.payload;
+      return {
+        ...state,
+        token: user.token,
+        username: user.username,
+        isFournisseur: user_type === 'fournisseur',
+        isConsommateur: user_type === 'consommateur',
+        isAdmin: user_type === 'admin'
+      };
+    case 'LOGOUT':
+      return {
+        ...initialState,
         token: null,
         username: null
-    });
+      };
+    default:
+      return state;
+  }
+};
 
-    useEffect(() => {
-        const token = localStorage.getItem('jwtToken');
-        const username = localStorage.getItem('username');
-        const isFournisseur = localStorage.getItem('isFournisseur');
-        const isConsommateur = localStorage.getItem('isConsommateur');
-        const isAdmin = localStorage.getItem('isAdmin');
-        if (token && username) {
-            dispatch({
-                type: 'LOGIN',
-                payload: {
-                    token: token,
-                    user: {
-                        username: username,
-                        is_fournisseur: isFournisseur === 'true',
-                        is_consommateur: isConsommateur === 'true',
-                        is_admin: isAdmin === 'true'
-                    }
-                }
-            });
-        }
-    }, []);
+// Create a provider component
+export const AuthProvider = ({ children }) => {
+  const [authState, dispatch] = useReducer(authReducer, initialState);
 
-    return (
-        <AuthContext.Provider value={{ ...state, dispatch }}>
-            {children}
-        </AuthContext.Provider>
-    );
-}
+  // Effect to update local storage when authState changes
+  useEffect(() => {
+    localStorage.setItem('token', authState.token);
+    localStorage.setItem('username', authState.username);
+    localStorage.setItem('isFournisseur', authState.isFournisseur);
+    localStorage.setItem('isConsommateur', authState.isConsommateur);
+    localStorage.setItem('isAdmin', authState.isAdmin);
+  }, [authState]);
+
+  // The value prop of the provider will be the current state and the dispatch function
+  return (
+    <AuthContext.Provider value={{ authState, dispatch }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+// Custom hook to use the auth context
+export const useAuthContext = () => {
+  return useContext(AuthContext);
+};

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useToast } from '@chakra-ui/react';
-import { useAuthContext } from './useAuthContext';
+import {useAuthContext} from '../context/authContext'
 import useStorage from './useStorage';
 import{BASEURL} from './API'
 
@@ -23,19 +23,11 @@ export default function useAuth() {
         })
         .then((response) => response.json())
         .then((result) => {
-            setToken(result.access);
-            setUsername(result.user.username);
-            setIsFournisseur(result.user_type == 'fournisseur'? true : false );
-            setIsConsommateur(result.user_type == 'consommateur'? true : false );
-            setIsAdmin(result.user_type == 'admin'? true : false );
-            setLoading(false);
+            
             dispatch({
-                type: 'LOGIN',
-                payload: {
-                    token: result.access,
-                    username: result.user.username
-                }
-            });
+                type: 'SET_AUTH_INFO',
+                payload: result
+              });
             toast({
                 title: 'User signed up',
                 description: "User signed up successfully",
@@ -99,11 +91,8 @@ export default function useAuth() {
     }
     
     const logOut = () => {
-        deleteUsername();
-        deleteIsConsommateur();
-        deleteIsFournisseur();
-        deleteToken();
         dispatch({ type: 'LOGOUT' });
+        localStorage.clear();
     }
 
     return {

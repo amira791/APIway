@@ -21,12 +21,11 @@ import ApiDetails from './components/ApiDetails'
 import LoginPage from './components/auth_components/LoginPage';
 import TicketForm from './components/tickets/TicketForm';
 import TicketsPage from './components/pages/TicketsPage';
-import {AuthContextProvider} from './context/authContext'
-import {useAuthContext} from './hooks/useAuthContext'
+import { useAuthContext , AuthProvider} from './context/authContext';
 import SignUpPage from './components/auth_components/SignUpPage';
 
 function Root() {
-  const { isAuthenticated , isFournisseur } = useAuthContext();
+  const { authState } = useAuthContext();
   
   return (
     <div id="App">
@@ -44,7 +43,7 @@ function Root() {
           <Route path="/forum/threads/:thread_id" element={<ThreadPage />} />
           <Route path="/tickets/new" element={<TicketForm />} />
           <Route path='/tickets' element={<TicketsPage/>} />
-          <Route path='/fournisseur' element={isAuthenticated && isFournisseur? <ProviderHomePage /> : <Navigate to="/"/>} />
+          <Route path='/fournisseur' element={authState.isAuthenticated && authState.isFournisseur? <ProviderHomePage /> : <Navigate to="/"/>} />
         </Routes>
       </Router>
     </div>
@@ -55,9 +54,9 @@ function Root() {
 // Use createRoot instead of ReactDOM.render
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AuthContextProvider>
+    <AuthProvider>
      <Root />
-    </AuthContextProvider>
+    </AuthProvider>
    
   </React.StrictMode>
 );
