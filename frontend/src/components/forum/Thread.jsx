@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom';
+import { NavLink , useNavigate} from 'react-router-dom';
 import useForum from '../../hooks/useForum';
 import Comment from './Comment';
 import {
@@ -11,6 +11,7 @@ import { ChevronLeftIcon, TimeIcon } from '@chakra-ui/icons'
 import formatTime from '../../utils/formatTime';
 
 export default function Thread({ thread_id }) {
+  const navigate = useNavigate()
   const [message, setMessage] = useState()
   const { addNewComment, getThread, getThreadComments, thread, comments, error, loading } = useForum();
 
@@ -33,6 +34,7 @@ export default function Thread({ thread_id }) {
     }
     e.preventDefault(); // Prevent default form submission behavior
     addNewComment(newPost)
+    navigate(`/forum/threads/${thread_id}`)
   };
 
   return (

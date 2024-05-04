@@ -43,7 +43,7 @@ function Root() {
           <Route path="/forum/threads/:thread_id" element={<ThreadPage />} />
           <Route path="/tickets/new" element={<TicketForm />} />
           <Route path='/tickets' element={<TicketsPage/>} />
-          <Route path='/fournisseur' element={authState.isAuthenticated && authState.isFournisseur? <ProviderHomePage /> : <Navigate to="/"/>} />
+          <Route path='/fournisseur' element={<ProviderHomePage />} />
         </Routes>
       </Router>
     </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import {useNavigate} from 'react-router-dom'
 import Navbar from '../global_components/navbar';
 import Footer from '../global_components/footer';
 import useAuth from '../../hooks/useAuth'
@@ -6,6 +7,7 @@ import useAuth from '../../hooks/useAuth'
 
 export default function LoginPage() {
    
+    const navigate = useNavigate()
     const [email,setEmail] = useState("")
     const [username,setUsername]= useState("")
     const [password,setPassword] = useState("")
@@ -23,6 +25,7 @@ export default function LoginPage() {
          
         console.log(user)
         signIn(user)
+        navigate('/')
     };
 
   return (

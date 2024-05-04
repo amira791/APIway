@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import { useToast } from '@chakra-ui/react';
 import {useAuthContext} from '../context/authContext'
-import useStorage from './useStorage';
 import{BASEURL} from './API'
 
 export default function useAuth() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const toast = useToast();
-    const { deleteToken, setToken, setUsername, deleteUsername, setIsFournisseur, setIsConsommateur, deleteIsConsommateur , deleteIsFournisseur , setIsAdmin} = useStorage();
     const { dispatch } = useAuthContext();
 
 
