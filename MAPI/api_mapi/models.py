@@ -151,7 +151,7 @@ class Abonnement(models.Model):
     
 class APIForum(models.Model):
     id_forum = models.AutoField(primary_key=True)
-    api = models.ForeignKey(API,on_delete= models.CASCADE)
+    api_id = models.ForeignKey(API,on_delete= models.CASCADE)
     name = models.CharField(max_length=200)
     description = models.TextField()
 

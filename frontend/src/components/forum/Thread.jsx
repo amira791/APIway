@@ -12,7 +12,7 @@ import formatTime from '../../utils/formatTime';
 
 export default function Thread({ thread_id }) {
   const [message, setMessage] = useState()
-  const { addNewComment, getThread, getThreadPosts, thread, comments, error, loading } = useForum();
+  const { addNewComment, getThread, getThreadComments, thread, comments, error, loading } = useForum();
 
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export default function Thread({ thread_id }) {
 
   useEffect(() => {
     // Fetch posts for each thread when threads data changes
-    getThreadPosts(thread_id);
+    getThreadComments(thread_id);
   }, [thread_id]);
 
 
@@ -79,7 +79,7 @@ export default function Thread({ thread_id }) {
             <div className='inner tf-filter-container'>
               <div className="history-content">
                 {comments.map(comment => (
-                  <Comment key={comment.id_post} comment={comment} />
+                  <Comment key={comment.id_comment} comment={comment} />
                 ))}
               </div>
             </div>

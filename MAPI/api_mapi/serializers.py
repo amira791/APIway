@@ -107,14 +107,28 @@ class ThreadWriteSerializer(serializers.ModelSerializer):
         model = Thread
         fields = '__all__'
 
-    #to-do
-        # define the craetor as connected user , current user
-class PostSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        # Get the current authenticated user
+        user = self.context['request'].user
+        
+        # Add the creator (user) to the validated data before creating the thread
+        validated_data['creator'] = user
+        
+        # Create and return the thread
+        return Thread.objects.create(**validated_data)
+class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = '__all__'
-        #to-do
-        # define the craetor as connected user , current user
+        def create(self, validated_data):
+            # Get the current authenticated user
+            user = self.context['request'].user
+            
+            # Add the creator (user) to the validated data before creating the comment
+            validated_data['creator'] = user
+            
+            # Create and return the comment
+            return Comment.objects.create(**validated_data)
 
 class TicketSerializer(serializers.ModelSerializer):
     class Meta:

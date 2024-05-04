@@ -14,7 +14,7 @@ export default function useForum() {
 
     
     const getForum = (id) => {
-        fetchData(`${BASEURL}apiforum/${id}/`, setForum, setLoading, setError);
+        fetchData(`${BASEURL}apis/${id}/forum/`, setForum, setLoading, setError);
     };
 
     const getForumThreads = (id) => {

@@ -6,18 +6,18 @@ export default function signupForm() {
   return (
     <>
 
-    <div id="wrapper" class="wrapper-style">
-        <div id="page" class="clearfix">
-            <header class="header">
-                <div class="tf-container">
-                    <div class="row">
-                        <div class="col-md-12">                              
+    <div id="wrapper" className="wrapper-style">
+        <div id="page" className="clearfix">
+            <header className="header">
+                <div className="tf-container">
+                    <div className="row">
+                        <div className="col-md-12">                              
                             <div id="site-header-inner">                                 
                           
                             <Navbar />
-                                <div class="header-right">
-                                    <a href="connect-wallet.html" class="tf-button "><span>Connect Wallet</span></a>
-                                     <span class="user "><svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <div className="header-right">
+                                    <a href="connect-wallet.html" className="tf-button "><span>Connect Wallet</span></a>
+                                     <span className="user "><svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <mask id="mask0_2981_49321" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="11" width="16" height="7">
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M0 11.2949H15.1998V18.0009H0V11.2949Z" fill="white"/>
                                         </mask>
@@ -34,12 +34,12 @@ export default function signupForm() {
                                         </g>
                                         </svg>
                                         </span>
-                                    <a href="#" onclick="switchTheme()" class="mode-switch">
+                                    <a href="#" onclick="switchTheme()" className="mode-switch">
                                         <img id="img-mode" src="assets/images/icon/moon.png" alt="Image"/>
                                     </a>
                                 </div>  
 
-                                <div class="mobile-button"><span></span></div>
+                                <div className="mobile-button"><span></span></div>
                             </div>
                         </div>
                     </div>
@@ -47,11 +47,11 @@ export default function signupForm() {
                 
             </header>
 
-            <section class="tf-page-title style-2">    
-                <div class="tf-container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <ul class="breadcrumbs">
+            <section className="tf-page-title style-2">    
+                <div className="tf-container">
+                    <div className="row">
+                        <div className="col-md-12">
+                            <ul className="breadcrumbs">
                                 <li><a href="blog2.html">Home</a></li>
                                 <li>Sign Up</li>
                             </ul>
@@ -61,32 +61,32 @@ export default function signupForm() {
                 </div>                    
             </section>
                 
-            <section class="tf-login">
-                <div class="tf-container">
-                    <div class="row justify-content-center">
-                        <div class="col-md-12">
-                            <div class="tf-heading style-2">
-                                <h4 class="heading">Sign Up To NFT</h4>
+            <section className="tf-login">
+                <div className="tf-container">
+                    <div className="row justify-content-center">
+                        <div className="col-md-12">
+                            <div className="tf-heading style-2">
+                                <h4 className="heading">Sign Up To NFT</h4>
                             </div>
                         </div>
-                        <div class="col-xl-6 col-lg-9 col-md-12">
+                        <div className="col-xl-6 col-lg-9 col-md-12">
                             <form action="#" id="contactform">
-                                <fieldset><input id="name" name="name" tabindex="1" aria-required="true" required="" type="text" placeholder="User name"/></fieldset>
-                               <fieldset> <input id="showpassword" name="password" tabindex="2" aria-required="true"  type="password" placeholder="Password" required=""/>
-                                <span class="btn-show-pass"><i class="far fa-eye-slash"></i></span></fieldset>
-                                <fieldset class="mb24"> <input id="showpassword2" name="password" tabindex="2" aria-required="true"  type="password" placeholder="Confirm password" required=""/>
-                                    <span class="btn-show-pass2"><i class="far fa-eye-slash"></i></span></fieldset>
-                                <div class="forgot-pass-wrap">
+                                <fieldset><input id="name" name="name" tabIndex="1" aria-required="true" required="" type="text" placeholder="User name"/></fieldset>
+                               <fieldset> <input id="showpassword" name="password" tabIndex="2" aria-required="true"  type="password" placeholder="Password" required=""/>
+                                <span className="btn-show-pass"><i className="far fa-eye-slash"></i></span></fieldset>
+                                <fieldset className="mb24"> <input id="showpassword2" name="password" tabIndex="2" aria-required="true"  type="password" placeholder="Confirm password" required=""/>
+                                    <span className="btn-show-pass2"><i className="far fa-eye-slash"></i></span></fieldset>
+                                <div className="forgot-pass-wrap">
                                     <label>I agree to the terms and services
                                         <input type="checkbox"/>
-                                        <span class="btn-checkbox"></span>
+                                        <span className="btn-checkbox"></span>
                                     </label>
                                 </div>
-                                <div class="title-login">Or login with social</div>
-                                <div class="button-gg"><a href="#" ><i class="fab fa-facebook"></i>Facebook</a></div>
-                                <div class="button-gg mb33"><a href="#" ><i class="fab fa-google"></i>Google</a>
+                                <div className="title-login">Or login with social</div>
+                                <div className="button-gg"><a href="#" ><i className="fab fa-facebook"></i>Facebook</a></div>
+                                <div className="button-gg mb33"><a href="#" ><i className="fab fa-google"></i>Google</a>
                                 </div>
-                                <button class="submit" type="submit">Login</button>
+                                <button className="submit" type="submit">Login</button>
                             </form>
                         
                             

@@ -134,12 +134,26 @@ class APIdocumentationView(viewsets.ModelViewSet):
     serializer_class = APIdocumentationSerializer
 
 class APIForumView(viewsets.ModelViewSet):
-    queryset = APIForum.objects.all()
     serializer_class = APIForumSerializer
+
+    def get_queryset(self):
+        queryset = APIForum.objects.all()
+        api_id = self.kwargs.get('api_id')
+        if api_id is not None:
+            queryset = queryset.filter(api_id=api_id)
+        return queryset
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset.first())  
+        return Response(serializer.data)
 
 # Forum Thread View
 class ThreadView(viewsets.ModelViewSet):
     queryset = Thread.objects.all()
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user)
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:
@@ -157,7 +171,11 @@ class ThreadView(viewsets.ModelViewSet):
 # Forum Post View
 class CommentView(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
-    serializer_class = PostSerializer
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
 
     def get_queryset(self):
         queryset = self.queryset

@@ -5,21 +5,28 @@ import { Flex, Box  , Heading , Text , HStack
 import useForum from '../../hooks/useForum';
 import ThreadList from './ThreadList';
 
-export default function Forum({ forum_id }) {
+export default function Forum({api_id }) {
 
   const { addNewThread, getForum,forum , error, loading } = useForum();
 
   const [message,setMessage] = useState()
 
   useEffect(() => {
-    getForum(forum_id);
-  }, [forum_id]);
-
+    getForum(api_id);
+  
+  }, [api_id]);
+  
+  useEffect(() => {
+    console.log("forum here ")
+    console.log(forum)
+  
+  }, [forum]);
 
   const handleNewDiscussion = () => {
+    
       const thread = {
        content: message,
-       forum: forum_id, 
+       forum: forum.id_forum, 
        creator: 2 // current user 
       }
     addNewThread(thread)
@@ -47,7 +54,7 @@ export default function Forum({ forum_id }) {
        
         </HStack> 
         <Box>
-          <ThreadList key={forum_id} forum_id={forum_id}/>
+          <ThreadList key={forum.id_forum} forum_id={forum.id_forum}/>
         </Box>
        </Flex>
 

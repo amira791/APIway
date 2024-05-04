@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom'; 
 import useApi from '../hooks/ApiHook';
 import { Link } from 'react-router-dom';
+import Forum from '../components/forum/Forum'
 
 const ApiDetails = () => {
     const { Api ,fetchApi } = useApi();
@@ -24,85 +25,85 @@ const ApiDetails = () => {
     return (
         <>
        
-    <div id="wrapper" class="wrapper-style">
-        <div id="page" class="clearfix">
+    <div id="wrapper" className="wrapper-style">
+        <div id="page" className="clearfix">
             
 
-        <section class="tf-page-title ">    
-                <div class="tf-container">
-                    <div class="row">
-                        <div class="col-md-12">
+        <section className="tf-page-title ">    
+                <div className="tf-container">
+                    <div className="row">
+                        <div className="col-md-12">
 
-                            <ul class="breadcrumbs">
+                            <ul className="breadcrumbs">
                                 <li><Link to={'/'}>Home</Link></li>
                                 <li><Link to={'/searchApi'}>Explore</Link></li>
                                 <li>Item Details</li>
                             </ul>
-                            <h4 class="page-title-heading">Item Details</h4>
+                            <h4 className="page-title-heading">Item Details</h4>
                         </div>
                     </div>
                 </div>                    
             </section>
 
-            <section class="tf-item-detail">
-                <div class="tf-container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="tf-item-detail-inner">
-                                <div class="image">
+            <section className="tf-item-detail">
+                <div className="tf-container">
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="tf-item-detail-inner">
+                                <div className="image">
                                     <img src="assets/images/apiLogo.jpg" alt="Image"/>
                                 </div>
-                                <div class="content">
-                                    <div class="content-top">
-                                        <div class="author">
+                                <div className="content">
+                                    <div className="content-top">
+                                        <div className="author">
                                             <img src="assets/images/author/author-detail-3.png" alt="Image"></img>
-                                            <h6 class="title">Trending Arts</h6>
+                                            <h6 className="title">Trending Arts</h6>
                                         </div>
-                                        <div class="wishlish">
-                                            <div class="number-wishlish"><i class="far fa-heart"></i>68</div>
-                                            <div class="option btn-option"><i class="far fa-ellipsis-h"></i>
-                                                <div class="option_popup">
+                                        <div className="wishlish">
+                                            <div className="number-wishlish"><i className="far fa-heart"></i>68</div>
+                                            <div className="option btn-option"><i className="far fa-ellipsis-h"></i>
+                                                <div className="option_popup">
                                                     <a href="#">Delete</a>
                                                     <a href="#">Edit</a>
                                                 </div></div>
                                         </div>
                                     </div>
-                                    <h2 class="title-detail">{Api.api_name}Wicked Cranium #4449</h2>
-                                    <p class="except">A Collection Of 10,000 Undead NFTs Minted On The Ethereum Blockchain. Each Unique Deadfella Is Randomly Generated From A Combination.</p>
-                                    <div class="tf-tab">
-                                        <ul class="menu-tab ">
-                                            <li class="tab-title active">
+                                    <h2 className="title-detail">{Api.api_name}Wicked Cranium #4449</h2>
+                                    <p className="except">A Collection Of 10,000 Undead NFTs Minted On The Ethereum Blockchain. Each Unique Deadfella Is Randomly Generated From A Combination.</p>
+                                    <div className="tf-tab">
+                                        <ul className="menu-tab ">
+                                            <li className="tab-title active">
                                                 <a href="#">Details</a>
                                             </li>
-                                            <li class="tab-title ">
+                                            <li className="tab-title ">
                                                 <a href="#">Bids</a>
                                             </li>
-                                            <li class="tab-title">
+                                            <li className="tab-title">
                                                 <a href="#">History</a>
                                             </li>
                                             
                                         </ul>
-                                        <div class="content-tab">
-                                            <div class="content-inner active" >
-                                                <div class="tab-details">
-                                                    <div class="top">
-                                                        <div class="author">
-                                                            <div class="heading">Current Owner</div>
-                                                            <div class="infor">
+                                        <div className="content-tab">
+                                            <div className="content-inner active" >
+                                                <div className="tab-details">
+                                                    <div className="top">
+                                                        <div className="author">
+                                                            <div className="heading">Current Owner</div>
+                                                            <div className="infor">
                                                                 <img src="assets/images/author/author-detail-1.png" alt="Image"></img>
-                                                                <h6 class="name">Surrogatess</h6>
+                                                                <h6 className="name">Surrogatess</h6>
                                                             </div>
                                                         </div>
-                                                        <div class="author">
-                                                            <div class="heading">Creator</div>
-                                                            <div class="infor">
+                                                        <div className="author">
+                                                            <div className="heading">Creator</div>
+                                                            <div className="infor">
                                                                 <img src="assets/images/author/author-detail-2.png" alt="Image"></img>
-                                                                <h6 class="name">Truman Wallaker</h6>
+                                                                <h6 className="name">Truman Wallaker</h6>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="title-propepties">Properties</div>
-                                                    <ul class="properties">
+                                                    <div className="title-propepties">Properties</div>
+                                                    <ul className="properties">
                                                         <li><a href="#"><svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <path d="M6 11.375L1.09375 7.53125L0 8.375L6 13.0312L12 8.375L10.9062 7.53125L6 11.375ZM6 9.65625L10.9062 5.84375L12 5L6 0.34375L0 5L1.09375 5.84375L6 9.65625ZM6 2.03125L9.8125 5L6 7.96875L2.1875 5L6 2.03125Z" fill="white"/>
                                                             </svg>Background: Blue</a></li>
@@ -120,263 +121,263 @@ const ApiDetails = () => {
                                                             <path d="M1.65625 13.6562V8.65625H0.65625V5C0.65625 4.28125 1.28125 3.65625 2 3.65625H4C4.71875 3.65625 5.34375 4.28125 5.34375 5V8.65625H4.34375V13.6562H1.65625ZM10 13.6562V9.65625H12L10.3125 4.59375C10.125 4.03125 9.625 3.65625 9.03125 3.65625H8.96875C8.375 3.65625 7.875 4.03125 7.6875 4.59375L6 9.65625H8V13.6562H10ZM3 3C3.75 3 4.34375 2.40625 4.34375 1.65625C4.34375 0.9375 3.75 0.34375 3 0.34375C2.25 0.34375 1.65625 0.9375 1.65625 1.65625C1.65625 2.40625 2.25 3 3 3ZM9 3C9.75 3 10.3438 2.40625 10.3438 1.65625C10.3438 0.9375 9.75 0.34375 9 0.34375C8.25 0.34375 7.65625 0.9375 7.65625 1.65625C7.65625 2.40625 8.25 3 9 3Z" fill="white"/>
                                                             </svg>
                                                             Body: Red</a></li>
-                                                        <li><a href="#" class="active">See more</a></li>
+                                                        <li><a href="#" className="active">See more</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div class="content-inner">                                               
-                                                <ul class="tab-bid">
+                                            <div className="content-inner">                                               
+                                                <ul className="tab-bid">
                                                     <li>
-                                                        <div class="box-bid">
-                                                            <div class="image-bid">
+                                                        <div className="box-bid">
+                                                            <div className="image-bid">
                                                                 <img src="assets/images/author/authour-bid-1.png" alt="Image"></img>
                                                             </div>
-                                                            <div class="infor">
-                                                                <div class="history"><span class="price">1.35 ETH</span> by <span class="name">carlisle</span></div>
-                                                                <div class="time">3/26/2022, 7:28 AM</div>
+                                                            <div className="infor">
+                                                                <div className="history"><span className="price">1.35 ETH</span> by <span className="name">carlisle</span></div>
+                                                                <div className="time">3/26/2022, 7:28 AM</div>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="box-bid">
-                                                            <div class="image-bid">
+                                                        <div className="box-bid">
+                                                            <div className="image-bid">
                                                                 <img src="assets/images/author/authour-bid-2.png" alt="Image"></img>
                                                             </div>
-                                                            <div class="infor">
-                                                                <div class="history"><span class="price">1.35 ETH</span> by <span class="name">carlisle</span></div>
-                                                                <div class="time">3/26/2022, 7:28 AM</div>
+                                                            <div className="infor">
+                                                                <div className="history"><span className="price">1.35 ETH</span> by <span className="name">carlisle</span></div>
+                                                                <div className="time">3/26/2022, 7:28 AM</div>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="box-bid">
-                                                            <div class="image-bid">
+                                                        <div className="box-bid">
+                                                            <div className="image-bid">
                                                                 <img src="assets/images/author/authour-bid-3.png" alt="Image"></img>
                                                             </div>
-                                                            <div class="infor">
-                                                                <div class="history"><span class="price">1.35 ETH</span> by <span class="name">carlisle</span></div>
-                                                                <div class="time">3/26/2022, 7:28 AM</div>
+                                                            <div className="infor">
+                                                                <div className="history"><span className="price">1.35 ETH</span> by <span className="name">carlisle</span></div>
+                                                                <div className="time">3/26/2022, 7:28 AM</div>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="box-bid">
-                                                            <div class="image-bid">
+                                                        <div className="box-bid">
+                                                            <div className="image-bid">
                                                                 <img src="assets/images/author/authour-bid-1.png" alt="Image"></img>
                                                             </div>
-                                                            <div class="infor">
-                                                                <div class="history"><span class="price">1.35 ETH</span> by <span class="name">carlisle</span></div>
-                                                                <div class="time">3/26/2022, 7:28 AM</div>
+                                                            <div className="infor">
+                                                                <div className="history"><span className="price">1.35 ETH</span> by <span className="name">carlisle</span></div>
+                                                                <div className="time">3/26/2022, 7:28 AM</div>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="box-bid">
-                                                            <div class="image-bid">
+                                                        <div className="box-bid">
+                                                            <div className="image-bid">
                                                                 <img src="assets/images/author/authour-bid-2.png" alt="Image"></img>
                                                             </div>
-                                                            <div class="infor">
-                                                                <div class="history"><span class="price">1.35 ETH</span> by <span class="name">carlisle</span></div>
-                                                                <div class="time">3/26/2022, 7:28 AM</div>
+                                                            <div className="infor">
+                                                                <div className="history"><span className="price">1.35 ETH</span> by <span className="name">carlisle</span></div>
+                                                                <div className="time">3/26/2022, 7:28 AM</div>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="box-bid">
-                                                            <div class="image-bid">
+                                                        <div className="box-bid">
+                                                            <div className="image-bid">
                                                                 <img src="assets/images/author/authour-bid-3.png" alt="Image"></img>
                                                             </div>
-                                                            <div class="infor">
-                                                                <div class="history"><span class="price">1.35 ETH</span> by <span class="name">carlisle</span></div>
-                                                                <div class="time">3/26/2022, 7:28 AM</div>
+                                                            <div className="infor">
+                                                                <div className="history"><span className="price">1.35 ETH</span> by <span className="name">carlisle</span></div>
+                                                                <div className="time">3/26/2022, 7:28 AM</div>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="box-bid">
-                                                            <div class="image-bid">
+                                                        <div className="box-bid">
+                                                            <div className="image-bid">
                                                                 <img src="assets/images/author/authour-bid-1.png" alt="Image"></img>
                                                             </div>
-                                                            <div class="infor">
-                                                                <div class="history"><span class="price">1.35 ETH</span> by <span class="name">carlisle</span></div>
-                                                                <div class="time">3/26/2022, 7:28 AM</div>
+                                                            <div className="infor">
+                                                                <div className="history"><span className="price">1.35 ETH</span> by <span className="name">carlisle</span></div>
+                                                                <div className="time">3/26/2022, 7:28 AM</div>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="box-bid">
-                                                            <div class="image-bid">
+                                                        <div className="box-bid">
+                                                            <div className="image-bid">
                                                                 <img src="assets/images/author/authour-bid-2.png" alt="Image"></img>
                                                             </div>
-                                                            <div class="infor">
-                                                                <div class="history"><span class="price">1.35 ETH</span> by <span class="name">carlisle</span></div>
-                                                                <div class="time">3/26/2022, 7:28 AM</div>
+                                                            <div className="infor">
+                                                                <div className="history"><span className="price">1.35 ETH</span> by <span className="name">carlisle</span></div>
+                                                                <div className="time">3/26/2022, 7:28 AM</div>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="box-bid">
-                                                            <div class="image-bid">
+                                                        <div className="box-bid">
+                                                            <div className="image-bid">
                                                                 <img src="assets/images/author/authour-bid-3.png" alt="Image"></img>
                                                             </div>
-                                                            <div class="infor">
-                                                                <div class="history"><span class="price">1.35 ETH</span> by <span class="name">carlisle</span></div>
-                                                                <div class="time">3/26/2022, 7:28 AM</div>
+                                                            <div className="infor">
+                                                                <div className="history"><span className="price">1.35 ETH</span> by <span className="name">carlisle</span></div>
+                                                                <div className="time">3/26/2022, 7:28 AM</div>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="box-bid">
-                                                            <div class="image-bid">
+                                                        <div className="box-bid">
+                                                            <div className="image-bid">
                                                                 <img src="assets/images/author/authour-bid-1.png" alt="Image"></img>
                                                             </div>
-                                                            <div class="infor">
-                                                                <div class="history"><span class="price">1.35 ETH</span> by <span class="name">carlisle</span></div>
-                                                                <div class="time">3/26/2022, 7:28 AM</div>
+                                                            <div className="infor">
+                                                                <div className="history"><span className="price">1.35 ETH</span> by <span className="name">carlisle</span></div>
+                                                                <div className="time">3/26/2022, 7:28 AM</div>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="box-bid">
-                                                            <div class="image-bid">
+                                                        <div className="box-bid">
+                                                            <div className="image-bid">
                                                                 <img src="assets/images/author/authour-bid-2.png" alt="Image"></img>
                                                             </div>
-                                                            <div class="infor">
-                                                                <div class="history"><span class="price">1.35 ETH</span> by <span class="name">carlisle</span></div>
-                                                                <div class="time">3/26/2022, 7:28 AM</div>
+                                                            <div className="infor">
+                                                                <div className="history"><span className="price">1.35 ETH</span> by <span className="name">carlisle</span></div>
+                                                                <div className="time">3/26/2022, 7:28 AM</div>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="box-bid">
-                                                            <div class="image-bid">
+                                                        <div className="box-bid">
+                                                            <div className="image-bid">
                                                                 <img src="assets/images/author/authour-bid-3.png" alt="Image"></img>
                                                             </div>
-                                                            <div class="infor">
-                                                                <div class="history"><span class="price">1.35 ETH</span> by <span class="name">carlisle</span></div>
-                                                                <div class="time">3/26/2022, 7:28 AM</div>
+                                                            <div className="infor">
+                                                                <div className="history"><span className="price">1.35 ETH</span> by <span className="name">carlisle</span></div>
+                                                                <div className="time">3/26/2022, 7:28 AM</div>
                                                             </div>
                                                         </div>
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div class="content-inner" >
-                                                <ul class="tab-history">
+                                            <div className="content-inner" >
+                                                <ul className="tab-history">
                                                     <li>
-                                                        <div class="box-history">
-                                                            <div class="infor">
-                                                                <div class="img"><img src="assets/images/author/author-history-1.jpg" alt="Image"></img></div>
-                                                                <div class="content">
-                                                                    <h6 class="name">Mason Woodward <span>place a bid</span></h6>
-                                                                    <p class="time">8 hours ago</p>
+                                                        <div className="box-history">
+                                                            <div className="infor">
+                                                                <div className="img"><img src="assets/images/author/author-history-1.jpg" alt="Image"></img></div>
+                                                                <div className="content">
+                                                                    <h6 className="name">Mason Woodward <span>place a bid</span></h6>
+                                                                    <p className="time">8 hours ago</p>
                                                                 </div>
                                                             </div>
-                                                            <div class="price">
+                                                            <div className="price">
                                                                 <p>4.89 ET</p>
                                                                 <span>= $12.245</span>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="box-history">
-                                                            <div class="infor">
-                                                                <div class="img"><img src="assets/images/author/author-history-2.jpg" alt="Image"></img></div>
-                                                                <div class="content">
+                                                        <div className="box-history">
+                                                            <div className="infor">
+                                                                <div className="img"><img src="assets/images/author/author-history-2.jpg" alt="Image"></img></div>
+                                                                <div className="content">
                                                                     <h6>Violet Pascall <span>place a bid</span></h6>
-                                                                    <p class="time">8 hours ago</p>
+                                                                    <p className="time">8 hours ago</p>
                                                                 </div>
                                                             </div>
-                                                            <div class="price">
+                                                            <div className="price">
                                                                 <p>4.89 ET</p>
                                                                 <span>= $12.245</span>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="box-history">
-                                                            <div class="infor">
-                                                                <div class="img"><img src="assets/images/author/author-history-3.jpg" alt="Image"></img></div>
-                                                                <div class="content">
+                                                        <div className="box-history">
+                                                            <div className="infor">
+                                                                <div className="img"><img src="assets/images/author/author-history-3.jpg" alt="Image"></img></div>
+                                                                <div className="content">
                                                                     <h6>Camilla Hudson <span>place a bid</span></h6>
-                                                                    <p class="time">8 hours ago</p>
+                                                                    <p className="time">8 hours ago</p>
                                                                 </div>
                                                             </div>
-                                                            <div class="price">
+                                                            <div className="price">
                                                                 <p>4.89 ET</p>
                                                                 <span>= $12.245</span>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="box-history">
-                                                            <div class="infor">
-                                                                <div class="img"><img src="assets/images/author/author-history-4.jpg" alt="Image"></img></div>
-                                                                <div class="content">
+                                                        <div className="box-history">
+                                                            <div className="infor">
+                                                                <div className="img"><img src="assets/images/author/author-history-4.jpg" alt="Image"></img></div>
+                                                                <div className="content">
                                                                     <h6>Derick Reed <span>place a bid</span></h6>
-                                                                    <p class="time">8 hours ago</p>
+                                                                    <p className="time">8 hours ago</p>
                                                                 </div>
                                                             </div>
-                                                            <div class="price">
+                                                            <div className="price">
                                                                 <p>4.89 ET</p>
                                                                 <span>= $12.245</span>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="box-history">
-                                                            <div class="infor">
-                                                                <div class="img"><img src="assets/images/author/author-history-1.jpg" alt="Image"></img></div>
-                                                                <div class="content">
+                                                        <div className="box-history">
+                                                            <div className="infor">
+                                                                <div className="img"><img src="assets/images/author/author-history-1.jpg" alt="Image"></img></div>
+                                                                <div className="content">
                                                                     <h6>Mason Woodward <span>place a bid</span></h6>
-                                                                    <p class="time">8 hours ago</p>
+                                                                    <p className="time">8 hours ago</p>
                                                                 </div>
                                                             </div>
-                                                            <div class="price">
+                                                            <div className="price">
                                                                 <p>4.89 ET</p>
                                                                 <span>= $12.245</span>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="box-history">
-                                                            <div class="infor">
-                                                                <div class="img"><img src="assets/images/author/author-history-2.jpg" alt="Image"></img></div>
-                                                                <div class="content">
+                                                        <div className="box-history">
+                                                            <div className="infor">
+                                                                <div className="img"><img src="assets/images/author/author-history-2.jpg" alt="Image"></img></div>
+                                                                <div className="content">
                                                                     <h6>Violet Pascall <span>place a bid</span></h6>
-                                                                    <p class="time">8 hours ago</p>
+                                                                    <p className="time">8 hours ago</p>
                                                                 </div>
                                                             </div>
-                                                            <div class="price">
+                                                            <div className="price">
                                                                 <p>4.89 ET</p>
                                                                 <span>= $12.245</span>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="box-history">
-                                                            <div class="infor">
-                                                                <div class="img"><img src="assets/images/author/author-history-3.jpg" alt="Image"></img></div>
-                                                                <div class="content">
+                                                        <div className="box-history">
+                                                            <div className="infor">
+                                                                <div className="img"><img src="assets/images/author/author-history-3.jpg" alt="Image"></img></div>
+                                                                <div className="content">
                                                                     <h6>Camilla Hudson <span>place a bid</span></h6>
-                                                                    <p class="time">8 hours ago</p>
+                                                                    <p className="time">8 hours ago</p>
                                                                 </div>
                                                             </div>
-                                                            <div class="price">
+                                                            <div className="price">
                                                                 <p>4.89 ET</p>
                                                                 <span>= $12.245</span>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="box-history">
-                                                            <div class="infor">
-                                                                <div class="img"><img src="assets/images/author/author-history-4.jpg" alt="Image"></img></div>
-                                                                <div class="content">
+                                                        <div className="box-history">
+                                                            <div className="infor">
+                                                                <div className="img"><img src="assets/images/author/author-history-4.jpg" alt="Image"></img></div>
+                                                                <div className="content">
                                                                     <h6>Derick Reed <span>place a bid</span></h6>
-                                                                    <p class="time">8 hours ago</p>
+                                                                    <p className="time">8 hours ago</p>
                                                                 </div>
                                                             </div>
-                                                            <div class="price">
+                                                            <div className="price">
                                                                 <p>4.89 ET</p>
                                                                 <span>= $12.245</span>
                                                             </div>
@@ -386,15 +387,8 @@ const ApiDetails = () => {
                                             </div>
                                         </div>                           
                                     </div>
-                                    <div class="content-bottom">
-                                        <div class="heading">
-                                            <h6>Top bid</h6>
-                                            <div class="price"><div class="icon"><i class="fab fa-ethereum"></i></div><span>3.52 ETH ($9118.1 USD)</span></div>
-                                        </div>
-                                        <div class="button">
-                                            <a href="#" class="tf-button" data-toggle="modal" data-target="#popup_bid">Place your bid</a>
-                                            <a href="#" class="tf-button">Save for later</a>
-                                        </div>
+                                    <div>
+                                        <Forum api_id={api_id}/>
                                     </div>
                                 </div>
                             </div>
@@ -404,14 +398,7 @@ const ApiDetails = () => {
             </section>
             </div>
             </div>
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jquery.easing.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/plugin.js"></script>
-<script src="assets/js/count-down.js"></script>
-<script src="assets/js/switchmode.js"></script>
-<script src="assets/js/shortcodes.js"></script>
-<script src="assets/js/main.js"></script>
+
 </>
     );
 };
