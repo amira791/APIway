@@ -40,7 +40,8 @@ class Admin(UserProfileBase):
 
 class Consommateur(UserProfileBase):
     id_consommateur = models.AutoField(primary_key=True)
-# class Fournisseur(User):
+
+#class Fournisseur(UserProfileBase):
 #     id_fournisseur = models.AutoField(primary_key=True)
 #     FR_first_name = models.CharField(max_length=100)
 #     FR_last_name = models.CharField(max_length=100)
@@ -53,7 +54,7 @@ class Consommateur(UserProfileBase):
 #     def __str__(self):
 #         return self.FRusername
     
-# class Admin(User):
+# class Admin(UserProfileBase):
 #     id_admin = models.AutoField(primary_key=True)
 #     AdminEmail = models.CharField(max_length=100)
 #     AdminUsername = models.CharField(max_length=100)
@@ -64,7 +65,7 @@ class Consommateur(UserProfileBase):
 #     def __str__(self):
 #         return self.AdminUsername
 
-# class Consommateur(User):
+# class Consommateur(UserProfileBase):
 #     id_consommateur = models.AutoField(primary_key=True)
 #     CN_first_name = models.CharField(max_length=100)
 #     CN_last_name = models.CharField(max_length=100)

@@ -45,7 +45,16 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework_simplejwt',
     'rest_framework.authtoken',
+    'django_elasticsearch_dsl',
 ]
+
+ELASTICSEARCH_DSL={
+'default': {
+'hosts': 'http://localhost:9200',
+'timeout': 60,  # Custom timeout
+'http_auth': ('hadilane', '123456789')
+}
+}
 
 # from api_mapi.models import UserBase
 

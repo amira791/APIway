@@ -10,6 +10,6 @@ router = routers.SimpleRouter()
 
 # Get the urlpatterns from the router
 urlpatterns = [
-   
+    path('api/search/', search_api, name='search_api'),
    
     ] + router.urls
