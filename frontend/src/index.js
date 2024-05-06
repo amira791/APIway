@@ -23,6 +23,7 @@ import TicketForm from './components/tickets/TicketForm';
 import TicketsPage from './components/pages/TicketsPage';
 import { useAuthContext , AuthProvider} from './context/authContext';
 import SignUpPage from './components/auth_components/SignUpPage';
+import AddAPIPage from './components/provider_componants/AddApi';
 
 function Root() {
   const { authState } = useAuthContext();
@@ -44,6 +45,7 @@ function Root() {
           <Route path="/tickets/new" element={<TicketForm />} />
           <Route path='/tickets' element={<TicketsPage/>} />
           <Route path='/fournisseur' element={<ProviderHomePage />} />
+          <Route exact path="/addAPI" element={<AddAPIPage />} />
         </Routes>
       </Router>
     </div>

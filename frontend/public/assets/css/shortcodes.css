@@ -1999,10 +1999,10 @@
   height: 120px;
   margin-bottom: 39px;
 }
-.tf-contact .comment-form .form-select {
+ .form-select {
   position: relative;
 }
-.tf-contact .comment-form .form-select i {
+ .form-select i {
   position: absolute;
   top: 20px;
   right: 23px;
@@ -2830,6 +2830,29 @@
 .tf-tab .content-tab .content-inner {
   display: none;
 }
+ form .search-form2 {
+  position: relative;
+  flex-grow: 1; 
+
+}
+ form .search-form2 input {
+border-radius: 10rem;
+  color: var(--primary-color8);
+  font-size: 16px;
+  line-height: 24px;
+}
+ form .search-form2 input::placeholder {
+  font-size: 16px;
+  color: var(--primary-color8);
+}
+ form .search-form2 .btn-search {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary-color49);
+  font-size: 21px;
+}
 
 .tab-details .top {
   display: flex;
@@ -3135,7 +3158,7 @@
 }
 
 .banner-collection-inner {
-  position: relative;
+
   margin-bottom: 63px;
 }
 .banner-collection-inner .img-bg {
@@ -3366,8 +3389,10 @@
   display: none;
 }
 .add-nft-inner .drag-upload {
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 94px 0 80px;
+  padding: 10px 0 20px;
   background: var(--primary-color22);
   border-radius: 12px;
   margin-bottom: 34px;
@@ -3385,6 +3410,7 @@
   z-index: 2;
 }
 .add-nft-inner .drag-upload img {
+margin-left: 45%;
   margin-bottom: 32px;
 }
 .add-nft-inner .drag-upload .title {
@@ -3437,6 +3463,26 @@
 }
 .add-nft-inner .propertise .propertise-list li {
   margin-right: 6px;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--primary-color7);
+  background-color: var(--primary-color22);
+  border: 1px solid var(--primary-color36);
+  border-radius: 18px;
+  padding: 8px 17px;
+  display: inline-block;
+}
+.add-nft-inner .propertise .propertise-list li input {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 20px;
+  color: var(--primary-color7);
+  background-color: var(--primary-color22);
+  border:none;
+  border-radius: 18px;
+  padding: 8px 17px;
+  display: inline-block;
 }
 .add-nft-inner .propertise .propertise-list li a {
   font-weight: 700;
@@ -6279,12 +6325,12 @@
   width: 37%;
   padding-top: 59px;
 }
-.tf-slider-item.style-6 .content-inner .heading {
+.tf-slider-item.style-6 .content-inner .title {
   font-size: 80px;
   line-height: 96px;
   max-width: 600px;
 }
-.tf-slider-item.style-6 .content-inner .heading span {
+.tf-slider-item.style-6 .content-inner .title span {
   background: linear-gradient(to right, rgb(93, 53, 255) 0%, rgb(24, 136, 239) 50%, rgb(247, 56, 251) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -6461,7 +6507,7 @@
 .tf-slider .swiper-slide .sub-heading {
   transform: translateY(300px);
 }
-.tf-slider .swiper-slide-active .heading, .tf-slider .swiper-slide-active .sub-heading, .tf-slider .swiper-slide-active .btn-slider, .tf-slider .swiper-slide-active form {
+.tf-slider .swiper-slide-active .heading,.tf-slider .swiper-slide-active .title, .tf-slider .swiper-slide-active .sub-heading, .tf-slider .swiper-slide-active .btn-slider, .tf-slider .swiper-slide-active form {
   opacity: 1;
   transform: translateY(0);
   transition-delay: 300ms;

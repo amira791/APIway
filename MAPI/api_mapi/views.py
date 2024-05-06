@@ -1,17 +1,13 @@
-from rest_framework import generics , status
+from rest_framework import  status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from .models import *
 from .serializers import *
 from django.db.models import Q
 from rest_framework import viewsets
-from .models import Fournisseur, Consommateur
-from django.db.models import  Max
-from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from django.contrib.auth import get_user_model
-
 
 
 
@@ -135,9 +131,6 @@ class APIcategoryView(viewsets.ModelViewSet):
 class APIView(viewsets.ModelViewSet):
     queryset = API.objects.all()
     serializer_class = APISerializer
-    parser_classes = (MultiPartParser, FormParser)
-   
-
 
 # APIversion View
 class APIversionView(viewsets.ModelViewSet):
@@ -239,9 +232,45 @@ class Endpoint_parameterView(viewsets.ModelViewSet):
 
 # Type View
 class TypeView(viewsets.ModelViewSet):
-    queryset = Type.objects.all()
-    serializer_class = TypeSerializer
+    queryset = TypeParam.objects.all()
+    serializer_class = TypeParamSerializer
     
+# Type View
+class ApiHeaderView(viewsets.ModelViewSet):
+    queryset = ApiHeader.objects.all()
+    serializer_class = ApiHeaderSerializer
+    
+# ApiQueryParam View
+class ApiQueryParamView(viewsets.ModelViewSet):
+    queryset = ApiQueryParam.objects.all()
+    serializer_class = ApiQueryParamSerializer
+    
+# ApiEndpointBody View
+class ApiEndpointBodyView(viewsets.ModelViewSet):
+    queryset = ApiEndpointBody.objects.all()
+    serializer_class = ApiEndpointBodySerializer
+# BaseLink View
+class BaseLinkView(viewsets.ModelViewSet):
+    queryset = BaseLink.objects.all()
+    serializer_class = BaseLinkSerializer
+# BaseLink View
+class BaseLinkView(viewsets.ModelViewSet):
+    queryset = BaseLink.objects.all()
+    serializer_class = BaseLinkSerializer
+# TypeTarif View
+class TypeTarifView(viewsets.ModelViewSet):
+    queryset = TypeTarif.objects.all()
+    serializer_class = TypeTarifSerializer
+    
+# PricingModel View
+class PricingModelView(viewsets.ModelViewSet):
+    queryset = PricingModel.objects.all()
+    serializer_class = PricingModelSerializer
+
+# ResponseExample View
+class ResponseExampleView(viewsets.ModelViewSet):
+    queryset = ResponseExample.objects.all()
+    serializer_class = ResponseExampleSerializer
 
 
 
@@ -298,8 +327,6 @@ def manage_user_status(request, id, action):
     # Serialize and return the updated user data
     serializer = serializer_class(user_instance)
     return Response(serializer.data, status=status.HTTP_200_OK)
-
-
 # Search API by Name, Description, or Functionalities **************************************************************
 @api_view(['POST'])
 def search_api(request):
