@@ -4,6 +4,7 @@ const AuthContext = createContext(null);
 
 // Define the initial state
 const initialState = {
+  isAuth : localStorage.getItem('isAuth'),
   token: localStorage.getItem('token') || null,
   username: localStorage.getItem('username') || null,
   userId: localStorage.getItem('userId') || null,
@@ -19,6 +20,7 @@ const authReducer = (state, action) => {
       const { user_type, user,access , refresh} = action.payload;
       return {
         ...state,
+        isAuth:true,
         token: access,
         username: user.username,
         userId : user.id,
@@ -29,9 +31,13 @@ const authReducer = (state, action) => {
     case 'LOGOUT':
       return {
         ...initialState,
+        isAuth:false,
         token: null,
         username: null,
-        userId:null
+        userId:null,
+        isFournisseur: false,
+        isConsommateur: false,
+        isAdmin: false
       };
     default:
       return state;
@@ -45,6 +51,7 @@ export const AuthProvider = ({ children }) => {
   // Effect to update local storage when authState changes
   useEffect(() => {
     localStorage.setItem('token', authState.token);
+    localStorage.setItem('isAuth', authState.isAuth);
     localStorage.setItem('username', authState.username);
     localStorage.setItem('userId', authState.userId);
     localStorage.setItem('isFournisseur', authState.isFournisseur);

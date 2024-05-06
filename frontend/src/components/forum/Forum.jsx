@@ -1,83 +1,137 @@
-import React, { useEffect,  useState } from 'react';
-import {Link} from'react-router-dom'
-import { Flex, Box  , Heading , Text , HStack  
-} from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Flex, Box, Heading, Text, HStack } from '@chakra-ui/react';
 import useForum from '../../hooks/useForum';
 import ThreadList from './ThreadList';
-import {useAuthContext} from '../../context/authContext';
-import useManageAccountsC from '../../hooks/ConsomAccountsHook'
+import { useAuthContext } from '../../context/authContext';
+import useManageAccountsC from '../../hooks/ConsomAccountsHook';
 
-export default function Forum({api_id }) {
+export default function Forum({ api_id }) {
 
-  const { addNewThread, getForum,forum , error, loading } = useForum();
+  const { addNewThread, getForum, forum, error, loading } = useForum();
   const { authState } = useAuthContext();
   const user_id = parseInt(authState.userId);
-  const {getConsommateur ,consommateur} = useManageAccountsC()
-  const [message,setMessage] = useState()
+  const { getConsommateur, consommateur } = useManageAccountsC();
+  const [message, setMessage] = useState('');
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false); // State to control login prompt
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     getForum(api_id);
-    if(authState.isConsommateur) getConsommateur(user_id)
-    console.log(consommateur.id_consommateur)
-  }, [api_id,user_id]);
-  
-  useEffect(() => {
-    console.log(forum)
-  }, [forum]);
+    if (authState.isConsommateur) getConsommateur(user_id);
+  }, [api_id, user_id]);
 
   const handleNewDiscussion = () => {
-    const thread = {
-       content: message,
-       forum: forum.id_forum, 
-       creator: consommateur.id_consommateur
+    if (authState.isAuth) {
+      const thread = {
+        content: message,
+        forum: forum.id_forum,
+        creator: consommateur.id_consommateur,
+      };
+      addNewThread(thread);
+    } else {
+      setShowLoginPrompt(true);
     }
-    addNewThread(thread)
-  }
+  };
 
- 
+  const handleLoginRedirect = () => {
+    setShowLoginPrompt(false);
+    navigate('/login');
+  };
+
   return (
     <>
-          
-      <Flex
-        margin={50}
-        flexDirection={'column'}
-      >
+      <Flex margin={50} flexDirection={'column'}>
         <Box>
           <Heading>{forum.title}</Heading>
           <Text>{forum.description}</Text>
         </Box>
-        <HStack alignSelf={'flex-end'} >
-        <div className="product-button">
-          <a href="#" data-toggle="modal" data-target="#popup_bid" className="tf-button"> <span className="icon-btn-product"></span>New Discussion</a>
-        </div>
-        <div className="product-button">
-        <Link to={'/tickets/new'} className="tf-button"><span className="icon-btn-product"></span>New ticket </Link>
-        </div>
-       
-        </HStack> 
+        <HStack alignSelf={'flex-end'}>
+          <div className="product-button">
+            <a href="#" data-toggle="modal" data-target="#popup_bid" className="tf-button">
+              <span className="icon-btn-product"></span>New Discussion
+            </a>
+          </div>
+          <div className="product-button">
+          {authState.isAuthen ? (
+              <Link to={'/tickets/new'} className="tf-button">
+                <span className="icon-btn-product"></span>New ticket
+              </Link>
+            ) : (
+              <a
+                href="#"
+                data-toggle="modal"
+                data-target="#login_modal"
+                className="tf-button"
+                onClick={() => setShowLoginPrompt(true)}
+              >
+                <span className="icon-btn-product"></span>New ticket
+              </a>
+            )}
+          </div>
+        </HStack>
         <Box>
-          <ThreadList key={forum.id_forum} forum_id={forum.id_forum}/>
+          <ThreadList key={forum.id_forum} forum_id={forum.id_forum} />
         </Box>
-       </Flex>
+      </Flex>
 
-  {/*************************modal to create new conversation **************************/}
-    <div className="modal fade popup" id="popup_bid" tabIndex="-1" aria-modal="true" role="dialog">
+      {/* Modal for new discussion */}
+      <div className="modal fade popup" id="popup_bid" tabIndex="-1" aria-modal="true" role="dialog">
         <div className="modal-dialog modal-dialog-centered" role="document">
-            <div className="modal-content">
-                <div className="modal-body space-y-20 pd-40">
-                    <h3>Ajouter une nouvelle discussion</h3>
-                    <br /> 
-                    <label htmlFor="">Message</label>
-                    <input type="text" className="form-control" 
-                      value={message} 
-                      onChange={(e) => setMessage(e.target.value) } />
-                      <br />
-                    <a onClick={handleNewDiscussion} className="button-popup" data-toggle="modal" data-target="#popup_bid_success" data-dismiss="modal" aria-label="Close">Save</a>
-                </div>
+          <div className="modal-content">
+            <div className="modal-body space-y-20 pd-40">
+              <h3>Ajouter une nouvelle discussion</h3>
+              <br />
+              <label htmlFor="">Message</label>
+              <input
+                type="text"
+                className="form-control"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              />
+              <br />
+              {authState.isAuth ? (
+                <a
+                  onClick={handleNewDiscussion}
+                  className="button-popup"
+                  data-toggle="modal"
+                  data-target="#popup_bid_success"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  Save
+                </a>
+              ) : (
+                <a href="#" data-toggle="modal" data-target="#login_modal" className="button-popup">
+                  Save
+                </a>
+              )}
             </div>
+          </div>
         </div>
-   </div>
- 
-      </>
+      </div>
+
+      {/* Modal for login */}
+      <div className="modal fade popup" id="login_modal" tabIndex="-1" aria-modal="true" role="dialog">
+        <div className="modal-dialog modal-dialog-centered" role="document">
+          <div className="modal-content">
+            <div className="modal-body space-y-20 pd-40">
+              {showLoginPrompt && (
+                <>
+                  <h3>Oops!</h3>
+                  <p className="text-center sub-heading">
+                    You must log in <span className="price color-popup">to purchase</span>
+                  </p>
+                  <a className="button-popup" onClick={handleLoginRedirect}>
+                    Log In
+                  </a>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
