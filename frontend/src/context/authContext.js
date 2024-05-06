@@ -16,7 +16,7 @@ const initialState = {
 const authReducer = (state, action) => {
   switch (action.type) {
     case 'SET_AUTH_INFO':
-      const { user_type, user,access } = action.payload;
+      const { user_type, user,access , refresh} = action.payload;
       return {
         ...state,
         token: access,

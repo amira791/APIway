@@ -4,31 +4,33 @@ import { Flex, Box  , Heading , Text , HStack
 } from '@chakra-ui/react'
 import useForum from '../../hooks/useForum';
 import ThreadList from './ThreadList';
+import {useAuthContext} from '../../context/authContext';
+import useManageAccountsC from '../../hooks/ConsomAccountsHook'
 
 export default function Forum({api_id }) {
 
   const { addNewThread, getForum,forum , error, loading } = useForum();
-
+  const { authState } = useAuthContext();
+  const user_id = parseInt(authState.userId);
+  const {getConsommateur ,consommateur} = useManageAccountsC()
   const [message,setMessage] = useState()
 
   useEffect(() => {
     getForum(api_id);
-  
-  }, [api_id]);
+    if(authState.isConsommateur) getConsommateur(user_id)
+    console.log(consommateur.id_consommateur)
+  }, [api_id,user_id]);
   
   useEffect(() => {
-    console.log("forum here ")
     console.log(forum)
-  
   }, [forum]);
 
   const handleNewDiscussion = () => {
-    
-      const thread = {
+    const thread = {
        content: message,
        forum: forum.id_forum, 
-       creator: 2 // current user 
-      }
+       creator: consommateur.id_consommateur
+    }
     addNewThread(thread)
   }
 

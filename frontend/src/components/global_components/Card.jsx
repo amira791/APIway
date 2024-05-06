@@ -60,6 +60,7 @@ const Card = ({ idApi ,apiName, description, logo, termsOfUse, website, category
                     </div>
                 </div>
             </div>
+            
             <div className="modal fade popup" id="popup_bid" tabIndex="-1" aria-modal="true" role="dialog">
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">

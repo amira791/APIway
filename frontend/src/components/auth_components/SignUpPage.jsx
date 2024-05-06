@@ -72,15 +72,15 @@ export default function SignUpPage() {
                                             <h6 class="title">Choose Role</h6>
                                             <p class="sub">Connect to APIway as provider to create APIs or as Consumer to use APIs</p>
                                             <ul class="blockchain-button">
-                                                <li><a href="#" onClick={() => setUserType('fournisseur')}><img src="assets/images/svg/metamask.svg" alt="Image" />Provider</a></li>
-                                                <li><a href="#"onClick={() => setUserType('consommateur')}><img src="assets/images/svg/coinbase.svg" alt="Image" />Consumer</a></li>
+                                                <li><label><input type="radio" name="userType" value="fournisseur" onChange={() => setUserType('fournisseur')} required /> Provider</label></li>
+                                                <li><label><input type="radio" name="userType" value="consommateur" onChange={() => setUserType('consommateur')} required /> Consumer</label></li>
                                             </ul>
                                         </div>
-                                        <fieldset><input value={first_name} onChange={(e) => setFirstName(e.target.value)} id="first_name" name="first_name" tabIndex="1" aria-required="true" required="" type="text" placeholder="First name" /></fieldset>
-                                        <fieldset><input value={last_name} onChange={(e) => setLastName(e.target.value)} id="last_name" name="last_name" tabIndex="1" aria-required="true" required="" type="text" placeholder="Last name" /></fieldset>
-                                        <fieldset><input value={username} onChange={(e) => setUsername(e.target.value)} id="username" name="username" tabIndex="1" aria-required="true" required="" type="text" placeholder="Username" /></fieldset>
-                                        <fieldset><input value={email} onChange={(e) => setEmail(e.target.value)} id="email" name="email" tabIndex="1" aria-required="true" required="" type="text" placeholder="Email" /></fieldset>
-                                        <fieldset> <input value={password} onChange={(e) => setPassword(e.target.value)} id="showpassword" name="password" tabIndex="2" aria-required="true" type="password" placeholder="Password" required="" />
+                                        <fieldset><input value={first_name} onChange={(e) => setFirstName(e.target.value)} id="first_name" name="first_name" tabIndex="1" aria-required="true" required type="text" placeholder="First name" /></fieldset>
+                                        <fieldset><input value={last_name} onChange={(e) => setLastName(e.target.value)} id="last_name" name="last_name" tabIndex="1" aria-required="true" required type="text" placeholder="Last name" /></fieldset>
+                                        <fieldset><input value={username} onChange={(e) => setUsername(e.target.value)} id="username" name="username" tabIndex="1" aria-required="true" required type="text" placeholder="Username" /></fieldset>
+                                        <fieldset><input value={email} onChange={(e) => setEmail(e.target.value)} id="email" name="email" tabIndex="1" aria-required="true" required type="text" placeholder="Email" /></fieldset>
+                                        <fieldset> <input value={password} onChange={(e) => setPassword(e.target.value)} id="showpassword" name="password" tabIndex="2" aria-required="true" type="password" placeholder="Password" required />
                                             <span className="btn-show-pass"><i className="far fa-eye-slash"></i></span></fieldset>
                                         <fieldset className="mb24"> <input id="showpassword2" name="password" tabIndex="2" aria-required="true" type="password" placeholder="Confirm password" required="" />
                                             <span className="btn-show-pass2"><i className="far fa-eye-slash"></i></span></fieldset>

@@ -96,14 +96,21 @@ class ThreadWriteSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        # Get the current authenticated user
-        user = self.context['request'].user
-        
-        # Add the creator (user) to the validated data before creating the thread
-        validated_data['creator'] = user
+        # Get the creator ID from the validated data
+        creator_id = validated_data.pop('creator')
+
+        # Check if the creator_id corresponds to a Consommateur
+        try:
+            consommateur = Consommateur.objects.get(user_id=creator_id)
+        except Consommateur.DoesNotExist:
+            raise serializers.ValidationError("The provided creator ID does not belong to a Consommateur")
+
+        # Add the creator (Consommateur instance) to the validated data before creating the thread
+        validated_data['creator'] = consommateur
         
         # Create and return the thread
         return Thread.objects.create(**validated_data)
+    
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment

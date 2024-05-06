@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { BASEURL ,fetchData, postData } from './API';
+import { BASEURL ,fetchData } from './API';
 
 export default function useManageAccountsF() {
     const [fournisseurs, setFournisseurs] = useState([]);

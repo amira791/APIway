@@ -77,9 +77,23 @@ def signin(request):
 
     serialized_user = UserSerializer(user).data
 
+    user_type = None
+    consommateur = Consommateur.objects.filter(user_id=user.id).first()
+    if consommateur:
+        user_type = 'consommateur'
+    else:
+        fournisseur = Fournisseur.objects.filter(user_id=user.id).first()
+        if fournisseur:
+            user_type = 'fournisseur'
+        else:
+            admin = Admin.objects.filter(user_id=user.id).first()
+            if admin:
+                user_type = 'admin'
+
     return Response({
         'refresh': str(refresh),
         'access': str(access),
+        'user_type':user_type,
         'user': serialized_user,
     }, status=status.HTTP_200_OK)
 
@@ -103,8 +117,14 @@ class AdminView(viewsets.ModelViewSet):
 
 # Consommateur View
 class ConsommateurView(viewsets.ModelViewSet):
-    queryset = Consommateur.objects.all()
     serializer_class = ConsommateurSerializer
+    lookup_field = 'user_id'
+
+    def get_queryset(self):
+        user_id = self.request.query_params.get('user_id')
+        if user_id:
+         return Consommateur.objects.filter(user_id=user_id)
+        return Consommateur.objects.all()
 
 # APIcategory View
 class APIcategoryView(viewsets.ModelViewSet):
@@ -174,7 +194,7 @@ class ThreadView(viewsets.ModelViewSet):
         return queryset
 
 
-# Forum Post View
+# Forum Comment View
 class CommentView(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
