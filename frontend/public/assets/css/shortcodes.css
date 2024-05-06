@@ -2557,7 +2557,7 @@
 /* Item Details 
 --------------------------------------------------*/
 .tf-item-detail {
-  padding: 38px 0 80px;
+  padding: 0 5%;
 }
 
 .tf-item-detail-inner {
@@ -2581,7 +2581,7 @@
   display: -ms-flexbox;
   display: -webkit-flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   margin-bottom: 18px;
 }
 .tf-item-detail-inner .content .content-top .author {
@@ -2591,7 +2591,8 @@
   display: -ms-flexbox;
   display: -webkit-flex;
   align-items: center;
-  justify-content: space-between;
+  
+/*   justify-content: space-between; */
 }
 .tf-item-detail-inner .content .content-top .author img {
   border-radius: 50%;

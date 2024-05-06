@@ -50,9 +50,9 @@ export default function APIAjout() {
       .then((response) => {
         if (response.status === 201) {
           apiId = response.data.id_api;
-          alert(Models);
+          //alert(Models);
           Models.forEach((model) => {
-            alert("foreachh");
+            //alert("foreachh");
             // Step 1: Add Model Information
             API.post(
               `/pricing_model/`,
@@ -72,8 +72,8 @@ export default function APIAjout() {
               .then((response) => {
                 // Step 2: Retrieve Model ID
                 const modelId = response.data.id_model;
-             alert("doneee");
-             alert(modelId);
+             //alert("doneee");
+             //alert(modelId);
                 // Step 3: Add Plans
                 model.plans.forEach((plan) => {
                   API.post(`/tarifications/`, {
@@ -142,7 +142,7 @@ export default function APIAjout() {
                 functions: functionalityIds,
                 base_links: baseLinkIds,
               };
-              alert("done1");
+              //alert("done1");
               return API.post(`/apiversions/`, apiVersionsData);
             });
           });
@@ -163,7 +163,7 @@ export default function APIAjout() {
               description: endpoint.description,
               group:endpoint.group
                }).then((endpointResponse) => {
-              alert("done2");
+              //alert("done2");
               if (endpointResponse.status === 201) {
                 const endpointId = endpointResponse.data.id_endpoint; // Save the ID of the newly created API endpoint
                 if (endpoint.headers) {
@@ -213,7 +213,7 @@ export default function APIAjout() {
                 }
 
                 if (endpoint.params) {
-                //  alert(param.name +" "+param.type+" "+param.required)
+                //  //alert(param.name +" "+param.type+" "+param.required)
                   const paramsData = endpoint.params.map((param) => ({
                     id_endpoint: endpointId,
                     name: param.name,
@@ -272,7 +272,7 @@ export default function APIAjout() {
       })
       .then((responses) => {
         // Handle successful creation of endpoints
-        alert("Endpoints created successfully!");
+        //alert("Endpoints created successfully!");
       })
       .catch((error) => {
         console.error("Error:", error); // Handle error
@@ -288,8 +288,8 @@ const addNewAPI = async (formData, functionalities, baseLinks, endpoints, Models
     let functionalityIds = await createFunctionnalities(functionalities);
   let baseLinkIds =  await createBaseLinks(baseLinks);
   let apiversionId=  await createAPIVersions(apiId,functionalityIds, baseLinkIds);
-    await createEndpoints(apiId, endpoints);
-    alert("API created successfully!");
+    await createEndpoints(apiversionId, endpoints);
+   alert("API created successfully!");
   } catch (error) {
     console.error("Error creating API:", error);
     // Handle error
@@ -392,6 +392,7 @@ const createFunctionnalities = async (functionnalities) => {
 };
 
 const createBaseLinks = async (baseLinks) => {
+  
   try {
     const baseLinkResponses = await Promise.all(baseLinks.map(async (url) => {
       const response = await API.post(`/baselink/`, { url });
@@ -406,11 +407,13 @@ const createBaseLinks = async (baseLinks) => {
 const createAPIVersions = async (apiId, functionalityIds, baseLinkIds) => {
   try {
     const apiVersionsData = {
-      num_version: 1,
-      state: "Alpha",
+      num_version: "1",
+      state: "Active",
       api: apiId,
       functions: functionalityIds,
       base_links: baseLinkIds,
+      
+
     };
     const response = await API.post(`/apiversions/`, apiVersionsData);
     return response.data.id_version;
@@ -470,7 +473,7 @@ const createQueryParams = (endpointResponse, endpointId, queryParams) => {
     const queryParamsData = queryParams.map((queryParam) => ({
       key: queryParam.key,
       type_id: queryParam.type,
-      example_value: queryParam.example_value,
+      example_value: queryParam.value,
       endpoint: endpointResponse.data.id_endpoint,
     }));
     return Promise.all(queryParamsData.map((queryParamData) =>
@@ -511,7 +514,7 @@ const createParams = (endpointResponse, endpointId, params) => {
       required: param.required,
       deleted: false,
     }));
-    alert(endpointResponse.data.id_endpoint);
+    //alert(endpointResponse.data.id_endpoint);
     return Promise.all(paramsData.map((paramData) =>
       API.post(`/endpoint_parameter/`, paramData)
     ));
@@ -527,7 +530,7 @@ const createResponseExamples = (endpointResponse, endpointId, responseExamples) 
       body: example.responseBody,
       id_endpoint: endpointResponse.data.id_endpoint,
     }));
-    alert(endpointId);
+    //alert(endpointId);
     return Promise.all(responseExamplesData.map((exampleData) =>
       API.post(`/responseexample/`, exampleData)
     ));
@@ -546,8 +549,53 @@ const executeAllPromises = (allPromises) => {
     
     });
 };
+const fetchAPIDetailsById = async (id) => {
+  try {
+    const response = await API.get(`/apis/${id}/`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+const fetchAPICategorysById = async (id) => {
+  try {
+    const response = await API.get(`/apicategories/${id}/`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
 
-  
+const fetchAPIProviderById = async (id) => {
+  try {
+    const response = await API.get(`/fournisseurs/${id}/`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+const fetchAllAPIVersionsById = async (id) => {
+  try {
+    const response = await API.get('/apiversions/');
+    const allApiVersions = response.data;
+
+    // Filter API versions by the provided API ID
+    const apiVersionsByApiId = allApiVersions.filter(apiVersion => apiVersion.api.id === id);
+    
+    return apiVersionsByApiId;
+  } catch (error) {
+    console.error('Error fetching API versions by API ID:', error);
+    throw error;
+  }
+};
+const fetchAPIEndpointsByVersion = async (id) => {
+  try {
+    const response = await API.get(`/apicategories/${id}/`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
   const [tarifTypes, setTarifTypes] = useState([]);
 
   const getTarifType = () => {
@@ -564,6 +612,9 @@ const executeAllPromises = (allPromises) => {
   return {
     addNewAPI,
     getTarifType,
+    fetchAPIDetailsById,
+    fetchAPICategorysById,
+    fetchAPIProviderById,
     tarifTypes,
   };
 }

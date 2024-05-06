@@ -133,7 +133,7 @@ const AddAPIPage = () => {
     const { id, value, type, checked } = e.target;
 
     if (type === "checkbox") {
-      alert(checked);
+      //alert(checked);
       setFormData((prevState) => ({
         ...prevState,
         visibility: checked,
@@ -181,7 +181,7 @@ const AddAPIPage = () => {
   const handleCategoryChange = (e) => {
     const categoryId = e.target.value;
 
-    alert(categoryId);
+    //alert(categoryId);
 
     setFormData((prevState) => ({
       ...prevState,
@@ -199,7 +199,7 @@ const AddAPIPage = () => {
     const existingCategory = categories.find(
       (category) => category.label.toLowerCase() === newCategory.toLowerCase()
     );
-   // existingCategory? alert(existingCategory+" "+existingCategory.id_category+" "+existingCategory.label): alert("doesn't exist");
+   // existingCategory? //alert(existingCategory+" "+existingCategory.id_category+" "+existingCategory.label): //alert("doesn't exist");
     
     // If the new category doesn't exist, update formData with the new category name
     if (!existingCategory) {
@@ -254,7 +254,7 @@ const AddAPIPage = () => {
     }
   
     // If all required data is present, proceed with submission logic
-    alert(formData.apiName);
+    //alert(formData.apiName);
     addNewAPI(formData, functionalities, baseURLs, endpoints, Models);
   };
   
@@ -729,7 +729,7 @@ const AddAPIPage = () => {
                                                     e.target.checked
                                                   );
 
-                                                  alert(termesAgreed);
+                                                  //alert(termesAgreed);
                                                 }}
                                               />
                                               <span class="btn-checkbox"></span>

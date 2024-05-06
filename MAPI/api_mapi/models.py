@@ -44,7 +44,7 @@ class APIcategory(models.Model):
 class API(models.Model):
     id_api = models.AutoField(primary_key=True)
     api_name = models.CharField(max_length=100)
-    description = models.CharField(max_length=255, help_text="Brief description of the API")
+    description = models.TextField(verbose_name="Description",help_text="Brief description of the API")
     provider = models.ForeignKey(Fournisseur, on_delete=models.DO_NOTHING, verbose_name="Provider")
     category = models.ForeignKey(APIcategory, on_delete=models.DO_NOTHING, verbose_name="Category")
     terms_of_use = models.TextField(verbose_name="Terms of Use", help_text="Terms and conditions for API usage")
@@ -63,22 +63,21 @@ class BaseLink(models.Model):
         return self.url
 class APIversion(models.Model):
     id_version = models.AutoField(primary_key=True)
-    num_version= models.CharField(max_length=100)
+    num_version= models.CharField(max_length=100, null=True)
     CHOICES = (
-        ('Alpha', 'Alpha'),  
-        ('Beta', 'Beta'),
-        ('Stable', 'Stable'),
+        ('Active', 'Active'),
+        ('Draft', 'Draft'),
         ('Deprecated', 'Deprecated'),
-        ('Obsolete', 'Obsolete'),
     )
-    state = models.CharField(max_length=50, choices=CHOICES)
-    description = models.TextField
+    state = models.CharField(max_length=50, choices=CHOICES, null=True)
+    description = models.TextField(null = True)  # Added parentheses
     date_version = models.DateField(auto_now=True)
-    api = models.ForeignKey(API, on_delete=models.DO_NOTHING )
-    functions = models.ManyToManyField('Functionnality')
-    base_links = models.ManyToManyField('BaseLink', verbose_name="Base Links")
+    api = models.ForeignKey(API, on_delete=models.DO_NOTHING, null=True )
+    current = models.BooleanField(default=False, verbose_name="Current Version", null = True)
+    functions = models.ManyToManyField('Functionnality', null=True)
+    base_links = models.ManyToManyField('BaseLink', verbose_name="Base Links", blank=True)
     def __str__(self):
-        return self.id_version
+        return self.num_version
     
 class APIendpoint(models.Model):
     id_endpoint = models.AutoField(primary_key=True)

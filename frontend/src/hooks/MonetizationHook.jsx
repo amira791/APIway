@@ -25,8 +25,8 @@ export default function PlansAjout() {
         .then((response) => {
           // Step 2: Retrieve Model ID
           const modelId = response.data.id_model;
-       alert("doneee");
-       alert(modelId);
+       //alert("doneee");
+       //alert(modelId);
           // Step 3: Add Plans
           model.plans.forEach((plan) => {
             API.post(`/tarifications/`, {

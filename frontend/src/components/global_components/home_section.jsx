@@ -83,6 +83,7 @@ const HomeSection = () => {
                                 >
                                   Discover now
                                 </a>
+                                
                               </div>
                             </div>
                             <div class="image ">

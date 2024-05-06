@@ -76,10 +76,12 @@ const HomeSection = () => {
                               </p>
                               <div style={{ fontSize: "20px", gap: "20px" }}>
                                 <a
-                                  href="searchApi"
+                                  
                                   class="tf-button style-6"
                                 >
-                                  Discover now
+                                 <div >
+                            <Link to={"/details/1/"}>Go to</Link>
+                        </div>
                                 </a>
                               </div>
                             </div>
