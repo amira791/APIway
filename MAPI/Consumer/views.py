@@ -70,13 +70,13 @@ def search_api(request, index='api_index',
 
     # Define Elasticsearch multi_match query
     if search_field == 'Name':
-        search_fields = ["api_name^3","description","category.label"]
+        search_fields = ["api_name^3","description","category.label^2","functions.functName"]
     elif search_field == 'Description':
-        search_fields = ["description^3","api_name","category.label^2",]
+        search_fields = ["description^3","api_name","category.label^2"]
     elif search_field == 'Category':
-        search_fields = ["category.label^3","api_name^2","description",]
+        search_fields = ["category.label^3","api_name^2","description","functions.functName^3"]
     elif search_field == 'Functionalities':
-        search_fields = ["functions.functName^3"]
+        search_fields = ["functions.functName^3","api_name^2","description","category.label"]
     else:
         return Response({'error': 'Invalid search field'}, status=status.HTTP_400_BAD_REQUEST)
 
