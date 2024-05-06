@@ -154,17 +154,18 @@ class APIdocumentationView(viewsets.ModelViewSet):
 
 class APIForumView(viewsets.ModelViewSet):
     serializer_class = APIForumSerializer
+    queryset = APIForum.objects.all()
 
-    def get_queryset(self):
-        queryset = APIForum.objects.all()
-        api_id = self.kwargs.get('api_id')
-        if api_id is not None:
-            queryset = queryset.filter(api_id=api_id)
-        return queryset
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        serializer = self.get_serializer(queryset.first())  
-        return Response(serializer.data)
+    # def get_queryset(self):
+    #     queryset = APIForum.objects.all()
+    #     api_id = self.kwargs.get('api_id')
+    #     if api_id is not None:
+    #         queryset = queryset.filter(api_id=api_id)
+    #     return queryset
+    # def list(self, request, *args, **kwargs):
+    #     queryset = self.get_queryset()
+    #     serializer = self.get_serializer(queryset.first())  
+    #     return Response(serializer.data)
 
 # Forum Thread View
 class ThreadView(viewsets.ModelViewSet):

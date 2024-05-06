@@ -37,6 +37,33 @@ class Admin(UserProfileBase):
 class Consommateur(UserProfileBase):
     id_consommateur = models.AutoField(primary_key=True)
 
+class APIForum(models.Model):
+    id_forum = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=200)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+    
+class Thread(models.Model):
+    id_thread = models.AutoField(primary_key=True)
+    content = models.CharField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    forum = models.ForeignKey(APIForum, on_delete=models.CASCADE)
+    creator = models.ForeignKey(Consommateur, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.content
+
+class Comment(models.Model):
+    id_comment = models.AutoField(primary_key=True)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(UserBase, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.message
 
 class APIcategory(models.Model):
     id_category = models.AutoField(primary_key=True)
@@ -56,10 +83,20 @@ class API(models.Model):
     logo = models.ImageField(upload_to="assets/images/", verbose_name="Logo")
     visibility = models.BooleanField(default=False, verbose_name="Visibility")
     website = models.URLField(verbose_name="Website", help_text="API website")
+    forum = models.OneToOneField(APIForum, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Forum")
     """ pricing_plans = models.ManyToManyField('Tarification', verbose_name="Pricing Plans") """
 
     def __str__(self):
         return self.api_name
+
+    def save(self, *args, **kwargs):
+        # Check if the API instance is being created (not updated)
+        if not self.id:
+            # Create a corresponding forum instance
+            forum = APIForum.objects.create(name=self.api_name, description=f"Forum for {self.api_name}")
+            self.forum = forum
+        super().save(*args, **kwargs)
+    
 class BaseLink(models.Model):
     baselink_id = models.AutoField(primary_key=True)
     url = models.TextField(verbose_name="Base Link URL", help_text="Base link for API endpoints")
@@ -215,34 +252,7 @@ class Abonnement(models.Model):
     def __str__(self):
         return self.id_subscription
     
-class APIForum(models.Model):
-    id_forum = models.AutoField(primary_key=True)
-    api_id = models.ForeignKey(API,on_delete= models.CASCADE)
-    name = models.CharField(max_length=200)
-    description = models.TextField()
 
-    def __str__(self):
-        return self.name
-    
-class Thread(models.Model):
-    id_thread = models.AutoField(primary_key=True)
-    content = models.CharField(max_length=500)
-    created_at = models.DateTimeField(auto_now_add=True)
-    forum = models.ForeignKey(APIForum, on_delete=models.CASCADE)
-    creator = models.ForeignKey(Consommateur, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.content
-
-class Comment(models.Model):
-    id_comment = models.AutoField(primary_key=True)
-    message = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
-    created_by = models.ForeignKey(UserBase, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.message
     
 class Ticket(models.Model):
     ticket_id = models.AutoField(primary_key=True)

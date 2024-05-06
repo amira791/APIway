@@ -6,8 +6,7 @@ import './styles/SearchApi.css';
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  Navigate
+  Route
 } from 'react-router-dom';
 import ForumPage from './components/pages/ForumPage';
 import ThreadPage from './components/pages/ThreadPage';
@@ -21,12 +20,12 @@ import ApiDetails from './components/ApiDetails'
 import LoginPage from './components/auth_components/LoginPage';
 import TicketForm from './components/tickets/TicketForm';
 import TicketsPage from './components/pages/TicketsPage';
-import { useAuthContext , AuthProvider} from './context/authContext';
+import {  AuthProvider} from './context/authContext';
 import SignUpPage from './components/auth_components/SignUpPage';
 import AddAPIPage from './components/provider_componants/AddApi';
 
 function Root() {
-  const { authState } = useAuthContext();
+
   
   return (
     <div id="App">

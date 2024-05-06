@@ -392,7 +392,7 @@ const ApiDetails = () => {
                                         </div>                           
                                     </div>
                                     <div>
-                                        <Forum api_id={api_id}/>
+                                        <Forum forum_id={Api.forum}/>
                                     </div>
                                 </div>
                             </div>

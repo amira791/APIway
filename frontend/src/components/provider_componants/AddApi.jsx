@@ -255,6 +255,7 @@ const AddAPIPage = () => {
   
     // If all required data is present, proceed with submission logic
     alert(formData.apiName);
+    console.log(formData,functionalities,baseURLs,endpoints,Models)
     addNewAPI(formData, functionalities, baseURLs, endpoints, Models);
   };
   

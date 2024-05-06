@@ -1,16 +1,24 @@
 import React, { useEffect } from 'react';
 import parse from 'html-react-parser';
-import { Button, Flex, Box } from '@chakra-ui/react'; // Assuming Box from Chakra-UI for wrapping individual tickets
+import { Button, Flex, Box } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import useTicket from '../../hooks/useTicket';
 
-export default function TicketsList({api_id}) {
-  const { getAPITickets, tickets } = useTicket();
+export default function TicketsList({ api_id }) {
+  const { getAPITickets, tickets, error, loading } = useTicket();
 
   useEffect(() => {
     console.log(api_id);
     getAPITickets(api_id);
   }, [api_id]);
+
+  if (loading) {
+    return <div>Loading...</div>; // Display a loading indicator while fetching data
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>; // Display error message if an error occurs
+  }
 
   return (
     <div>

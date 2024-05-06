@@ -77,12 +77,10 @@ const HomeSection = () => {
                                 effortlessly with our diverse selection.
                               </p>
                               <div style={{ fontSize: "20px", gap: "20px" }}>
-                                <a
-                                  href="live-auction.html"
-                                  class="tf-button style-6"
-                                >
-                                  Discover now
-                                </a>
+                                <Link to={'/searchApi'} className="tf-button style-6">
+                                Discover now
+                                </Link>
+                               
                               </div>
                             </div>
                             <div class="image ">

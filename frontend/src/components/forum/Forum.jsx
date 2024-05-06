@@ -6,27 +6,36 @@ import ThreadList from './ThreadList';
 import { useAuthContext } from '../../context/authContext';
 import useManageAccountsC from '../../hooks/ConsomAccountsHook';
 
-export default function Forum({ api_id }) {
-
-  const { addNewThread, getForum, forum, error, loading } = useForum();
+export default function Forum({ forum_id }) {
+  const { addNewThread, getForum, forum, error: forumError, loading: forumLoading } = useForum();
   const { authState } = useAuthContext();
   const user_id = parseInt(authState.userId);
-  const { getConsommateur, consommateur } = useManageAccountsC();
+  const { getConsommateur, consommateur, error: consommateurError } = useManageAccountsC();
   const [message, setMessage] = useState('');
   const [showLoginPrompt, setShowLoginPrompt] = useState(false); // State to control login prompt
+  const [loading, setLoading] = useState(true); // Component-level loading state
   const navigate = useNavigate();
 
-
   useEffect(() => {
-    getForum(api_id);
-    if (authState.isConsommateur) getConsommateur(user_id);
-  }, [api_id, user_id]);
+    async function fetchData() {
+      try {
+        await getForum(forum_id);
+        if (authState.isConsommateur) await getConsommateur(user_id);
+        setLoading(false); // Set loading to false after data fetching is complete
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Handle error state here
+      }
+    }
+
+    fetchData();
+  }, [forum_id, user_id, authState.isConsommateur]);
 
   const handleNewDiscussion = () => {
     if (authState.isAuth) {
       const thread = {
         content: message,
-        forum: forum.id_forum,
+        forum: forum_id,
         creator: consommateur.id_consommateur,
       };
       addNewThread(thread);
@@ -39,6 +48,14 @@ export default function Forum({ api_id }) {
     setShowLoginPrompt(false);
     navigate('/login');
   };
+
+  if (loading) {
+    return <div>Loading...</div>; // Display a loading indicator while fetching data
+  }
+
+  if (forumError || consommateurError) {
+    return <div>Error: {forumError || consommateurError}</div>; // Display error message if an error occurs
+  }
 
   return (
     <>
@@ -54,7 +71,7 @@ export default function Forum({ api_id }) {
             </a>
           </div>
           <div className="product-button">
-          {authState.isAuthen ? (
+          {authState.isAuth ? (
               <Link to={'/tickets/new'} className="tf-button">
                 <span className="icon-btn-product"></span>New ticket
               </Link>
