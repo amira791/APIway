@@ -2594,7 +2594,22 @@ header.absolute {
 .button-slide-home-3-prev {
   left: 15px;
 }
-
+.update_btn {
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 24px;
+  background-color: #3749E9;
+  color: #fff;
+  border-radius: 50px;
+  padding: 17px 30px;
+  display: inline-block;
+  -webkit-appearance: none;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
 /*# sourceMappingURL=style.css.map */
 
 #general-section label{
@@ -2686,4 +2701,20 @@ header.absolute {
 
 .bullet-point {
   margin-right: 0.5rem; /* Adjust the space between the bullet point and text */
+}
+.update_btn {
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 24px;
+  background-color: #3749E9;
+  color: #fff;
+  border-radius: 50px;
+  padding: 17px 30px;
+  display: inline-block;
+  -webkit-appearance: none;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }

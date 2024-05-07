@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import ForumPage from './components/pages/ForumPage';
 import ThreadPage from './components/pages/ThreadPage';
-import ProviderHomePage from './components/pages/ProviderHome';
+import ProviderHomePage from './components/provider_componants/ProviderHome';
 import HomeSection from './components/global_components/home_section';
 import FourAccountManag from "./components/admin/fourAccountManag";
 import ConsomAccountManag from "./components/admin/consAccountManag";
@@ -42,9 +42,9 @@ function Root() {
           <Route path="/forum/threads/:thread_id" element={<ThreadPage />} />
           <Route path="/tickets/new" element={<TicketForm />} />
           <Route path='/tickets' element={<TicketsPage/>} />
-          <Route path='/fournisseur' element={<ProviderHomePage />} />
           <Route exact path="/addAPI" element={<AddAPIPage />} />
           <Route exact path="/details/:id" element={<Details />} />
+          <Route exact path="/provider_home" element={<ProviderHomePage/>} />
         </Routes>
       </Router>
     </div>

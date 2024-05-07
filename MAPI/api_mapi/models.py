@@ -75,14 +75,14 @@ class APIcategory(models.Model):
 
 class API(models.Model):
     id_api = models.AutoField(primary_key=True)
-    api_name = models.CharField(max_length=100)
-    description = models.TextField(verbose_name="Description",help_text="Brief description of the API")
-    provider = models.ForeignKey(Fournisseur, on_delete=models.DO_NOTHING, verbose_name="Provider")
-    category = models.ForeignKey(APIcategory, on_delete=models.DO_NOTHING, verbose_name="Category")
-    terms_of_use = models.TextField(verbose_name="Terms of Use", help_text="Terms and conditions for API usage")
-    logo = models.ImageField(upload_to="assets/images/", verbose_name="Logo")
-    visibility = models.BooleanField(default=False, verbose_name="Visibility")
-    website = models.URLField(verbose_name="Website", help_text="API website")
+    api_name = models.CharField(max_length=100, blank = True)
+    description = models.TextField( help_text="Brief description of the API", blank = True)
+    provider = models.ForeignKey(Fournisseur, on_delete=models.DO_NOTHING, verbose_name="Provider", null = True)
+    category = models.ForeignKey(APIcategory, on_delete=models.DO_NOTHING, related_name="Category", null = True)
+    terms_of_use = models.TextField(verbose_name="Terms of Use", help_text="Terms and conditions for API usage", blank = True)
+    logo = models.ImageField(upload_to="assets/images/", verbose_name="Logo", null = True)
+    visibility = models.BooleanField(default=False, verbose_name="Visibility", null = True)
+    website = models.TextField(verbose_name="Web Site", help_text="Base link for API ", blank = True)
     forum = models.OneToOneField(APIForum, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Forum")
     """ pricing_plans = models.ManyToManyField('Tarification', verbose_name="Pricing Plans") """
 
@@ -90,9 +90,7 @@ class API(models.Model):
         return self.api_name
 
     def save(self, *args, **kwargs):
-        # Check if the API instance is being created (not updated)
         if not self.id_api:
-            # Create a corresponding forum instance
             forum = APIForum.objects.create(name=self.api_name, description=f"Forum for {self.api_name}")
             self.forum = forum
         super().save(*args, **kwargs)
@@ -103,6 +101,7 @@ class BaseLink(models.Model):
 
     def __str__(self):
         return self.url
+
 class APIversion(models.Model):
     id_version = models.AutoField(primary_key=True)
     num_version= models.CharField(max_length=100, null=True)
@@ -135,7 +134,7 @@ class APIendpoint(models.Model):
     link= models.TextField
     group=models.CharField(max_length=255,default="",  null=True)
     version = models.ForeignKey(APIversion, on_delete=models.DO_NOTHING )
-    description = models.TextField( help_text="Brief description of the endPoint")   
+    description = models.TextField( help_text="Brief description of the endPoint" ,default="")   
     def __str__(self):
         return self.title
 class TypeParam(models.Model):
@@ -143,6 +142,7 @@ class TypeParam(models.Model):
     name= models.CharField(max_length=100)
     def __str__(self):
         return self.name
+
 class ApiHeader(models.Model):
     id_header =models.AutoField(primary_key=True)
     key = models.CharField(max_length=255)
@@ -152,6 +152,8 @@ class ApiHeader(models.Model):
     endpoint = models.ForeignKey(APIendpoint, related_name='headers', on_delete=models.CASCADE)
     def __str__(self):
         return self.key
+
+
 
 class ApiQueryParam(models.Model):
     id_queryparams =models.AutoField(primary_key=True)
@@ -171,8 +173,9 @@ class ApiEndpointBody(models.Model):
     endpoint = models.ForeignKey(APIendpoint, related_name='body', on_delete=models.CASCADE)
   
     def __str__(self):
-        return self.key
-       
+        return self.payload_name
+
+
 class Endpoint_parameter(models.Model):
     id_parameter = models.AutoField(primary_key=True)
     id_endpoint = models.ForeignKey(APIendpoint, on_delete=models.DO_NOTHING )
@@ -183,6 +186,7 @@ class Endpoint_parameter(models.Model):
     deleted = models.BooleanField(default=False)
     def __str__(self):
         return self.name
+    
 class Functionnality(models.Model):
     id_funct= models.AutoField(primary_key=True)
     functName = models.CharField(max_length=100)
@@ -212,7 +216,7 @@ class PricingModel(models.Model):
     api = models.ForeignKey(API, on_delete=models.DO_NOTHING )
     name = models.CharField(max_length=255)
     CHOICES = (
-         ('Daily', 'Daily'),
+        ('Daily', 'Daily'),
         ('Monthly', 'Monthly'),
         ('Yearly', 'Yearly'),
     )
@@ -235,9 +239,9 @@ class Tarification(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     features = models.TextField()
     quota_limit = models.IntegerField() #Total limit
-    rate_limit = models.IntegerField() #Per hour
+    rate_limit = models.IntegerField(default=1000) #Per hour
     def __str__(self):
-        return self.id_tarif
+        return self.features
 
 class Abonnement(models.Model):
     id_subscription = models.AutoField(primary_key=True)

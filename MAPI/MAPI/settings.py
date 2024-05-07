@@ -64,14 +64,15 @@ SIMPLE_JWT = {
 }
 
 MIDDLEWARE = [
+    
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware'
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
 ROOT_URLCONF = 'MAPI.urls'
@@ -102,7 +103,7 @@ DATABASES = {
     'default': {
 
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mapiadd',
+        'NAME': 'mapi',
         'USER': 'root',
         'PASSWORD': '',
         'HOST':'localhost',
@@ -144,7 +145,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
 STATIC_URL = 'static/'
 
 # Base url to serve media files
@@ -158,6 +158,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'assets/images')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#React’s port through which requests will come be served
+
+
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',

@@ -4,6 +4,8 @@ from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from .models import *
 from .serializers import *
+from rest_framework.parsers import MultiPartParser, FormParser
+
 from django.db.models import Q
 from rest_framework import viewsets
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
@@ -131,6 +133,8 @@ class APIcategoryView(viewsets.ModelViewSet):
 class APIView(viewsets.ModelViewSet):
     queryset = API.objects.all()
     serializer_class = APISerializer
+    parser_classes = (MultiPartParser, FormParser)
+
 
 # APIversion View
 class APIversionView(viewsets.ModelViewSet):

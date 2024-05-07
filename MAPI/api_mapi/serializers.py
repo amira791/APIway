@@ -45,9 +45,11 @@ class APIcategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class APISerializer(serializers.ModelSerializer):
+    category_label = serializers.CharField(source='category.label', read_only=True)
+    logo = serializers.ImageField(required=False)
     class Meta:
         model = API
-        fields = '__all__'
+        fields = ['id_api', 'api_name', 'description', 'provider', 'category', 'category_label', 'terms_of_use', 'logo', 'visibility', 'website']
 
 class APIversionSerializer(serializers.ModelSerializer):
     class Meta:
