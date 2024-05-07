@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "bootstrap": "^5.3.3",
-    "cors": "^2.8.5",
-    "reactstrap": "^9.2.2"
-  }
-}
