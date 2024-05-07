@@ -22,6 +22,7 @@ import {  AuthProvider} from './context/authContext';
 import SignUpPage from './components/auth_components/SignUpPage';
 import AddAPIPage from './components/provider_componants/AddApi';
 import Details from './components/provider_componants/Details';
+import Payment from './components/Payment/Payment';
 
 function Root() {
 
@@ -45,6 +46,7 @@ function Root() {
           <Route exact path="/addAPI" element={<AddAPIPage />} />
           <Route exact path="/details/:id" element={<Details />} />
           <Route exact path="/provider_home" element={<ProviderHomePage/>} />
+          <Route exact path="/payment" element={<Payment/>} />
         </Routes>
       </Router>
     </div>
