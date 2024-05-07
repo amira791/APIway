@@ -91,7 +91,7 @@ class API(models.Model):
 
     def save(self, *args, **kwargs):
         # Check if the API instance is being created (not updated)
-        if not self.id:
+        if not self.id_api:
             # Create a corresponding forum instance
             forum = APIForum.objects.create(name=self.api_name, description=f"Forum for {self.api_name}")
             self.forum = forum
