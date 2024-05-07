@@ -291,7 +291,6 @@ console.log("tarif:", tarif);
       } else {
         return (
           <div class="col-ranking product-button" key={index2}>
-            {planValidated ? (
             <a
               class="tf-button"
               href="#"
@@ -315,14 +314,6 @@ console.log("tarif:", tarif);
                 </div>
               </span>
             </a>
-            ) : (
-              // Render a non-clickable element if planValidated is false
-              <span className="tf-button-disabled">
-                <div className="img">
-                  <i className="fal fa-plus"></i>
-                </div>
-              </span>
-            )}
           </div>
         );
       }
@@ -366,6 +357,27 @@ console.log("tarif:", tarif);
       );
     }
     //return Models[index].plans.some((plan) => plan.Name === planName);
+  };
+  const checkExistence2 = (model, planName, type, index2) => {
+
+    // Check if the model exists and has plans
+    if (model) {
+      
+      const modelTarifications = tarif.filter(tarification => tarification.pricingModel === model.id_model);
+      return (
+        modelTarifications.map((tarification, index) => (
+          <div className="col-ranking product-button" key={index2}>
+          
+              <span className="tf-button-disabled">
+                <div className="img">
+                  <i className="fal fa-plus"></i>
+                </div>
+              </span>
+        
+          </div>
+        ))
+      )
+    };
   };
   // Function to handle plan selection
   const handleSelectPlan = (plan) => {
@@ -412,10 +424,6 @@ console.log("tarif:", tarif);
 
   const hideEditingPlan = () =>{
     setPlanValidated(true);
-  }
-
-  const showTarifs = (id_model) =>{
-    
   }
   return (
     <div className="tf-container">
@@ -555,21 +563,24 @@ console.log("tarif:", tarif);
                 justifyContent: "space-evenly",
                 alignItems: "center",
                 marginTop: "3%",
-                marginLeft:"0px",
-                paddingLedt: "0px"
               }}
             >
               <div className="col-ranking">{index + 1}</div>
               <div className="col-ranking">
                {model.Name ? model.Name : model.name} {/* Assuming Name is the property for the model name */}
               </div>
-              {tarifTypes.map((type, index2) => {
-                if (pricingModels.includes(model)) {
-                  showTarifs(model.id_model);
-                } else {
-                  checkExistence(index, type.name, type, index2);
-                }
-              })}
+              {pricingModels.includes(model) ? (
+                // If model is in pricingModels, call showTarifs
+                tarifTypes.map((type, index2) =>
+                  checkExistence2(model, type.name, type, index2)
+                )
+              ) : (
+                // If model is in Models, iterate over tarifTypes and call checkExistence
+                tarifTypes.map((type, index2) =>
+                  checkExistence(index, type.name, type, index2)
+                )
+              )}
+
               {newModelAdded == model && (
                 <div
                   style={{

@@ -18,10 +18,10 @@ export default function ManipulateMonetize() {
             setLoading(false);
         });
     };
-    const getModelTraifications= (id_model) =>  {
+    const getModelTraifications= () =>  {
         setLoading(true);
         API.get(`/tarifications/`).then((res) => {
-            setTarif(res.data.filter(tarification => tarification.pricingModel === id_model));
+            setTarif(res.data);
             setLoading(false);
         })
         .catch((error) => {
