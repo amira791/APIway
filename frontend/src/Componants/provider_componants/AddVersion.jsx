@@ -9,8 +9,7 @@ import "datatables.net";
 import CreateEndpointForm from "./CreatEndpointForm.jsx";
 import AddGroupForm from "./CreateGroupEndpoint.jsx";
 import EndpointTable from "./CommunComponants/endpointable.jsx";
-import Monetizing from "./Monetize.jsx";
-import PlansAjout from "../../Hooks/MonetizationHook.jsx";
+import Monetizing from "./ModifyMonetize.jsx";
 import { ToastContainer } from 'react-toastify';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -22,7 +21,6 @@ const AddVersion = ({selectedAPI, onReturnClick2}) => {
   const { categories } = ManipulateCat();
   const { addNewAPI } = APIAjout();
   const { addVersion, checkIfVersionExists } = ManipulateVersion();
-  const { addApiModels } = PlansAjout();
   const [Models, setModels] = useState([]); // Define and manage the Models array in the parent component
 
   /*****************************************************/

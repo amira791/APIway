@@ -10,8 +10,8 @@ import "datatables.net";
 import CreateEndpointForm from "./CreatEndpointForm.jsx";
 import AddGroupForm from "./CreateGroupEndpoint.jsx";
 import EndpointTable from "./CommunComponants/endpointable.jsx";
-import Monetizing from "./Monetize.jsx";
-import PlansAjout from "../../Hooks/MonetizationHook.jsx";
+import Monetizing from "./ModifyMonetize.jsx";
+
 
 const AddAPIPage = () => {
   $.noConflict();
@@ -19,7 +19,6 @@ const AddAPIPage = () => {
   /**************From hooks****************************/
   const { categories } = ManipulateCat();
   const { addNewAPI } = APIAjout();
-  const { addApiModels } = PlansAjout();
   const [Models, setModels] = useState([]); // Define and manage the Models array in the parent component
 
   /*****************************************************/
@@ -803,111 +802,7 @@ const AddAPIPage = () => {
                   class="tf-section tf-create-and-sell"
                 >
                   <Monetizing Models={Models} setModels={setModels} />
-                  {/*   <div class="tf-container">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="tf-heading style-2 mb40 wow fadeInUp">
-                          <h4 class="heading">Choose your plan</h4>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-md-6">
-                        <div
-                          class="tf-create wow fadeInUp"
-                          data-wow-delay="0.2s"
-                        >
-                          <div class="icon">
-                            <img
-                              src="assets/images/svg/icon-create-1.svg"
-                              alt="Image"
-                            />
-                          </div>
-                          <h6 class="title">
-                            <a href="#"> BASIC</a>
-                          </h6>
-                          <div class="button-toggle">
-                            <input type="checkbox" id="switch" />
-                            <label for="switch"></label>
-                          </div>
-                          <p class="content">
-                            Sed Ut Perspiciatis Unde Omnis Iste Natus Error Sit
-                            Voluptatem Accusantium Doloremque
-                          </p>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-md-6">
-                        <div
-                          class="tf-create wow fadeInUp"
-                          data-wow-delay="0.4s"
-                        >
-                          <div class="icon">
-                            <img
-                              src="assets/images/svg/icon-create-2.svg"
-                              alt="Image"
-                            ></img>
-                          </div>
-                          <h6 class="title">
-                            <a href="#">PRO</a>{" "}
-                          </h6>
-                          <div class="button-toggle">
-                            <input type="checkbox" id="switch2" />
-                            <label for="switch2"></label>
-                          </div>
-                          <p class="content">
-                            Sed Ut Perspiciatis Unde Omnis Iste Natus Error Sit
-                            Voluptatem Accusantium Doloremque
-                          </p>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-md-6">
-                        <div
-                          class="tf-create wow fadeInUp"
-                          data-wow-delay="0.6s"
-                        >
-                          <div class="icon">
-                            <img
-                              src="assets/images/svg/icon-create-3.svg"
-                              alt="Image"
-                            />
-                          </div>
-                          <h6 class="title">
-                            <a href="#">ULTRA</a>{" "}
-                          </h6>
-                          <div class="button-toggle">
-                            <input type="checkbox" id="switch4" />
-                            <label for="switch4"></label>
-                          </div>
-                          <p class="content">
-                            Sed Ut Perspiciatis Unde Omnis Iste Natus Error Sit
-                            Voluptatem Accusantium Doloremque
-                          </p>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-md-6">
-                        <div
-                          class="tf-create wow fadeInUp"
-                          data-wow-delay="0.8s"
-                        >
-                          <div class="icon">
-                            <img
-                              src="assets/images/svg/icon-create-4.svg"
-                              alt="Image"
-                            />
-                          </div>
-                          <h6 class="title">
-                            <a href="#">MEGA</a>
-                          </h6>
-                          <div class="button-toggle">
-                            <input type="checkbox" id="switch5" />
-                            <label for="switch5"></label>
-                          </div>
-                          <p class="content">
-                            Sed Ut Perspiciatis Unde Omnis Iste Natus Error Sit
-                            Voluptatem Accusantium Doloremque
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div> */}
+                  
                 </section>
                 <div
                   className="col-xl-3 col-lg-4 col-md-6"

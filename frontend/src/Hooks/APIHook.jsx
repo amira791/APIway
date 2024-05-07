@@ -1,10 +1,9 @@
 // Define the custom hook in hooks/useUnite
 import { useState, useEffect} from "react";
 import API from "../API";
-import PlansAjout from "./MonetizationHook";
+
 
 export default function APIAjout() {
-
 
   const addNewAPI = async (
     formData,
@@ -15,7 +14,7 @@ export default function APIAjout() {
   ) => {
     let apiId;
 
-    const { addApiModels } = PlansAjout();
+
     if (formData.categoryId === null) {
       // Create a new category
       try {
@@ -321,11 +320,57 @@ export default function APIAjout() {
     });
 };
 
-  
+const createModels = async (apiId, models) => {
+  try {
+    // Logic to create models
+    for (const model of models) {
+      const modelResponse = await API.post(`/pricing_model/`, {
+        name: model.Name,
+        period: model.Period,
+        description: model.Description,
+        api: apiId,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const modelId = modelResponse.data.id_model;
+      for (const plan of model.plans) {
+        await API.post(`/tarifications/`, {
+          price: plan.price,
+          recommended: false,
+          features: plan.features,
+          quota_limit: plan.quotalimit,
+          rate_limit: plan.ratelimit || 10000,
+          type: plan.id,
+          pricingModel: modelId,
+        },{
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then((planData) => {
+          console.log(
+            `Plan "${plan.Name}" added with ID ${planData.data.id_tarif}`
+          );
+        })
+        .catch((error) =>
+          console.error("Error adding plan:", error)
+        );
+      }
+    }
+  } catch (error) {
+    console.error("Error creating models:", error);
+    throw error;
+  }
+};
+
+
   return {
     addNewAPI,
     updateAPI,
     getTarifType,
     tarifTypes,
+    createModels,
   };
 }

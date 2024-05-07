@@ -57,8 +57,8 @@ class AbonnementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Abonnement
         fields = '__all__'
-        
 
+        
 class TypeParamSerializer(serializers.ModelSerializer):
     class Meta:
         model = TypeParam

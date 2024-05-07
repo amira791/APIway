@@ -21,11 +21,11 @@ class Root extends Component {
     return (
       <div id="App">
         <Router>
-          <Routes>
+          <Routes >
             <Route exact path="/" element={<Home/>} />
             <Route exact path="/addAPI" element={<AddAPIPage/>} />
             <Route exact path="/provider_home" element={<ProviderHomePage/>} />
-          </Routes>
+          </Routes >
         </Router>
       </div>
     );
@@ -36,6 +36,6 @@ export default Root;
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 
-    <Root />
+  <Root />
 
 );

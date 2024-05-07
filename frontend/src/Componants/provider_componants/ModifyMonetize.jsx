@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import APIAjout from "../../Hooks/APIHook.jsx";
-
-const Monetizing = ({Models ,setModels}) => {
+import { ToastContainer } from 'react-toastify';
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import ManipulateMonetize from "../../Hooks/MonetizeHook.jsx"
+const Monetizing = ({apiId}) => {
   // State to track the selected plan
   const [selectedPlan, setSelectedPlan] = useState({
     Name: "",
@@ -13,9 +16,8 @@ const Monetizing = ({Models ,setModels}) => {
   });
 
   const [activeFilter, setActiveFilter] = useState("Daily");
-/*   const [Models, setModels] = useState(Models); // Define Models state and setModels function
+  const [Models, setModels] = useState([]); // Define Models state and setModels function
 
- */
   const [Model, setModel] = useState({
     Name: "",
     Description: "",
@@ -45,22 +47,39 @@ const Monetizing = ({Models ,setModels}) => {
     features: "",
   });
   const [modificationOn, setModificationOn] = useState(false);
-  const { tarifTypes } = APIAjout();
+  const { tarifTypes, createModels } = APIAjout();
+  const { checkExistingModel, getAPImodels, pricingModels, tarif, getModelTraifications } = ManipulateMonetize();
+  const [pricingPlans, setPricingPlans] = useState([]);
+  const [newModelAdded, setNewModelAdded] = useState(null);
+  const [planValidated, setPlanValidated] = useState(true);
+useEffect(() => {
+    getAPImodels(apiId);
+}, [apiId]);
+useEffect(() => {
+  console.log("Pricing Models:", pricingModels);
+}, [pricingModels]);
+useEffect(() => {
+  getModelTraifications(1);
+}, [1]);
+useEffect(() => {
+console.log("tarif:", tarif);
+}, [tarif]);
   const handleModelChange = (key, value) => {
     setModel((prevModel) => ({ ...prevModel, [key]: value }));
   };
-  const addModel = () => {
+  const addModel = async () => {
     if (!Model.Name || !Model.Description) {
-      alert("Please fill in all fields before adding the model.");
+      toast.error("Please fill in all fields before adding the model.");
       return;
     }
     setModels((prevModels) => [...prevModels, Model]);
-
+    setNewModelAdded(Model);
     setActiveFilter("Daily");
     setModel({ Name: "", Description: "", Period: activeFilter, plans: [] });
     document.getElementById("model-name").value = "";
     document.getElementById("model-description").value = "";
-    console.log(Models);
+    console.log("settedModels",Models);
+   // await createModels(apiId, Models);
   };
   const handlePlanChange = (key, value) => {
     setNewPlan((prevPlan) => ({ ...prevPlan, [key]: value }));
@@ -76,7 +95,7 @@ const Monetizing = ({Models ,setModels}) => {
       !editedPlan.quotalimit ||
       !editedPlan.ratelimit
     ) {
-      alert("Please fill in all fields before editing the plan.");
+      toast.error("Please fill in all fields before editing the plan.");
       return;
     }
     const model = Models[indexModel];
@@ -121,7 +140,7 @@ const Monetizing = ({Models ,setModels}) => {
     document.getElementById("sub-price").value = "";
     document.getElementById("features").value = "";
     setModificationOn(false);
-    console.log(Models);
+    console.log("afterModif",Models);
   };
   const addPlan = (indexModel) => {
     if (
@@ -144,10 +163,21 @@ const Monetizing = ({Models ,setModels}) => {
      {
       newPlan.quotatype="Daily";
      }
+    // Find the selected model
+    const selectedModel = Models[indexModel];
+
+    // Check if the selected model already has plans
+    if (!selectedModel.plans) {
+        selectedModel.plans = [];
+    }
+
+    // Add the new plan to the selected model
+    selectedModel.plans.push(newPlan);
+
     setModels((prevModels) => {
-      const updatedModels = [...prevModels];
-      updatedModels[indexModel].plans.push(newPlan);
-      return updatedModels;
+        const updatedModels = [...prevModels];
+        updatedModels[indexModel].plans = [...selectedModel.plans]; // Replace the plans array with the updated one
+        return updatedModels;
     });
 
     setActiveFilter("Daily");
@@ -168,7 +198,9 @@ const Monetizing = ({Models ,setModels}) => {
     document.getElementById("features").value = "";
     setRateLimit("");
     setSubscriptionPrice("");
-    console.log(Models);
+    setPlanValidated(false);
+
+    console.log("planVal1",planValidated);
   };
   const deletePlan = (indexModel) => {
     if (window.confirm("Do u really want to delete this plan?")) {
@@ -227,28 +259,39 @@ const Monetizing = ({Models ,setModels}) => {
         const quotatype =plan.quotatype;
         console.log(quotatype);
         return (
-          <a
-            href="#"
-            data-toggle="modal"
-            data-target="#tarif_pop"
-            class="tf-button"
-            style={{ textDecorationLine: "underline" }}
-            onClick={() => {
-              activateModification(plan);
-            }}
-          >
-            {quotalimit }   <p>
-                  {quotatype === "Yearly"
-                    ? "/Year"
-                    :quotatype === "Monthly"
-                    ? "/Month"
-                    : "/Day"}
-                </p>
-          </a>
+          planValidated ? (
+            <a
+              href="#"
+              data-toggle="modal"
+              data-target="#tarif_pop"
+              className="tf-button"
+              style={{ textDecorationLine: "underline" }}
+              onClick={() => {
+                activateModification(plan);
+              }}
+            >
+              {quotalimit}{" "}
+              <p>
+                {quotatype === "Yearly"
+                  ? "/Year"
+                  : quotatype === "Monthly"
+                  ? "/Month"
+                  : "/Day"}
+              </p>
+            </a>
+          ) : (
+            // Render a non-clickable element if planValidated is false
+            <span className="tf-button-disabled">
+              <div className="img">
+                <i className="fal fa-plus"></i>
+              </div>
+            </span>
+          )
         );
       } else {
         return (
           <div class="col-ranking product-button" key={index2}>
+            {planValidated ? (
             <a
               class="tf-button"
               href="#"
@@ -272,35 +315,53 @@ const Monetizing = ({Models ,setModels}) => {
                 </div>
               </span>
             </a>
+            ) : (
+              // Render a non-clickable element if planValidated is false
+              <span className="tf-button-disabled">
+                <div className="img">
+                  <i className="fal fa-plus"></i>
+                </div>
+              </span>
+            )}
           </div>
         );
       }
-    } else {
+    }else {
       return (
-        <div class="col-ranking product-button" key={index2}>
-          <a
-            class="tf-button"
-            href="#"
-            data-toggle="modal"
-            data-target="#tarif_pop"
-            onClick={() => {
-              setNewPlan({
-                Name: type.name,
-                id: type.id_TypeTarif,
-                modelIndex: index,
-              });
-              setSelectedModel({
-                Name: Models[index].Name,
-                index: index,
-              });
-            }}
-          >
-            <span>
-              <div class="img">
-                <i class="fal fa-plus"></i>
+        <div className="col-ranking product-button" key={index2}>
+          {/* Check if planValidated is true before rendering the clickable element */}
+          {planValidated ? (
+            <a
+              className="tf-button"
+              href="#"
+              data-toggle="modal"
+              data-target="#tarif_pop"
+              onClick={() => {
+                setNewPlan({
+                  Name: type.name,
+                  id: type.id_TypeTarif,
+                  modelIndex: index,
+                });
+                setSelectedModel({
+                  Name: Models[index].Name,
+                  index: index,
+                });
+              }}
+            >
+              <span>
+                <div className="img">
+                  <i className="fal fa-plus"></i>
+                </div>
+              </span>
+            </a>
+          ) : (
+            // Render a non-clickable element if planValidated is false
+            <span className="tf-button-disabled">
+              <div className="img">
+                <i className="fal fa-plus"></i>
               </div>
             </span>
-          </a>
+          )}
         </div>
       );
     }
@@ -349,16 +410,22 @@ const Monetizing = ({Models ,setModels}) => {
     }
   };
 
+  const hideEditingPlan = () =>{
+    setPlanValidated(true);
+  }
+
+  const showTarifs = (id_model) =>{
+    
+  }
   return (
     <div className="tf-container">
       <div className="row">
         <div className="col-md-12">
           <div className="tf-heading style-2 mb40 wow fadeInUp">
-            <h4 className="heading">Choose your plans</h4>
+            <h4 className="heading">Update your plans</h4>
           </div>
         </div>
       </div>
-
       <div
         class="modal fade popup"
         id="popup_bid"
@@ -456,6 +523,7 @@ const Monetizing = ({Models ,setModels}) => {
 
       <section class="tf-ranking tf-filter">
         <div class="tf-container">
+          
           <div class="table-ranking">
             <div
               class="title-ranking"
@@ -477,33 +545,71 @@ const Monetizing = ({Models ,setModels}) => {
               ))}
             </div>
           </div>
-          <div class="table-ranking tf-filter-container">
-            {Models.map((model, index) => (
-              <div
-                key={index} // You need to assign a unique key to each mapped element
-                class="content-ranking tf-loadmore 3d anime music"
-                style={{
-                  display: "flex",
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                  marginTop: "3%",
-                }}
-              >
-                <div class="col-ranking">{index + 1}</div>
-                <div class="col-ranking">
-                
-                  {model.Name}
-                </div>
-
-                {tarifTypes.map((type, index2) =>
-                  checkExistence(index, type.name, type, index2)
-                )}
+        <div className="table-ranking tf-filter-container">
+          {[...Models, ...pricingModels].map((model, index) => (
+            <div
+              key={index}
+              className="content-ranking tf-loadmore 3d anime music"
+              style={{
+                display: "flex",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                marginTop: "3%",
+                marginLeft:"0px",
+                paddingLedt: "0px"
+              }}
+            >
+              <div className="col-ranking">{index + 1}</div>
+              <div className="col-ranking">
+               {model.Name ? model.Name : model.name} {/* Assuming Name is the property for the model name */}
               </div>
-            ))}
-          </div>
+              {tarifTypes.map((type, index2) => {
+                if (pricingModels.includes(model)) {
+                  showTarifs(model.id_model);
+                } else {
+                  checkExistence(index, type.name, type, index2);
+                }
+              })}
+              {newModelAdded == model && (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "1rem",
+                  }}
+                >
+                  <button
+                    className="button-popup"
+                    onClick={async () => {
+                      if (window.confirm("Are you sure you want to add this model?")) {
+                        await createModels(apiId, Models);
+                        setNewModelAdded(false);
+                        setPlanValidated(false);
+                        console.log("planVal2",planValidated);
+                      }
+                    }}
+                    style={{ background: "green", marginRight: "1rem" }}
+                  >
+                    <i class="fa-solid fa-check"></i> Validate
+                  </button>
+                  <button
+                    className="button-popup"
+                    onClick={() => {
+                      setModels((prevModels) => prevModels.slice(0, -1));
+                      setNewModelAdded(false);
+                    }}
+                    style={{ background: "red" }}
+                  >
+                    <i class="fa-solid fa-xmark"></i> Cancel
+                  </button>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
         </div>
       </section>
-
       <div
         class="modal fade popup"
         id="tarif_pop"
@@ -511,6 +617,7 @@ const Monetizing = ({Models ,setModels}) => {
         aria-modal="true"
         role="dialog"
       >
+      
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-body space-y-20 pd-40">
@@ -767,7 +874,9 @@ const Monetizing = ({Models ,setModels}) => {
             </div>
           </div>
         </div>
+      
       </div>
+
       <div
         style={{
           display: "flex",
@@ -796,6 +905,7 @@ const Monetizing = ({Models ,setModels}) => {
           {/* You can display more details about the selected plan here *}
         </div>
       ) */}
+      <ToastContainer />
     </div>
   );
 };

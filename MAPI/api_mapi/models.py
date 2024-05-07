@@ -70,12 +70,13 @@ class APIversion(models.Model):
         ('Deprecated', 'Deprecated'),
     )
     state = models.CharField(max_length=50, choices=CHOICES, null=True)
-    description = models.TextField
+    description = models.TextField()
     date_version = models.DateField(auto_now=True)
     api = models.ForeignKey(API, on_delete=models.DO_NOTHING, null=True )
     current = models.BooleanField(default=False, verbose_name="Current Version", null = True)
     functions = models.ManyToManyField('Functionnality', null=True)
     base_links = models.ManyToManyField('BaseLink', verbose_name="Base Links", blank=True)
+    
     def __str__(self):
         return self.num_version
     
@@ -181,7 +182,7 @@ class PricingModel(models.Model):
     description = models.TextField( help_text="Brief description of the pricing model")
     is_active = models.BooleanField(default=True)   
     def __str__(self):
-        return self.id_model
+        return self.name
 
 
 class TypeTarif(models.Model):
@@ -189,6 +190,7 @@ class TypeTarif(models.Model):
     name= models.CharField(max_length=100)
     def __str__(self):
         return self.name   
+    
 class Tarification(models.Model):
     id_tarif= models.AutoField(primary_key=True)
     pricingModel = models.ForeignKey(PricingModel, on_delete=models.DO_NOTHING, null=True )
@@ -202,7 +204,6 @@ class Tarification(models.Model):
         ('Yearly', 'Yearly'),
     )
     quota_type = models.CharField(max_length=100, choices=Quota_CHOICES, default="")
-
     quota_limit = models.IntegerField(null=True)
     rate_limit = models.IntegerField(null=True)
     def __str__(self):
