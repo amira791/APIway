@@ -67,7 +67,7 @@ const ApiDetails = () => {
                                 <div className="content">
                                     <div className="content-top">
                                         <div className="author">
-                                            <img src="assets/images/author/author-detail-3.png" alt="Image"/>
+                                            <img src="/assets/images/author/author-detail-3.png" alt="Image"/>
                                             <h6 className="title">Trending Arts</h6>
                                         </div>
                                         <div className="wishlish">
@@ -104,14 +104,14 @@ const ApiDetails = () => {
                                                         <div className="author">
                                                             <div className="heading">Current Owner</div>
                                                             <div className="infor">
-                                                                <img src="assets/images/author/author-detail-1.png" alt="Image"/>
+                                                                <img src="/assets/images/author/author-detail-1.png" alt="Image"/>
                                                                 <h6 className="name">Surrogatess</h6>
                                                             </div>
                                                         </div>
                                                         <div className="author">
                                                             <div className="heading">Creator</div>
                                                             <div className="infor">
-                                                                <img src="assets/images/author/author-detail-2.png" alt="Image"/>
+                                                                <img src="/assets/images/author/author-detail-2.png" alt="Image"/>
                                                                 <h6 className="name">Truman Wallaker</h6>
                                                             </div>
                                                         </div>
@@ -144,7 +144,7 @@ const ApiDetails = () => {
                                                     <li>
                                                         <div className="box-bid">
                                                             <div className="image-bid">
-                                                                <img src="assets/images/author/authour-bid-1.png" alt="Image"/>
+                                                                <img src="/assets/images/author/authour-bid-1.png" alt="Image"/>
                                                             </div>
                                                             <div className="infor">
                                                                 <div className="history"><span className="price">1.35 ETH</span> by <span className="name">carlisle</span></div>
@@ -155,7 +155,7 @@ const ApiDetails = () => {
                                                     <li>
                                                         <div className="box-bid">
                                                             <div className="image-bid">
-                                                                <img src="assets/images/author/authour-bid-2.png" alt="Image"/>
+                                                                <img src="/assets/images/author/authour-bid-2.png" alt="Image"/>
                                                             </div>
                                                             <div className="infor">
                                                                 <div className="history"><span className="price">1.35 ETH</span> by <span className="name">carlisle</span></div>
@@ -166,7 +166,7 @@ const ApiDetails = () => {
                                                     <li>
                                                         <div className="box-bid">
                                                             <div className="image-bid">
-                                                                <img src="assets/images/author/authour-bid-3.png" alt="Image"/>
+                                                                <img src="/assets/images/author/authour-bid-3.png" alt="Image"/>
                                                             </div>
                                                             <div className="infor">
                                                                 <div className="history"><span className="price">1.35 ETH</span> by <span className="name">carlisle</span></div>
@@ -182,7 +182,7 @@ const ApiDetails = () => {
                                                     <li>
                                                         <div className="box-history">
                                                             <div className="infor">
-                                                                <div className="img"><img src="assets/images/author/author-history-1.jpg" alt="Image"/></div>
+                                                                <div className="img"><img src="/assets/images/author/author-history-1.jpg" alt="Image"/></div>
                                                                 <div className="content">
                                                                     <h6 className="name">Mason Woodward <span>place a bid</span></h6>
                                                                     <p className="time">8 hours ago</p>
@@ -197,7 +197,7 @@ const ApiDetails = () => {
                                                     <li>
                                                         <div className="box-history">
                                                             <div className="infor">
-                                                                <div className="img"><img src="assets/images/author/author-history-2.jpg" alt="Image"/></div>
+                                                                <div className="img"><img src="/assets/images/author/author-history-2.jpg" alt="Image"/></div>
                                                                 <div className="content">
                                                                     <h6>Violet Pascall <span>place a bid</span></h6>
                                                                     <p className="time">8 hours ago</p>
@@ -222,7 +222,7 @@ const ApiDetails = () => {
                                                     <li>
                                                         <div className="box-history">
                                                             <div className="infor">
-                                                                <div className="img"><img src="assets/images/author/author-history-1.jpg" alt="Image"/></div>
+                                                                <div className="img"><img src="/assets/images/author/author-history-1.jpg" alt="Image"/></div>
                                                                 <div className="content">
                                                                     <h6 className="name">Mason Woodward <span>place a bid</span></h6>
                                                                     <p className="time">8 hours ago</p>
@@ -237,7 +237,7 @@ const ApiDetails = () => {
                                                     <li>
                                                         <div className="box-history">
                                                             <div className="infor">
-                                                                <div className="img"><img src="assets/images/author/author-history-2.jpg" alt="Image"/></div>
+                                                                <div className="img"><img src="/assets/images/author/author-history-2.jpg" alt="Image"/></div>
                                                                 <div className="content">
                                                                     <h6>Violet Pascall <span>place a bid</span></h6>
                                                                     <p className="time">8 hours ago</p>
@@ -314,17 +314,17 @@ const ApiDetails = () => {
             <script src="../../../unpkg.com/imagesloaded%405.0.0/imagesloaded.pkgd.min.js"></script>
             <script src="../../../unpkg.com/imagesloaded%405.0.0/imagesloaded.pkgd.js"></script>
 
-            <script src="assets/js/jquery.min.js"></script>
-            <script src="assets/js/jquery.easing.js"></script>
-            <script src="assets/js/bootstrap.min.js"></script>
-            <script src="assets/js/swiper-bundle.min.js"></script>
-            <script src="assets/js/swiper.js"></script>
-            <script src="assets/js/count-down.js"></script>
-            <script src="assets/js/jquery.isotope.min.js"></script>
-            <script src="assets/js/switchmode.js"></script>
-            <script src="assets/js/plugin.js"></script>
-            <script src="assets/js/shortcodes.js"></script>
-            <script src="assets/js/main.js"></script>
+            <script src="/assets/js/jquery.min.js"></script>
+            <script src="/assets/js/jquery.easing.js"></script>
+            <script src="/assets/js/bootstrap.min.js"></script>
+            <script src="/assets/js/swiper-bundle.min.js"></script>
+            <script src="/assets/js/swiper.js"></script>
+            <script src="/assets/js/count-down.js"></script>
+            <script src="/assets/js/jquery.isotope.min.js"></script>
+            <script src="/assets/js/switchmode.js"></script>
+            <script src="/assets/js/plugin.js"></script>
+            <script src="/assets/js/shortcodes.js"></script>
+            <script src="/assets/js/main.js"></script>
         </div>
     );
 };

@@ -31,7 +31,7 @@ const Card = ({ apiName, description, logo, termsOfUse, website, categoryLabel, 
                 </div>
                 <div className="features">
                     <div className="product-media">
-                        <img src="assets/images/apiLogo.jpg" alt="API Logo" />
+                        <img src="/assets/images/apiLogo.jpg" alt="API Logo" />
                     </div>
                 </div>
                 <div className="bottom">
@@ -48,7 +48,7 @@ const Card = ({ apiName, description, logo, termsOfUse, website, categoryLabel, 
                         <div className="current-bid">
                             <div className="subtitle">Price</div>
                             <div className="price">
-                                <span className="cash">5000 DZA</span><span className="icon"><img src="assets/images/icon/ethe.svg" alt="images"/></span>
+                                <span className="cash">5000 DZA</span><span className="icon"><img src="/assets/images/icon/ethe.svg" alt="images"/></span>
                             </div>
                         </div>
                     </div>

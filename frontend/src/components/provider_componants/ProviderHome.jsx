@@ -30,7 +30,7 @@ const ProviderHomePage = () => {
                         <div className="container-fluid">
                             <div className="row">
                                 <div className="thumb-pagetitle">
-                                    <img src="assets/images/background/thumb-pagetitle.jpg" alt="images"/>
+                                    <img src="/assets/images/background/thumb-pagetitle.jpg" alt="images"/>
                                 </div>
                             </div>
                         </div>                  
@@ -43,7 +43,7 @@ const ProviderHomePage = () => {
                                     <div className="dashboard-user">
                                         <div className="dashboard-infor">
                                             <div className="avatar">
-                                                <img src="assets/images/author/author-db.jpg" alt="images"/>
+                                                <img src="/assets/images/author/author-db.jpg" alt="images"/>
                                             </div>
                                             <div className="name">Francisco Maia</div>
                                             <div className="pax"><i className="fab fa-ethereum"></i>0x59485…82590</div>
@@ -104,7 +104,7 @@ const ProviderHomePage = () => {
                                             </div>
                                             <div className="table-ranking ">
                                                 <div className="content-ranking">
-                                                    <div className="col-rankingg"><div className="image"><img src="assets/images/product/product4.jpg" alt="Image"/></div></div>
+                                                    <div className="col-rankingg"><div className="image"><img src="/assets/images/product/product4.jpg" alt="Image"/></div></div>
                                                     <div className="col-rankingg">Art</div>
                                                     <div className="col-rankingg coin"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
                                                         <path fillRule="evenodd" clipRule="evenodd" d="M11.7619 0V8.13257L5.74624 10.8216L11.7619 8.13418V15.1949L4.89084 11.204L4.89062 11.2041L4.8907 11.2039L4.89062 11.2038L4.89077 11.2038L11.7619 0ZM11.7637 0L18.6357 11.2038L18.6359 11.2038L18.6359 11.2039L18.6359 11.2041L18.6357 11.204L11.7637 15.1949V8.13418L17.7802 10.8216L11.7637 8.13257V0ZM11.7626 16.4746V22.0005L4.88672 12.4844L11.7626 16.4746ZM11.7637 22.0005V16.4736L18.6359 12.4844L11.7637 22.0005Z" fill="#6B8CEF"/>
@@ -115,7 +115,7 @@ const ProviderHomePage = () => {
                                                     <div className="col-rankingg dot"><a href="#"><i className="far fa-ellipsis-h"></i></a></div>
                                                 </div>
                                                 <div className="content-ranking">
-                                                    <div className="col-rankingg"><div className="image"><img src="assets/images/product/product5.jpg" alt="Image"/></div></div>
+                                                    <div className="col-rankingg"><div className="image"><img src="/assets/images/product/product5.jpg" alt="Image"/></div></div>
                                                     <div className="col-rankingg">Photography</div>
                                                     <div className="col-rankingg coin"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
                                                         <g clipPath="url(#clip0_2202_134581)">
@@ -134,7 +134,7 @@ const ProviderHomePage = () => {
                                                     <div className="col-rankingg dot"><a href="#"><i className="far fa-ellipsis-h"></i></a></div>
                                                 </div>
                                                 <div className="content-ranking">
-                                                    <div className="col-rankingg"><div className="image"><img src="assets/images/product/product6.jpg" alt="Image"/></div></div>
+                                                    <div className="col-rankingg"><div className="image"><img src="/assets/images/product/product6.jpg" alt="Image"/></div></div>
                                                     <div className="col-rankingg">Art</div>
                                                     <div className="col-rankingg coin"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
                                                         <path d="M13.2819 22C11.8098 22 10.7378 21.622 10.0641 20.8659C9.39134 20.1102 9.05451 19.2952 9.05451 18.4217C9.05451 18.1024 9.11307 17.8337 9.23052 17.6152C9.34515 17.3999 9.51139 17.2214 9.71225 17.0985C9.91571 16.9724 10.1661 16.9096 10.4638 16.9096C10.7614 16.9096 11.0115 16.9724 11.2153 17.0985C11.4187 17.2244 11.5793 17.3969 11.6966 17.6152C11.814 17.8337 11.8727 18.1024 11.8727 18.4217C11.8727 18.8082 11.7867 19.1229 11.6145 19.3667C11.442 19.6103 11.2386 19.7697 11.0037 19.8457C11.2076 20.1477 11.5285 20.3619 11.9668 20.4879C12.4052 20.6225 12.8435 20.6896 13.2819 20.6896C13.8924 20.6896 14.4443 20.5132 14.9376 20.1606C15.4307 19.8075 15.7949 19.2869 16.0298 18.5981C16.2647 17.9094 16.3821 17.128 16.3821 16.2542C16.3821 15.3051 16.2527 14.4942 15.9946 13.8225C15.7438 13.1421 15.3721 12.638 14.8788 12.3103C14.4007 11.9874 13.8468 11.8171 13.2819 11.8191C12.9059 11.8191 12.4366 11.9871 11.8727 12.3232L10.8393 12.8775V12.3232L15.4895 5.67021H9.05451V12.5748C9.05451 13.1462 9.17195 13.6166 9.40684 13.9863C9.64172 14.356 10.0017 14.5407 10.4874 14.5407C10.8626 14.5407 11.2231 14.4064 11.5676 14.1372C11.9144 13.8659 12.216 13.5338 12.4599 13.155C12.4912 13.0788 12.5304 13.0243 12.5774 12.9907C12.6195 12.9507 12.6737 12.9285 12.73 12.9279C12.816 12.9279 12.9177 12.9741 13.0354 13.0667C13.145 13.2007 13.1998 13.3562 13.1998 13.5326C13.1863 13.6514 13.1666 13.7692 13.1408 13.8856C12.8749 14.524 12.5068 15.0111 12.0371 15.347C11.5797 15.6791 11.0394 15.8548 10.4874 15.8512C9.09367 15.8512 8.13055 15.5571 7.59837 14.9694C7.06619 14.381 6.79993 13.5829 6.79993 12.5752V5.67021H3.51172V4.38475H6.79993V1.46182L6.0484 0.654721V0H8.23246L9.05419 0.453375V4.38475L17.5561 4.35975L18.4018 5.26682L13.188 10.8614C13.5037 10.7263 13.8361 10.6415 14.1745 10.6093C14.7381 10.6093 15.3721 10.8026 16.0767 11.1891C16.7892 11.567 17.3372 12.0881 17.7205 12.7512C18.1042 13.4066 18.3507 14.0367 18.4605 14.6414C18.5779 15.2465 18.6367 15.7838 18.6367 16.2542C18.6367 17.3297 18.4251 18.329 18.0026 19.2535C17.5799 20.1772 16.9379 20.8659 16.0767 21.3197C15.2155 21.7734 14.2838 22 13.2819 22Z" fill="#2C7DF7"/>
@@ -145,7 +145,7 @@ const ProviderHomePage = () => {
                                                     <div className="col-rankingg dot"><a href="#"><i className="far fa-ellipsis-h"></i></a></div>
                                                 </div>
                                                 <div className="content-ranking">
-                                                    <div className="col-rankingg"><div className="image"><img src="assets/images/product/product9.jpg" alt="Image"/></div></div>
+                                                    <div className="col-rankingg"><div className="image"><img src="/assets/images/product/product9.jpg" alt="Image"/></div></div>
                                                     <div className="col-rankingg">Art</div>
                                                     <div className="col-rankingg coin"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
                                                         <path fillRule="evenodd" clipRule="evenodd" d="M16.0138 5.65275C15.2277 5.65275 14.5905 6.29113 14.5905 7.07865V8.21954H19.2162V12.5686H14.5193V14.4223C14.5193 17.848 11.7474 20.625 8.32802 20.625C4.90869 20.625 2.13672 17.848 2.13672 14.4223C2.13672 10.9966 4.90869 8.21954 8.32802 8.21954H10.3206V7.07865C10.3206 3.92866 12.8695 1.375 16.0138 1.375H21.3867V5.65275H16.0138ZM10.3203 8.25586V12.5694H14.519V8.25586H10.3203ZM6.40625 14.423C6.40625 13.3598 7.26655 12.498 8.32767 12.498H10.2492V14.423C10.2492 15.4862 9.38889 16.348 8.32767 16.348C7.26655 16.348 6.40625 15.4862 6.40625 14.423Z" fill="#03DB80"/>
@@ -156,7 +156,7 @@ const ProviderHomePage = () => {
                                                     <div className="col-rankingg dot"><a href="#"><i className="far fa-ellipsis-h"></i></a></div>
                                                 </div>
                                                 <div className="content-ranking">
-                                                    <div className="col-rankingg"><div className="image"><img src="assets/images/product/product7.jpg" alt="Image"/></div></div>
+                                                    <div className="col-rankingg"><div className="image"><img src="/assets/images/product/product7.jpg" alt="Image"/></div></div>
                                                     <div className="col-rankingg">Collections</div>
                                                     <div className="col-rankingg coin"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
                                                         <path fillRule="evenodd" clipRule="evenodd" d="M15.0938 4.46826V0.515625C19.6588 1.96675 22.7579 6.20623 22.7621 10.9983C22.7538 15.7862 19.6546 20.0172 15.0938 21.4684V17.5326C17.5522 16.2797 19.0976 13.7572 19.0976 10.9983C19.0934 8.2395 17.548 5.72112 15.0938 4.46826ZM0.761719 10.9974C0.765907 6.20952 3.86928 1.97425 8.4301 0.527344V4.45888C5.97169 5.70753 4.42629 8.23434 4.42629 10.9932C4.43048 13.752 5.97588 16.2704 8.4301 17.5232V21.4759C3.86509 20.0247 0.761719 15.7895 0.761719 10.9974Z" fill="#3D92EF"/>
@@ -169,7 +169,7 @@ const ProviderHomePage = () => {
                                                     <div className="col-rankingg dot"><a href="#"><i className="far fa-ellipsis-h"></i></a></div>
                                                 </div>
                                                 <div className="content-ranking">
-                                                    <div className="col-rankingg"><div className="image"><img src="assets/images/product/product11.jpg" alt="Image"/></div></div>
+                                                    <div className="col-rankingg"><div className="image"><img src="/assets/images/product/product11.jpg" alt="Image"/></div></div>
                                                     <div className="col-rankingg">Photography</div>
                                                     <div className="col-rankingg coin"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
                                                         <path fillRule="evenodd" clipRule="evenodd" d="M16.0138 5.65275C15.2277 5.65275 14.5905 6.29113 14.5905 7.07865V8.21954H19.2162V12.5686H14.5193V14.4223C14.5193 17.848 11.7474 20.625 8.32802 20.625C4.90869 20.625 2.13672 17.848 2.13672 14.4223C2.13672 10.9966 4.90869 8.21954 8.32802 8.21954H10.3206V7.07865C10.3206 3.92866 12.8695 1.375 16.0138 1.375H21.3867V5.65275H16.0138ZM10.3203 8.25586V12.5694H14.519V8.25586H10.3203ZM6.40625 14.423C6.40625 13.3598 7.26655 12.498 8.32767 12.498H10.2492V14.423C10.2492 15.4862 9.38889 16.348 8.32767 16.348C7.26655 16.348 6.40625 15.4862 6.40625 14.423Z" fill="#03DB80"/>
@@ -189,7 +189,7 @@ const ProviderHomePage = () => {
                                             <div className="wallet-list">
                                                 <div className="tf-wallet">
                                                     <div className="icon">
-                                                        <img src="assets/images/svg/icon-wallet-1.svg" alt="Image"/>
+                                                        <img src="/assets/images/svg/icon-wallet-1.svg" alt="Image"/>
                                                         <span className="label">BETA</span>
                                                     </div>
                                                     <h6 className="title"><a href="#"> Meta Mask</a></h6>
@@ -197,14 +197,14 @@ const ProviderHomePage = () => {
                                                 </div>
                                                 <div className="tf-wallet">
                                                     <div className="icon">
-                                                        <img src="assets/images/svg/icon-wallet-2.svg" alt="Image"/>
+                                                        <img src="/assets/images/svg/icon-wallet-2.svg" alt="Image"/>
                                                     </div>
                                                     <h6 className="title"><a href="#">Bitski</a> </h6>
                                                     <p className="content">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
                                                 </div>
                                                 <div className="tf-wallet">
                                                     <div className="icon">
-                                                        <img src="assets/images/svg/icon-wallet-3.svg" alt="Image"/>
+                                                        <img src="/assets/images/svg/icon-wallet-3.svg" alt="Image"/>
                                                         <span className="label">BETA</span>
                                                     </div>
                                                     <h6 className="title"><a href="#">Wallet Connect</a> </h6>
@@ -212,7 +212,7 @@ const ProviderHomePage = () => {
                                                 </div>
                                                 <div className="tf-wallet">
                                                     <div className="icon">
-                                                        <img src="assets/images/svg/icon-wallet-4.svg" alt="Image"/>
+                                                        <img src="/assets/images/svg/icon-wallet-4.svg" alt="Image"/>
                                                         
                                                     </div>
                                                     <h6 className="title"><a href="#"> Coin Base</a></h6>
@@ -220,7 +220,7 @@ const ProviderHomePage = () => {
                                                 </div>
                                                 <div className="tf-wallet">
                                                     <div className="icon">
-                                                        <img src="assets/images/svg/icon-wallet-5.svg" alt="Image"/>
+                                                        <img src="/assets/images/svg/icon-wallet-5.svg" alt="Image"/>
                                                         <span className="label">BETA</span>
                                                     </div>
                                                     <h6 className="title"><a href="#"> Authereum</a></h6>
@@ -228,7 +228,7 @@ const ProviderHomePage = () => {
                                                 </div>
                                                 <div className="tf-wallet">
                                                     <div className="icon">
-                                                        <img src="assets/images/svg/icon-wallet-6.svg" alt="Image"/>
+                                                        <img src="/assets/images/svg/icon-wallet-6.svg" alt="Image"/>
                                                         <span className="label">BETA</span>
                                                     </div>
                                                     <h6 className="title"><a href="#">Kaikas</a> </h6>
@@ -236,14 +236,14 @@ const ProviderHomePage = () => {
                                                 </div>
                                                 <div className="tf-wallet">
                                                     <div className="icon">
-                                                        <img src="assets/images/svg/icon-wallet-7.svg" alt="Image"/>
+                                                        <img src="/assets/images/svg/icon-wallet-7.svg" alt="Image"/>
                                                     </div>
                                                     <h6 className="title"><a href="#">Torus</a> </h6>
                                                     <p className="content">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
                                                 </div>
                                                 <div className="tf-wallet">
                                                     <div className="icon">
-                                                        <img src="assets/images/svg/icon-wallet-8.svg" alt="Image"/>
+                                                        <img src="/assets/images/svg/icon-wallet-8.svg" alt="Image"/>
                                                         <span className="label">BETA</span>
                                                     </div>
                                                     <h6 className="title"><a href="#"> Fortmatic</a></h6>
@@ -259,7 +259,7 @@ const ProviderHomePage = () => {
                                                         <div className="history-details tf-loadmore 3d">
                                                             <div className="authorr">
                                                                 <div className="avatar">
-                                                                    <img src="assets/images/author/history-at1.jpg" alt="images"/>
+                                                                    <img src="/assets/images/author/history-at1.jpg" alt="images"/>
                                                                 </div>
                                                                 <div className="content">
                                                                     <a href="#" className="name">Kayle Jr. Brown</a>
@@ -281,7 +281,7 @@ const ProviderHomePage = () => {
                                                         <div className="history-details tf-loadmore 3d anime">
                                                             <div className="authorr">
                                                                 <div className="avatar">
-                                                                    <img src="assets/images/author/history-at2.jpg" alt="images"/>
+                                                                    <img src="/assets/images/author/history-at2.jpg" alt="images"/>
                                                                 </div>
                                                                 <div className="content">
                                                                     <a href="#" className="name">Baby Girl 3D Model</a>
@@ -303,7 +303,7 @@ const ProviderHomePage = () => {
                                                         <div className="history-details tf-loadmore 3d pixel">
                                                             <div className="authorr">
                                                                 <div className="avatar">
-                                                                    <img src="assets/images/author/history-at3.jpg" alt="images"/>
+                                                                    <img src="/assets/images/author/history-at3.jpg" alt="images"/>
                                                                 </div>
                                                                 <div className="content">
                                                                     <a href="#" className="name">Cyber Punk Gaming</a>
@@ -324,7 +324,7 @@ const ProviderHomePage = () => {
                                                         <div className="history-details tf-loadmore 3d cyber">
                                                             <div className="authorr">
                                                                 <div className="avatar">
-                                                                    <img src="assets/images/author/history-at4.jpg" alt="images"/>
+                                                                    <img src="/assets/images/author/history-at4.jpg" alt="images"/>
                                                                 </div>
                                                                 <div className="content">
                                                                     <a href="#" className="name">Cyber Punk Gaming</a>
@@ -345,7 +345,7 @@ const ProviderHomePage = () => {
                                                         <div className="history-details tf-loadmore 3d cyber music">
                                                             <div className="authorr">
                                                                 <div className="avatar">
-                                                                    <img src="assets/images/author/history-at5.jpg" alt="images"/>
+                                                                    <img src="/assets/images/author/history-at5.jpg" alt="images"/>
                                                                 </div>
                                                                 <div className="content">
                                                                     <a href="#" className="name">Cyber Punk Gaming</a>
@@ -366,7 +366,7 @@ const ProviderHomePage = () => {
                                                         <div className="history-details tf-loadmore 3d cyber pixel">
                                                             <div className="authorr">
                                                                 <div className="avatar">
-                                                                    <img src="assets/images/author/history-at6.jpg" alt="images"/>
+                                                                    <img src="/assets/images/author/history-at6.jpg" alt="images"/>
                                                                 </div>
                                                                 <div className="content">
                                                                     <a href="#" className="name">Cyber Punk Gaming</a>
@@ -438,7 +438,7 @@ const ProviderHomePage = () => {
                                             <div className="content-follow">
                                                 <div className="card-author">
                                                     <div className="avatar">
-                                                        <img src="assets/images/author/author-follow1.jpg" alt="images"/>
+                                                        <img src="/assets/images/author/author-follow1.jpg" alt="images"/>
                                                     </div>
                                                     <div className="name"> <a href="#">Lucy Neal</a> </div>
                                                     <div className="details">
@@ -449,7 +449,7 @@ const ProviderHomePage = () => {
                                                 </div>
                                                 <div className="card-author">
                                                     <div className="avatar">
-                                                        <img src="assets/images/author/author-follow2.jpg" alt="images"/>
+                                                        <img src="/assets/images/author/author-follow2.jpg" alt="images"/>
                                                     </div>
                                                     <div className="name"> <a href="#">Leopold Hum</a> </div>
                                                     <div className="details">
@@ -460,7 +460,7 @@ const ProviderHomePage = () => {
                                                 </div>
                                                 <div className="card-author">
                                                     <div className="avatar">
-                                                        <img src="assets/images/author/author-follow2.jpg" alt="images"/>
+                                                        <img src="/assets/images/author/author-follow2.jpg" alt="images"/>
                                                     </div>
                                                     <div className="name"> <a href="#">Hazel Middleton</a> </div>
                                                     <div className="details">
@@ -471,7 +471,7 @@ const ProviderHomePage = () => {
                                                 </div>
                                                 <div className="card-author">
                                                     <div className="avatar">
-                                                        <img src="assets/images/author/author-follow3.jpg" alt="images"/>
+                                                        <img src="/assets/images/author/author-follow3.jpg" alt="images"/>
                                                     </div>
                                                     <div className="name"> <a href="#">Rosemary Welch</a> </div>
                                                     <div className="details">
@@ -482,7 +482,7 @@ const ProviderHomePage = () => {
                                                 </div>
                                                 <div className="card-author">
                                                     <div className="avatar">
-                                                        <img src="assets/images/author/author-follow3.jpg" alt="images"/>
+                                                        <img src="/assets/images/author/author-follow3.jpg" alt="images"/>
                                                     </div>
                                                     <div className="name"> <a href="#">Rosemary Welch</a> </div>
                                                     <div className="details">
@@ -493,7 +493,7 @@ const ProviderHomePage = () => {
                                                 </div>
                                                 <div className="card-author">
                                                     <div className="avatar">
-                                                        <img src="assets/images/author/author-follow4.jpg" alt="images"/>
+                                                        <img src="/assets/images/author/author-follow4.jpg" alt="images"/>
                                                     </div>
                                                     <div className="name"> <a href="#">Hazel Middleton</a> </div>
                                                     <div className="details">
@@ -524,7 +524,7 @@ const ProviderHomePage = () => {
                                                             <a href="#" className="bookmark"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                                                                 <path d="M12.7617 2.25H5.23828C4.42969 2.25 3.76172 2.91797 3.76172 3.76172V15.75L9 13.5L14.2383 15.75V3.76172C14.2383 2.91797 13.5703 2.25 12.7617 2.25Z" fill="#3749E9"/>
                                                                 </svg></a>
-                                                            <div className="image"><img src="assets/images/product/product27.jpg" alt="Image"/></div>  
+                                                            <div className="image"><img src="/assets/images/product/product27.jpg" alt="Image"/></div>  
                                                             <a href="#" className="name">Sweet Baby #1</a>  
                                                         </div>
                                                     </div>
@@ -533,7 +533,7 @@ const ProviderHomePage = () => {
                                                         </svg>Flow</div>
                                                     <div className="col-rankingg"><div className="author-pd">
                                                         <div className="avatar">
-                                                            <img src="assets/images/author/avt-fv1.jpg" alt="images"/>
+                                                            <img src="/assets/images/author/avt-fv1.jpg" alt="images"/>
                                                         </div>
                                                         <a href="#" className="name">Fabian Johnson</a>
                                                     </div></div>
@@ -546,7 +546,7 @@ const ProviderHomePage = () => {
                                                             <a href="#" className="bookmark"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                                                                 <path d="M12.7617 2.25H5.23828C4.42969 2.25 3.76172 2.91797 3.76172 3.76172V15.75L9 13.5L14.2383 15.75V3.76172C14.2383 2.91797 13.5703 2.25 12.7617 2.25Z" fill="#3749E9"/>
                                                                 </svg></a>
-                                                            <div className="image"><img src="assets/images/product/product4.jpg" alt="Image"/></div>  
+                                                            <div className="image"><img src="/assets/images/product/product4.jpg" alt="Image"/></div>  
                                                             <a href="#" className="name">Doug Ortega #1</a>  
                                                         </div>
                                                     </div>
@@ -555,7 +555,7 @@ const ProviderHomePage = () => {
                                                         </svg>Tezos</div>
                                                     <div className="col-rankingg"><div className="author-pd">
                                                         <div className="avatar">
-                                                            <img src="assets/images/author/author-follow2.jpg" alt="images"/>
+                                                            <img src="/assets/images/author/author-follow2.jpg" alt="images"/>
                                                         </div>
                                                         <a href="#" className="name">Polly Walters</a>
                                                     </div></div>
@@ -568,7 +568,7 @@ const ProviderHomePage = () => {
                                                             <a href="#" className="bookmark"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                                                                 <path d="M12.7617 2.25H5.23828C4.42969 2.25 3.76172 2.91797 3.76172 3.76172V15.75L9 13.5L14.2383 15.75V3.76172C14.2383 2.91797 13.5703 2.25 12.7617 2.25Z" fill="#3749E9"/>
                                                                 </svg></a>
-                                                            <div className="image"><img src="assets/images/product/product5.jpg" alt="Image"/></div>  
+                                                            <div className="image"><img src="/assets/images/product/product5.jpg" alt="Image"/></div>  
                                                             <a href="#" className="name">Vincent Welch #1</a>  
                                                         </div>
                                                     </div>
@@ -577,7 +577,7 @@ const ProviderHomePage = () => {
                                                         </svg>Ethereum</div>
                                                     <div className="col-rankingg"><div className="author-pd">
                                                         <div className="avatar">
-                                                            <img src="assets/images/author/avt-fv3.jpg" alt="images"/>
+                                                            <img src="/assets/images/author/avt-fv3.jpg" alt="images"/>
                                                         </div>
                                                         <a href="#" className="name">Basil Slater</a>
                                                     </div></div>
@@ -590,7 +590,7 @@ const ProviderHomePage = () => {
                                                             <a href="#" className="bookmark"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                                                                 <path d="M12.7617 2.25H5.23828C4.42969 2.25 3.76172 2.91797 3.76172 3.76172V15.75L9 13.5L14.2383 15.75V3.76172C14.2383 2.91797 13.5703 2.25 12.7617 2.25Z" fill="#3749E9"/>
                                                                 </svg></a>
-                                                            <div className="image"><img src="assets/images/product/product9.jpg" alt="Image"/></div>  
+                                                            <div className="image"><img src="/assets/images/product/product9.jpg" alt="Image"/></div>  
                                                             <a href="#" className="name">Alec Alvarado #1</a>  
                                                         </div>
                                                     </div>
@@ -599,7 +599,7 @@ const ProviderHomePage = () => {
                                                         </svg>Flow</div>
                                                     <div className="col-rankingg"><div className="author-pd">
                                                         <div className="avatar">
-                                                            <img src="assets/images/author/avt-fv4.jpg" alt="images"/>
+                                                            <img src="/assets/images/author/avt-fv4.jpg" alt="images"/>
                                                         </div>
                                                         <a href="#" className="name">Mirabelle Maldonado</a>
                                                     </div></div>
@@ -612,7 +612,7 @@ const ProviderHomePage = () => {
                                                             <a href="#" className="bookmark"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                                                                 <path d="M12.7617 2.25H5.23828C4.42969 2.25 3.76172 2.91797 3.76172 3.76172V15.75L9 13.5L14.2383 15.75V3.76172C14.2383 2.91797 13.5703 2.25 12.7617 2.25Z" fill="#3749E9"/>
                                                                 </svg></a>
-                                                            <div className="image"><img src="assets/images/product/product10.jpg" alt="Image"/></div>  
+                                                            <div className="image"><img src="/assets/images/product/product10.jpg" alt="Image"/></div>  
                                                             <a href="#" className="name">Baz Fletcher #1</a>  
                                                         </div>
                                                     </div>
@@ -621,7 +621,7 @@ const ProviderHomePage = () => {
                                                         </svg>Tezos</div>
                                                     <div className="col-rankingg"><div className="author-pd">
                                                         <div className="avatar">
-                                                            <img src="assets/images/author/avt-fv5.jpg" alt="images"/>
+                                                            <img src="/assets/images/author/avt-fv5.jpg" alt="images"/>
                                                         </div>
                                                         <a href="#" className="name">Roderick Boyd</a>
                                                     </div></div>
@@ -634,7 +634,7 @@ const ProviderHomePage = () => {
                                                             <a href="#" className="bookmark"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                                                                 <path d="M12.7617 2.25H5.23828C4.42969 2.25 3.76172 2.91797 3.76172 3.76172V15.75L9 13.5L14.2383 15.75V3.76172C14.2383 2.91797 13.5703 2.25 12.7617 2.25Z" fill="#3749E9"/>
                                                                 </svg></a>
-                                                            <div className="image"><img src="assets/images/product/product11.jpg" alt="Image"/></div>  
+                                                            <div className="image"><img src="/assets/images/product/product11.jpg" alt="Image"/></div>  
                                                             <a href="#" className="name">Bert Moore #1</a>  
                                                         </div>
                                                     </div>
@@ -643,7 +643,7 @@ const ProviderHomePage = () => {
                                                         </svg>Ethereum</div>
                                                     <div className="col-rankingg"><div className="author-pd">
                                                         <div className="avatar">
-                                                            <img src="assets/images/author/avt-fv6.jpg" alt="images"/>
+                                                            <img src="/assets/images/author/avt-fv6.jpg" alt="images"/>
                                                         </div>
                                                         <a href="#" className="name">Lucy Neal</a>
                                                     </div></div>
@@ -656,7 +656,7 @@ const ProviderHomePage = () => {
                                                             <a href="#" className="bookmark"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                                                                 <path d="M12.7617 2.25H5.23828C4.42969 2.25 3.76172 2.91797 3.76172 3.76172V15.75L9 13.5L14.2383 15.75V3.76172C14.2383 2.91797 13.5703 2.25 12.7617 2.25Z" fill="#3749E9"/>
                                                                 </svg></a>
-                                                            <div className="image"><img src="assets/images/product/product6.jpg" alt="Image"/></div>  
+                                                            <div className="image"><img src="/assets/images/product/product6.jpg" alt="Image"/></div>  
                                                             <a href="#" className="name">Oriel Binder #1</a>  
                                                         </div>
                                                     </div>
@@ -665,7 +665,7 @@ const ProviderHomePage = () => {
                                                         </svg>Tezos</div>
                                                     <div className="col-rankingg"><div className="author-pd">
                                                         <div className="avatar">
-                                                            <img src="assets/images/author/avt-fv7.jpg" alt="images"/>
+                                                            <img src="/assets/images/author/avt-fv7.jpg" alt="images"/>
                                                         </div>
                                                         <a href="#" className="name">Hazel Middleton</a>
                                                     </div></div>
@@ -731,17 +731,17 @@ const ProviderHomePage = () => {
 
            
 
-            <script src="assets/js/jquery.min.js"></script>
-            <script src="assets/js/jquery.easing.js"></script>
-            <script src="assets/js/bootstrap.min.js"></script>
-            <script src="assets/js/swiper-bundle.min.js"></script>
-            <script src="assets/js/swiper.js"></script>
-            <script src="assets/js/count-down.js"></script>
-            <script src="assets/js/jquery.isotope.min.js"></script>
-            <script src="assets/js/switchmode.js"></script>
-            <script src="assets/js/plugin.js"></script>
-            <script src="assets/js/shortcodes.js"></script>
-            <script src="assets/js/main.js"></script>
+            <script src="/assets/js/jquery.min.js"></script>
+            <script src="/assets/js/jquery.easing.js"></script>
+            <script src="/assets/js/bootstrap.min.js"></script>
+            <script src="/assets/js/swiper-bundle.min.js"></script>
+            <script src="/assets/js/swiper.js"></script>
+            <script src="/assets/js/count-down.js"></script>
+            <script src="/assets/js/jquery.isotope.min.js"></script>
+            <script src="/assets/js/switchmode.js"></script>
+            <script src="/assets/js/plugin.js"></script>
+            <script src="/assets/js/shortcodes.js"></script>
+            <script src="/assets/js/main.js"></script>
 
         </body>
 

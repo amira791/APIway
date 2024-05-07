@@ -12,30 +12,74 @@ import { useParams } from "react-router-dom";
 
 const Details = () => {
     const { id } = useParams(); // Get the ID parameter from the URL
-
+    const [activeTab, setActiveTab] = useState('Endpoints');
     const [apiDetails, setAPIDetails] = useState(null);
     const [apiCategory, setAPICategory] = useState(null);
     const [apiProvider, setAPIProvider] = useState(null);
-    const { fetchAPIDetailsById,fetchAPICategorysById,fetchAPIProviderById } = APIAjout();
+    const [chosenVersion, setChosenVersion]= useState(null);
+    const [apiVersions, setApiVersions] = useState([]);
+    const [apiEndpoints, setApiEndpoints] = useState(null);
+    const { fetchAPIDetailsById,fetchAPICategorysById,fetchAPIProviderById,fetchAllAPIVersionsById,fetchAPIEndpointsByVersion } = APIAjout();
+    
+    const handleVersionChange = (event) => {
+     
+      setChosenVersion(event.target.value);
+    };
+  
+    const handleTabClick = (tabId) => {
+      setActiveTab(tabId);
+    };
     useEffect(() => {
       const fetchData = async () => {
         try {
+        
           const details = await fetchAPIDetailsById(id);
-         const category= await fetchAPICategorysById(details.category);
-         const provider= await fetchAPIProviderById(details.provider);
-         
+          const category = await fetchAPICategorysById(details.category);
+          const provider = await fetchAPIProviderById(details.provider);
+          const versions = await fetchAllAPIVersionsById(id);
+          const versionId = versions.length > 0 ? versions[0].id_version : null;
+          setChosenVersion(versionId);
           setAPIDetails(details);
           setAPICategory(category);
           setAPIProvider(provider);
+          setApiVersions(versions);
+       
+          if (versionId !== null) {
+            const endpoints = await fetchAPIEndpointsByVersion(versionId);
+            setApiEndpoints(endpoints);
+            console.log(endpoints);
+          }
+          if (!apiEndpoints ) {
+            return <div>Loading  Endpoints...</div>;
+          }
         } catch (error) {
           console.error("Error fetching API details:", error);
         }
       };
       fetchData();
-    }, []);
-  
-    if (!apiDetails) {
+    }, [id]);
+    
+    useEffect(() => {
+     
+      const fetchData = async () => {
+        try {
+          if (chosenVersion !== null) {
+            const endpoints = await fetchAPIEndpointsByVersion(chosenVersion);
+            setApiEndpoints(endpoints);
+            console.log(endpoints);
+          }
+        } catch (error) {
+          console.error("Error fetching API endpoints:", error);
+        }
+      };
+      fetchData();
+    }, [chosenVersion]);
+    
+    if (!apiDetails ) {
       return <div>Loading...</div>;
+    }
+    if (!apiEndpoints ) {
+      return <div>Loading  Endpoints...</div>;
     }
   
   return (
@@ -56,13 +100,13 @@ const Details = () => {
                     <div class="content">
                       <div class="content-top">
                       <div class="image" style={{ width: "15%", height: "15%" }}>
-                      <img src="assets/images/item-details.jpg" alt="Image" />
+                      <img src="/assets/images/item-details.jpg" alt="Image" />
                     </div>
                     <div>
                         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingBottom:"2%"}}>
                         <div class="author">
                           <img
-                            src="assets/images/author/author-detail-3.png"
+                            src="/assets/images/author/author-detail-3.png"
                             alt="Image"
                           />
                           <h6 class="title">{apiProvider.FR_first_name}  {apiProvider.FR_last_name}</h6>
@@ -92,44 +136,48 @@ const Details = () => {
                       </div>
                       </div>
                       <div class="tf-tab">
-                        <ul class="menu-tab ">
-                          <li class="tab-title active">
-                            <a href="#">Endpoints</a>
-                          </li>
-                          <li class="tab-title ">
-                            <a href="#">About</a>
-                          </li>
-                          <li class="tab-title ">
-                            <a href="#">Discussion</a>
-                          </li>
-                          <li class="tab-title">
-                            <a href="#">Pricing</a>
-                          </li>
-                        </ul>
+                      <ul className="menu-tab">
+        <li className={activeTab === 'Endpoints' ? 'tab-title active' : 'tab-title'}>
+          <a href="#" onClick={() => handleTabClick('Endpoints')}>Endpoints</a>
+        </li>
+        <li className={activeTab === 'About' ? 'tab-title active' : 'tab-title'}>
+          <a href="#" onClick={() => handleTabClick('About')}>About</a>
+        </li>
+        <li className={activeTab === 'Discussion' ? 'tab-title active' : 'tab-title'}>
+          <a href="#" onClick={() => handleTabClick('Discussion')}>Discussion</a>
+        </li>
+        <li className={activeTab === 'Pricing' ? 'tab-title active' : 'tab-title'}>
+          <a href="#" onClick={() => handleTabClick('Pricing')}>Pricing</a>
+        </li>
+      </ul>
                         <div class="content-tab">
-                        
-                          <div class="content-inner active">
-                          <fieldset className="message" style={{display:"flex",justifyContent:"end",gap:"3%"}}>
+                        {activeTab === 'Endpoints' && (
+          <div id="Endpoints" className="tab-content">
+            <fieldset className="message" style={{display:"flex",justifyContent:"end",gap:"3%"}}>
                             <label>Choose a version</label>
                             <div class="form-select" >
-                          <select>
-                              <option value="v1">Version 1</option>
-                              <option value="v2">Version 2</option>
-                              <option value="v3">Version 3</option>
-                            </select>
+                            <select onChange={handleVersionChange} value={chosenVersion}>
+                                    {apiVersions.map(apiVersion => (
+                                      <option key={apiVersion.id_version} value={apiVersion.id_version}>
+                                        {apiVersion.num_version} ({apiVersion.state})
+                                      </option>
+                                    ))}
+                                  </select>
                             </div>
                             </fieldset>
                             <div class="tab-details">
-                              <Example />
+                           { apiEndpoints?    <Example endpoints={apiEndpoints}  /> :<></>}
                             </div>
-                          </div>
-                          <div class="content-inner">
+                          </div> )}
+                      {activeTab === 'About' && (
+          <div id="About" className="tab-content">
+        
                             <ul class="tab-bid">
                               <li>
                                 <div class="box-bid">
                                   <div class="image-bid">
                                     <img
-                                      src="assets/images/author/authour-bid-1.png"
+                                      src="/assets/images/author/authour-bid-1.png"
                                       alt="Image"
                                     />
                                   </div>
@@ -146,7 +194,7 @@ const Details = () => {
                                 <div class="box-bid">
                                   <div class="image-bid">
                                     <img
-                                      src="assets/images/author/authour-bid-2.png"
+                                      src="/assets/images/author/authour-bid-2.png"
                                       alt="Image"
                                     />
                                   </div>
@@ -163,7 +211,7 @@ const Details = () => {
                                 <div class="box-bid">
                                   <div class="image-bid">
                                     <img
-                                      src="assets/images/author/authour-bid-3.png"
+                                      src="/assets/images/author/authour-bid-3.png"
                                       alt="Image"
                                     />
                                   </div>
@@ -180,7 +228,7 @@ const Details = () => {
                                 <div class="box-bid">
                                   <div class="image-bid">
                                     <img
-                                      src="assets/images/author/authour-bid-1.png"
+                                      src="/assets/images/author/authour-bid-1.png"
                                       alt="Image"
                                     />
                                   </div>
@@ -197,7 +245,7 @@ const Details = () => {
                                 <div class="box-bid">
                                   <div class="image-bid">
                                     <img
-                                      src="assets/images/author/authour-bid-2.png"
+                                      src="/assets/images/author/authour-bid-2.png"
                                       alt="Image"
                                     />
                                   </div>
@@ -214,7 +262,7 @@ const Details = () => {
                                 <div class="box-bid">
                                   <div class="image-bid">
                                     <img
-                                      src="assets/images/author/authour-bid-3.png"
+                                      src="/assets/images/author/authour-bid-3.png"
                                       alt="Image"
                                     />
                                   </div>
@@ -231,7 +279,7 @@ const Details = () => {
                                 <div class="box-bid">
                                   <div class="image-bid">
                                     <img
-                                      src="assets/images/author/authour-bid-1.png"
+                                      src="/assets/images/author/authour-bid-1.png"
                                       alt="Image"
                                     />
                                   </div>
@@ -248,7 +296,7 @@ const Details = () => {
                                 <div class="box-bid">
                                   <div class="image-bid">
                                     <img
-                                      src="assets/images/author/authour-bid-2.png"
+                                      src="/assets/images/author/authour-bid-2.png"
                                       alt="Image"
                                     />
                                   </div>
@@ -265,7 +313,7 @@ const Details = () => {
                                 <div class="box-bid">
                                   <div class="image-bid">
                                     <img
-                                      src="assets/images/author/authour-bid-3.png"
+                                      src="/assets/images/author/authour-bid-3.png"
                                       alt="Image"
                                     />
                                   </div>
@@ -282,7 +330,7 @@ const Details = () => {
                                 <div class="box-bid">
                                   <div class="image-bid">
                                     <img
-                                      src="assets/images/author/authour-bid-1.png"
+                                      src="/assets/images/author/authour-bid-1.png"
                                       alt="Image"
                                     />
                                   </div>
@@ -299,7 +347,7 @@ const Details = () => {
                                 <div class="box-bid">
                                   <div class="image-bid">
                                     <img
-                                      src="assets/images/author/authour-bid-2.png"
+                                      src="/assets/images/author/authour-bid-2.png"
                                       alt="Image"
                                     />
                                   </div>
@@ -316,7 +364,7 @@ const Details = () => {
                                 <div class="box-bid">
                                   <div class="image-bid">
                                     <img
-                                      src="assets/images/author/authour-bid-3.png"
+                                      src="/assets/images/author/authour-bid-3.png"
                                       alt="Image"
                                     />
                                   </div>
@@ -330,15 +378,16 @@ const Details = () => {
                                 </div>
                               </li>
                             </ul>
-                          </div>
-                          <div class="content-inner">
+                          </div>)}
+                          {activeTab === 'Discussion' && (
+          <div id="Discussion" className="tab-content">
                             <ul class="tab-history">
                               <li>
                                 <div class="box-history">
                                   <div class="infor">
                                     <div class="img">
                                       <img
-                                        src="assets/images/author/author-history-1.jpg"
+                                        src="/assets/images/author/author-history-1.jpg"
                                         alt="Image"
                                       />
                                     </div>
@@ -360,7 +409,7 @@ const Details = () => {
                                   <div class="infor">
                                     <div class="img">
                                       <img
-                                        src="assets/images/author/author-history-2.jpg"
+                                        src="/assets/images/author/author-history-2.jpg"
                                         alt="Image"
                                       />
                                     </div>
@@ -382,7 +431,7 @@ const Details = () => {
                                   <div class="infor">
                                     <div class="img">
                                       <img
-                                        src="assets/images/author/author-history-3.jpg"
+                                        src="/assets/images/author/author-history-3.jpg"
                                         alt="Image"
                                       />
                                     </div>
@@ -404,7 +453,7 @@ const Details = () => {
                                   <div class="infor">
                                     <div class="img">
                                       <img
-                                        src="assets/images/author/author-history-4.jpg"
+                                        src="/assets/images/author/author-history-4.jpg"
                                         alt="Image"
                                       />
                                     </div>
@@ -426,7 +475,7 @@ const Details = () => {
                                   <div class="infor">
                                     <div class="img">
                                       <img
-                                        src="assets/images/author/author-history-1.jpg"
+                                        src="/assets/images/author/author-history-1.jpg"
                                         alt="Image"
                                       />
                                     </div>
@@ -448,7 +497,7 @@ const Details = () => {
                                   <div class="infor">
                                     <div class="img">
                                       <img
-                                        src="assets/images/author/author-history-2.jpg"
+                                        src="/assets/images/author/author-history-2.jpg"
                                         alt="Image"
                                       />
                                     </div>
@@ -470,7 +519,7 @@ const Details = () => {
                                   <div class="infor">
                                     <div class="img">
                                       <img
-                                        src="assets/images/author/author-history-3.jpg"
+                                        src="/assets/images/author/author-history-3.jpg"
                                         alt="Image"
                                       />
                                     </div>
@@ -492,7 +541,7 @@ const Details = () => {
                                   <div class="infor">
                                     <div class="img">
                                       <img
-                                        src="assets/images/author/author-history-4.jpg"
+                                        src="/assets/images/author/author-history-4.jpg"
                                         alt="Image"
                                       />
                                     </div>
@@ -510,10 +559,11 @@ const Details = () => {
                                 </div>
                               </li>
                             </ul>
-                          </div>
-                          <div class="content-inner active">
+                          </div> )}
+                          {activeTab === 'Pricing' && (
+          <div id="Pricing" className="tab-content">
                         <PricingContainer/>
-                          </div>
+                          </div>)}
                         </div>
                       </div>
                     </div>

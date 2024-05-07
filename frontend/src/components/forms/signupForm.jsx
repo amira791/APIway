@@ -17,7 +17,7 @@ export default function signupForm() {
                                 <div id="site-logo" class="clearfix">
                                     <div id="site-logo-inner">
                                         <a href="index-2.html" rel="home" class="main-logo">
-                                            <img id="logo_header" src="assets/images/logo/logo_dark.png" alt="Image"/>
+                                            <img id="logo_header" src="/assets/images/logo/logo_dark.png" alt="Image"/>
                                         </a>
                                     </div>
                                 </div>
@@ -119,7 +119,7 @@ export default function signupForm() {
                                         </svg>
                                         </span>
                                     <a href="#" onclick="switchTheme()" class="mode-switch">
-                                        <img id="img-mode" src="assets/images/icon/moon.png" alt="Image"/>
+                                        <img id="img-mode" src="/assets/images/icon/moon.png" alt="Image"/>
                                     </a>
                                 </div>  
 
@@ -186,7 +186,7 @@ export default function signupForm() {
                         <div class="col-xl-4 col-lg-3 col-md-3">
                             <div class="widget widget-infor">
                                 <div class="logo">
-                                    <img id="logo_footer" src="assets/images/logo/logo_dark.png" alt="Image" />
+                                    <img id="logo_footer" src="/assets/images/logo/logo_dark.png" alt="Image" />
                                 </div>
                                 <p class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
                                 <ul class="social-item">

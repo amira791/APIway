@@ -156,7 +156,7 @@ const SearchApi = () => {
                                     <div className="col-md-12">
                                         <div className="image" style={{ maxHeight: "300px", overflow: "hidden", borderRadius: "15px" }}>
                                             <video autoPlay muted loop style={{ width: "100%" }}>
-                                                <source src="assets/images/explore3.mp4" type="video/mp4" />
+                                                <source src="/assets/images/explore3.mp4" type="video/mp4" />
                                                 Your browser does not support the video tag.
                                             </video>
                                         </div>
@@ -362,17 +362,17 @@ const SearchApi = () => {
             <script src="../../../unpkg.com/imagesloaded%405.0.0/imagesloaded.pkgd.min.js"></script>
             <script src="../../../unpkg.com/imagesloaded%405.0.0/imagesloaded.pkgd.js"></script>
 
-            <script src="assets/js/jquery.min.js"></script>
-            <script src="assets/js/jquery.easing.js"></script>
-            <script src="assets/js/bootstrap.min.js"></script>
-            <script src="assets/js/swiper-bundle.min.js"></script>
-            <script src="assets/js/swiper.js"></script>
-            <script src="assets/js/count-down.js"></script>
-            <script src="assets/js/jquery.isotope.min.js"></script>
-            <script src="assets/js/switchmode.js"></script>
-            <script src="assets/js/plugin.js"></script>
-            <script src="assets/js/shortcodes.js"></script>
-            <script src="assets/js/main.js"></script>
+            <script src="/assets/js/jquery.min.js"></script>
+            <script src="/assets/js/jquery.easing.js"></script>
+            <script src="/assets/js/bootstrap.min.js"></script>
+            <script src="/assets/js/swiper-bundle.min.js"></script>
+            <script src="/assets/js/swiper.js"></script>
+            <script src="/assets/js/count-down.js"></script>
+            <script src="/assets/js/jquery.isotope.min.js"></script>
+            <script src="/assets/js/switchmode.js"></script>
+            <script src="/assets/js/plugin.js"></script>
+            <script src="/assets/js/shortcodes.js"></script>
+            <script src="/assets/js/main.js"></script>
         </div>
     );
 };

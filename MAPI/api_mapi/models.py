@@ -90,7 +90,7 @@ class APIendpoint(models.Model):
         ('DELETE','DELETE'),
     )
     method = models.CharField(max_length=20, choices=CHOICES, null=True)  
-    link= models.TextField
+    path= models.TextField(default="/")
     group=models.CharField(max_length=255,default="",  null=True)
     version = models.ForeignKey(APIversion, on_delete=models.DO_NOTHING )
     description = models.TextField( help_text="Brief description of the endPoint")   
@@ -129,7 +129,7 @@ class ApiEndpointBody(models.Model):
     endpoint = models.ForeignKey(APIendpoint, related_name='body', on_delete=models.CASCADE)
   
     def __str__(self):
-        return self.key
+        return self.payload_name
        
 class Endpoint_parameter(models.Model):
     id_parameter = models.AutoField(primary_key=True)
@@ -178,7 +178,7 @@ class PricingModel(models.Model):
     description = models.TextField( help_text="Brief description of the pricing model")
     is_active = models.BooleanField(default=True)   
     def __str__(self):
-        return self.id_model
+        return self.name
 
 
 class TypeTarif(models.Model):
@@ -193,7 +193,7 @@ class Tarification(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     features = models.TextField()
     quota_limit = models.IntegerField() #Total limit
-    rate_limit = models.IntegerField() #Per hour
+    rate_limit = models.IntegerField(null = True) #Per hour
     def __str__(self):
         return self.id_tarif
 

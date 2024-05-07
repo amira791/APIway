@@ -22,7 +22,7 @@ class Root extends Component {
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/addAPI" element={<AddAPIPage />} />
-            <Route exact path="details/:id/" element={<Details />} />
+            <Route exact path="/details/:id" element={<Details />} />
           </Routes>
         </Router>
       </div>

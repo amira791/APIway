@@ -15,7 +15,7 @@ class Footer extends Component {
                         <div className="col-xl-4 col-lg-3 col-md-3">
                             <div className="widget widget-infor">
                                 <div className="logo">
-                                    <img id="logo_footer"  style={{paddingTop:"10%",width:"80%"}} src="assets/images/logo/MAPI_logo_White.png" alt="Image" />
+                                    <img id="logo_footer"  style={{paddingTop:"10%",width:"80%"}} src="/assets/images/logo/MAPI_logo_White.png" alt="Image" />
                                 </div>
                                 <p className="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
                                 <ul className="social-item">

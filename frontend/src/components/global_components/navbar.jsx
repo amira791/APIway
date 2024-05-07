@@ -46,7 +46,7 @@ class Navbar extends Component {
                                 <div id="site-logo" className="clearfix">
                                     <div id="site-logo-inner">
                                         <a href="index-2.html" rel="home" className="main-logo">
-                                            <img id="logo_header" style={{paddingTop:"10%",translate:"-100px",width:"80%"}} src="assets/images/logo/MAPI_logo_White.png" alt="Image"></img>
+                                            <img id="logo_header" style={{paddingTop:"10%",translate:"-100px",width:"80%"}} src="/assets/images/logo/MAPI_logo_White.png" alt="Image"></img>
                                         </a>
                                     </div>
                                 </div>
@@ -83,7 +83,7 @@ class Navbar extends Component {
                                         </svg>
                                         </span>
                                     <a href="#" onClick={LightMode} className="mode-switch">
-                                        <img id="img-mode" src="assets/images/icon/moon.png" alt="Image"></img>
+                                        <img id="img-mode" src="/assets/images/icon/moon.png" alt="Image"></img>
                                     </a>
                                 </div>  
 

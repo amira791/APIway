@@ -46,7 +46,7 @@ const HomeSection = () => {
               <div class="row">
                 <div class="col-md-12">
                   <img
-                    src="assets/images/slider/bg-slider-2.png"
+                    src="/assets/images/slider/bg-slider-2.png"
                     alt="Image"
                     class="img-slider-1"
                   />
@@ -102,7 +102,7 @@ const HomeSection = () => {
                                       <div class="features">
                                         <div class="product-media">
                                           <img
-                                            src="assets/images/product/product79.jpg"
+                                            src="/assets/images/product/product79.jpg"
                                             alt="images"
                                           />
                                         </div>
@@ -111,13 +111,13 @@ const HomeSection = () => {
                                         </div>
                                         <div class="rain-drop1">
                                           <img
-                                            src="assets/images/icon/rain1.svg"
+                                            src="/assets/images/icon/rain1.svg"
                                             alt="images"
                                           />
                                         </div>
                                         <div class="rain-drop2">
                                           <img
-                                            src="assets/images/icon/rain2.svg"
+                                            src="/assets/images/icon/rain2.svg"
                                             alt="images"
                                           />
                                         </div>
@@ -127,7 +127,7 @@ const HomeSection = () => {
                                           <div class="author">
                                             <div class="avatar">
                                               <img
-                                                src="assets/images/author/author1.png"
+                                                src="/assets/images/author/author1.png"
                                                 alt="images"
                                               />
                                             </div>
@@ -181,7 +181,7 @@ const HomeSection = () => {
                                       <div class="features">
                                         <div class="product-media">
                                           <img
-                                            src="assets/images/product/product75.jpg"
+                                            src="/assets/images/product/product75.jpg"
                                             alt="images"
                                           />
                                         </div>
@@ -190,13 +190,13 @@ const HomeSection = () => {
                                         </div>
                                         <div class="rain-drop1">
                                           <img
-                                            src="assets/images/icon/rain1.svg"
+                                            src="/assets/images/icon/rain1.svg"
                                             alt="images"
                                           />
                                         </div>
                                         <div class="rain-drop2">
                                           <img
-                                            src="assets/images/icon/rain2.svg"
+                                            src="/assets/images/icon/rain2.svg"
                                             alt="images"
                                           />
                                         </div>
@@ -230,7 +230,7 @@ const HomeSection = () => {
                                       <div class="features">
                                         <div class="product-media">
                                           <img
-                                            src="assets/images/product/product79.jpg"
+                                            src="/assets/images/product/product79.jpg"
                                             alt="images"
                                           />
                                         </div>
@@ -239,13 +239,13 @@ const HomeSection = () => {
                                         </div>
                                         <div class="rain-drop1">
                                           <img
-                                            src="assets/images/icon/rain1.svg"
+                                            src="/assets/images/icon/rain1.svg"
                                             alt="images"
                                           />
                                         </div>
                                         <div class="rain-drop2">
                                           <img
-                                            src="assets/images/icon/rain2.svg"
+                                            src="/assets/images/icon/rain2.svg"
                                             alt="images"
                                           />
                                         </div>
@@ -255,7 +255,7 @@ const HomeSection = () => {
                                           <div class="author">
                                             <div class="avatar">
                                               <img
-                                                src="assets/images/author/author1.png"
+                                                src="/assets/images/author/author1.png"
                                                 alt="images"
                                               />
                                             </div>
@@ -309,7 +309,7 @@ const HomeSection = () => {
                                       <div class="features">
                                         <div class="product-media">
                                           <img
-                                            src="assets/images/product/product75.jpg"
+                                            src="/assets/images/product/product75.jpg"
                                             alt="images"
                                           />
                                         </div>
@@ -318,13 +318,13 @@ const HomeSection = () => {
                                         </div>
                                         <div class="rain-drop1">
                                           <img
-                                            src="assets/images/icon/rain1.svg"
+                                            src="/assets/images/icon/rain1.svg"
                                             alt="images"
                                           />
                                         </div>
                                         <div class="rain-drop2">
                                           <img
-                                            src="assets/images/icon/rain2.svg"
+                                            src="/assets/images/icon/rain2.svg"
                                             alt="images"
                                           />
                                         </div>
@@ -358,7 +358,7 @@ const HomeSection = () => {
                                       <div class="features">
                                         <div class="product-media">
                                           <img
-                                            src="assets/images/product/product79.jpg"
+                                            src="/assets/images/product/product79.jpg"
                                             alt="images"
                                           />
                                         </div>
@@ -367,13 +367,13 @@ const HomeSection = () => {
                                         </div>
                                         <div class="rain-drop1">
                                           <img
-                                            src="assets/images/icon/rain1.svg"
+                                            src="/assets/images/icon/rain1.svg"
                                             alt="images"
                                           />
                                         </div>
                                         <div class="rain-drop2">
                                           <img
-                                            src="assets/images/icon/rain2.svg"
+                                            src="/assets/images/icon/rain2.svg"
                                             alt="images"
                                           />
                                         </div>
@@ -383,7 +383,7 @@ const HomeSection = () => {
                                           <div class="author">
                                             <div class="avatar">
                                               <img
-                                                src="assets/images/author/author1.png"
+                                                src="/assets/images/author/author1.png"
                                                 alt="images"
                                               />
                                             </div>
@@ -452,7 +452,7 @@ const HomeSection = () => {
                                <div class="swiper-slide">
                                <div class="slider-item">
                                    <div class="tf-product-category">
-                                       <img src="assets/images/product-category/product-category-1.jpg" alt="Image"/>
+                                       <img src="/assets/images/product-category/product-category-1.jpg" alt="Image"/>
                                        <div class="category"><a href="#">{category.label}</a></div>
                                    </div>
                                </div>
@@ -460,7 +460,7 @@ const HomeSection = () => {
                                     <div class="swiper-slide">
                                         <div class="slider-item">
                                             <div class="tf-product-category">
-                                                <img src="assets/images/product-category/product-category-1.jpg" alt="Image"/>
+                                                <img src="/assets/images/product-category/product-category-1.jpg" alt="Image"/>
                                                 <div class="category"><a href="#">Digital art</a></div>
                                             </div>
                                         </div>
@@ -468,7 +468,7 @@ const HomeSection = () => {
                                     <div class="swiper-slide">
                                         <div class="slider-item">
                                             <div class="tf-product-category">
-                                                <img src="assets/images/product-category/product-category-2.jpg" alt="Image"/>
+                                                <img src="/assets/images/product-category/product-category-2.jpg" alt="Image"/>
                                                 <div class="category"><a href="#">Style</a></div>
                                             </div>
                                         </div>
@@ -476,7 +476,7 @@ const HomeSection = () => {
                                     <div class="swiper-slide">
                                         <div class="slider-item">
                                             <div class="tf-product-category">
-                                                <img src="assets/images/product-category/product-category-3.jpg" alt="Image"/>
+                                                <img src="/assets/images/product-category/product-category-3.jpg" alt="Image"/>
                                                 <div class="category"><a href="#">Music</a></div>
                                             </div>
                                         </div>
@@ -484,7 +484,7 @@ const HomeSection = () => {
                                     <div class="swiper-slide">
                                         <div class="slider-item">
                                             <div class="tf-product-category">
-                                                <img src="assets/images/product-category/product-category-4.jpg" alt="Image"/>
+                                                <img src="/assets/images/product-category/product-category-4.jpg" alt="Image"/>
                                                 <div class="category"><a href="#">Sport</a></div>
                                             </div>
                                         </div>
@@ -492,7 +492,7 @@ const HomeSection = () => {
                                     <div class="swiper-slide">
                                         <div class="slider-item">
                                             <div class="tf-product-category">
-                                                <img src="assets/images/product-category/product-category-1.jpg" alt="Image"/>
+                                                <img src="/assets/images/product-category/product-category-1.jpg" alt="Image"/>
                                                 <div class="category"><a href="#">Digital art</a></div>
                                             </div>
                                         </div>
@@ -500,7 +500,7 @@ const HomeSection = () => {
                                     <div class="swiper-slide">
                                         <div class="slider-item">
                                             <div class="tf-product-category">
-                                                <img src="assets/images/product-category/product-category-2.jpg" alt="Image"/>
+                                                <img src="/assets/images/product-category/product-category-2.jpg" alt="Image"/>
                                                 <div class="category"><a href="#">Style</a></div>
                                             </div>
                                         </div>
@@ -543,7 +543,7 @@ const HomeSection = () => {
                         <div class="author">
                           <div class="avatar">
                             <img
-                              src="assets/images/author/author1.png"
+                              src="/assets/images/author/author1.png"
                               alt="images"
                             />
                           </div>
@@ -560,21 +560,21 @@ const HomeSection = () => {
                     <div class="features">
                       <div class="product-media">
                         <img
-                          src="assets/images/product/product74.jpg"
+                          src="/assets/images/product/product74.jpg"
                           alt="images"
                         />
                       </div>
                       <div class="rain-drop1">
-                        <img src="assets/images/icon/rain1.svg" alt="images" />
+                        <img src="/assets/images/icon/rain1.svg" alt="images" />
                       </div>
                       <div class="rain-drop2">
-                        <img src="assets/images/icon/rain2.svg" alt="images" />
+                        <img src="/assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
+                        <img src="/assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -610,7 +610,7 @@ const HomeSection = () => {
                         <div class="author">
                           <div class="avatar">
                             <img
-                              src="assets/images/author/author14.png"
+                              src="/assets/images/author/author14.png"
                               alt="images"
                             />
                           </div>
@@ -627,21 +627,21 @@ const HomeSection = () => {
                     <div class="features">
                       <div class="product-media">
                         <img
-                          src="assets/images/product/product75.jpg"
+                          src="/assets/images/product/product75.jpg"
                           alt="images"
                         />
                       </div>
                       <div class="rain-drop1">
-                        <img src="assets/images/icon/rain1.svg" alt="images" />
+                        <img src="/assets/images/icon/rain1.svg" alt="images" />
                       </div>
                       <div class="rain-drop2">
-                        <img src="assets/images/icon/rain2.svg" alt="images" />
+                        <img src="/assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
+                        <img src="/assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -678,7 +678,7 @@ const HomeSection = () => {
                         <div class="author">
                           <div class="avatar">
                             <img
-                              src="assets/images/author/author14.png"
+                              src="/assets/images/author/author14.png"
                               alt="images"
                             />
                           </div>
@@ -695,21 +695,21 @@ const HomeSection = () => {
                     <div class="features">
                       <div class="product-media">
                         <img
-                          src="assets/images/product/product71.jpg"
+                          src="/assets/images/product/product71.jpg"
                           alt="images"
                         />
                       </div>
                       <div class="rain-drop1">
-                        <img src="assets/images/icon/rain1.svg" alt="images" />
+                        <img src="/assets/images/icon/rain1.svg" alt="images" />
                       </div>
                       <div class="rain-drop2">
-                        <img src="assets/images/icon/rain2.svg" alt="images" />
+                        <img src="/assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
                     <div class="bottom-style2">
                       <div class="price">
                       <div class="icon">
-                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
+                        <img src="/assets/images/svg/coinbase.svg" alt="Image"/>
                     </div>
                         <div class="content">
                          
@@ -746,7 +746,7 @@ const HomeSection = () => {
                         <div class="author">
                           <div class="avatar">
                             <img
-                              src="assets/images/author/author1.png"
+                              src="/assets/images/author/author1.png"
                               alt="images"
                             />
                           </div>
@@ -763,21 +763,21 @@ const HomeSection = () => {
                     <div class="features">
                       <div class="product-media">
                         <img
-                          src="assets/images/product/product70.jpg"
+                          src="/assets/images/product/product70.jpg"
                           alt="images"
                         />
                       </div>
                       <div class="rain-drop1">
-                        <img src="assets/images/icon/rain1.svg" alt="images" />
+                        <img src="/assets/images/icon/rain1.svg" alt="images" />
                       </div>
                       <div class="rain-drop2">
-                        <img src="assets/images/icon/rain2.svg" alt="images" />
+                        <img src="/assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
+                        <img src="/assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -814,7 +814,7 @@ const HomeSection = () => {
                         <div class="author">
                           <div class="avatar">
                             <img
-                              src="assets/images/author/author4.png"
+                              src="/assets/images/author/author4.png"
                               alt="images"
                             />
                           </div>
@@ -831,21 +831,21 @@ const HomeSection = () => {
                     <div class="features">
                       <div class="product-media">
                         <img
-                          src="assets/images/product/product72.jpg"
+                          src="/assets/images/product/product72.jpg"
                           alt="images"
                         />
                       </div>
                       <div class="rain-drop1">
-                        <img src="assets/images/icon/rain1.svg" alt="images" />
+                        <img src="/assets/images/icon/rain1.svg" alt="images" />
                       </div>
                       <div class="rain-drop2">
-                        <img src="assets/images/icon/rain2.svg" alt="images" />
+                        <img src="/assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
+                        <img src="/assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -882,7 +882,7 @@ const HomeSection = () => {
                         <div class="author">
                           <div class="avatar">
                             <img
-                              src="assets/images/author/author5.png"
+                              src="/assets/images/author/author5.png"
                               alt="images"
                             />
                           </div>
@@ -899,21 +899,21 @@ const HomeSection = () => {
                     <div class="features">
                       <div class="product-media">
                         <img
-                          src="assets/images/product/product73.jpg"
+                          src="/assets/images/product/product73.jpg"
                           alt="images"
                         />
                       </div>
                       <div class="rain-drop1">
-                        <img src="assets/images/icon/rain1.svg" alt="images" />
+                        <img src="/assets/images/icon/rain1.svg" alt="images" />
                       </div>
                       <div class="rain-drop2">
-                        <img src="assets/images/icon/rain2.svg" alt="images" />
+                        <img src="/assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
+                        <img src="/assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -949,7 +949,7 @@ const HomeSection = () => {
                         <div class="author">
                           <div class="avatar">
                             <img
-                              src="assets/images/author/author7.png"
+                              src="/assets/images/author/author7.png"
                               alt="images"
                             />
                           </div>
@@ -966,21 +966,21 @@ const HomeSection = () => {
                     <div class="features">
                       <div class="product-media">
                         <img
-                          src="assets/images/product/product77.jpg"
+                          src="/assets/images/product/product77.jpg"
                           alt="images"
                         />
                       </div>
                       <div class="rain-drop1">
-                        <img src="assets/images/icon/rain1.svg" alt="images" />
+                        <img src="/assets/images/icon/rain1.svg" alt="images" />
                       </div>
                       <div class="rain-drop2">
-                        <img src="assets/images/icon/rain2.svg" alt="images" />
+                        <img src="/assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
+                        <img src="/assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -1016,7 +1016,7 @@ const HomeSection = () => {
                         <div class="author">
                           <div class="avatar">
                             <img
-                              src="assets/images/author/author14.png"
+                              src="/assets/images/author/author14.png"
                               alt="images"
                             />
                           </div>
@@ -1033,21 +1033,21 @@ const HomeSection = () => {
                     <div class="features">
                       <div class="product-media">
                         <img
-                          src="assets/images/product/product78.jpg"
+                          src="/assets/images/product/product78.jpg"
                           alt="images"
                         />
                       </div>
                       <div class="rain-drop1">
-                        <img src="assets/images/icon/rain1.svg" alt="images" />
+                        <img src="/assets/images/icon/rain1.svg" alt="images" />
                       </div>
                       <div class="rain-drop2">
-                        <img src="assets/images/icon/rain2.svg" alt="images" />
+                        <img src="/assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
+                        <img src="/assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -1083,7 +1083,7 @@ const HomeSection = () => {
                         <div class="author">
                           <div class="avatar">
                             <img
-                              src="assets/images/author/author19.png"
+                              src="/assets/images/author/author19.png"
                               alt="images"
                             />
                           </div>
@@ -1100,21 +1100,21 @@ const HomeSection = () => {
                     <div class="features">
                       <div class="product-media">
                         <img
-                          src="assets/images/product/product71.jpg"
+                          src="/assets/images/product/product71.jpg"
                           alt="images"
                         />
                       </div>
                       <div class="rain-drop1">
-                        <img src="assets/images/icon/rain1.svg" alt="images" />
+                        <img src="/assets/images/icon/rain1.svg" alt="images" />
                       </div>
                       <div class="rain-drop2">
-                        <img src="assets/images/icon/rain2.svg" alt="images" />
+                        <img src="/assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
+                        <img src="/assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -1150,7 +1150,7 @@ const HomeSection = () => {
                         <div class="author">
                           <div class="avatar">
                             <img
-                              src="assets/images/author/author14.png"
+                              src="/assets/images/author/author14.png"
                               alt="images"
                             />
                           </div>
@@ -1167,21 +1167,21 @@ const HomeSection = () => {
                     <div class="features">
                       <div class="product-media">
                         <img
-                          src="assets/images/product/product77.jpg"
+                          src="/assets/images/product/product77.jpg"
                           alt="images"
                         />
                       </div>
                       <div class="rain-drop1">
-                        <img src="assets/images/icon/rain1.svg" alt="images" />
+                        <img src="/assets/images/icon/rain1.svg" alt="images" />
                       </div>
                       <div class="rain-drop2">
-                        <img src="assets/images/icon/rain2.svg" alt="images" />
+                        <img src="/assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
+                        <img src="/assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -1217,7 +1217,7 @@ const HomeSection = () => {
                         <div class="author">
                           <div class="avatar">
                             <img
-                              src="assets/images/author/author12.png"
+                              src="/assets/images/author/author12.png"
                               alt="images"
                             />
                           </div>
@@ -1234,21 +1234,21 @@ const HomeSection = () => {
                     <div class="features">
                       <div class="product-media">
                         <img
-                          src="assets/images/product/product70.jpg"
+                          src="/assets/images/product/product70.jpg"
                           alt="images"
                         />
                       </div>
                       <div class="rain-drop1">
-                        <img src="assets/images/icon/rain1.svg" alt="images" />
+                        <img src="/assets/images/icon/rain1.svg" alt="images" />
                       </div>
                       <div class="rain-drop2">
-                        <img src="assets/images/icon/rain2.svg" alt="images" />
+                        <img src="/assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
+                        <img src="/assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -1284,7 +1284,7 @@ const HomeSection = () => {
                         <div class="author">
                           <div class="avatar">
                             <img
-                              src="assets/images/author/author10.png"
+                              src="/assets/images/author/author10.png"
                               alt="images"
                             />
                           </div>
@@ -1301,21 +1301,21 @@ const HomeSection = () => {
                     <div class="features">
                       <div class="product-media">
                         <img
-                          src="assets/images/product/product73.jpg"
+                          src="/assets/images/product/product73.jpg"
                           alt="images"
                         />
                       </div>
                       <div class="rain-drop1">
-                        <img src="assets/images/icon/rain1.svg" alt="images" />
+                        <img src="/assets/images/icon/rain1.svg" alt="images" />
                       </div>
                       <div class="rain-drop2">
-                        <img src="assets/images/icon/rain2.svg" alt="images" />
+                        <img src="/assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
                     <div class="bottom-style2">
                       <div class="price">
                         <div class="icon">
-                        <img src="assets/images/svg/coinbase.svg" alt="Image"/>
+                        <img src="/assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
                         <div class="content">
                          
@@ -1352,7 +1352,7 @@ const HomeSection = () => {
                   <div class="tf-author style-3">
                     <span class="number">1</span>
                     <div class="image">
-                      <img src="assets/images/author/author1.png" alt="Image" />
+                      <img src="/assets/images/author/author1.png" alt="Image" />
                       <svg
                         width="18"
                         height="19"
@@ -1385,7 +1385,7 @@ const HomeSection = () => {
                     <span class="number">2</span>
                     <div class="image">
                       <img
-                        src="assets/images/author/author14.png"
+                        src="/assets/images/author/author14.png"
                         alt="Image"
                       />
                       <svg
@@ -1420,7 +1420,7 @@ const HomeSection = () => {
                     <span class="number">3</span>
                     <div class="image">
                       <img
-                        src="assets/images/author/author15.png"
+                        src="/assets/images/author/author15.png"
                         alt="Image"
                       />
                       <svg
@@ -1455,7 +1455,7 @@ const HomeSection = () => {
                     <span class="number">4</span>
                     <div class="image">
                       <img
-                        src="assets/images/author/author16.png"
+                        src="/assets/images/author/author16.png"
                         alt="Image"
                       />
                       <svg
@@ -1491,7 +1491,7 @@ const HomeSection = () => {
                     <span class="number">5</span>
                     <div class="image">
                       <img
-                        src="assets/images/author/author17.png"
+                        src="/assets/images/author/author17.png"
                         alt="Image"
                       />
                       <svg
@@ -1526,7 +1526,7 @@ const HomeSection = () => {
                     <span class="number">6</span>
                     <div class="image">
                       <img
-                        src="assets/images/author/author18.png"
+                        src="/assets/images/author/author18.png"
                         alt="Image"
                       />
                       <svg
@@ -1561,7 +1561,7 @@ const HomeSection = () => {
                     <span class="number">7</span>
                     <div class="image">
                       <img
-                        src="assets/images/author/author19.png"
+                        src="/assets/images/author/author19.png"
                         alt="Image"
                       />
                       <svg
@@ -1596,7 +1596,7 @@ const HomeSection = () => {
                     <span class="number">8</span>
                     <div class="image">
                       <img
-                        src="assets/images/author/author20.png"
+                        src="/assets/images/author/author20.png"
                         alt="Image"
                       />
                       <svg
@@ -1631,7 +1631,7 @@ const HomeSection = () => {
                     <span class="number">9</span>
                     <div class="image">
                       <img
-                        src="assets/images/author/author21.png"
+                        src="/assets/images/author/author21.png"
                         alt="Image"
                       />
                       <svg
@@ -1666,7 +1666,7 @@ const HomeSection = () => {
                     <span class="number">10</span>
                     <div class="image">
                       <img
-                        src="assets/images/author/author22.png"
+                        src="/assets/images/author/author22.png"
                         alt="Image"
                       />
                       <svg
@@ -1701,7 +1701,7 @@ const HomeSection = () => {
                     <span class="number">11</span>
                     <div class="image">
                       <img
-                        src="assets/images/author/author23.png"
+                        src="/assets/images/author/author23.png"
                         alt="Image"
                       />
                       <svg
@@ -1736,7 +1736,7 @@ const HomeSection = () => {
                     <span class="number">12</span>
                     <div class="image">
                       <img
-                        src="assets/images/author/author24.png"
+                        src="/assets/images/author/author24.png"
                         alt="Image"
                       />
                       <svg
@@ -1780,7 +1780,7 @@ const HomeSection = () => {
             <div class="col-lg-3 col-md-6">
                 <div class="tf-create wow fadeInUp"  data-wow-delay="0.2s">
                     <div class="icon">
-                        <img src="assets/images/svg/icon-create-5.svg" alt="Image"/>
+                        <img src="/assets/images/svg/icon-create-5.svg" alt="Image"/>
                     </div>
                     <h6 class="title"><a href="#">API Exploitation</a></h6>
                     <p class="content">Search, explore, and integrate APIs seamlessly, unlocking endless possibilities for your projects and endeavors.</p>
@@ -1789,7 +1789,7 @@ const HomeSection = () => {
             <div class="col-lg-3 col-md-6">
                 <div class="tf-create wow fadeInUp"  data-wow-delay="0.4s">
                     <div class="icon">
-                        <img src="assets/images/svg/icon-create-2.svg" alt="Image"/>
+                        <img src="/assets/images/svg/icon-create-2.svg" alt="Image"/>
                     </div>
                     <h6 class="title"><a href="#">API Publishing & Management</a> </h6>
                     <p class="content">Welcome to seamless API management! Easily add and update APIs with our intuitive platform.</p>
@@ -1798,7 +1798,7 @@ const HomeSection = () => {
             <div class="col-lg-3 col-md-6">
                 <div class="tf-create wow fadeInUp"  data-wow-delay="0.6s">
                     <div class="icon">
-                        <img src="assets/images/svg/icon-create-6.svg" alt="Image"/>
+                        <img src="/assets/images/svg/icon-create-6.svg" alt="Image"/>
                     </div>
                     <h6 class="title"><a href="#">API Documentation</a> </h6>
                     <p class="content">Unlock the power of clear documentation! Publish comprehensive API docs effortlessly with our platform.</p>
@@ -1807,7 +1807,7 @@ const HomeSection = () => {
             <div class="col-lg-3 col-md-6">
                 <div class="tf-create wow fadeInUp"  data-wow-delay="0.8s">
                     <div class="icon">
-                        <img src="assets/images/svg/icon-create-9.svg" alt="Image"/>
+                        <img src="/assets/images/svg/icon-create-9.svg" alt="Image"/>
                     </div>
                     <h6 class="title"><a href="#">API Testing & Monitoring</a></h6>
                     <p class="content">Seamlessly test functionality, performance, and reliability to guarantee a smooth user experience.</p>
@@ -1875,18 +1875,18 @@ const HomeSection = () => {
 
       <a id="scroll-top"></a>
 
-      <script src="assets/js/jquery.min.js"></script>
-      <script src="assets/js/jquery.easing.js"></script>
-      <script src="assets/js/bootstrap.min.js"></script>
-      <script src="assets/js/swiper-bundle.min.js"></script>
-      <script src="assets/js/swiper.js"></script>
-      <script src="assets/js/count-down.js"></script>
-      <script src="assets/js/jquery.isotope.min.js"></script>
-      <script src="assets/js/textanimation.js"></script>
-      <script src="assets/js/switchmode.js"></script>
-      <script src="assets/js/plugin.js"></script>
-      <script src="assets/js/shortcodes.js"></script>
-      <script src="assets/js/main.js"></script>
+      <script src="/assets/js/jquery.min.js"></script>
+      <script src="/assets/js/jquery.easing.js"></script>
+      <script src="/assets/js/bootstrap.min.js"></script>
+      <script src="/assets/js/swiper-bundle.min.js"></script>
+      <script src="/assets/js/swiper.js"></script>
+      <script src="/assets/js/count-down.js"></script>
+      <script src="/assets/js/jquery.isotope.min.js"></script>
+      <script src="/assets/js/textanimation.js"></script>
+      <script src="/assets/js/switchmode.js"></script>
+      <script src="/assets/js/plugin.js"></script>
+      <script src="/assets/js/shortcodes.js"></script>
+      <script src="/assets/js/main.js"></script>
     </body>
   );
 };
