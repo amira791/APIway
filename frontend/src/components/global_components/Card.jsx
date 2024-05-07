@@ -53,7 +53,7 @@ const Card = ({ idApi ,apiName, description, logo, termsOfUse, website, category
                         </div>
                     </div>
                     <div className="product-button">
-                        <Link className='tf-button flex items-center' to={`/ApiDetail/${idApi}`}>
+                        <Link className='tf-button flex items-center' to={`/details/${idApi}`}>
                           <span className="fas fa-info-circle" style={{ marginRight: '-15px' }}></span>
                            See Details
                         </Link>

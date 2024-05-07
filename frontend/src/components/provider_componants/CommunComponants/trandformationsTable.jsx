@@ -18,7 +18,7 @@ const TransformationTable = ({ data, params, onAddRow, onChange, onDelete }) => 
   const handleConfirmRow = () => {
     console.log(newRow.action+' '+newRow.key+' '+newRow.plans+' '+newRow.scope)
     if (!newRow.action || !newRow.key || !newRow.plans||!newRow.scope) {
-      alert("Please fill in all fields before adding the row.");
+      //alert("Please fill in all fields before adding the row.");
       return;
     }
     onAddRow(newRow);

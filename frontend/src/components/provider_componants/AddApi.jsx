@@ -6,6 +6,8 @@ import Navbar from "../global_components/navbar.jsx";
 import DataTable from "../global_components/Datatable.jsx";
 import ManipulateCat from "../../hooks/CategoryHook.jsx";
 import APIAjout from "../../hooks/APIHook2.jsx";
+import useManageAccountsF from '../../hooks/FouAccountsHook'
+import { useAuthContext } from '../../context/authContext';
 import $ from "jquery";
 import "datatables.net";
 import CreateEndpointForm from "./CreateEndpointForm.jsx";
@@ -45,11 +47,13 @@ const AddAPIPage = () => {
   const tableRef2 = useRef(null);
   const [isNewCategory, setIsNewCategory] = useState(false);
   const [newCategory, setNewCategory] = useState("");
+  const { authState } = useAuthContext();
+  const {getFournisseur ,fournisseur , error , loading} = useManageAccountsF()
   const [formData, setFormData] = useState({
     apiName: "",
     description: "",
     termOfUse: "",
-    providerId: provider_id,
+    // providerId: fournisseur.id_fournisseur,
     categoryId: "",
     visibility: false,
     category: "",
@@ -57,12 +61,25 @@ const AddAPIPage = () => {
     /*    baseURLs: [""], */
     logo: null,
   });
+
+//   useEffect(() => {
+
+//         if (authState.isFournisseur && authState.isAuth) getFournisseur(authState.userId)
+     
+//     console.log(fournisseur.id_fournisseur)
+//  }, [authState.userId,authState.isFournisseur,authState.isAuth]);
+
   /*  useEffect(() => {
     if (tableRef.current) {
       $("#example").DataTable();
     }
   }, [tableRef]);
  */
+
+  
+
+
+
 
   const handleDeleteEndpoint = (endpointId) => {
     const updatedEndpoints = [...endpoints];
@@ -133,7 +150,7 @@ const AddAPIPage = () => {
     const { id, value, type, checked } = e.target;
 
     if (type === "checkbox") {
-      alert(checked);
+      //alert(checked);
       setFormData((prevState) => ({
         ...prevState,
         visibility: checked,
@@ -181,7 +198,7 @@ const AddAPIPage = () => {
   const handleCategoryChange = (e) => {
     const categoryId = e.target.value;
 
-    alert(categoryId);
+    //alert(categoryId);
 
     setFormData((prevState) => ({
       ...prevState,
@@ -199,7 +216,7 @@ const AddAPIPage = () => {
     const existingCategory = categories.find(
       (category) => category.label.toLowerCase() === newCategory.toLowerCase()
     );
-   // existingCategory? alert(existingCategory+" "+existingCategory.id_category+" "+existingCategory.label): alert("doesn't exist");
+   // existingCategory? //alert(existingCategory+" "+existingCategory.id_category+" "+existingCategory.label): //alert("doesn't exist");
     
     // If the new category doesn't exist, update formData with the new category name
     if (!existingCategory) {
@@ -254,8 +271,7 @@ const AddAPIPage = () => {
     }
   
     // If all required data is present, proceed with submission logic
-    alert(formData.apiName);
-    console.log(formData,functionalities,baseURLs,endpoints,Models)
+    //alert(formData.apiName);
     addNewAPI(formData, functionalities, baseURLs, endpoints, Models);
   };
   
@@ -730,7 +746,7 @@ const AddAPIPage = () => {
                                                     e.target.checked
                                                   );
 
-                                                  alert(termesAgreed);
+                                                  //alert(termesAgreed);
                                                 }}
                                               />
                                               <span class="btn-checkbox"></span>

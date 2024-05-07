@@ -1,8 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';// Import createRoot instead of ReactDOM
 import './index.css';
-import './styles/tailwind.css';
-import './styles/SearchApi.css';
 import {
   BrowserRouter as Router,
   Routes,
@@ -23,6 +21,7 @@ import TicketsPage from './components/pages/TicketsPage';
 import {  AuthProvider} from './context/authContext';
 import SignUpPage from './components/auth_components/SignUpPage';
 import AddAPIPage from './components/provider_componants/AddApi';
+import Details from './components/provider_componants/Details';
 
 function Root() {
 
@@ -38,13 +37,14 @@ function Root() {
           <Route exact path="/searchApi" element={<SearchApi />} />
           <Route exact path="/login" element={<LoginPage />} />
           <Route exact path="/signup" element={<SignUpPage/>}/>
-          <Route path='/ApiDetail/:api_id' element={<ApiDetails />}></Route>
+          {/* <Route path='/ApiDetail/:api_id' element={<ApiDetails />}></Route> */}
           <Route path="/forum" element={<ForumPage />} />
           <Route path="/forum/threads/:thread_id" element={<ThreadPage />} />
           <Route path="/tickets/new" element={<TicketForm />} />
           <Route path='/tickets' element={<TicketsPage/>} />
           <Route path='/fournisseur' element={<ProviderHomePage />} />
           <Route exact path="/addAPI" element={<AddAPIPage />} />
+          <Route exact path="/details/:id" element={<Details />} />
         </Routes>
       </Router>
     </div>

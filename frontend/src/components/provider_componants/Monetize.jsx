@@ -54,7 +54,7 @@ const Monetizing = ({Models ,setModels}) => {
   var isAddButtonDisabled = filteredPeriods.length === 0;
   
   const handleModelChange = (key, value) => {
-    alert("done");
+    //alert("done");
     setModel((prevModel) => ({ ...prevModel, [key]: value }));
   };
   const addModel = () => {
@@ -62,10 +62,10 @@ const Monetizing = ({Models ,setModels}) => {
       toast.error("Please fill in all fields before adding the model.");
       return;
     }
-  //  alert(activeFilter);
+  //  //alert(activeFilter);
     handleModelChange("Period", activeFilter);
     setModels((prevModels) => [...prevModels, Model]);
-   //alert(filteredPeriods[0]);
+   ////alert(filteredPeriods[0]);
  setActiveFilter(filteredPeriods[0]);
     setModel({ Name: "", Description: "", Period: activeFilter, plans: [] });
     document.getElementById("model-name").value = "";
@@ -350,7 +350,7 @@ console.log(Models[index].Period);
     (period) => !Models.some((model) => model.Period === period)
       );
      isAddButtonDisabled = filteredPeriods.length === 0;
-    //alert(isAddButtonDisabled);
+    ////alert(isAddButtonDisabled);
 
     setActiveFilter(filteredPeriods[0]);
     
