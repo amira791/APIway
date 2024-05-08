@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { BASEURL,fetchData, postData } from './API';
+import { BASEURL,ConsumerBASEURL,fetchData, postData } from './API';
+import axios from 'axios';
 
 
 
 export default function useApi() {
     const [APIs, setAPIs] = useState([]);
+    const [Api, setApi] = useState([]);
     const [Categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -13,16 +15,7 @@ export default function useApi() {
     const [suggestions, setSuggestions] = useState([]);
 
     useEffect(() => {
-        setLoading(true);
-        fetchData(`${BASEURL}apis/`)
-            .then(data => {
-                setAPIs(data);
-                setLoading(false);
-            })
-            .catch(error => {
-                setError(error);
-                setLoading(false);
-            });
+        fetchData(`${BASEURL}apis/`,setAPIs,setLoading,setError)
     }, []);
 
     useEffect(() => {
@@ -38,22 +31,85 @@ export default function useApi() {
             });
     }, []);
 
-    const fetchApiCategories = () => {
-        fetchData(`${BASEURL}apicategories/`)
-            .then(data => {
-                setCategories(data);
+    
+    
+    const fetchApi = async (id) => {
+        try {
+            const response = await axios.get(`${BASEURL}apis/${id}/`);
+            console.log('Fetched Data:', response.data);
+            setApi(response.data);
+            console.log('Api:', Api);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setError(error);
+        }
+    };
+    
+    const fetchApis = () => {
+        axios.get(`${BASEURL}apis/`)
+            .then(response => {
+                console.log('Fetched Data:', response.data);
+                setAPIs(response.data);
             })
             .catch(error => {
+                console.error('Error fetching data:', error);
+                setError(error);
+            });
+    };
+
+    const fetchApiCategories = () => {
+        axios.get(`${BASEURL}apicategories/`)
+            .then(response => {
+                console.log('Fetched Data:', response.data);
+                setCategories(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
                 setError(error);
             });
     };
 
     const fetchApiSearchResults = (queryParams) => {
-        postData(`${BASEURL}api/search/`, queryParams, {}, setSearchResults, setError);
+        axios.post(`${ConsumerBASEURL}api/search/`, queryParams)
+            .then(response => {
+                console.log('QueryParams:', queryParams);
+                console.log('Fetched Searched APIs:', response.data);
+                setSearchResults(response.data);
+            })
+    
+            .catch(error => {
+                console.error('Error fetching search results:', error);
+                setError(error);
+            });
+    };
+        const fetchAPIVersions =  (sortby) => {
+            axios.post(`${BASEURL}api/versions/`, sortby )
+    
+                .then(response => {
+                    console.log('sortBy:', sortby);
+                    console.log('Fetched Searched APIs:', response.data);
+                    setSearchResults(response.data);
+                })
+        
+                .catch(error => {
+                    console.error('Error fetching search results:', error);
+                    setError(error);
+                });
+               
     };
 
-    const fetchAPIVersions = (sortby) => {
-        postData(`${BASEURL}api/versions/`, sortby, {}, setSearchResults, setError);
+    const fetchApiFunctions = async (apiId) => {
+        try {
+            const response = await fetch(`${BASEURL}api/functions/${apiId}/`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch API functions');
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error fetching API functions:', error.message);
+            return null;
+        }
     };
 
     const fetchApiSuggestions = (query, suggestionType) => {
@@ -81,10 +137,12 @@ export default function useApi() {
         APIs,
         functionalities,
         suggestions,
+        fetchApis,
         setSearchResults,
         fetchApiCategories,
         fetchApiSearchResults,
         fetchAPIVersions,
-        fetchApiSuggestions
+        fetchApiSuggestions,
+        fetchApiFunctions
     };
 }

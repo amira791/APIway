@@ -308,3 +308,31 @@ def api_versions_view(request):
 
     serializer = APISerializer(apis, many=True)
     return Response(serializer.data)
+
+# Get API functions*******************************************
+@api_view(['GET'])
+def get_api_functions(request, id):
+    try:
+        # Fetch API instance based on api_id
+        api_instance = API.objects.get(id_api=id)
+        
+        # Fetch API version associated with the API instance
+        api_version = APIversion.objects.filter(api=api_instance).first()
+        
+        if api_version:
+            # Fetch functions associated with the API version
+            functions = api_version.functions.all()
+            
+            # Serialize the functions data
+            serializer = FunctionnalitySerializer(functions, many=True)
+            
+            # Return the serialized functions data
+            return Response(serializer.data)
+        else:
+            return Response({'error': 'API version not found'}, status=status.HTTP_404_NOT_FOUND)
+    
+    except API.DoesNotExist:
+        return Response({'error': 'API not found'}, status=status.HTTP_404_NOT_FOUND)
+    
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

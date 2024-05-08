@@ -5,7 +5,7 @@ import Card from './global_components/Card';
 import useApi from '../hooks/ApiHook';
 
 const SearchApi = () => {
-    const { searchResults,APIs,Categories, suggestions, fetchApiSuggestions, fetchApiCategories,fetchApiSearchResults,setSearchResults,fetchAPIVersions } = useApi();
+    const { searchResults,APIs,Categories, suggestions,fetchApiFunctions,fetchApis, fetchApiSuggestions, fetchApiCategories,fetchApiSearchResults,setSearchResults,fetchAPIVersions } = useApi();
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchFilter, setSearchFilter] = useState('Name'); // Default search filter
@@ -24,6 +24,7 @@ const SearchApi = () => {
 
     useEffect(() => {
         setSearchResults(APIs); // Set initial search results to all APIs
+        console.log("APIs:",APIs)
     }, [APIs]);
 
     useEffect(() => {
@@ -56,8 +57,14 @@ const SearchApi = () => {
     };
 
     const handleCategoryClick = async (categoryLabel) => {
+
         setSelectedCategoryLabel(categoryLabel);
-        fetchApiSearchResults({ query: categoryLabel, filter: 'Category', page: 1 });
+        if (categoryLabel ==='All'){
+            fetchApis();
+        } 
+      
+        fetchApiSearchResults({ query: categoryLabel, filter: 'Category', category: categoryLabel,page: 1 });
+    
     };
 
     const handleSortByClick = async (sortby) => {
@@ -311,6 +318,8 @@ const SearchApi = () => {
                                                 termsOfUse={api.terms_of_use}
                                                 website={api.website}
                                                 categoryLabel={api.category_label}
+                                                searchQuery={searchQuery}
+                                                
                                             />
                                         );
                                     })

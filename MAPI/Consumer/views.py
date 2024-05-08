@@ -60,10 +60,7 @@ def index_api(request):
 
 # Search function 
 @api_view(['POST'])
-def search_api(request, index='api_index',
-            sort_by=None, source=None, year=None, signature_date=None,
-             publication_date=None, type=None, ojNumber=None, 
-             jtNumber=None, jt_source=None, domain=None, page=None, page_size=None):
+def search_api(request, index='api_index'):
     query = request.data.get('query', '')
     search_field = request.data.get('filter')
     category_label = request.data.get('category')
@@ -72,11 +69,11 @@ def search_api(request, index='api_index',
     if search_field == 'Name':
         search_fields = ["api_name^3","description","category.label^2","functions.functName"]
     elif search_field == 'Description':
-        search_fields = ["description^3","api_name","category.label^2"]
+        search_fields = ["description^3","api_name","category.label^2","functions.functName"]
     elif search_field == 'Category':
-        search_fields = ["category.label^3","api_name^2","description","functions.functName^3"]
+        search_fields = ["category.label^3"]
     elif search_field == 'Functionalities':
-        search_fields = ["functions.functName^3","api_name^2","description","category.label"]
+        search_fields = ["functions.functName^3"]
     else:
         return Response({'error': 'Invalid search field'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -86,35 +83,48 @@ def search_api(request, index='api_index',
             "query": query,
             "fields": search_fields,
             "fuzziness":'AUTO'
-            
+       
         }
         
     }
 
+    # Define wildcard queries for partial word matches
+    wildcard_queries = []
+    for field in search_fields:
+        wildcard_queries.append({
+            "wildcard": {
+                field: {
+                    "value": f"*{query.lower()}*"
+                }
+            }
+        })
+
+    # Combine multi_match and wildcard queries using Bool Query
+    combined_query = {
+        "bool": {
+            "should": [search_query] + wildcard_queries,
+            "minimum_should_match": 1
+        }
+    }
+
+
     sort = '_score'  # Tri par défaut (pertinence)
 
     # Execute search query
-    search = Search(index=index).using(client).query(search_query).sort(sort)
+    search = Search(index=index).using(client).query(combined_query).sort(sort)
 
     # Filter by category if provided
     if category_label and category_label != 'All':
-        search = search.filter('term', category__label=category_label)
+        search = search.filter('match_phrase', category__label=category_label)
+   
 
     # Execute the search
     results = search.execute()
 
-    # Process results
-    # hits = results.hits  # No need to convert hits to dictionaries
-
     # Construct response data
     response_data = []
 
-    
-        
-        
-
     for hit in results:
-        
 
         response_data.append({
             'id_api': hit.meta.id,
@@ -124,9 +134,9 @@ def search_api(request, index='api_index',
             'logo': hit.logo,
             'visibility': hit.visibility,
             'website': hit.website,
-            'category': hit.category,
+            'category_label': hit.category.label,
             'functions': [func.functName for func in hit.functions]  # assuming functions is a related field
        
-            })
+         })
 
     return Response(response_data)

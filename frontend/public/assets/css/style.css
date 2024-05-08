@@ -2543,3 +2543,7 @@ header.absolute {
 
 /*# sourceMappingURL=style.css.map */
 
+.highlight {
+  background-color: rgb(87, 183, 252);
+  /* Add any other styles you want for highlighted text */
+}
