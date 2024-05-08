@@ -405,13 +405,16 @@ const createBaseLinks = async (baseLinks) => {
   }
 };
 const createAPIVersions = async (apiId, functionalityIds, baseLinkIds) => {
+    // Check if baseLinkIds is empty and set base_links accordingly
+    const base_links = baseLinkIds.length > 0 ? baseLinkIds : [];
   try {
+
     const apiVersionsData = {
       num_version: "1",
       state: "Active",
       api: apiId,
       functions: functionalityIds,
-      base_links: baseLinkIds,
+      base_links: base_links,
       
 
     };
@@ -615,6 +618,21 @@ const fetchAPIEndpointsByVersion = async (versionId) => {
     throw error.response ? error.response.data : error.message;
   }
 };
+/* const fetchAllFunctionalitiesById = async (id) => {
+  try {
+    // Fetch all functionalities
+    const response = await API.get('/functionnalities/');
+    const allFunctionalities = response.data;
+    
+    // Filter functionalities by the provided API ID
+    const functionalitiesById = allFunctionalities.filter(func => func.api === id);
+  
+    return functionalitiesById;
+  } catch (error) {
+    console.error('Error fetching functionalities by API ID:', error);
+    throw error;
+  }
+}; */
 
 const fetchAPIHeadersByEndpointId = async (endpointId) => {
   try {
@@ -646,7 +664,7 @@ const fetchAPIEndpointBodyByEndpointId = async (endpointId) => {
   try {
     const response = await API.get(`/apiendpointbody/`);
     const allEndpointBodies = response.data;
-    const endpointBodyByEndpointId = allEndpointBodies.find(endpointBody => endpointBody.endpoint === endpointId);
+    const endpointBodyByEndpointId = allEndpointBodies.find(endpointBody => endpointBody.endpoint == endpointId);
     console.log('Fetched endpoint body by endpointId:', endpointBodyByEndpointId);
     return endpointBodyByEndpointId;
   } catch (error) {
@@ -681,6 +699,51 @@ const fetchEndpointParametersByEndpointId = async (endpointId) => {
   }
 };
 
+const fetchAPIModelsById = async (id) => {
+  try {
+    // Make the API call to fetch endpoints
+    const response = await API.get('/pricing_model/');
+    
+    // Check if the response is valid and contains data
+    if (response && response.data) {
+      //alert(versionId);
+      // Filter endpoints by versionId
+      const modelsByApiId = response.data.filter(model => model.api == id  && model.is_active == true);
+      
+      // Log filtered endpoints for debugging
+      console.log('Filtered models:', modelsByApiId);
+       return modelsByApiId;
+    } else {
+      // Log error if response is invalid or empty
+      console.error('Empty or invalid response:', response);
+      return [];
+    }
+  } catch (error) {
+    // Handle API call errors
+    console.error("Error fetching API endpoints:", error);
+    throw error.response ? error.response.data : error.message;
+  }
+};
+const fetchAPITarifByModelId = async () => {
+  try {
+    // Make the API call to fetch endpoints
+    const response = await API.get('/tarifications/');
+    
+    // Check if the response is valid and contains data
+    if (response && response.data) {
+     
+      return response.data;
+    } else {
+      // Log error if response is invalid or empty
+      console.error('Empty or invalid response:', response);
+      return [];
+    }
+  } catch (error) {
+    // Handle API call errors
+    console.error("Error fetching API endpoints:", error);
+    throw error.response ? error.response.data : error.message;
+  }
+};
   const [tarifTypes, setTarifTypes] = useState([]);
 
   const getTarifType = () => {
@@ -707,6 +770,8 @@ const fetchEndpointParametersByEndpointId = async (endpointId) => {
     fetchAPIEndpointBodyByEndpointId,
     fetchAPIResponseExamplesByEndpointId,
     fetchEndpointParametersByEndpointId,
+    fetchAPIModelsById,
+    fetchAPITarifByModelId,
     tarifTypes,
   };
 }

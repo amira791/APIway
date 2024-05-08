@@ -232,15 +232,13 @@ const AddAPIPage = () => {
     }
   
     // Check if any functionality, baseURL, endpoint, or model is null
-    if (functionalities.length === 0 || baseURLs.length === 0 || endpoints.length === 0 || Models.length === 0) {
+    if (functionalities.length === 0|| endpoints.length === 0 || Models.length === 0) {
       // Construct message indicating which arrays are empty
       let missingDataMessage = "";
       if (functionalities.length === 0) {
         missingDataMessage += "Functionalities, ";
       }
-      if (baseURLs.length === 0) {
-        missingDataMessage += "Base URLs, ";
-      }
+      
       if (endpoints.length === 0) {
         missingDataMessage += "Endpoints, ";
       }

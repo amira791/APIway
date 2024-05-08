@@ -1,4 +1,4 @@
-import React, { useMemo, useState,useEffect } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -57,19 +57,24 @@ const getColorForMethod = (method) => {
   }
 };
 const useStyles = makeStyles({
-    endpointDetails: {
-      padding: "20px",
-      border: "1px solid #ccc",
-      borderRadius: "5px",
-      marginTop: "20px",
-      backgroundColor: "#f5f5f5",
-    },
-    button: {
-      margin: "0.5rem",
-    },
-  });
+  endpointDetails: {
+    padding: "20px",
+    border: "1px solid #ccc",
+    borderRadius: "5px",
+    marginTop: "20px",
+    backgroundColor: "#f5f5f5",
+  },
+  button: {
+    margin: "0.5rem",
+    fontSize: "20px", // Increase font size for buttons
+    padding: "10px 20px", // Increase padding for buttons
+  },
+  text: {
+    fontSize: "20px", // Increase font size for text elements
+  },
+});
 
-const Example = ({endpoints}) => {
+const Example = ({ endpoints , state}) => {
   const classes = useStyles(); // Initialize the styles
   const [selectedEndpoint, setSelectedEndpoint] = useState(endpoints[0]); // Initialize selected endpoint state
   const [headers, setHeaders] = useState([]);
@@ -77,48 +82,83 @@ const Example = ({endpoints}) => {
   const [endpointBody, setEndpointBody] = useState(null);
   const [responseExamples, setResponseExamples] = useState([]);
   const [endpointParameters, setEndpointParameters] = useState([]);
-  const {   fetchAPIHeadersByEndpointId,
+  const [selectedCode, setSelectedCode] = useState('');
+  const [responseContent, setResponseContent] = useState('');
+
+
+  const {
+    fetchAPIHeadersByEndpointId,
     fetchAPIQueryParamsByEndpointId,
     fetchAPIEndpointBodyByEndpointId,
     fetchAPIResponseExamplesByEndpointId,
-    fetchEndpointParametersByEndpointId } = APIAjout();
-    
+    fetchEndpointParametersByEndpointId,
+  } = APIAjout();
+  const [selectedChoice, setSelectedChoice] = useState('Response Example');
+
+
   const handleEndpointSelection = (endpoint) => {
     setSelectedEndpoint(endpoint);
   };
+  const handleChoiceClick = (choice) => {
+    setSelectedChoice(choice);
+    if (choice === 'Response Example') {
+      setSelectedCode('');
+      setResponseContent('');
+    }
+  };
 
+  const handleCodeSelect = (code) => {
+    setSelectedCode(code);
+    const selectedExample = responseExamples.find(example => example.code_status === code);
+  
+    if (selectedExample) {
+      setResponseContent(selectedExample.body);
+    } else {
+      setResponseContent('');
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (selectedEndpoint !== null) {
           // Fetch headers by endpoint ID
-          const headers = await fetchAPIHeadersByEndpointId(selectedEndpoint.id_endpoint);
+          const headers = await fetchAPIHeadersByEndpointId(
+            selectedEndpoint.id_endpoint
+          );
           setHeaders(headers);
-  
+
           // Fetch query parameters by endpoint ID
-          const queryParams = await fetchAPIQueryParamsByEndpointId(selectedEndpoint.id_endpoint);
+          const queryParams = await fetchAPIQueryParamsByEndpointId(
+            selectedEndpoint.id_endpoint
+          );
           setQueryParams(queryParams);
-  
+
           // Fetch endpoint body by endpoint ID
-          const endpointBody = await fetchAPIEndpointBodyByEndpointId(selectedEndpoint.id_endpoint);
+          const endpointBody = await fetchAPIEndpointBodyByEndpointId(
+            selectedEndpoint.id_endpoint
+          );
           setEndpointBody(endpointBody);
-  
+
           // Fetch response examples by endpoint ID
-          const responseExamples = await fetchAPIResponseExamplesByEndpointId(selectedEndpoint.id_endpoint);
+          const responseExamples = await fetchAPIResponseExamplesByEndpointId(
+            selectedEndpoint.id_endpoint
+          );
           setResponseExamples(responseExamples);
-  
+
           // Fetch endpoint parameters by endpoint ID
-          const endpointParameters = await fetchEndpointParametersByEndpointId(selectedEndpoint.id_endpoint);
+          const endpointParameters = await fetchEndpointParametersByEndpointId(
+            selectedEndpoint.id_endpoint
+          );
           setEndpointParameters(endpointParameters);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-  
+
     fetchData();
   }, [selectedEndpoint]);
-  
+
   const columns = useMemo(
     () => [
       {
@@ -151,6 +191,11 @@ const Example = ({endpoints}) => {
   const table = useMaterialReactTable({
     columns,
     data: endpoints,
+    muiTableHeadProps:{
+      sx: {
+        fontSize: "20px",
+      },
+    },
     muiTableBodyCellProps: {
       sx: {
         fontSize: "20px",
@@ -178,243 +223,331 @@ const Example = ({endpoints}) => {
   }
   return (
     <Box display="flex" justifyContent="space-between">
-      <Box sx={{ flex: 1, backgroundColor: "#fff", maxHeight: 700 }}>
+      <Box sx={{ flex: 1, maxHeight: 700 }}>
         <MaterialReactTable table={table} />
       </Box>
-      
-        <>
-          <Box sx={{ flex: 1, backgroundColor: "#fff", padding: "1rem" }}>
-            <div
+
+      <>
+        <Box sx={{ flex: 1, padding: "1rem" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography style={{ fontSize: "20px" }}>
+              {selectedEndpoint.title}:
+            </Typography>
+            <Typography
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
+                color: getColorForMethod(selectedEndpoint.method),
+                fontSize: "20px",
               }}
             >
-              <Typography style={{ fontSize: "20px" }}>
-                {selectedEndpoint.title}:
-              </Typography>
-              <Typography
+              {selectedEndpoint.method} {selectedEndpoint.path}
+            </Typography>
+            {state!="Deprecated"? <Button
+              variant="contained"
+              color="primary"
+              style={{
+                margin: "0.5rem",
+                fontSize: "15px", // Increase font size for buttons
+                padding: "10px 20px", // Increase padding for buttons
+              }}
+            >
+              Subscribe{" "}
+            </Button>:<></>}
+          </div>
+          <Divider />
+          {selectedEndpoint.description}
+          <Divider />
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography variant="h5" sx={{ mt: 2 }}>
+              APIway App
+            </Typography>
+            <Box sx={{ mt: 1 }}>
+              {/* <Typography variant="body1">Select Application:</Typography> */}
+              <select name="" id="" disabled="disabled">
+                <option value="">Default Application{" "}</option>
+              </select>
+              {/* <Select disabled value="default">
+                <MenuItem value="default" disabled>
+                  Default Application{" "}
+                </MenuItem>
+              </Select> */}
+              <Typography variant="body1">Required</Typography>
+            </Box>
+          </div>
+          <Divider />
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography variant="h5" sx={{ mt: 2 }}>
+              Request URL
+            </Typography>
+            <Box sx={{ mt: 1 }}>
+              {/* <Typography variant="body1">Select Application:</Typography> */}
+              <select name="" id="" disabled="disabled">
+                <option value=""> Apiway.com</option>
+              </select>
+              {/* <Select disabled value="default">
+                <MenuItem value="default" disabled>
+                  {" "}
+                  Apiway.com{" "}
+                </MenuItem>
+              </Select> */}
+              <Typography variant="body1">Required</Typography>
+            </Box>
+          </div>
+          <Divider />
+          <Accordion sx={{ mt: 2 }}>
+            <AccordionSummary expandIcon={<StepIcon />}>
+              <Typography style={{fontSize:"20px"}}>Header Parameters</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div
                 style={{
-                  color: getColorForMethod(selectedEndpoint.method),
-                  fontSize: "20px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
                 }}
               >
-                {selectedEndpoint.method} {selectedEndpoint.path}
-              </Typography>
-              <Button variant="contained" color="primary"    className={classes.button}>
-                Subscribe{" "}
-              </Button>
-            </div>
-            <Divider />
-            {selectedEndpoint.description}
-            <Divider />
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography variant="h6" sx={{ mt: 2 }}>
-                APIway App
+                <Typography style={{fontSize:"13px"}} sx={{ mt: 2 }}>
+                  APIway App
+                </Typography>
+                <Box sx={{ mt: 1 }}>
+                  {/* <Typography variant="body1">Select Application:</Typography> */}
+                  <Select disabled value="default">
+                    <MenuItem value="default" disabled>
+                      Default Application{" "}
+                    </MenuItem>
+                  </Select>
+                  <Typography variant="body1">Required</Typography>
+                </Box>
+              </div>
+              <Divider />
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography style={{fontSize:"12px"}} sx={{ mt: 2 }}>
+                  Request URL
+                </Typography>
+                <Box sx={{ mt: 1 }}>
+                  {/* <Typography variant="body1">Select Application:</Typography> */}
+                  <Select disabled value="default">
+                    <MenuItem value="default" disabled>
+                      {" "}
+                      Apiway.com{" "}
+                    </MenuItem>
+                  </Select>
+                  <Typography variant="body1">Required</Typography>
+                </Box>
+              </div>
+              {headers.map((parameter) => (
+                <div key={parameter.id}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Typography variant="h5" sx={{ mt: 2 }}>
+                      {parameter.key}
+                    </Typography>
+                    <Box sx={{ mt: 1 }}>
+                      <Select disabled value="default">
+                        <MenuItem value="default" disabled>
+                          {parameter.example_value}
+                        </MenuItem>
+                      </Select>
+                      {parameter.required ? (
+                        <Typography variant="body1">Required</Typography>
+                      ) : (
+                        <></>
+                      )}
+                    </Box>
+                  </div>
+                  <Divider />
+                </div>
+              ))}
+            </AccordionDetails>
+          </Accordion>
+          <Accordion sx={{ mt: 2 }}>
+            <AccordionSummary expandIcon={<StepIcon />}>
+              <Typography style={{fontSize:"20px"}}>Required Parameters</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+            <Typography style={{fontSize:"15px"}}>Query Parameters</Typography>
+            {queryParams.filter(param => param.required).map((param, index) => (
+            <div key={index}>
+              <Typography variant="h5" sx={{ mt: 2 }}>
+                {param.name}
               </Typography>
               <Box sx={{ mt: 1 }}>
-                {/* <Typography variant="body1">Select Application:</Typography> */}
-                <Select disabled value="default">
-                  <MenuItem value="default" disabled>
-                    Default Application{" "}
-                  </MenuItem>
-                </Select>
-                <Typography variant="body1">Required</Typography>
+                <input type="text" defaultValue={param.example_value} />
+                <Typography variant="body1">{param.example_value}</Typography>
               </Box>
             </div>
-            <Divider />
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography variant="h6" sx={{ mt: 2 }}>
-                Request URL
+            ))}
+              <Divider />
+              <Typography style={{fontSize:"15px"}}>Endpoint Parameters</Typography>
+              {endpointParameters.filter(param => param.required).map((param, index) => (
+            <div key={index}>
+              <Typography variant="h5" sx={{ mt: 2 }}>
+                {param.name}
               </Typography>
               <Box sx={{ mt: 1 }}>
-                {/* <Typography variant="body1">Select Application:</Typography> */}
-                <Select disabled value="default">
-                  <MenuItem value="default" disabled>
-                    {" "}
-                    Apiway.com{" "}
-                  </MenuItem>
-                </Select>
-                <Typography variant="body1">Required</Typography>
+                <input type="text" defaultValue={param.example_value} />
+                <Typography variant="body1">{param.example_value}</Typography>
               </Box>
             </div>
-            <Divider />
+          ))}
+            
+            </AccordionDetails>
+          </Accordion>
+          <Accordion sx={{ mt: 2 }}>
+            <AccordionSummary expandIcon={<StepIcon />}>
+              <Typography style={{fontSize:"20px"}}>Optional Parameters</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+            <Typography style={{fontSize:"15px"}}>Query Parameters</Typography>
+            {queryParams.filter(param => !param.required).map((param, index) => (
+            <div key={index}>
+              <Typography variant="h5" sx={{ mt: 2 }}>
+                {param.name}
+              </Typography>
+              <Box sx={{ mt: 1 }}>
+                <input type="text" defaultValue={param.example_value} />
+                <Typography variant="body1">{param.example_value}</Typography>
+              </Box>
+            </div>
+            ))}
+              <Divider />
+              <Typography style={{fontSize:"15px"}}>Endpoint Parameters</Typography>
+              {endpointParameters.filter(param => !param.required).map((param, index) => (
+            <div key={index}>
+              <Typography variant="h5" sx={{ mt: 2 }}>
+                {param.name}
+              </Typography>
+              <Box sx={{ mt: 1 }}>
+                <input type="text" defaultValue={param.example_value} />
+                <Typography variant="body1">{param.example_value}</Typography>
+              </Box>
+            </div>
+          ))}
+            
+            </AccordionDetails>
+          </Accordion>
+          {selectedEndpoint.method === "POST" && (
             <Accordion sx={{ mt: 2 }}>
-        <AccordionSummary expandIcon={<StepIcon/>}>
-          <Typography>Header Parameters</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-      
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography variant="h6" sx={{ mt: 2 }}>
-                APIway App
-              </Typography>
-              <Box sx={{ mt: 1 }}>
-                {/* <Typography variant="body1">Select Application:</Typography> */}
-                <Select disabled value="default">
-                  <MenuItem value="default" disabled>
-                    Default Application{" "}
-                  </MenuItem>
-                </Select>
-                <Typography variant="body1">Required</Typography>
-              </Box>
-            </div>
-            <Divider />
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography variant="h6" sx={{ mt: 2 }}>
-                Request URL
-              </Typography>
-              <Box sx={{ mt: 1 }}>
-                {/* <Typography variant="body1">Select Application:</Typography> */}
-                <Select disabled value="default">
-                  <MenuItem value="default" disabled>
-                    {" "}
-                    Apiway.com{" "}
-                  </MenuItem>
-                </Select>
-                <Typography variant="body1">Required</Typography>
-              </Box>
-            </div>
-            {headers.map(parameter => (
-      <div key={parameter.id}>
-        <div
+              <AccordionSummary expandIcon={<StepIcon />}>
+                <Typography style={{fontSize:"20px"}}>Request Body</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+              {endpointBody && (
+  <div>
+    <Typography  style={{fontSize:"15px"}}sx={{ mt: 2 }}>
+      Request Body
+    </Typography>
+    <Box sx={{ mt: 1 }}>
+      <Typography variant="body1">Media Type: {endpointBody.media_type}</Typography>
+      <Typography variant="body1">Payload Name: {endpointBody.payload_name}</Typography>
+      <Typography variant="body1">Description: {endpointBody.payload_description}</Typography>
+      <input type="text" defaultValue={endpointBody.body_example} />
+    </Box>
+  </div>
+)}
+              </AccordionDetails>
+            </Accordion>
+          )}
+        </Box>
+        <Box sx={{ flex: 1, padding: "1rem" }}>
+          <Typography variant="h1" style={{fontSize:"20%"}}>{selectedEndpoint.name}</Typography>
+          <Divider />
+          <div class="tf-tab">
+          <div>
+      <ul className="menu-tab">
+        <li className={selectedChoice === 'Response Example' ? 'tab-title active' : 'tab-title'}>
+          <a href="#" onClick={() => handleChoiceClick('Response Example')}>
+            Response Example
+          </a>
+        </li>
+        <li className={selectedChoice === 'View Results' ? 'tab-title active' : 'tab-title'}>
+        <Button
+          variant="contained"
+          color="primary"
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
+            margin: "0.5rem",
+            fontSize: "15px", // Increase font size for buttons
+            padding: "10px 20px", // Increase padding for buttons
           }}
-        >
-          <Typography variant="h6" sx={{ mt: 2 }}>
-            {parameter.key}
-          </Typography>
-          <Box sx={{ mt: 1 }}>
-            <Select disabled value="default">
-              <MenuItem value="default" disabled>
-                {parameter.example_value}
-              </MenuItem>
-            </Select>
-          {parameter.required? <Typography variant="body1">Required</Typography>:<></>} 
-          </Box>
-        </div>
-        <Divider />
-      </div>
-    ))}
-             </AccordionDetails>
-      </Accordion>
-      <Accordion sx={{ mt: 2 }}>
-        <AccordionSummary expandIcon={<StepIcon/>}>
-          <Typography>Required Parameters</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
+          disabled
+          >
+          <a href="#" onClick={() => handleChoiceClick('View Results')}>
         
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography variant="h6" sx={{ mt: 2 }}>
-              X-APIway-Key
-              </Typography>
-              <Box sx={{ mt: 1 }}>
-                {/* <Typography variant="body1">Select Application:</Typography> */}
-                <Select disabled value="default">
-                  <MenuItem value="default" disabled>
-                  5bcf37c40cmshdee5def2d7ghg456bnhsd445dpwdbwk56cvafa45{" "}
-                  </MenuItem>
-                </Select>
-                <Typography variant="body1">Required</Typography>
-              </Box>
+
+            View Results
+       
+          </a>   </Button>
+        </li>
+      </ul>
+      {selectedChoice === 'Response Example' && (
+        <div>
+        <Select
+          value={selectedCode}
+          onChange={(e) => handleCodeSelect(e.target.value)}
+          disabled={!responseExamples.length}
+        >
+          <MenuItem value="" disabled>
+            {responseExamples.length ? 'Select Code' : 'No Code Statues'}
+          </MenuItem>
+          {responseExamples.map((example, index) => (
+            <MenuItem key={index} value={example.code_status}>
+              {example.code_status}
+            </MenuItem>
+          ))}
+        </Select>
+        <div>
+          {responseContent && (
+            <div>
+              <p>Response content:</p>
+              <p>{responseContent}</p>
             </div>
-            <Divider />
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <Typography variant="h6" sx={{ mt: 2 }}>
-              X-APIway-Host
-              </Typography>
-              <Box sx={{ mt: 1 }}>
-                {/* <Typography variant="body1">Select Application:</Typography> */}
-                <Select disabled value="default">
-                  <MenuItem value="default" disabled>
-                    {" "}
-                    Apiway.com{" "}
-                  </MenuItem>
-                </Select>
-                <Typography variant="body1">Required</Typography>
-              </Box>
-            </div>   </AccordionDetails>
-      </Accordion>
-      <Accordion sx={{ mt: 2 }}>
-        <AccordionSummary expandIcon={<StepIcon />}>
-          <Typography>Optional Parameters</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Button variant="contained" color="primary">Optional Parameters Button 1</Button>
-          <Button variant="contained" color="secondary">Optional Parameters Button 2</Button>
-        </AccordionDetails>
-      </Accordion>
-      {selectedEndpoint.method === 'POST' && (
-        <Accordion sx={{ mt: 2 }}>
-          <AccordionSummary expandIcon={<StepIcon/>}>
-            <Typography>Request Body</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Button variant="contained" color="primary">Request Body Button 1</Button>
-            <Button variant="contained" color="secondary">Request Body Button 2</Button>
-          </AccordionDetails>
-        </Accordion>
+          )}
+        </div>
+      </div>
       )}
-          </Box>
-          <Box sx={{ flex: 1, backgroundColor: "#fff", padding: "1rem" }}>
-            <Typography variant="h6">{selectedEndpoint.name}</Typography>
-            <Divider />
-            <div class="tf-tab">
-                                        <ul class="menu-tab ">
-                                        <li class="tab-title active">
-                                                <a href="#">Response Example</a>
-                                            </li>
-                                            <li class="tab-title ">
-                                                <a href="#">Results</a>
-                                            </li>
-                                          
-                                            
-                                        </ul>
-                                                          
-                                    </div>
-          </Box>
-        </>
-     
+      {selectedChoice === 'View Results' && (
+        <div>
+          {/* Your code for the View Results section goes here */}
+          <Button
+           
+            disabled
+          >
+            View Results
+          </Button>
+        </div>
+      )}
+    </div>
+          </div>
+        </Box>
+      </>
     </Box>
   );
 };

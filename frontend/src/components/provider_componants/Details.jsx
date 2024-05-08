@@ -9,6 +9,7 @@ import EndpointExacTable from "./CommunComponants/EndpointExecTable.jsx";
 import Example from "./CommunComponants/execTab.jsx";
 import PricingContainer from "./PricingPlan.jsx";
 import { useParams } from "react-router-dom";
+import API from "../../API.js";
 
 const Details = () => {
     const { id } = useParams(); // Get the ID parameter from the URL
@@ -19,12 +20,19 @@ const Details = () => {
     const [chosenVersion, setChosenVersion]= useState(null);
     const [apiVersions, setApiVersions] = useState([]);
     const [apiEndpoints, setApiEndpoints] = useState(null);
-    const { fetchAPIDetailsById,fetchAPICategorysById,fetchAPIProviderById,fetchAllAPIVersionsById,fetchAPIEndpointsByVersion } = APIAjout();
+    const [chosenVersionState, setChosenVersionState] = useState(null);
+    const { fetchAPIDetailsById,fetchAPICategorysById,fetchAPIProviderById,fetchAllAPIVersionsById,fetchAPIEndpointsByVersion,tarifTypes } = APIAjout();
     
     const handleVersionChange = (event) => {
-     
-      setChosenVersion(event.target.value);
+      const selectedVersionId = event.target.value;
+    //  alert(selectedVersionId);
+      const selectedVersion = apiVersions.find(version => version.id_version == selectedVersionId);
+      setChosenVersion(selectedVersionId);
+      
+      setChosenVersionState(selectedVersion.state);
+      
     };
+    
   
     const handleTabClick = (tabId) => {
       setActiveTab(tabId);
@@ -34,9 +42,11 @@ const Details = () => {
         try {
         
           const details = await fetchAPIDetailsById(id);
+          console.log(details);
           const category = await fetchAPICategorysById(details.category);
           const provider = await fetchAPIProviderById(details.provider);
           const versions = await fetchAllAPIVersionsById(id);
+          console.log(versions);
           const versionId = versions.length > 0 ? versions[0].id_version : null;
           setChosenVersion(versionId);
           setAPIDetails(details);
@@ -100,61 +110,65 @@ const Details = () => {
                     <div class="content">
                       <div class="content-top">
                       <div class="image" style={{ width: "15%", height: "15%" }}>
-                      <img src="/assets/images/item-details.jpg" alt="Image" />
+                      <img src={apiDetails.logo} alt="Image" />
+                     
+                      
                     </div>
-                    <div>
-                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingBottom:"2%"}}>
+                    <div style={{ width: "100%"}} >
+                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingBottom:"2%",gap:"20%"}}>
                         <div class="author">
                           <img
                             src="/assets/images/author/author-detail-3.png"
                             alt="Image"
                           />
-                          <h6 class="title">{apiProvider.FR_first_name}  {apiProvider.FR_last_name}</h6>
+                          <h6 class="title"  style={{fontSize:"17px"}}>Provider: {apiProvider.FR_first_name}  {apiProvider.FR_last_name}</h6>
                         </div>
-                        <div class="wishlish">
+                        <div class="wishlish" >
                           <div class="number-wishlish">
                             <i class="far fa-heart"></i>
                           </div>
-                          <div class="option btn-option">
+                         {/*  <div class="option btn-option">
                             <i class="far fa-ellipsis-h"></i>
                             <div class="option_popup">
                               <a href="#">Delete</a>
                               <a href="#">Edit</a>
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                         </div>
                         <div>
-                        <h2 class="title-detail">{apiDetails.api_name}</h2>
-                        <div class="author">
-                          <h4 class="title">Category:  </h4> <p>  {   apiCategory.label}</p>
+                          <p></p>
+                        <h2 style={{display:"flex",alignItems:"center",paddingBottom:"2%",gap:"2%"}} class="title-detail">API name: <p>{apiDetails.api_name}</p> </h2>
+                        <div class="author" style={{display:"flex",alignItems:"center",paddingBottom:"2%",gap:"2%"}}>
+                          <h4 class="title" style={{fontSize:"25px"}}>Category:  </h4> <p style={{fontSize:"23px"}}>  {   apiCategory.label}</p>
                         </div>
-                      <p class="except">
-                      {apiDetails.description}
-                      </p>
+                        <div class="author" style={{display:"flex",alignItems:"center",paddingBottom:"2%",gap:"2%"}}>
+                          <h4 class="title" style={{fontSize:"25px"}}>Description:  </h4> <p style={{fontSize:"23px"}}> {apiDetails.description}</p>
+                        </div>
+                       
                       </div>
                       </div>
                       </div>
                       <div class="tf-tab">
-                      <ul className="menu-tab">
+                      <ul className="menu-tab" >
         <li className={activeTab === 'Endpoints' ? 'tab-title active' : 'tab-title'}>
-          <a href="#" onClick={() => handleTabClick('Endpoints')}>Endpoints</a>
+          <a href="#" onClick={() => handleTabClick('Endpoints')} style={{fontSize:"25px"}}>Endpoints</a>
         </li>
         <li className={activeTab === 'About' ? 'tab-title active' : 'tab-title'}>
-          <a href="#" onClick={() => handleTabClick('About')}>About</a>
+          <a href="#" onClick={() => handleTabClick('About')} style={{fontSize:"25px"}}>About</a>
         </li>
         <li className={activeTab === 'Discussion' ? 'tab-title active' : 'tab-title'}>
-          <a href="#" onClick={() => handleTabClick('Discussion')}>Discussion</a>
+          <a href="#" onClick={() => handleTabClick('Discussion')} style={{fontSize:"25px"}}>Discussion</a>
         </li>
         <li className={activeTab === 'Pricing' ? 'tab-title active' : 'tab-title'}>
-          <a href="#" onClick={() => handleTabClick('Pricing')}>Pricing</a>
+          <a href="#" onClick={() => handleTabClick('Pricing')} style={{fontSize:"25px"}}>Pricing</a>
         </li>
       </ul>
                         <div class="content-tab">
                         {activeTab === 'Endpoints' && (
           <div id="Endpoints" className="tab-content">
-            <fieldset className="message" style={{display:"flex",justifyContent:"end",gap:"3%"}}>
-                            <label>Choose a version</label>
+            <fieldset className="message" style={{display:"flex",justifyContent:"end",alignItems:"center",gap:"3%"}}>
+                            <h6>Choose a version</h6>
                             <div class="form-select" >
                             <select onChange={handleVersionChange} value={chosenVersion}>
                                     {apiVersions.map(apiVersion => (
@@ -166,7 +180,7 @@ const Details = () => {
                             </div>
                             </fieldset>
                             <div class="tab-details">
-                           { apiEndpoints?    <Example endpoints={apiEndpoints}  /> :<></>}
+                           { apiEndpoints?    <Example endpoints={apiEndpoints} state={chosenVersionState} /> :<></>}
                             </div>
                           </div> )}
                       {activeTab === 'About' && (
@@ -562,7 +576,7 @@ const Details = () => {
                           </div> )}
                           {activeTab === 'Pricing' && (
           <div id="Pricing" className="tab-content">
-                        <PricingContainer/>
+                        <PricingContainer id={id} tarifs={tarifTypes}/>
                           </div>)}
                         </div>
                       </div>
