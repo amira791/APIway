@@ -70,7 +70,7 @@ class APIversion(models.Model):
         ('Deprecated', 'Deprecated'),
     )
     state = models.CharField(max_length=50, choices=CHOICES, null=True)
-    description = models.TextField()
+    description = models.TextField(null=True)
     date_version = models.DateField(auto_now=True)
     api = models.ForeignKey(API, on_delete=models.DO_NOTHING, null=True )
     current = models.BooleanField(default=False, verbose_name="Current Version", null = True)
@@ -171,15 +171,15 @@ class APIdocumentation(models.Model):
     
 class PricingModel(models.Model):
     id_model= models.AutoField(primary_key=True)
-    api = models.ForeignKey(API, on_delete=models.DO_NOTHING )
-    name = models.CharField(max_length=255)
+    api = models.ForeignKey(API, on_delete=models.DO_NOTHING, null=True)
+    name = models.CharField(max_length=255, blank=True)
     CHOICES = (
          ('Daily', 'Daily'),
         ('Monthly', 'Monthly'),
         ('Yearly', 'Yearly'),
     )
-    period = models.CharField(max_length=100, choices=CHOICES)
-    description = models.TextField( help_text="Brief description of the pricing model")
+    period = models.CharField(max_length=100, choices=CHOICES, blank=True)
+    description = models.TextField( help_text="Brief description of the pricing model", blank=True)
     is_active = models.BooleanField(default=True)   
     def __str__(self):
         return self.name
@@ -203,9 +203,8 @@ class Tarification(models.Model):
         ('Monthly', 'Monthly'),
         ('Yearly', 'Yearly'),
     )
-    quota_type = models.CharField(max_length=100, choices=Quota_CHOICES, default="")
     quota_limit = models.IntegerField(null=True)
-    rate_limit = models.IntegerField(null=True)
+    rate_limit = models.IntegerField(default=10000)
     def __str__(self):
         return self.id_tarif
 

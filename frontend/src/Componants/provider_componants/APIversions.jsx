@@ -75,12 +75,18 @@ const VersionTable = ({ selectedAPI, onReturnClick }) => {
         const newCurrentState = !isCurrentChecked;
         console.log("New Current State: ", newCurrentState)
         if (newCurrentState) {
+            const currentVersions = versions.filter(version => version.current);
+            if (currentVersions.length > 0) {
+                // Make all current versions not current
+                currentVersions.forEach(version => updateCurrentVersion(version, 0));
+            }
             updateCurrentVersion(selectedVersion, 1);
+            setIsCurrentChecked(newCurrentState);
             //setSelectedVersion(updatedVersion);
         } else {
             updateCurrentVersion(selectedVersion, 0);
         }
-        setIsCurrentChecked(newCurrentState);
+        
         getAPIversions(selectedAPI.id_api);
     };
 
@@ -92,8 +98,9 @@ const VersionTable = ({ selectedAPI, onReturnClick }) => {
         setShowAddVersionsSection(true);
     };
     const handleReturnToVersions= () => {
+        getAPIversions(selectedAPI.id_api)
         setShowAddVersionsSection(false);
-      };
+    };
     return (
         <div>
            <div className="returnButtonContainer">

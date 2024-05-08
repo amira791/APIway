@@ -24,17 +24,16 @@ const ProvAPIList = () => {
     };
 
     const handleReturnClick = () => {
-
-      setShowUpdateSection(false);
+      if(showMonetizeSection){
+        window.location.reload();
+      }else{setShowUpdateSection(false);}
+      
     };
 
     const handleReturnClick2 = () => {
         setShowVersionsSection(false);
     };
-    const handleReturnClick3 = () => {
-        setShowMonetizeSection(false);
-        setShowUpdateSection(true);
-    };
+
     const handleVersions = (api) => {
         setSelectedAPI(api);
         setShowVersionsSection(true);
@@ -153,7 +152,7 @@ const ProvAPIList = () => {
                                 onClick={handleToggleMonetizeSection}
                                 title="Toggle Monetize Section"
                             >
-                                Toggle Monetize Section
+                                Modify pricing plans
                             </button>
                         )}
                     </div>
@@ -336,8 +335,6 @@ const ProvAPIList = () => {
                         >
                             <div>
                                 <h4 className="title-dashboard" style={{ display: "inline-block", marginRight: "600px" }}>Monetize Section</h4>
-                               
-                               
                             </div>
                             <Monetizing apiId={selectedAPI.id_api}/>
                         </section>

@@ -119,7 +119,6 @@ const AddVersion = ({selectedAPI, onReturnClick2}) => {
     const { id, value, type, checked } = e.target;
 
     if (type === "checkbox") {
-      alert(checked);
       setFormData((prevState) => ({
         ...prevState,
         visibility: checked,

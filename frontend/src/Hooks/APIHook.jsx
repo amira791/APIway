@@ -1,7 +1,7 @@
 // Define the custom hook in hooks/useUnite
 import { useState, useEffect} from "react";
 import API from "../API";
-
+import ManipulateMonetize from "./MonetizeHook";
 
 export default function APIAjout() {
 
@@ -50,9 +50,7 @@ export default function APIAjout() {
       .then((response) => {
         if (response.status === 201) {
           apiId = response.data.id_api;
-          alert(Models);
           Models.forEach((model) => {
-            alert("foreachh");
             // Step 1: Add Model Information
             API.post(
               `/pricing_model/`,
@@ -72,8 +70,6 @@ export default function APIAjout() {
               .then((response) => {
                 // Step 2: Retrieve Model ID
                 const modelId = response.data.id_model;
-             alert("doneee");
-             alert(modelId);
                 // Step 3: Add Plans
                 model.plans.forEach((plan) => {
                   API.post(`/tarifications/`, {
@@ -145,7 +141,6 @@ export default function APIAjout() {
                 base_links: baseLinkIds,
                 current: 1
               };
-              alert("done1");
               return API.post(`/apiversions/`, apiVersionsData);
             });
           });
@@ -165,7 +160,6 @@ export default function APIAjout() {
               version: apiversionId, // You need to set the version here
               description: endpoint.description,
             }).then((endpointResponse) => {
-              alert("done2");
               if (endpointResponse.status === 201) {
                 const endpointId = endpointResponse.data.id_endpoint; // Save the ID of the newly created API endpoint
                 if (endpoint.headers) {
@@ -319,7 +313,7 @@ export default function APIAjout() {
         console.log("Failed to update API");
     });
 };
-
+const {getAPImodels} = ManipulateMonetize();
 const createModels = async (apiId, models) => {
   try {
     // Logic to create models
@@ -336,6 +330,26 @@ const createModels = async (apiId, models) => {
         },
       });
       const modelId = modelResponse.data.id_model;
+      
+      // Check if there is another active model with the same period
+      const allModels = await API.get(`/pricing_model/`);
+      console.log("allModels",allModels);
+      const activeModels = allModels.data.filter((pricing_model => pricing_model.api === apiId && pricing_model.period === model.Period && pricing_model.id_model !== modelId && pricing_model.is_active === true));
+      console.log("activemodels",activeModels);
+
+      // If there is an active model with the same period, deactivate it
+      if (activeModels.length > 0 ) {
+        await API.put(`/pricing_model/${activeModels[0].id_model}/`, {
+          is_active: 0,
+        });
+        // Show an alert after deactivating the active models
+        const confirmReload = window.confirm("Your Current Model added successfully");
+        if (confirmReload) {
+          // Reload the page if the user clicks "OK"
+          window.location.reload();
+        }
+      }
+
       for (const plan of model.plans) {
         await API.post(`/tarifications/`, {
           price: plan.price,
@@ -359,6 +373,7 @@ const createModels = async (apiId, models) => {
         );
       }
     }
+    getAPImodels(apiId);
   } catch (error) {
     console.error("Error creating models:", error);
     throw error;
