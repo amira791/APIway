@@ -134,6 +134,14 @@ class APIView(viewsets.ModelViewSet):
     queryset = API.objects.all()
     serializer_class = APISerializer
     parser_classes = (MultiPartParser, FormParser)
+    lookup_field = 'provider'
+
+    def get_queryset(self):
+        provider_id = self.kwargs.get('provider')
+        if provider_id:
+            return API.objects.filter(provider=provider_id)
+        return API.objects.all()
+
 
 
 # APIversion View

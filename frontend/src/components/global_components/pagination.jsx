@@ -16,13 +16,13 @@ const CustomPagination = ({ currentPage, totalPages, handlePageChange }) => {
   };
 
   return (
-    <nav className="flex justify-center" aria-label="Pagination">
-      <ul className="flex flex-wrap items-center">
+    <nav className="pagination-container">
+      <ul className="pagination">
         <li>
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="px-3 py-2 bg-white text-blue-500 border border-blue-500 rounded-md mr-2 hover:bg-blue-200 focus:outline-none"
+            className="pagination-button"
           >
             Prev
           </button>
@@ -32,7 +32,7 @@ const CustomPagination = ({ currentPage, totalPages, handlePageChange }) => {
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="px-3 py-2 bg-white text-blue-500 border border-blue-500 rounded-md ml-2 hover:bg-blue-200 focus:outline-none"
+            className="pagination-button"
           >
             Next
           </button>

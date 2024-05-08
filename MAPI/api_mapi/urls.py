@@ -40,6 +40,7 @@ urlpatterns = [
     path('apis/<int:api_id>/tickets/', TicketView.as_view({'get': 'list'}), name='api_tickets'),
     path('activate/<int:id>/', activate_user, name='activate_user'),
     path('deactivate/<int:id>/', deactivate_user, name='deactivate_user'),
+    path('apis/<int:provider>/', APIView.as_view({'get': 'list'})),
     path('fournisseurs/<int:user_id>/', FournisseurView.as_view({'get': 'retrieve'})),
     path('consommateurs/<int:user_id>/', ConsommateurView.as_view({'get': 'retrieve'})),
     path('api/search/', search_api, name='search_api'),

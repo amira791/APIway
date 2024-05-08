@@ -1,10 +1,20 @@
 import Footer from "../global_components/footer";
-import Navbar from "../global_components/navbar";
+import Navbar from "./CommunComponants/NavBar";
 import AddAPIPage from "../provider_componants/AddApi";
 import ProvAPIList from "../provider_componants/ListProvAPI";
-import React, { useState } from "react";
-import APIAjout from "../../hooks/APIHook";
+import React, { useEffect, useState } from "react";
+import APIAjout from "../../hooks/ApiHook";
+import TicketsList from "../tickets/TicketsList";
+import useManageAccountsF from '../../hooks/FouAccountsHook'
+import { useAuthContext } from '../../context/authContext';
 const ProviderHomePage = () => {
+
+    const { authState } = useAuthContext();
+    const {getFournisseur ,fournisseur} = useManageAccountsF()
+
+    useEffect(() => {
+        getFournisseur(authState.userId)
+     }, [authState.userId]);
     return (
         <div className="body header-fixed">
 
@@ -19,23 +29,7 @@ const ProviderHomePage = () => {
                     <Navbar />
 
                     <section className="tf-page-title ">    
-                        <div className="tf-container">
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <ul className="breadcrumbs">
-                                        <li><a href="index-2.html">Home</a></li>
-                                        <li>Profile</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>  
-                        <div className="container-fluid">
-                            <div className="row">
-                                <div className="thumb-pagetitle">
-                                    <img src="assets/images/background/thumb-pagetitle.jpg" alt="images"/>
-                                </div>
-                            </div>
-                        </div>                  
+                           
                     </section>
 
                     <section className="tf-dashboard tf-tab">
@@ -47,11 +41,9 @@ const ProviderHomePage = () => {
                                             <div className="avatar">
                                                 <img src="assets/images/author/author-db.jpg" alt="images"/>
                                             </div>
-                                            <div className="name">Francisco Maia</div>
+                                            <div className="name">{fournisseur.user?.first_name ? fournisseur.user.first_name : 'Francisco Maia'}</div>
                                             <div className="pax"><i className="fab fa-ethereum"></i>0x59485…82590</div>
-                                            <div className="description">
-                                                8,888 NFTs of beautiful, Asian women painstakingly-crafted where even the most intricate
-                                            </div>
+                                           
                                             <ul className="social-item">
                                                 <li><a href="#"><i className="fab fa-facebook-f"></i></a></li>
                                                 <li><a href="#"><i className="fab fa-twitter"></i></a></li>
@@ -71,7 +63,7 @@ const ProviderHomePage = () => {
                                                 <li><a href="#" ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                                     <path className="svg-fill" d="M14.4916 13.0583L11.1249 10H8.86657L5.4999 13.0583C4.55823 13.9083 4.2499 15.2167 4.70823 16.4C5.16657 17.575 6.28323 18.3333 7.54157 18.3333H12.4499C13.7166 18.3333 14.8249 17.575 15.2832 16.4C15.7416 15.2167 15.4332 13.9083 14.4916 13.0583ZM11.5166 15.1167H8.48323C8.16657 15.1167 7.91657 14.8583 7.91657 14.55C7.91657 14.2417 8.1749 13.9833 8.48323 13.9833H11.5166C11.8332 13.9833 12.0832 14.2417 12.0832 14.55C12.0832 14.8583 11.8249 15.1167 11.5166 15.1167Z" fill="#3749E9"/>
                                                     <path className="svg-fill" d="M15.2919 3.6013C14.8335 2.4263 13.7169 1.66797 12.4585 1.66797H7.54188C6.28355 1.66797 5.16688 2.4263 4.70855 3.6013C4.25855 4.78464 4.56688 6.09297 5.50855 6.94297L8.87521 10.0013H11.1335L14.5002 6.94297C15.4335 6.09297 15.7419 4.78464 15.2919 3.6013ZM11.5169 6.0263H8.48355C8.16688 6.0263 7.91688 5.76797 7.91688 5.45964C7.91688 5.1513 8.17522 4.89297 8.48355 4.89297H11.5169C11.8335 4.89297 12.0835 5.1513 12.0835 5.45964C12.0835 5.76797 11.8252 6.0263 11.5169 6.0263Z" fill="#3749E9"/>
-                                                    </svg> History</a></li>
+                                                    </svg> Tickets</a></li>
                                                 <li><a href="#" ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                                                     <path className="svg-fill" d="M14.6089 6.4763C14.5505 6.46797 14.4922 6.46797 14.4339 6.4763C13.1422 6.43464 12.1172 5.3763 12.1172 4.0763C12.1172 2.7513 13.1922 1.66797 14.5255 1.66797C15.8505 1.66797 16.9339 2.74297 16.9339 4.0763C16.9255 5.3763 15.9005 6.43464 14.6089 6.4763Z" fill="#3749E9"/>
                                                     <path className="svg-fill" d="M17.3257 12.2503C16.3923 12.8753 15.084 13.1087 13.8757 12.9503C14.1923 12.267 14.359 11.5087 14.3673 10.7087C14.3673 9.87534 14.184 9.08367 13.834 8.392C15.0673 8.22534 16.3757 8.45867 17.3173 9.08367C18.634 9.95034 18.634 11.3753 17.3257 12.2503Z" fill="#3749E9"/>
@@ -99,10 +91,11 @@ const ProviderHomePage = () => {
                                         </div>
                                         <div className="inner-content wallet">
                                             <h4 className="title-dashboard">Create New API</h4>
-                                            <AddAPIPage/>
+                                            <AddAPIPage provider={fournisseur}/>
                                         </div>
                                         <div className="inner-content history">
-                                            <h4 className="title-dashboard">History</h4>
+                                            <h4 className="title-dashboard">Tickets</h4>
+                                             <TicketsList/>
                                             <div className="history-filter">
                                                 <div className="history-content">
                                                     <div className="inner tf-filter-container">
@@ -579,6 +572,19 @@ const ProviderHomePage = () => {
 
             <a id="scroll-top"></a>
 
+           
+
+            <script src="assets/js/jquery.min.js"></script>
+            <script src="assets/js/jquery.easing.js"></script>
+            <script src="assets/js/bootstrap.min.js"></script>
+            <script src="assets/js/swiper-bundle.min.js"></script>
+            <script src="assets/js/swiper.js"></script>
+            <script src="assets/js/count-down.js"></script>
+            <script src="assets/js/jquery.isotope.min.js"></script>
+            <script src="assets/js/switchmode.js"></script>
+            <script src="assets/js/plugin.js"></script>
+            <script src="assets/js/shortcodes.js"></script>
+            <script src="assets/js/main.js"></script>
 
         </div>
 

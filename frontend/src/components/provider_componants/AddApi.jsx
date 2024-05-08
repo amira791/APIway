@@ -6,8 +6,6 @@ import Navbar from "../global_components/navbar.jsx";
 import DataTable from "../global_components/Datatable.jsx";
 import ManipulateCat from "../../hooks/CategoryHook.jsx";
 import APIAjout from "../../hooks/APIHook2.jsx";
-import useManageAccountsF from '../../hooks/FouAccountsHook'
-import { useAuthContext } from '../../context/authContext';
 import $ from "jquery";
 import "datatables.net";
 import CreateEndpointForm from "./CreateEndpointForm.jsx";
@@ -19,7 +17,7 @@ import PlansAjout from "../../hooks/MonetizationHook.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AddAPIPage = () => {
+const AddAPIPage = ({provider}) => {
   $.noConflict();
   const provider_id = 1;
   /**************From hooks****************************/
@@ -47,13 +45,12 @@ const AddAPIPage = () => {
   const tableRef2 = useRef(null);
   const [isNewCategory, setIsNewCategory] = useState(false);
   const [newCategory, setNewCategory] = useState("");
-  const { authState } = useAuthContext();
-  const {getFournisseur ,fournisseur , error , loading} = useManageAccountsF()
+
   const [formData, setFormData] = useState({
     apiName: "",
     description: "",
     termOfUse: "",
-    // providerId: fournisseur.id_fournisseur,
+    providerId: provider.id_fournisseur,
     categoryId: "",
     visibility: false,
     category: "",
@@ -387,7 +384,7 @@ const AddAPIPage = () => {
     <body>
       <div className="wrapper">
         <div className="page clearfix">
-          <Navbar />
+        
           <section className="page-title">
             <div className="tf-container">
               <div className="row">
@@ -397,9 +394,6 @@ const AddAPIPage = () => {
           </section>
           <div class="row tf-container">
             <div class="col-md-12">
-              <h4 className="page-title-heading" style={{ marginBottom: "5%" }}>
-                Add New API
-              </h4>
 
               <div class="top-menu">
                 <ul className="filter-menu">
@@ -427,21 +421,7 @@ const AddAPIPage = () => {
                       Definitions
                     </a>
                   </li>
-                  <li
-                    className={activeFilter === "#doc-section" ? "active" : ""}
-                  >
-                    <a
-                      href="#"
-                      onClick={() => handleFilterClick("#doc-section")}
-                    >
-                      Documentation
-                    </a>
-                  </li>
-                  <li className={activeFilter === "#pixel" ? "active" : ""}>
-                    <a href="#" onClick={() => handleFilterClick("#pixel")}>
-                      Gateway
-                    </a>
-                  </li>
+                 
                   <li
                     className={
                       activeFilter === "#monetize-section" ? "active" : ""
@@ -964,7 +944,7 @@ const AddAPIPage = () => {
             </div>
           </section>
         </div>
-        <Footer />
+ 
         <div
           className="modal fade popup"
           id="popup_bid"
