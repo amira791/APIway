@@ -84,7 +84,7 @@ const PricingMenu = ({ allPricingData, onSelect }) => {
                                 <div class="content" style={{marginTop:"4%"}}>
                                 <div class="cash">          
  <div class="product-button">
-                                        <a href="#" data-toggle="modal"  class="tf-button"> Purchase</a>
+                                        <a href="#" data-toggle="modal"  class="tf-button"> Purchase id is {tarif.id}</a>
                                     </div>
                                     </div>
                                      </div>
@@ -119,6 +119,7 @@ const PricingMenu = ({ allPricingData, onSelect }) => {
               var type = tarifs.find((type) => type.id_TypeTarif == tarif.type);
             
               return {
+                id:tarif.id_tarif,
                 name: type ? type.name : "Unknown",
                 price: tarif.price,
                 features: tarif.features.split(','), // Assuming features are stored as a comma-separated string
@@ -151,6 +152,7 @@ const PricingMenu = ({ allPricingData, onSelect }) => {
           // Set the pricing data in state
           setPricingData(pricingArray);
           setSelectedType(pricingArray[0]?.type || "");
+          console.log(pricingData);
         } catch (error) {
           console.error('Error fetching pricing data:', error);
         }
