@@ -40,11 +40,21 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api_mapi.apps.ApiMapiConfig',
+    'Consumer.apps.ConsumerConfig',
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt',
     'rest_framework.authtoken',
+    'django_elasticsearch_dsl',
 ]
+
+ELASTICSEARCH_DSL={
+'default': {
+'hosts': 'http://localhost:9200',
+'timeout': 60,  # Custom timeout
+'http_auth': ('soumi', 'soumimks')
+}
+}
 
 # from api_mapi.models import UserBase
 

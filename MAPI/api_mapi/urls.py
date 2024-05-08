@@ -45,6 +45,7 @@ urlpatterns = [
     path('consommateurs/byuser/<int:user_id>/', ConsommateurByUserView.as_view({'get': 'list'}), name='consommateur_by_user'),
     path('api/search/', search_api, name='search_api'),
     path('api/versions/', api_versions_view, name='api-versions'),
+    path('api/functions/<int:id>/', get_api_functions, name='api-functions'),
     path('signup/',signup),
     path('signin/',signin)
    

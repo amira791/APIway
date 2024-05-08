@@ -43,7 +43,7 @@ function Root() {
           <Route path="/forum/threads/:thread_id" element={<ThreadPage />} />
           <Route path="/tickets/new" element={<TicketForm />} />
           <Route path='/tickets' element={<TicketsPage/>} />
-          <Route exact path="/addAPI" element={<AddAPIPage />} />
+          {/* <Route exact path="/addAPI" element={<AddAPIPage />} /> */}
           <Route exact path="/details/:id" element={<Details />} />
           <Route exact path="/provider_home"  element={<ProviderHomePage/>}/>
         </Routes>

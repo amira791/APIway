@@ -1,4 +1,5 @@
-const BASEURL="http://127.0.0.1:8000/api_mapi/";
+const BASEURL = "http://127.0.0.1:8000/api_mapi/"
+const ConsumerBASEURL = "http://127.0.0.1:8000/Consumer/"
 
 const createHeaders = () => {
     const token = localStorage.getItem('token');
@@ -66,7 +67,4 @@ const postData = async (url, data, successMessage, toast, setError) => {
     }
 };
 
-
-export { BASEURL , fetchData, postData }
-
-
+export { BASEURL,ConsumerBASEURL,fetchData, postData };

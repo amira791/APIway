@@ -28,10 +28,10 @@ export default function LoginPage() {
         console.log(user)
         signIn(user)
         
-        if (authState.isAuth && authState.isConsommateur ) {
+        if (authState.isAuth  && authState.isConsommateur  ) {
             navigate('/')
         }
-        if(authState.isAuth && authState.isFournisseur){
+        if(authState.isAuth && authState.isFournisseur ){
             navigate('/provider_home')
         } 
         

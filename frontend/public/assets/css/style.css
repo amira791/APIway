@@ -2612,7 +2612,10 @@ header.absolute {
 }
 /*# sourceMappingURL=style.css.map */
 
-#general-section label{
+.highlight {
+  background-color: rgb(87, 183, 252);
+  /* Add any other styles you want for highlighted text */
+}#general-section label{
  font-size: 25px;
  margin-bottom: 3%;
 }
