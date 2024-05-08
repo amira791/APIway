@@ -53,7 +53,7 @@ def subscribe(request):
 
     tarification = Tarification.objects.filter(id_tarif= tarificationId)[0]
 
-    apiId = request.data.get('apiId')
+    apiId = tarification.pricingModel.api.id_api;
     priceId = tarification.priceId
     token = request.data.get('token')
     method = request.data.get('paymentMethod')
