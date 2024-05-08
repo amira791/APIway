@@ -26,6 +26,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-left: 2%;
 }
 
 .offre.actif
@@ -33,7 +34,7 @@
     border-width: 5px;
 }
 
-.sub_container .offre h3{
+.sub_container .offre h4{
     color: white;
 }
 .sub_container .btn_sub{
@@ -42,7 +43,7 @@
     padding: 5%;
     color: white;
     font-weight: 500;
-    width: 100%;
+    width: 90%;
     border-radius: 3px;
     display: flex;
     align-items: center;
@@ -62,13 +63,9 @@
     height: 100%;
 }
 
-.sub_container .list_offers{
-    text-align:end;
-}
 
-.sub_container  ul {
-    direction: rtl;
-}
+
+
 .sub_container .offer_icon{
     width: 100px;
     height: 100px;
