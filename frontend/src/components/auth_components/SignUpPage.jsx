@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../global_components/navbar';
 import Footer from '../global_components/footer';
-import useAuth from '../../hooks/useAuth'
-
+import useAuth from '../../hooks/useAuth';
+import {useAuthContext} from '../../context/authContext';
 
 export default function SignUpPage() {
 
@@ -16,6 +16,7 @@ export default function SignUpPage() {
     const [user_type, setUserType] = useState('');
 
     const { signUp } = useAuth()
+    const { authState } = useAuthContext();
 
 
     const handleFormSubmit = (e) => {
@@ -35,7 +36,13 @@ export default function SignUpPage() {
 
         console.log(newUser)
         signUp(newUser)
-        navigate('/')
+        if (authState.isAuth && authState.isConsommateur ) {
+            navigate('/')
+        }
+        if(authState.isAuth && authState.isFournisseur){
+            navigate('/provider_home')
+        } 
+        
     };
 
     return (
@@ -63,7 +70,7 @@ export default function SignUpPage() {
                             <div className="row justify-content-center">
                                 <div className="col-md-12">
                                     <div className="tf-heading style-2">
-                                        <h4 className="heading">Sign Up To NFT</h4>
+                                        <h4 className="heading">Sign Up To APIway</h4>
                                     </div>
                                 </div>
                                 <div className="col-xl-6 col-lg-9 col-md-12">

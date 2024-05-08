@@ -325,7 +325,7 @@ def manage_user_status(request, id, action):
         user_model = Consommateur
         serializer_class = ConsommateurSerializer
         id_field = 'id_consommateur'
-        status_field = 'CNstatus'
+        status_field = 'is_active'
     else:
         return Response({'error': 'Invalid user type'}, status=status.HTTP_400_BAD_REQUEST)
     

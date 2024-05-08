@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom'
 import Navbar from '../global_components/navbar';
 import Footer from '../global_components/footer';
 import useAuth from '../../hooks/useAuth'
+import {useAuthContext} from '../../context/authContext'
 
 
 export default function LoginPage() {
@@ -12,7 +13,8 @@ export default function LoginPage() {
     const [username,setUsername]= useState("")
     const [password,setPassword] = useState("")
 
-    const { signIn} = useAuth()
+    const {signIn} = useAuth()
+    const { authState } = useAuthContext();
 
    
     const handleFormSubmit = (e) => {
@@ -25,7 +27,15 @@ export default function LoginPage() {
          
         console.log(user)
         signIn(user)
-        navigate('/')
+        
+        if (authState.isAuth && authState.isConsommateur ) {
+            navigate('/')
+        }
+        if(authState.isAuth && authState.isFournisseur){
+            navigate('/provider_home')
+        } 
+        
+       
     };
 
   return (
@@ -53,7 +63,7 @@ export default function LoginPage() {
                     <div className="row justify-content-center">
                         <div className="col-md-12">
                             <div className="tf-heading style-2">
-                                <h4 className="heading">Sign In To NFT</h4>
+                                <h4 className="heading">Sign In To APIway</h4>
                             </div>
                         </div>
                         <div className="col-xl-6 col-lg-9 col-md-12">

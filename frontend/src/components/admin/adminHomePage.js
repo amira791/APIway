@@ -7,9 +7,6 @@ class AdminHome extends Component {
 
 
     render() {
-
-        let publicUrl = process.env.PUBLIC_URL+'/'
-
         return (
 			<body className="body header-fixed home-4">
 

@@ -4,7 +4,7 @@ import './index.css';
 import {
   BrowserRouter as Router,
   Routes,
-  Route
+  Route,Navigate
 } from 'react-router-dom';
 import ForumPage from './components/pages/ForumPage';
 import ThreadPage from './components/pages/ThreadPage';
@@ -18,14 +18,15 @@ import ApiDetails from './components/ApiDetails'
 import LoginPage from './components/auth_components/LoginPage';
 import TicketForm from './components/tickets/TicketForm';
 import TicketsPage from './components/pages/TicketsPage';
-import {  AuthProvider} from './context/authContext';
+import { AuthProvider} from './context/authContext';
 import SignUpPage from './components/auth_components/SignUpPage';
 import AddAPIPage from './components/provider_componants/AddApi';
 import Details from './components/provider_componants/Details';
-
+import {useAuthContext} from './context/authContext'
 function Root() {
 
-  
+  const { authState } = useAuthContext();
+
   return (
     <div id="App">
       <Router>
@@ -44,7 +45,7 @@ function Root() {
           <Route path='/tickets' element={<TicketsPage/>} />
           <Route exact path="/addAPI" element={<AddAPIPage />} />
           <Route exact path="/details/:id" element={<Details />} />
-          <Route exact path="/provider_home" element={<ProviderHomePage/>} />
+          <Route exact path="/provider_home"  element={<ProviderHomePage/>}/>
         </Routes>
       </Router>
     </div>

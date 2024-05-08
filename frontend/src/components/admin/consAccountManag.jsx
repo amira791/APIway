@@ -16,7 +16,8 @@ const FourAccountManag = () => {
 
   // Custom cell for rendering status with Tailwind CSS classes
   const customStatusCell = (row) => {
-    const status = row.CNstatus.toLowerCase();
+    console.log(row)
+    const status = row.is_active.toLowerCase();
     let statusClass = '';
   
     switch (status) {
@@ -31,7 +32,7 @@ const FourAccountManag = () => {
         break;
     }
   
-    return <div className={statusClass}>{row.CNstatus}</div>;
+    return <div className={statusClass}>{row.is_active}</div>;
   };
 
   const handleActivateStatus =  () => {
@@ -53,32 +54,32 @@ const FourAccountManag = () => {
   const columns = [
     {
       name: 'User Name',
-      selector: (row) => row.CNusername,
+      selector: (row) => row.username,
       sortable: true,
     },
     {
       name: 'First Name',
-      selector: (row) => row.CN_first_name,
+      selector: (row) => row.first_name,
       sortable: true,
     },
     {
       name: 'Last Name',
-      selector: (row) => row.CN_last_name,
+      selector: (row) => row.last_name,
       sortable: true,
     },
     {
       name: 'Email',
-      selector: (row) => row.CNemail,
+      selector: (row) => row.email,
       sortable: true,
     },
     {
       name: 'Phone',
-      selector: (row) => row.CNphone,
+      selector: (row) => row.phone,
       sortable: true,
     },
     {
       name: 'Status',
-      selector: (row) => row.CNstatus,
+      selector: (row) => row.is_active,
       sortable: true,
       cell: customStatusCell,
     },

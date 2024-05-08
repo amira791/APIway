@@ -38,6 +38,7 @@ export default function Forum({ forum_id }) {
         forum: forum_id,
         creator: consommateur.id_consommateur,
       };
+      console.log(thread)
       addNewThread(thread);
     } else {
       setShowLoginPrompt(true);

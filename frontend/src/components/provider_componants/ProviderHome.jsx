@@ -3,6 +3,7 @@ import Navbar from "./CommunComponants/NavBar";
 import AddAPIPage from "../provider_componants/AddApi";
 import ProvAPIList from "../provider_componants/ListProvAPI";
 import React, { useEffect, useState } from "react";
+import {useNavigate} from 'react-router-dom'
 import APIAjout from "../../hooks/ApiHook";
 import TicketsList from "../tickets/TicketsList";
 import useManageAccountsF from '../../hooks/FouAccountsHook'
@@ -11,14 +12,19 @@ const ProviderHomePage = () => {
 
     const { authState } = useAuthContext();
     const {getFournisseur ,fournisseur} = useManageAccountsF()
+    const navigate = useNavigate()
 
     useEffect(() => {
+        if(!authState.isAuth || !authState.isFournisseur){
+           navigate('/login')
+        }
         getFournisseur(authState.userId)
      }, [authState.userId]);
-    return (
+  
+        return (
         <div className="body header-fixed">
 
-           
+            
             <div className="preload preload-container">
                 <div className="preload-logo"></div>
             </div>
@@ -29,7 +35,7 @@ const ProviderHomePage = () => {
                     <Navbar />
 
                     <section className="tf-page-title ">    
-                           
+                            
                     </section>
 
                     <section className="tf-dashboard tf-tab">
@@ -43,7 +49,7 @@ const ProviderHomePage = () => {
                                             </div>
                                             <div className="name">{fournisseur.user?.first_name ? fournisseur.user.first_name : 'Francisco Maia'}</div>
                                             <div className="pax"><i className="fab fa-ethereum"></i>0x59485…82590</div>
-                                           
+                                            
                                             <ul className="social-item">
                                                 <li><a href="#"><i className="fab fa-facebook-f"></i></a></li>
                                                 <li><a href="#"><i className="fab fa-twitter"></i></a></li>
@@ -95,7 +101,7 @@ const ProviderHomePage = () => {
                                         </div>
                                         <div className="inner-content history">
                                             <h4 className="title-dashboard">Tickets</h4>
-                                             <TicketsList/>
+                                                <TicketsList/>
                                             <div className="history-filter">
                                                 <div className="history-content">
                                                     <div className="inner tf-filter-container">
@@ -564,15 +570,15 @@ const ProviderHomePage = () => {
                         </div>
                     </section>
                     
-                 <Footer />
+                    <Footer />
                 </div>
-               
+                
             </div>
-           
+            
 
             <a id="scroll-top"></a>
 
-           
+            
 
             <script src="/assets/js/jquery.min.js"></script>
             <script src="/assets/js/jquery.easing.js"></script>
@@ -588,6 +594,7 @@ const ProviderHomePage = () => {
 
         </div>
 
-    );
+        );
+
 };
 export default ProviderHomePage;

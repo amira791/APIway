@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState ,useEffect } from 'react';
 import axios from 'axios';
 import { BASEURL ,fetchData } from './API';
 
@@ -8,24 +8,24 @@ export default function useManageAccountsF() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    // useEffect(() => {
-    //     setLoading(true);
-    //     axios.get('http://127.0.0.1:5000/fournisseurs/')
-    //         .then(response => {
-    //             console.log('Fetched Data:', response.data);
-    //             setFournisseurs(response.data);
-    //             setLoading(false);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching data:', error);
-    //             setError(error);
-    //             setLoading(false);
-    //         });
-    // }, []);
+    useEffect(() => {
+        setLoading(true);
+        axios.get(`${BASEURL}/fournisseurs/`)
+            .then(response => {
+                console.log('Fetched Data:', response.data);
+                setFournisseurs(response.data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                setError(error);
+                setLoading(false);
+            });
+    }, []);
 
     const activateStatus = async (userId) => {
         try {
-          const response = await axios.post(`http://127.0.0.1:5000/activate/${userId}/`, {
+          const response = await axios.post(`${BASEURL}activate/${userId}/`, {
             type: "F" // Include user type in the request body
           });
           console.log(response.data.message);
@@ -38,7 +38,7 @@ export default function useManageAccountsF() {
 
       const deactivateStatus = async (userId) => {
         try {
-          const response = await axios.post(`http://127.0.0.1:5000/deactivate/${userId}/`, {
+          const response = await axios.post(`${BASEURL}deactivate/${userId}/`, {
             type: "F" // Include user type in the request body
           });
           console.log(response.data.message);
@@ -50,7 +50,7 @@ export default function useManageAccountsF() {
       };
 
     const fetchFournisseursData = () => {
-        axios.get('http://127.0.0.1:5000/fournisseurs/')
+        axios.get(`${BASEURL}fournisseurs/`)
             .then(response => {
                 console.log('Fetched Data:', response.data);
                 setFournisseurs(response.data);
