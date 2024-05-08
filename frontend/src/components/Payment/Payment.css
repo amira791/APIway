@@ -15,7 +15,7 @@
    .payment-form .payment-group{
      display: flex;
      flex-direction: column;
-     align-items: flex-end;
+     
      width: 48%;
      
  }
@@ -29,7 +29,7 @@
    .payment-form label  {
      display: block;
      margin-bottom: 5px;
-     text-align: right;
+    
      color: white;
      font-weight: 500;
    }
@@ -37,7 +37,7 @@
    .payment-form .payment-group-col{
      display: flex;
      flex-direction: column;
-     align-items: flex-end;
+     
      margin-bottom: 5%;
     /* border: #3D3935 1px solid;*/
      width: 100%; 
@@ -70,7 +70,8 @@
    color: white;
  }
  .payment-form input::placeholder {
-   text-align: right;
+  font-size: 14px;
+  
    color: white;
  }
  
