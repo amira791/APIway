@@ -2,7 +2,7 @@ import React, { useState, useEffect,useRef } from 'react';
 import Navbar from './global_components/navbar';
 import Footer from './global_components/footer';
 import Card from './global_components/Card';
-import useApi from '../hooks/APIHook3';
+import useApi from '../Hooks/APIHook3';
 
 const SearchApi = () => {
     const { searchResults,APIs,Categories, suggestions, fetchApiSuggestions, fetchApiCategories,fetchApiSearchResults,setSearchResults,fetchAPIVersions } = useApi();

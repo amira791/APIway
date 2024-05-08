@@ -4,9 +4,9 @@ import React, { useRef } from "react";
 import Footer from "../global_components/footer.jsx";
 import Navbar from "../global_components/navbar.jsx";
 import DataTable from "../global_components/Datatable.jsx";
-import ManipulateCat from "../../hooks/CategoryHook.jsx";
-import APIAjout from "../../hooks/APIHook2.jsx";
-import useManageAccountsF from '../../hooks/FouAccountsHook'
+import ManipulateCat from "../../../src/Hooks/CategoryHook.jsx";
+import APIAjout from "../../../src/Hooks/APIHook2.jsx";
+import useManageAccountsF from '../../../src/Hooks/FouAccountsHook.jsx'
 import { useAuthContext } from '../../context/authContext';
 import $ from "jquery";
 import "datatables.net";
@@ -15,7 +15,7 @@ import TextEditor from "./CommunComponants/textEditor.jsx";
 import AddGroupForm from "./CreateGroupEndpoint.jsx";
 import EndpointTable from "./CommunComponants/endpointable.jsx";
 import Monetizing from "./Monetize.jsx";
-import PlansAjout from "../../hooks/MonetizationHook.jsx";
+import PlansAjout from "../../../src/Hooks/MonetizationHook.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

@@ -4,6 +4,10 @@ import { Navigate, useParams, useNavigate, useLocation } from 'react-router-dom'
 import { CardCvcElement, CardExpiryElement, CardNumberElement, useElements, useStripe } from '@stripe/react-stripe-js';
 
 import ShoppingCart from '@mui/icons-material/ShoppingCart';
+import { Elements } from '@stripe/react-stripe-js';
+import { background } from '@chakra-ui/react';
+import { color } from 'framer-motion';
+
 function Payment() {
 
     const stripe = useStripe()
@@ -43,6 +47,7 @@ function Payment() {
 
   return (
     <>
+   <div className='payment-form'>
     <form onSubmit={handleSubmit} className='payment_sub'>
         <div className='payment-section1'>
           <div className='mini-invoice'>
@@ -60,11 +65,11 @@ function Payment() {
               <h3>BaridiMOB</h3>
               </button> */}
               <button className={`paiement-mode-item ${activeButton === 1 ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); setActiveButton(1) }} >
-                <img src='../images/cib.png' />
+                <img src='../assets/images/payment/cib.png' />
                 <h3>CIB</h3>
               </button>
               <button className={`paiement-mode-item ${activeButton === 0 ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); setActiveButton(0) }} >
-                <img src='../images/dahabia.png' />
+                <img src='../assets/images/payment/dahabia.png' />
                 <h3>Dahabia</h3>
               </button>
 
@@ -82,6 +87,7 @@ function Payment() {
                   name="NumCart"
                   className={`payment_item_col ${errors.NumCart ? 'error' : ''}`}
                   placeholder='رقم البطاقة'
+               
                 />
 
                 {errors.NumCart && <span className='error-message'>{errors.NumCart}</span>}
@@ -165,6 +171,8 @@ function Payment() {
 
         </div>
       </form>
+      </div>
+     
     </>
   )
 }

@@ -2,10 +2,12 @@ import React, { useEffect } from 'react';
 import parse from 'html-react-parser';
 import { Button, Flex, Box } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import useTicket from '../../hooks/useTicket';
+import useTicket from '../../../src/Hooks/useTicket';
+
+
 
 export default function TicketsList({ api_id }) {
-  const { getAPITickets, tickets, error, loading } = useTicket();
+  const { getAPITickets, tickets, error, loading } = useTicket;
 
   useEffect(() => {
     console.log(api_id);

@@ -24,7 +24,11 @@ import AddAPIPage from './components/provider_componants/AddApi';
 import Details from './components/provider_componants/Details';
 import Payment from './components/Payment/Payment';
 
+import { loadStripe } from '@stripe/stripe-js'
+import {Elements} from '@stripe/react-stripe-js'
+
 function Root() {
+  const stripe = loadStripe("pk_test_51OygXvLDzFR9kcMzeb7UST3IEa8SXi7CD3pXxIcTSQFunxMWcnaKqIJiCHZWO7fLFvnpgauFm9XArtMtZ9xjBJGl00FHM5TiPB");
 
   
   return (
@@ -46,7 +50,10 @@ function Root() {
           <Route exact path="/addAPI" element={<AddAPIPage />} />
           <Route exact path="/details/:id" element={<Details />} />
           <Route exact path="/provider_home" element={<ProviderHomePage/>} />
-          <Route exact path="/payment" element={<Payment/>} />
+          <Route exact path="/payment" element={
+          <Elements stripe={stripe}>
+            <Payment/>
+          </Elements>} />
         </Routes>
       </Router>
     </div>

@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import Navbar from '../global_components/navbar';
 import Footer from '../global_components/footer';
 import TheDataTable from './FrDatatable';
-import useManageAccountsF from '../../hooks/FouAccountsHook';
+import useManageAccountsF from '../../../src/Hooks/FouAccountsHook';
 import { Button } from '@chakra-ui/react'; // Import Chakra UI Button or your preferred button component
 
 const FourAccountManag = () => {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ManipulateTypes from "../../../hooks/EndpointHook";
+import ManipulateTypes from "../../../../src/Hooks/EndpointHook";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const ParamsTable = ({ data, params, onAddRow, onChange, onDelete, activeTab }) => {

@@ -1,8 +1,8 @@
-import ManipulateProv from "../../hooks/ProviderHook";
+import ManipulateProv from "../../../src/Hooks/ProviderHook";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import ManipulateCat from "../../hooks/CategoryHook";
-import APIAjout from "../../hooks/APIHook";
+import ManipulateCat from "../../../src/Hooks/CategoryHook";
+import APIAjout from "../../../src/Hooks/ApiHook";
 const ProvAPIList = () => {
     const { providerAPIs } = ManipulateProv();
     const [showUpdateSection, setShowUpdateSection] = useState(false);

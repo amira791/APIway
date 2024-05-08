@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios"; // Import axios for making HTTP requests
 import { Button, Input, Checkbox, Switch, Radio, Select, Tabs } from "antd";
-import ManipulateTypes from "../../hooks/EndpointHook";
+import ManipulateTypes from "../../../src/Hooks/EndpointHook";
 import ParamsTable from "./CommunComponants/paramTable";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

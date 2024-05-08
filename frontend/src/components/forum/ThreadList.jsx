@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import useForum from '../../hooks/useForum';
+import useForum from '../../../src/Hooks/useForum';
 
 import { NavLink } from 'react-router-dom';
 import { TimeIcon, ChatIcon } from '@chakra-ui/icons';

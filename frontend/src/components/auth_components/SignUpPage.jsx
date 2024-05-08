@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../global_components/navbar';
 import Footer from '../global_components/footer';
-import useAuth from '../../hooks/useAuth'
+import useAuth from '../../../src/Hooks/useAuth'
 
 
 export default function SignUpPage() {

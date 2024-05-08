@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Flex, Box, Heading, Text, HStack } from '@chakra-ui/react';
-import useForum from '../../hooks/useForum';
+import useForum from '../../../src/Hooks/useForum';
 import ThreadList from './ThreadList';
 import { useAuthContext } from '../../context/authContext';
-import useManageAccountsC from '../../hooks/ConsomAccountsHook';
+import useManageAccountsC from '../../../src/Hooks/ConsomAccountsHook';
 
 export default function Forum({ forum_id }) {
   const { addNewThread, getForum, forum, error: forumError, loading: forumLoading } = useForum();

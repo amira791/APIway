@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {useAuthContext} from '../../context/authContext';
-import useAuth from '../../hooks/useAuth'
+import useAuth from '../../../src/Hooks/useAuth'
 
 export default function Navbar() {
 

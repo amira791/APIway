@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink , useNavigate} from 'react-router-dom';
-import useForum from '../../hooks/useForum';
+import useForum from '../../../src/Hooks/useForum';
 import Comment from './Comment';
 import {
   Flex, Avatar, Button, Input, Text, HStack, VStack,

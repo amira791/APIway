@@ -3,7 +3,7 @@ import Navbar from "../global_components/navbar";
 import AddAPIPage from "../provider_componants/AddApi";
 import ProvAPIList from "../provider_componants/ListProvAPI";
 import React, { useState } from "react";
-import APIAjout from "../../hooks/APIHook";
+import APIAjout from "../../../src/Hooks/ApiHook";
 const ProviderHomePage = () => {
     return (
         <div className="body header-fixed">

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ManipulateTypes from "../../../hooks/EndpointHook";
+import ManipulateTypes from "../../../../src/Hooks/EndpointHook";
 
 const TransformationTable = ({ data, params, onAddRow, onChange, onDelete }) => {
   const [newRow, setNewRow] = useState({
