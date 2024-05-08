@@ -131,7 +131,7 @@ class APIendpoint(models.Model):
         ('DELETE','DELETE'),
     )
     method = models.CharField(max_length=20, choices=CHOICES, null=True)  
-    link= models.TextField
+    path= models.TextField(default="/")
     group=models.CharField(max_length=255,default="",  null=True)
     version = models.ForeignKey(APIversion, on_delete=models.DO_NOTHING )
     description = models.TextField( help_text="Brief description of the endPoint" ,default="")   

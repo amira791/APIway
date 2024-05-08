@@ -99,13 +99,14 @@ def signin(request):
 # Fournisseur View
 class FournisseurView(viewsets.ModelViewSet):
     serializer_class = FournisseurSerializer
-    lookup_field = 'user_id'
+    queryset = Fournisseur.objects.all()
+    # lookup_field = 'user_id'
 
-    def get_queryset(self):
-        user_id = self.request.query_params.get('user_id')
-        if user_id:
-            return Fournisseur.objects.filter(user_id=user_id)
-        return Fournisseur.objects.all()
+    # def get_queryset(self):
+    #     user_id = self.request.query_params.get('user_id')
+    #     if user_id:
+    #         return Fournisseur.objects.filter(user_id=user_id)
+    #     return Fournisseur.objects.all()
 
 
 # Admin View
@@ -134,13 +135,13 @@ class APIView(viewsets.ModelViewSet):
     queryset = API.objects.all()
     serializer_class = APISerializer
     parser_classes = (MultiPartParser, FormParser)
-    lookup_field = 'provider'
+    # lookup_field = 'provider'
 
-    def get_queryset(self):
-        provider_id = self.kwargs.get('provider')
-        if provider_id:
-            return API.objects.filter(provider=provider_id)
-        return API.objects.all()
+    # def get_queryset(self):
+    #     provider_id = self.kwargs.get('provider')
+    #     if provider_id:
+    #         return API.objects.filter(provider=provider_id)
+    #     return API.objects.all()
 
 
 

@@ -85,11 +85,11 @@ export default function Navbar() {
                                         <path fillRule="evenodd" clipRule="evenodd" d="M17.9138 15.5473C17.6104 15.5473 17.3251 15.3725 17.212 15.0901C17.0649 14.7245 17.2601 14.3146 17.6475 14.1767C18.4984 13.8726 18.4984 13.5013 18.4984 13.3427C18.4984 12.8071 17.8267 12.4406 16.5023 12.2545C16.0918 12.196 15.8085 11.8352 15.8696 11.4488C15.9317 11.0616 16.3211 10.8018 16.7235 10.8519C19.4323 11.2344 19.9999 12.4179 19.9999 13.3427C19.9999 14.0312 19.6846 14.9635 18.18 15.501C18.0929 15.5321 18.0028 15.5473 17.9138 15.5473Z" fill="#B9B8BB"/>
                                         </g>
                                         </svg>
-                    </span>
-                  <a href="#" onClick={LightMode} className="mode-switch">
-                    <img id="img-mode" src="assets/images/icon/moon.png" alt="Image" />
-                  </a>
-                </div>
+                                        </span>
+                                    <a href="#" onClick={LightMode} className="mode-switch">
+                                        <img id="img-mode" src="/assets/images/icon/moon.png" alt="Image"></img>
+                                    </a>
+                                </div>  
 
                 <div className="mobile-button"><span></span></div>
               </div>

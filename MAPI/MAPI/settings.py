@@ -103,7 +103,7 @@ DATABASES = {
     'default': {
 
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mapi',
+        'NAME': 'details',
         'USER': 'root',
         'PASSWORD': '',
         'HOST':'localhost',

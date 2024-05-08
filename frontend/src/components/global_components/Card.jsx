@@ -48,7 +48,7 @@ const Card = ({ idApi ,apiName, description, logo, termsOfUse, website, category
                         <div className="current-bid">
                             <div className="subtitle">Price</div>
                             <div className="price">
-                                <span className="cash">5000 DZA</span><span className="icon"><img src="assets/images/icon/ethe.svg" alt="images"/></span>
+                                <span className="cash">5000 DZA</span><span className="icon"><img src="/assets/images/icon/ethe.svg" alt="images"/></span>
                             </div>
                         </div>
                     </div>

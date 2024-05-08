@@ -13,7 +13,7 @@ export default function ManipulateProv() {
     console.log("provider id :")
     console.log(provider_id)
       setLoading(true);
-      API.get(`apis/${provider_id}/`)
+      API.get(`apis/byprovider/${provider_id}/`)
           .then((res) => {
               console.log(res.data);
               setproviderAPIs(res.data);

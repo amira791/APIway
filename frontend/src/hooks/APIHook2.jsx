@@ -369,7 +369,7 @@ const createModels = async (apiId, models) => {
           recommended: false,
           features: plan.features,
           quota_limit: plan.quotalimit,
-          rate_limit: plan.ratelimit || 10000,
+          rate_limit: plan.ratelimit || 1000,
           type: plan.id,
           pricingModel: modelId,
         },{
@@ -442,7 +442,7 @@ const createEndpoints = async (apiVersionId, endpoints) => {
       const endpointResponse = await API.post(`/apiendpoints/`, {
         title: endpoint.name,
         method: endpoint.method,
-        link: endpoint.path,
+        path: endpoint.path,
         version: apiVersionId,
         description: endpoint.description,
         group: endpoint.group,
@@ -592,24 +592,109 @@ const fetchAllAPIVersionsById = async (id) => {
   try {
     const response = await API.get('/apiversions/');
     const allApiVersions = response.data;
-
-    // Filter API versions by the provided API ID
-    const apiVersionsByApiId = allApiVersions.filter(apiVersion => apiVersion.api.id === id);
     
+    
+    // Filter API versions by the provided API ID
+    const apiVersionsByApiId = allApiVersions.filter(apiVersion => apiVersion.api == id && apiVersion.state !== "Draft");
+  
     return apiVersionsByApiId;
   } catch (error) {
     console.error('Error fetching API versions by API ID:', error);
     throw error;
   }
 };
-const fetchAPIEndpointsByVersion = async (id) => {
+const fetchAPIEndpointsByVersion = async (versionId) => {
   try {
-    const response = await API.get(`/apicategories/${id}/`);
-    return response.data;
+    // Make the API call to fetch endpoints
+    const response = await API.get('/apiendpoints/');
+    
+    // Check if the response is valid and contains data
+    if (response && response.data) {
+      //alert(versionId);
+      // Filter endpoints by versionId
+      const endpointsByVersionId = response.data.filter(endpoint => endpoint.version == versionId);
+      
+      // Log filtered endpoints for debugging
+      console.log('Filtered endpoints:', endpointsByVersionId);
+      
+      return endpointsByVersionId;
+    } else {
+      // Log error if response is invalid or empty
+      console.error('Empty or invalid response:', response);
+      return [];
+    }
   } catch (error) {
-    throw error.response.data;
+    // Handle API call errors
+    console.error("Error fetching API endpoints:", error);
+    throw error.response ? error.response.data : error.message;
   }
 };
+
+const fetchAPIHeadersByEndpointId = async (endpointId) => {
+  try {
+    const response = await API.get(`/apiheaders/`);
+    const allHeaders = response.data;
+    const headersByEndpointId = allHeaders.filter(header => header.endpoint === endpointId);
+    console.log('Fetched headers by endpointId:', headersByEndpointId);
+    return headersByEndpointId;
+  } catch (error) {
+    console.error("Error fetching API headers:", error);
+    throw error.response ? error.response.data : error.message;
+  }
+};
+
+const fetchAPIQueryParamsByEndpointId = async (endpointId) => {
+  try {
+    const response = await API.get(`/apiquery/`);
+    const allQueryParams = response.data;
+    const queryParamsByEndpointId = allQueryParams.filter(queryParam => queryParam.endpoint === endpointId);
+    console.log('Fetched query parameters by endpointId:', queryParamsByEndpointId);
+    return queryParamsByEndpointId;
+  } catch (error) {
+    console.error("Error fetching API query parameters:", error);
+    throw error.response ? error.response.data : error.message;
+  }
+};
+
+const fetchAPIEndpointBodyByEndpointId = async (endpointId) => {
+  try {
+    const response = await API.get(`/apiendpointbody/`);
+    const allEndpointBodies = response.data;
+    const endpointBodyByEndpointId = allEndpointBodies.find(endpointBody => endpointBody.endpoint === endpointId);
+    console.log('Fetched endpoint body by endpointId:', endpointBodyByEndpointId);
+    return endpointBodyByEndpointId;
+  } catch (error) {
+    console.error("Error fetching API endpoint body:", error);
+    throw error.response ? error.response.data : error.message;
+  }
+};
+
+const fetchAPIResponseExamplesByEndpointId = async (endpointId) => {
+  try {
+    const response = await API.get(`/responseexample/`);
+    const allResponseExamples = response.data;
+    const responseExamplesByEndpointId = allResponseExamples.filter(responseExample => responseExample.id_endpoint === endpointId);
+    console.log('Fetched response examples by endpointId:', responseExamplesByEndpointId);
+    return responseExamplesByEndpointId;
+  } catch (error) {
+    console.error("Error fetching API response examples:", error);
+    throw error.response ? error.response.data : error.message;
+  }
+};
+
+const fetchEndpointParametersByEndpointId = async (endpointId) => {
+  try {
+    const response = await API.get(`/endpoint_parameter/`);
+    const allEndpointParameters = response.data;
+    const endpointParametersByEndpointId = allEndpointParameters.filter(parameter => parameter.id_endpoint === endpointId);
+    console.log('Fetched endpoint parameters by endpointId:', endpointParametersByEndpointId);
+    return endpointParametersByEndpointId;
+  } catch (error) {
+    console.error("Error fetching endpoint parameters:", error);
+    throw error.response ? error.response.data : error.message;
+  }
+};
+
   const [tarifTypes, setTarifTypes] = useState([]);
 
   const getTarifType = () => {
@@ -629,6 +714,13 @@ const fetchAPIEndpointsByVersion = async (id) => {
     fetchAPIDetailsById,
     fetchAPICategorysById,
     fetchAPIProviderById,
+    fetchAllAPIVersionsById,
+    fetchAPIEndpointsByVersion,
+    fetchAPIHeadersByEndpointId,
+    fetchAPIQueryParamsByEndpointId,
+    fetchAPIEndpointBodyByEndpointId,
+    fetchAPIResponseExamplesByEndpointId,
+    fetchEndpointParametersByEndpointId,
     tarifTypes,
   };
 }

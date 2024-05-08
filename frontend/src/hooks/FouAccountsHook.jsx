@@ -62,7 +62,7 @@ export default function useManageAccountsF() {
     };
 
     const getFournisseur = (id) => {
-      fetchData(`${BASEURL}fournisseurs/${id}/`, setFournisseur, setLoading, setError);
+      fetchData(`${BASEURL}fournisseurs/byuser/${id}/`, setFournisseur, setLoading, setError);
   };
 
     return {

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState,useEffect } from "react";
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -15,6 +15,7 @@ import {
 } from "@material-ui/core";
 import { AccordionDetails, Box, Button } from "@mui/material";
 import { Icons } from "react-toastify";
+import APIAjout from "../../../hooks/APIHook2";
 export const data = [
   {
     name: "User Endpoint",
@@ -68,12 +69,56 @@ const useStyles = makeStyles({
     },
   });
 
-const Example = () => {
+const Example = ({endpoints}) => {
   const classes = useStyles(); // Initialize the styles
-  const [selectedEndpoint, setSelectedEndpoint] = useState(data[0]); // Initialize selected endpoint state
+  const [selectedEndpoint, setSelectedEndpoint] = useState(endpoints[0]); // Initialize selected endpoint state
+  const [headers, setHeaders] = useState([]);
+  const [queryParams, setQueryParams] = useState([]);
+  const [endpointBody, setEndpointBody] = useState(null);
+  const [responseExamples, setResponseExamples] = useState([]);
+  const [endpointParameters, setEndpointParameters] = useState([]);
+  const {   fetchAPIHeadersByEndpointId,
+    fetchAPIQueryParamsByEndpointId,
+    fetchAPIEndpointBodyByEndpointId,
+    fetchAPIResponseExamplesByEndpointId,
+    fetchEndpointParametersByEndpointId } = APIAjout();
+    
   const handleEndpointSelection = (endpoint) => {
     setSelectedEndpoint(endpoint);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (selectedEndpoint !== null) {
+          // Fetch headers by endpoint ID
+          const headers = await fetchAPIHeadersByEndpointId(selectedEndpoint.id_endpoint);
+          setHeaders(headers);
+  
+          // Fetch query parameters by endpoint ID
+          const queryParams = await fetchAPIQueryParamsByEndpointId(selectedEndpoint.id_endpoint);
+          setQueryParams(queryParams);
+  
+          // Fetch endpoint body by endpoint ID
+          const endpointBody = await fetchAPIEndpointBodyByEndpointId(selectedEndpoint.id_endpoint);
+          setEndpointBody(endpointBody);
+  
+          // Fetch response examples by endpoint ID
+          const responseExamples = await fetchAPIResponseExamplesByEndpointId(selectedEndpoint.id_endpoint);
+          setResponseExamples(responseExamples);
+  
+          // Fetch endpoint parameters by endpoint ID
+          const endpointParameters = await fetchEndpointParametersByEndpointId(selectedEndpoint.id_endpoint);
+          setEndpointParameters(endpointParameters);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData();
+  }, [selectedEndpoint]);
+  
   const columns = useMemo(
     () => [
       {
@@ -105,7 +150,7 @@ const Example = () => {
 
   const table = useMaterialReactTable({
     columns,
-    data: data,
+    data: endpoints,
     muiTableBodyCellProps: {
       sx: {
         fontSize: "20px",
@@ -128,7 +173,9 @@ const Example = () => {
       sx: { maxHeight: 700 },
     }, // Apply transparent background style
   });
-
+  if (!selectedEndpoint) {
+    return <div>No endpoint selected</div>;
+  }
   return (
     <Box display="flex" justifyContent="space-between">
       <Box sx={{ flex: 1, backgroundColor: "#fff", maxHeight: 700 }}>
@@ -145,7 +192,7 @@ const Example = () => {
               }}
             >
               <Typography style={{ fontSize: "20px" }}>
-                {selectedEndpoint.name}:
+                {selectedEndpoint.title}:
               </Typography>
               <Typography
                 style={{
@@ -160,7 +207,7 @@ const Example = () => {
               </Button>
             </div>
             <Divider />
-            Brief Description of the current chosen endpoint
+            {selectedEndpoint.description}
             <Divider />
             <div
               style={{
@@ -252,7 +299,32 @@ const Example = () => {
                 </Select>
                 <Typography variant="body1">Required</Typography>
               </Box>
-            </div> </AccordionDetails>
+            </div>
+            {headers.map(parameter => (
+      <div key={parameter.id}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            {parameter.key}
+          </Typography>
+          <Box sx={{ mt: 1 }}>
+            <Select disabled value="default">
+              <MenuItem value="default" disabled>
+                {parameter.example_value}
+              </MenuItem>
+            </Select>
+          {parameter.required? <Typography variant="body1">Required</Typography>:<></>} 
+          </Box>
+        </div>
+        <Divider />
+      </div>
+    ))}
+             </AccordionDetails>
       </Accordion>
       <Accordion sx={{ mt: 2 }}>
         <AccordionSummary expandIcon={<StepIcon/>}>

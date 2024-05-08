@@ -598,7 +598,7 @@ const AddAPIPage = ({provider}) => {
                                   />
                                   <img
                                    
-                                    src="assets/images/svg/drap-upload.svg"
+                                    src="/assets/images/svg/drap-upload.svg"
                                     alt="Image"
                                   />
                                   <h6 className="title">Upload Logo</h6>
@@ -889,10 +889,10 @@ const AddAPIPage = ({provider}) => {
                       </div>
 
                       <div class="rain-drop1">
-                        <img src="assets/images/icon/rain1.svg" alt="images" />
+                        <img src="/assets/images/icon/rain1.svg" alt="images" />
                       </div>
                       <div class="rain-drop2">
-                        <img src="assets/images/icon/rain2.svg" alt="images" />
+                        <img src="/assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
                     <div className="bottom">
