@@ -174,7 +174,21 @@ const SearchApi = () => {
 
                         <section className="tf-baner-live-auction style-2">
                             <div className="tf-container">
+                            {/* <form action="#">
+                                                        <div id="item_category" class="dropdown">
+                                                            <a href="#" class="btn-selector nolink "><div class="icon"><i class="fab fa-ethereum"></i></div>ETH</a>
+                                                            <ul >
+                                                                <li><span>ETH</span></li>
+                                                                <li class="active"><span>USD</span></li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="search-form">
+                                                            <input type="text" placeholder="Search keyword..." required=""/>
+                                                        <a class="btn-search"><i class="icon-fl-search-filled"></i></a>
+                                                        </div>
+                                                    </form> */}
                                 <div className="mt-6 mb-20 flex flex-col items-center">
+
 
                                     
                                 <div className="mt-6 mb-10 flex justify-center items-center">

@@ -67,9 +67,9 @@ def search_api(request, index='api_index'):
 
     # Define Elasticsearch multi_match query
     if search_field == 'Name':
-        search_fields = ["api_name^3","description","category.label^2","functions.functName"]
+        search_fields = ["api_name^3","category.label^2"]
     elif search_field == 'Description':
-        search_fields = ["description^3","api_name","category.label^2","functions.functName"]
+        search_fields = ["description^3"]
     elif search_field == 'Category':
         search_fields = ["category.label^3"]
     elif search_field == 'Functionalities':

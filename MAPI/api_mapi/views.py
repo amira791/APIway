@@ -125,6 +125,8 @@ class FunctionnalityView(viewsets.ModelViewSet):
     queryset = Functionnality.objects.all()
     serializer_class = FunctionnalitySerializer
 
+
+
 # APIdocumentation View
 class APIdocumentationView(viewsets.ModelViewSet):
     queryset = APIdocumentation.objects.all()

@@ -1,15 +1,14 @@
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
-from elasticsearch_dsl import Index, Text ,Keyword, Date, Object
-from api_mapi.models import *
-
+from elasticsearch_dsl import Index, Text, Keyword, Date, Object
+from api_mapi.models import API, APIversion, Functionnality
 
 @registry.register_document
 class APIDocument(Document):
     
     category = fields.ObjectField(
         properties={
-           'label': fields.TextField(),
+            'label': fields.TextField(),
         }
     )
     
@@ -24,15 +23,19 @@ class APIDocument(Document):
     
     class Django:
         model = API
-        fields = ['id_api', 'api_name', 'description','logo',
-                   'terms_of_use', 'visibility', 'website']
-       
-        related_models = [Functionnality]
+        fields = ['id_api', 'api_name', 'description', 'logo', 'terms_of_use', 'visibility', 'website']
+        related_models = [APIversion]
 
     def get_instances_from_related(self, related_instance):
-        if isinstance(related_instance, Functionnality):
-            return related_instance.api_set.all()
+        if isinstance(related_instance, APIversion):
+            return related_instance.functions.all()
 
     def prepare_functions(self, instance):
-    # Assuming APIversion has a functions ManyToManyField related to Functionnality
-      return [{'functName': func.functName} for func in instance.apiversion_set.first().functions.all()]
+        # Get APIversion instances related to the API
+        api_versions = instance.apiversion_set.all()
+        
+        # Get all functions related to those APIversion instances
+        functions = Functionnality.objects.filter(apiversion__in=api_versions)
+        
+        # Prepare the functions data for indexing
+        return [{'functName': func.functName} for func in functions]
