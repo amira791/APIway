@@ -2,14 +2,6 @@ const BASEURL = "http://127.0.0.1:8000/api_mapi/"
 const ConsumerBASEURL = "http://127.0.0.1:8000/Consumer/"
 
 const createHeaders = () => {
-    const token = localStorage.getItem('token');
-    if (token) {
-        return {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-        };
-    }
     return {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

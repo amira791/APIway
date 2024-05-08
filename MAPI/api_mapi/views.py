@@ -216,7 +216,7 @@ class ThreadView(viewsets.ModelViewSet):
 class CommentView(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated]
+
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
