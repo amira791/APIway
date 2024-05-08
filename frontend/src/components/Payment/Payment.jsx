@@ -9,7 +9,7 @@ import { background } from '@chakra-ui/react';
 import { color } from 'framer-motion';
 
 function Payment() {
-
+  const navigate = useNavigate()
     const stripe = useStripe()
     const elements = useElements()
   
@@ -48,6 +48,23 @@ function Payment() {
   return (
     <>
    <div className='payment-form'>
+   {paymentSuccess?
+
+<section className="successful-payment">
+<h1 className="success-payment-title">تم إتمام معاملة الدفع بنجاح <i style={{color:"var(--primary-color)"}}>&#10003;</i></h1>
+<div className="success-payment-details">
+  <p><strong>العرض المختار:</strong> {name} </p>
+  <p><strong>المبلغ:</strong> {price} </p>
+  <p><strong>تاريخ بداية الاشتراك: </strong> {subscribed.dateDebut} </p>
+  <p><strong>تاريخ نهاية الاشتراك: </strong> {subscribed.dateDebut} </p>
+</div>
+<div className="receipt-actions">
+        <button onClick={()=>handleDownload(subscribed.facture.pdf)} >تحميل الفاتورة &#11015;</button>
+        <button onClick={()=> navigate('/services') } >صفحة الخدمات  &#128462;</button>
+      </div>
+</section>
+
+:
     <form onSubmit={handleSubmit} className='payment_sub'>
         <div className='payment-section1'>
           <div className='mini-invoice'>
@@ -170,7 +187,7 @@ function Payment() {
           <button type="submit" className="payment-button">  دفع {isLoading && <i className='loading'></i>}</button>
 
         </div>
-      </form>
+      </form>}
       </div>
      
     </>
