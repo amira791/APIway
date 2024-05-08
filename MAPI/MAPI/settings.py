@@ -104,8 +104,8 @@ DATABASES = {
 
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'search',
-        'USER': 'root',
-        'PASSWORD': '',
+        'USER': 'zaki',
+        'PASSWORD': 'Zaki7402',
         'HOST':'localhost',
         'PORT':'3306'
     }
@@ -197,3 +197,9 @@ CORS_ALLOW_HEADERS = [
     "x-csrftoken",
     "x-requested-with",
 ] """
+
+
+
+
+STRIPE_TEST_PUBLISHABLE_KEY = 'pk_test_51PDnbzEwLPoE4RaHQe4ixfjuIe0BQgN8A9K6E58sADIVHfvt7vf3brz7wRrjkGa150mvlfpxyAOhkNR6UBCMJQhg00lybgm8BX'
+STRIPE_TEST_SECRET_KEY = 'sk_test_51PDnbzEwLPoE4RaHQQAIlQfaB5okCSJldNrEiNH2xvLd7TzjXx595J0uQSlr7t9gJCK4PC5GyLEYiDWzBYfb1h8K00SCbEV80F'

@@ -11,5 +11,6 @@ router = routers.SimpleRouter()
 # Get the urlpatterns from the router
 urlpatterns = [
    
+    path('subscribe', subscribe, name = 'subscribe'),
    
     ] + router.urls
