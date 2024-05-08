@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import APIAjout from "../../hooks/ApiHook.jsx";
+import APIAjout from "../../hooks/APIHook2.jsx";
 import { ToastContainer } from 'react-toastify';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import ManipulateMonetize from "../../hooks/MonetizeHook.jsx"
+import ManipulateMonetize from "../../Hooks/MonetizeHook.jsx";
+import ModelCheckbox from "./ModelCheckBox.jsx";
+
 const Monetizing = ({apiId}) => {
+  
   // State to track the selected plan
   const [selectedPlan, setSelectedPlan] = useState({
     Name: "",
@@ -31,7 +34,6 @@ const Monetizing = ({apiId}) => {
     Recommended: false,
     ratelimit: "1000",
     quotalimit: "",
-    quotatype: activeFilter,
     price: "",
     features: "",
   });
@@ -42,28 +44,29 @@ const Monetizing = ({apiId}) => {
     Recommended: false,
     ratelimit: "1000",
     quotalimit: "",
-    quotatype: activeFilter,
     price: "",
     features: "",
   });
   const [modificationOn, setModificationOn] = useState(false);
   const { tarifTypes, createModels } = APIAjout();
-  const { checkExistingModel, getAPImodels, pricingModels, tarif, getModelTraifications } = ManipulateMonetize();
+  const { checkExistingModel, getAPImodels, pricingModels, tarif, getModelTraifications, updateActiveModel } = ManipulateMonetize();
   const [pricingPlans, setPricingPlans] = useState([]);
   const [newModelAdded, setNewModelAdded] = useState(null);
   const [planValidated, setPlanValidated] = useState(true);
-useEffect(() => {
-    getAPImodels(apiId);
-}, [apiId]);
-useEffect(() => {
-  console.log("Pricing Models:", pricingModels);
-}, [pricingModels]);
-useEffect(() => {
-  getModelTraifications(1);
-}, [1]);
-useEffect(() => {
-console.log("tarif:", tarif);
-}, [tarif]);
+  const [modelTarificationsLoaded, setModelTarificationsLoaded] = useState(false);
+  const [modelTarifications, setModelTarifications] = useState([]);
+
+  useEffect(() => {
+      getAPImodels(apiId);
+  }, [apiId]);
+  useEffect(() => {
+    console.log("Pricing Models:", pricingModels);
+  }, [pricingModels]);
+  useEffect(() => {
+    getModelTraifications();
+  }, []);
+
+
   const handleModelChange = (key, value) => {
     setModel((prevModel) => ({ ...prevModel, [key]: value }));
   };
@@ -109,7 +112,6 @@ console.log("tarif:", tarif);
         Models[indexModel].plans[planIndex].quotalimit = editedPlan.quotalimit; // Modify quotalimit to "100"
         Models[indexModel].plans[planIndex].price = editedPlan.price; // Modify price to "1000"
         Models[indexModel].plans[planIndex].features = editedPlan.features; // Modify quotalimit to "100"
-        Models[indexModel].plans[planIndex].quotatype = editedPlan.quotatype; // Modify price to "1000"
         Models[indexModel].plans[planIndex].ratelimit = editedPlan.ratelimit; // Modify quotalimit to "100"
         Models[indexModel].plans[planIndex].Recommended =
           editedPlan.Recommended; // Modify price to "1000"
@@ -127,11 +129,9 @@ console.log("tarif:", tarif);
       Recommended: false,
       ratelimit: "",
       quotalimit: "",
-      quotatype: activeFilter,
       price: "",
       features: "",
     });
-    document.getElementById("switch3").checked = false;
     const rateLimitInput = document.getElementById("rate-limit");
     if (rateLimitInput) {
       document.getElementById("rate-limit").value = "";
@@ -159,10 +159,7 @@ console.log("tarif:", tarif);
       alert("Please fill in all fields before adding the plan.");
       return;
     }
-     if(!newPlan.quotatype)
-     {
-      newPlan.quotatype="Daily";
-     }
+
     // Find the selected model
     const selectedModel = Models[indexModel];
 
@@ -187,18 +184,16 @@ console.log("tarif:", tarif);
       Recommended: false,
       ratelimit: "",
       quotalimit: "",
-      quotatype: activeFilter,
       price: "",
       features: "",
     });
-    document.getElementById("switch3").checked = false;
     document.getElementById("rate-limit").value = "";
     document.getElementById("quota-limit").value = "";
     document.getElementById("sub-price").value = "";
     document.getElementById("features").value = "";
     setRateLimit("");
     setSubscriptionPrice("");
-    setPlanValidated(false);
+    setPlanValidated(true);
 
     console.log("planVal1",planValidated);
   };
@@ -217,11 +212,9 @@ console.log("tarif:", tarif);
         Recommended: false,
         ratelimit: "",
         quotalimit: "",
-        quotatype: activeFilter,
         price: "",
         features: "",
       });
-      document.getElementById("switch3").checked = false;
       document.getElementById("rate-limit").value = "";
       document.getElementById("quota-limit").value = "";
       document.getElementById("sub-price").value = "";
@@ -238,7 +231,6 @@ console.log("tarif:", tarif);
     });
     console.log("the modiffiedblan is");
     console.log(modifiedPlan);
-    setActiveFilter(modifiedPlan.quotatype);
     setEditedPlan(modifiedPlan);
 
     console.log(editedPlan);
@@ -256,8 +248,7 @@ console.log("tarif:", tarif);
       if (plan) {
         // Access the 'quotalimit' property of the plan
         const quotalimit = plan.quotalimit;
-        const quotatype =plan.quotatype;
-        console.log(quotatype);
+        const quotatype = Models[plan.modelIndex].Period;
         return (
           planValidated ? (
             <a
@@ -283,7 +274,14 @@ console.log("tarif:", tarif);
             // Render a non-clickable element if planValidated is false
             <span className="tf-button-disabled">
               <div className="img">
-                <i className="fal fa-plus"></i>
+                {quotalimit}{" "}
+              <p>
+                {quotatype === "Yearly"
+                  ? "/Year"
+                  : quotatype === "Monthly"
+                  ? "/Month"
+                  : "/Day"}
+              </p>
               </div>
             </span>
           )
@@ -291,6 +289,7 @@ console.log("tarif:", tarif);
       } else {
         return (
           <div class="col-ranking product-button" key={index2}>
+           {planValidated ? (
             <a
               class="tf-button"
               href="#"
@@ -314,6 +313,14 @@ console.log("tarif:", tarif);
                 </div>
               </span>
             </a>
+            ): (
+              // Render a non-clickable element if planValidated is false
+              <span className="tf-button-disabled">
+                <div className="img">
+                  <i className="fal fa-plus"></i>
+                </div>
+              </span>
+            )}
           </div>
         );
       }
@@ -358,28 +365,7 @@ console.log("tarif:", tarif);
     }
     //return Models[index].plans.some((plan) => plan.Name === planName);
   };
-  const checkExistence2 = (model, planName, type, index2) => {
 
-    // Check if the model exists and has plans
-    if (model) {
-      
-      const modelTarifications = tarif.filter(tarification => tarification.pricingModel === model.id_model);
-      console.log("modelTarifications",modelTarifications);
-       return (
-        modelTarifications.map((tarification) => (
-          <div className="col-ranking product-button">
-          
-              <span className="tf-button-disabled">
-                <div className="img">
-                  <i className="fal fa-plus"></i>
-                </div>
-              </span>
-        
-          </div>
-        ))
-      ) 
-    };
-  };
   // Function to handle plan selection
   const handleSelectPlan = (plan) => {
     setSelectedPlan(plan);
@@ -390,9 +376,6 @@ console.log("tarif:", tarif);
   };
   const handlePlanFilterClick = (PlanfilterId) => {
     setActiveFilter(PlanfilterId);
-    modificationOn
-      ? handlePlanEdit("quotatype", PlanfilterId)
-      : handlePlanChange("quotatype", PlanfilterId);
   };
   useEffect(() => {
     console.log("ModificationOn:", modificationOn); // This will log the updated value
@@ -406,6 +389,7 @@ console.log("tarif:", tarif);
   const [subscriptionPrice, setSubscriptionPrice] = useState("");
   const [rateLimitEnabled, setRateLimitEnabled] = useState(false);
   const [rateLimit, setRateLimit] = useState("");
+  const [isChecked, setIsChecked] = useState(false);
 
   const handleSubscriptionPriceChange = (e) => {
     const price = parseFloat(e.target.value);
@@ -423,9 +407,6 @@ console.log("tarif:", tarif);
     }
   };
 
-  const hideEditingPlan = () =>{
-    setPlanValidated(true);
-  }
   return (
     <div className="tf-container">
       <div className="row">
@@ -573,7 +554,28 @@ console.log("tarif:", tarif);
               {pricingModels.includes(model) ? (
                 // If model is in pricingModels, call showTarifs
                 tarifTypes.map((type, index2) =>
-                  checkExistence2(model, type.name, type, index2)
+                  //checkExistence2(model, type.name, type, index2)
+                  {const modelTarifications = tarif.filter(tarification => tarification.pricingModel === model.id_model);
+                    const hasTarification = modelTarifications.some(tarification => tarification.type == type.id_TypeTarif);
+                    return (
+                      
+                      <React.Fragment key={index2}>
+                        {modelTarifications.map((tarification) => (
+                            tarification.type == type.id_TypeTarif && (
+                                <div className="col-ranking product-button" key={tarification.id}>
+                                    <span className="tf-button-disabled">
+                                        <div className="img">
+                                            <span>{tarification.quota_limit} / {model.period}</span>
+                                        </div>
+                                    </span>
+                                </div>
+                            )
+                        ))}
+                        {!hasTarification && <div>No plan</div>}
+                    </React.Fragment>
+                    );
+
+                  }
                 )
               ) : (
                 // If model is in Models, iterate over tarifTypes and call checkExistence
@@ -617,6 +619,9 @@ console.log("tarif:", tarif);
                   </button>
                 </div>
               )}
+              <div>
+                <ModelCheckbox model={model} updateActiveModel={updateActiveModel} getAPImodels={getAPImodels} />
+              </div>
             </div>
           ))}
         </div>
@@ -640,94 +645,6 @@ console.log("tarif:", tarif);
                 </h3>
               </h3>
 
-              <p class="label-1">
-                Recommended badge:{" "}
-                <div class="button-toggle">
-                  <input
-                    type="checkbox"
-                    id="switch3"
-                    checked={modificationOn ? editedPlan.Recommended : false}
-                    onChange={(e) => {
-                      modificationOn
-                        ? handlePlanEdit("recommended", e.target.checked)
-                        : handlePlanChange("recommended", e.target.checked);
-                    }}
-                  />
-                  <label for="switch3"></label>
-                </div>
-              </p>
-              <p>
-                Will have a badge in Hub as “Recommended”. Only one plan might
-                have recommended status simultaneously.
-              </p>
-
-              <p class="label-1">Quota type:</p>
-              <div class="row tf-container">
-                <div class="col-md-12">
-                  <div class="top-menu">
-                    <ul className="filter-menu">
-                      <li className={activeFilter === "Daily" ? "active" : ""}>
-                        <a
-                          href="#"
-                          onClick={() => handlePlanFilterClick("Daily")}
-                        >
-                          Daily
-                        </a>
-                      </li>
-
-                      {Models[
-                        modificationOn
-                          ? editedPlan.modelIndex
-                          : newPlan.modelIndex
-                      ] && (
-                        <React.Fragment>
-                          {(Models[
-                            modificationOn
-                              ? editedPlan.modelIndex
-                              : newPlan.modelIndex
-                          ].Period === "Monthly" ||
-                            Models[
-                              modificationOn
-                                ? editedPlan.modelIndex
-                                : newPlan.modelIndex
-                            ].Period === "Yearly") && (
-                            <li
-                              className={
-                                activeFilter === "Monthly" ? "active" : ""
-                              }
-                            >
-                              <a
-                                href="#"
-                                onClick={() => handlePlanFilterClick("Monthly")}
-                              >
-                                Monthly
-                              </a>
-                            </li>
-                          )}
-                          {Models[
-                            modificationOn
-                              ? editedPlan.modelIndex
-                              : newPlan.modelIndex
-                          ].Period === "Yearly" && (
-                            <li
-                              className={
-                                activeFilter === "Yearly" ? "active" : ""
-                              }
-                            >
-                              <a
-                                href="#"
-                                onClick={() => handlePlanFilterClick("Yearly")}
-                              >
-                                Yearly
-                              </a>
-                            </li>
-                          )}
-                        </React.Fragment>
-                      )}
-                    </ul>
-                  </div>
-                </div>
-              </div>
               <p class="label-1">Quota Limit :</p>
               <p></p>
               <div

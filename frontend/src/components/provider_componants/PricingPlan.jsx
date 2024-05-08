@@ -1,34 +1,8 @@
-import React, { useState } from 'react';
-const allPricingData = [
-    {
-      type: 'Daily',
-      tarifications: [
-        { name: 'Basic', price: '$10/day', features: ['Feature 1', 'Feature 2', 'Feature 3'], quota: 100, rate: 10 },
-        { name: 'Premium', price: '$20/day', features: ['Feature 1', 'Feature 2', 'Feature 3', 'Feature 4'], quota: 200, rate: 20 },
-        { name: 'Ultra', price: '$30/day', features: ['Feature 1', 'Feature 2', 'Feature 3', 'Feature 4', 'Feature 5'], quota: 300, rate: 30 },
-        // Add more tarifications for Daily plan if needed
-      ]
-    },
-    {
-      type: 'Monthly',
-      tarifications: [
-        { name: 'Basic', price: '$100/month', features: ['Feature 1', 'Feature 2', 'Feature 3'], quota: 1000, rate: 100 },
-        { name: 'Premium', price: '$200/month', features: ['Feature 1', 'Feature 2', 'Feature 3', 'Feature 4'], quota: 2000, rate: 200 },
-        { name: 'Ultra', price: '$300/month', features: ['Feature 1', 'Feature 2', 'Feature 3', 'Feature 4', 'Feature 5'], quota: 3000, rate: 300 },
-        // Add more tarifications for Monthly plan if needed
-      ]
-    },
-    {
-      type: 'Yearly',
-      tarifications: [
-        { name: 'Basic', price: '$1000/year', features: ['Feature 1', 'Feature 2', 'Feature 3'], quota: 10000, rate: 1000 },
-        { name: 'Premium', price: '$2000/year', features: ['Feature 1', 'Feature 2', 'Feature 3', 'Feature 4'], quota: 20000, rate: 2000 },
-        { name: 'Ultra', price: '$3000/year', features: ['Feature 1', 'Feature 2', 'Feature 3', 'Feature 4', 'Feature 5'], quota: 30000, rate: 3000 },
-        // Add more tarifications for Yearly plan if needed
-      ]
-    },
-    // Add more plans here if needed
-  ];
+import React, { useState,useEffect } from 'react';
+import APIAjout from '../../hooks/APIHook2';
+import { Alert } from '@mui/material';
+
+
   
 const PricingMenu = ({ allPricingData, onSelect }) => {
     const [activeType, setActiveType] = useState(allPricingData[0].type);
@@ -37,7 +11,7 @@ const PricingMenu = ({ allPricingData, onSelect }) => {
       setActiveType(type);
       onSelect(type);
     };
-  
+    
     return (
       <div className="top-menu">
         <ul className="filter-menu">
@@ -63,7 +37,7 @@ const PricingMenu = ({ allPricingData, onSelect }) => {
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 "  key={index}>
                             <div class="sc-product style2" >
                                 <div class="top" style={{display:"flex",alignContent:"center",justifyContent:"center"}}>
-                                    <a href="item-details.html" class="price" style={{fontSize:"30px"}}>{tarif.name}</a>
+                                    <a href="item-details.html" class="price" style={{fontSize:"30px",marginBottom:"10%"}}>{tarif.name}</a>
                                    
                                 </div>
                               {/*   <div class="bottom">
@@ -77,12 +51,14 @@ const PricingMenu = ({ allPricingData, onSelect }) => {
                                     </div>
                                 </div> */}
                                 <div class="features">
+                                <div class="price">
+                                             <div class="content">
+                                  <div class="cash" style={{paddingBottom:"6%"}}> The plan's features:  </div>
+                                    </div>
+                                   
+                                </div>
                                 <ul className="feature-list">
-            {tarif.features.map((feature, index) => (
-              <li key={index}>
-                <span className="bullet-point">&#8226;</span> {feature}
-              </li>
-            ))}
+            {tarif.features}
           </ul>
                                 </div>
                                 <div class="bottom-style2" style={{paddingBottom:"6%",fontSize:"25px"}}>
@@ -100,14 +76,18 @@ const PricingMenu = ({ allPricingData, onSelect }) => {
                                 <div class="bottom-style2">
                                     <div class="price">
                                              <div class="content">
-                                  <div class="cash">{tarif.price}</div>
+                                  <div class="cash">Price: {tarif.price} DA</div>
                                         </div>
                                     </div>
-                                    <div class="product-button">
-                                        <a href="#" data-toggle="modal" data-target="#popup_bid" class="tf-button"> Purchase</a>
-                                    </div>
+                                   
                                 </div>
-
+                                <div class="content" style={{marginTop:"4%"}}>
+                                <div class="cash">          
+ <div class="product-button">
+                                        <a href="#" data-toggle="modal"  class="tf-button"> Purchase id is {tarif.id}</a>
+                                    </div>
+                                    </div>
+                                     </div>
                             </div>
                         </div>
          
@@ -117,21 +97,97 @@ const PricingMenu = ({ allPricingData, onSelect }) => {
     </>
   );
   
-  const PricingContainer = () => {
-    const [selectedType, setSelectedType] = useState(allPricingData[0].type);
+  const PricingContainer = ({id,tarifs}) => {
+    const [pricingData, setPricingData] = useState([]);
+    const [selectedType, setSelectedType] = useState();
+    const {  fetchAPIModelsById,
+      fetchAPITarifByModelId } = APIAjout();
+    
+      const { tarifTypes } = APIAjout();
+
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          // Fetch models and tariffs data separately
+          const modelsResponse = await fetchAPIModelsById(id);
+          const tariffsResponse = await fetchAPITarifByModelId();
+      
+          // Combine models and tariffs data
+          const combinedData = modelsResponse.map((model) => {
+            const tarifications = tariffsResponse.filter((tarif) => tarif.pricingModel === model.id_model)
+            .map((tarif) => {
+              var type = tarifs.find((type) => type.id_TypeTarif == tarif.type);
+            
+              return {
+                id:tarif.id_tarif,
+                name: type ? type.name : "Unknown",
+                price: tarif.price,
+                features: tarif.features.split(','), // Assuming features are stored as a comma-separated string
+                quota: tarif.quota_limit,
+                rate: tarif.rate_limit,
+              };
+            });
+            
+            return {
+              type: model.period,
+              tarifications: tarifications,
+            };
+          });
+      
+          // Group the combined data by type (period)
+          const groupedData = combinedData.reduce((acc, curr) => {
+            if (!acc[curr.type]) {
+              acc[curr.type] = [];
+            }
+            acc[curr.type] = acc[curr.type].concat(curr.tarifications);
+            return acc;
+          }, {});
+      
+          // Convert groupedData object to an array
+          const pricingArray = Object.entries(groupedData).map(([type, tarifications]) => ({
+            type,
+            tarifications,
+          }));
+      
+          // Set the pricing data in state
+          setPricingData(pricingArray);
+          setSelectedType(pricingArray[0]?.type || "");
+          console.log(pricingData);
+        } catch (error) {
+          console.error('Error fetching pricing data:', error);
+        }
+      };
+      
   
+      fetchData();
+     console.log(pricingData);
+    }, []);
+    useEffect(() => {
+      console.log(pricingData); // This will log the updated pricingData whenever it changes
+      pricingData[0]?  setSelectedType(pricingData[0].type):setSelectedType("");
+    }, [pricingData]); // useEffect will be triggered whenever pricingData changes
+    useEffect(() => {
+      console.log(tarifTypes); // This will log the updated pricingData whenever it changes
+       }, [tarifTypes]); //
     const handleTypeSelect = (type) => {
       setSelectedType(type);
     };
-  
-    const selectedPricing = allPricingData.find(({ type }) => type === selectedType);
-  
+ 
+    const selectedPricing = pricingData.find(({ type }) => type === selectedType);
+    if (!selectedPricing ) {
+      return <div>Loading  plans...</div>;
+    } 
     return (
+
       <div className="pricing-container">
-        <PricingMenu allPricingData={allPricingData} onSelect={handleTypeSelect} />
+        <div className="pricing-container">
+         <PricingMenu allPricingData={pricingData} onSelect={handleTypeSelect} />
         <PricingPlan type={selectedPricing.type} tarifications={selectedPricing.tarifications} />
       </div>
+       
+      </div>
     );
+  
   };
   
   export default PricingContainer;

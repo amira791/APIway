@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import React, { useRef } from "react";
-import ManipulateCat from "../../hooks/CategoryHook.jsx";
-import APIAjout from "../../hooks/ApiHook.jsx";
+import ManipulateCat from "../../Hooks/CategoryHook.jsx";
+import APIAjout from "../../hooks/APIHook2.jsx";
 import ManipulateVersion from "../../hooks/VersionHook.jsx";
 import $ from "jquery";
 import "datatables.net";
@@ -16,7 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const AddVersion = ({selectedAPI, onReturnClick2}) => {
   $.noConflict();
-
+  const provider_id = 1;
   /**************From hooks****************************/
   const { categories } = ManipulateCat();
   const { addNewAPI } = APIAjout();
@@ -185,6 +185,7 @@ const AddVersion = ({selectedAPI, onReturnClick2}) => {
     }
  //   alert(formData.num_version);
     addVersion(formData, functionalities, baseURLs, endpoints);
+    // window.location.reload()
   };
   const handleRemoveEndpointFromGroup = (endpointId) => {
     const updatedEndpoints = endpoints.map((endpoint) => {

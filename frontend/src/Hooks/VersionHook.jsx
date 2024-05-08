@@ -48,8 +48,8 @@ export default function ManipulateVersion() {
   };
   const checkIfVersionExists = async (apiId, num_version) => {
     try {
-      const response = await API.get(`/apiversions/?api=${apiId}`);
-      const versions = response.data;
+      const response = await API.get(`/apiversions/`);
+      const versions = response.data.filter((v) => v.api === apiId);
       return versions.some((version) => version.num_version === num_version);
     } catch (error) {
       console.error("Error checking if version exists:", error);
@@ -304,7 +304,6 @@ export default function ManipulateVersion() {
   
     await postEndpoints(apiversionId, endpoints);
   
-    alert("Endpoints created successfully!");
   };
   
   const postFunctionalities = async (functionalities) => {

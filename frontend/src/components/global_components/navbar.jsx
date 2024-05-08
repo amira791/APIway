@@ -11,7 +11,7 @@ export default function Navbar() {
 
     const menuItems= [
         { name: "Home", url: "/", active: true },
-        { name: "Explore", url: "searchApi" },
+        { name: "Explore", url: "/searchApi" },
         { name: "Help Center", url: "help-center.html" },
         { name: "FAQ", url: "/tickets" },
         { name: "Contact", url: "/signup" }

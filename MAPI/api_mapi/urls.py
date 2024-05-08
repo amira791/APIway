@@ -35,7 +35,6 @@ router.register(r'responseexample', ResponseExampleView, basename='responseexamp
 urlpatterns = [
     path('apiforum/<int:forum_id>/threads/', ThreadView.as_view({'get': 'list'}), name='forum_threads'),
     path('threads/<int:thread_id>/comments/', CommentView.as_view({'get': 'list'}), name='thread_comments'),
-    path('apis/<int:pk>/', APIView.as_view({'get': 'retrieve'}), name='api_detail'),
     path('apis/byprovider/<int:provider>/', APIByProviderView.as_view({'get': 'list'}), name='api_by_provider'),
     path('apis/<int:api_id>/tickets/', TicketView.as_view({'get': 'list'}), name='api_tickets'),
     path('activate/<int:id>/', activate_user, name='activate_user'),

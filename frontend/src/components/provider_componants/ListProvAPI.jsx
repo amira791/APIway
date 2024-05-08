@@ -1,14 +1,13 @@
-import ManipulateProv from "../../hooks/ProviderHook";
+import ManipulateProv from "../../Hooks/ProviderHook";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import ManipulateCat from "../../hooks/CategoryHook";
-import APIAjout from "../../hooks/ApiHook";
+import ManipulateCat from "../../Hooks/CategoryHook";
+import APIAjout from "../../Hooks/APiHook";
 import VersionTable from "../provider_componants/APIversions";
-import CustomPagination from "../global_components/pagination";
+import CustomPagination from "../global_componants/Pagination";
 import Monetizing from "./ModifyMonetize";
-const ProvAPIList = ({provider_id}) => {
-
-    const {getApisByProvider, providerAPIs  } = ManipulateProv();
+const ProvAPIList = () => {
+    const { providerAPIs } = ManipulateProv();
     const [showUpdateSection, setShowUpdateSection] = useState(false);
     const [showVersionsSection, setShowVersionsSection] = useState(false);
     const [selectedAPI, setSelectedAPI] = useState(null);
@@ -19,29 +18,22 @@ const ProvAPIList = ({provider_id}) => {
     const itemsPerPage = 5; // Number of APIs per page
     const totalAPIs = providerAPIs.length; // Total number of APIs
     const totalPages = Math.ceil(totalAPIs / itemsPerPage); // Calculate total pages
-
-
-    useEffect(() => {
-        getApisByProvider(provider_id);
-    }, [provider_id]);
-    
     const handleUpdateClick = (api) => {
       setSelectedAPI(api);
       setShowUpdateSection(true);
     };
 
     const handleReturnClick = () => {
-
-      setShowUpdateSection(false);
+      if(showMonetizeSection){
+        window.location.reload();
+      }else{setShowUpdateSection(false);}
+      
     };
 
     const handleReturnClick2 = () => {
         setShowVersionsSection(false);
     };
-    const handleReturnClick3 = () => {
-        setShowMonetizeSection(false);
-        setShowUpdateSection(true);
-    };
+
     const handleVersions = (api) => {
         setSelectedAPI(api);
         setShowVersionsSection(true);
@@ -53,7 +45,7 @@ const ProvAPIList = ({provider_id}) => {
     const handleFilterClick = (filterId) => {
       setActiveFilter(filterId);
     };
-  
+    const provider_id = 1;
     const [formData, setFormData] = useState({
         description: selectedAPI?.description || '',
         termOfUse: selectedAPI?.terms_of_use|| '',
@@ -72,7 +64,6 @@ const ProvAPIList = ({provider_id}) => {
             logo : selectedAPI?.logo || null
         });
     }, [selectedAPI]);
-    
     const handleLogoChange = (e) => {
         const file = e.target.files[0];
         setFormData((prevState) => ({
@@ -161,7 +152,7 @@ const ProvAPIList = ({provider_id}) => {
                                 onClick={handleToggleMonetizeSection}
                                 title="Toggle Monetize Section"
                             >
-                                Toggle Monetize Section
+                                Modify pricing plans
                             </button>
                         )}
                     </div>
@@ -344,8 +335,6 @@ const ProvAPIList = ({provider_id}) => {
                         >
                             <div>
                                 <h4 className="title-dashboard" style={{ display: "inline-block", marginRight: "600px" }}>Monetize Section</h4>
-                               
-                               
                             </div>
                             <Monetizing apiId={selectedAPI.id_api}/>
                         </section>

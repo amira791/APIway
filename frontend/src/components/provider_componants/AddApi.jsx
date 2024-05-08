@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import Footer from "../global_components/footer.jsx";
 import Navbar from "../global_components/navbar.jsx";
 import DataTable from "../global_components/Datatable.jsx";
-import ManipulateCat from "../../hooks/CategoryHook.jsx";
+import ManipulateCat from "../../Hooks/CategoryHook.jsx";
 import APIAjout from "../../hooks/APIHook2.jsx";
 import $ from "jquery";
 import "datatables.net";
@@ -246,15 +246,13 @@ const AddAPIPage = ({provider}) => {
     }
   
     // Check if any functionality, baseURL, endpoint, or model is null
-    if (functionalities.length === 0 || baseURLs.length === 0 || endpoints.length === 0 || Models.length === 0) {
+    if (functionalities.length === 0|| endpoints.length === 0 || Models.length === 0) {
       // Construct message indicating which arrays are empty
       let missingDataMessage = "";
       if (functionalities.length === 0) {
         missingDataMessage += "Functionalities, ";
       }
-      if (baseURLs.length === 0) {
-        missingDataMessage += "Base URLs, ";
-      }
+      
       if (endpoints.length === 0) {
         missingDataMessage += "Endpoints, ";
       }
@@ -270,6 +268,7 @@ const AddAPIPage = ({provider}) => {
     // If all required data is present, proceed with submission logic
     //alert(formData.apiName);
     addNewAPI(formData, functionalities, baseURLs, endpoints, Models);
+    window.location.reload()
   };
   
   const handleRemoveEndpointFromGroup = (endpointId) => {

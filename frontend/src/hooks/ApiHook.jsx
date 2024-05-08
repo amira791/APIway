@@ -1,7 +1,7 @@
 // Define the custom hook in hooks/useUnite
 import { useState, useEffect} from "react";
 import API from "../API";
-
+import ManipulateMonetize from "./MonetizeHook";
 
 export default function APIAjout() {
 
@@ -313,7 +313,7 @@ export default function APIAjout() {
         console.log("Failed to update API");
     });
 };
-
+const {getAPImodels} = ManipulateMonetize();
 const createModels = async (apiId, models) => {
   try {
     // Logic to create models
@@ -330,6 +330,20 @@ const createModels = async (apiId, models) => {
         },
       });
       const modelId = modelResponse.data.id_model;
+      
+      // Check if there is another active model with the same period
+      const allModels = await API.get(`/pricing_model/`);
+      console.log("allModels",allModels);
+      const activeModels = allModels.data.filter((pricing_model => pricing_model.api === apiId && pricing_model.period === model.Period && pricing_model.id_model !== modelId && pricing_model.is_active === true));
+      console.log("activemodels",activeModels);
+
+      // If there is an active model with the same period, deactivate it
+      if (activeModels.length > 0 ) {
+        await API.put(`/pricing_model/${activeModels[0].id_model}/`, {
+          is_active: 0,
+        });
+      }
+
       for (const plan of model.plans) {
         await API.post(`/tarifications/`, {
           price: plan.price,
@@ -353,6 +367,12 @@ const createModels = async (apiId, models) => {
         );
       }
     }
+    // Show an alert after deactivating the active models
+   /* const confirmReload = window.confirm("Your Current Model added successfully");
+    if (confirmReload) {
+      // Reload the page if the user clicks "OK"
+      window.location.reload();
+    }*/
   } catch (error) {
     console.error("Error creating models:", error);
     throw error;
