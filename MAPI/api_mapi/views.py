@@ -100,13 +100,16 @@ def signin(request):
 class FournisseurView(viewsets.ModelViewSet):
     serializer_class = FournisseurSerializer
     queryset = Fournisseur.objects.all()
-    # lookup_field = 'user_id'
 
-    # def get_queryset(self):
-    #     user_id = self.request.query_params.get('user_id')
-    #     if user_id:
-    #         return Fournisseur.objects.filter(user_id=user_id)
-    #     return Fournisseur.objects.all()
+class FournisseurByUserView(viewsets.ModelViewSet):
+    serializer_class = FournisseurSerializer
+    lookup_field = 'user_id'
+
+    def get_queryset(self):
+        user_id = self.kwargs.get('user_id')  # Get user_id from URL kwargs
+        if user_id:
+            return Fournisseur.objects.filter(user_id=user_id)
+        return Fournisseur.objects.none()  # Return an empty queryset if user_id is not provided
 
 
 # Admin View
@@ -117,14 +120,17 @@ class AdminView(viewsets.ModelViewSet):
 # Consommateur View
 class ConsommateurView(viewsets.ModelViewSet):
     serializer_class = ConsommateurSerializer
+    queryset = Consommateur.objects.all()
+
+class ConsommateurByUserView(viewsets.ModelViewSet):
+    serializer_class = ConsommateurSerializer
     lookup_field = 'user_id'
 
     def get_queryset(self):
-        user_id = self.request.query_params.get('user_id')
+        user_id = self.kwargs.get('user_id')  # Get user_id from URL kwargs
         if user_id:
-         return Consommateur.objects.filter(user_id=user_id)
-        return Consommateur.objects.all()
-
+            return Consommateur.objects.filter(user_id=user_id)
+        return Consommateur.objects.none()  # Return an empty queryset if user_id is not provided
 # APIcategory View
 class APIcategoryView(viewsets.ModelViewSet):
     queryset = APIcategory.objects.all()
@@ -135,13 +141,16 @@ class APIView(viewsets.ModelViewSet):
     queryset = API.objects.all()
     serializer_class = APISerializer
     parser_classes = (MultiPartParser, FormParser)
-    # lookup_field = 'provider'
 
-    # def get_queryset(self):
-    #     provider_id = self.kwargs.get('provider')
-    #     if provider_id:
-    #         return API.objects.filter(provider=provider_id)
-    #     return API.objects.all()
+class APIByProviderView(viewsets.ModelViewSet):
+    serializer_class = APISerializer
+    lookup_field = 'provider'
+
+    def get_queryset(self):
+        provider_id = self.kwargs.get('provider')  # Get provider_id from URL kwargs
+        if provider_id:
+            return API.objects.filter(provider=provider_id)
+        return API.objects.none()  # Return an empty queryset if provider_id is not provided
 
 
 
@@ -183,7 +192,7 @@ class APIForumView(viewsets.ModelViewSet):
 # Forum Thread View
 class ThreadView(viewsets.ModelViewSet):
     queryset = Thread.objects.all()
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)

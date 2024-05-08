@@ -86,7 +86,7 @@ const ProviderHomePage = () => {
                                     <div className="dashboard-content inventory content-tab">
                                         <div className="inner-content inventory">
                                             
-                                            <ProvAPIList/>
+                                            <ProvAPIList provider_id={fournisseur.id_fournisseur}/>
 
                                         </div>
                                         <div className="inner-content wallet">

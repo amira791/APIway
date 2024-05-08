@@ -38,6 +38,7 @@ const Details = () => {
           const details = await fetchAPIDetailsById(id);
           console.log("get the API ...")
           console.log(details)
+          setAPI(details)
           const category = await fetchAPICategorysById(details.category);
           const provider = await fetchAPIProviderById(details.provider);
           const versions = await fetchAllAPIVersionsById(id);
@@ -385,7 +386,7 @@ const Details = () => {
                           </div>)}
                           {activeTab === 'Discussion' && (
                               <div id="Discussion" className="tab-content">
-                                  <Forum forum_id={api.id_api}/>
+                                  <Forum forum_id={api.forum}/>
                               </div> )}
                           {activeTab === 'Pricing' && (
           <div id="Pricing" className="tab-content">

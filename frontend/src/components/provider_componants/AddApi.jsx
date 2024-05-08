@@ -19,7 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const AddAPIPage = ({provider}) => {
   $.noConflict();
-  const provider_id = 1;
+
   /**************From hooks****************************/
   const { categories } = ManipulateCat();
   const { addNewAPI } = APIAjout();

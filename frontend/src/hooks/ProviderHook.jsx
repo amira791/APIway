@@ -26,14 +26,15 @@ export default function ManipulateProv() {
           });
   }
 
-  useEffect(() => {
-    getFournisseur(authState.userId)
-    console.log()
-    getApisByProvider(4);
+  // useEffect(() => {
+  //   getFournisseur(authState.userId)
+  //   console.log()
+  //   getApisByProvider(4);
     
-  }, [authState.userId]);
+  // }, [authState.userId]);
 
   return {
+    getApisByProvider,
       providerAPIs: providerAPIs || []
   };
 }

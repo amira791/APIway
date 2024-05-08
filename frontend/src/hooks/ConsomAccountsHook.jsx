@@ -65,7 +65,7 @@ export default function useManageAccountsC() {
     };
 
     const getConsommateur = (id) => {
-      fetchData(`${BASEURL}consommateurs/${id}/`, setConsommateur, setLoading, setError);
+      fetchData(`${BASEURL}consommateurs/byuser/${id}/`, setConsommateur, setLoading, setError);
   };
 
     return {

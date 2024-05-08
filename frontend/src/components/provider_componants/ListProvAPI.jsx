@@ -6,8 +6,9 @@ import APIAjout from "../../hooks/ApiHook";
 import VersionTable from "../provider_componants/APIversions";
 import CustomPagination from "../global_components/pagination";
 import Monetizing from "./ModifyMonetize";
-const ProvAPIList = () => {
-    const { providerAPIs } = ManipulateProv();
+const ProvAPIList = ({provider_id}) => {
+
+    const {getApisByProvider, providerAPIs  } = ManipulateProv();
     const [showUpdateSection, setShowUpdateSection] = useState(false);
     const [showVersionsSection, setShowVersionsSection] = useState(false);
     const [selectedAPI, setSelectedAPI] = useState(null);
@@ -18,6 +19,13 @@ const ProvAPIList = () => {
     const itemsPerPage = 5; // Number of APIs per page
     const totalAPIs = providerAPIs.length; // Total number of APIs
     const totalPages = Math.ceil(totalAPIs / itemsPerPage); // Calculate total pages
+
+
+    useEffect(() => {
+        console.log(provider_id)
+     getApisByProvider(provider_id);
+    }, [provider_id]);
+    
     const handleUpdateClick = (api) => {
       setSelectedAPI(api);
       setShowUpdateSection(true);
@@ -46,7 +54,7 @@ const ProvAPIList = () => {
     const handleFilterClick = (filterId) => {
       setActiveFilter(filterId);
     };
-    const provider_id = 1;
+  
     const [formData, setFormData] = useState({
         description: selectedAPI?.description || '',
         termOfUse: selectedAPI?.terms_of_use|| '',
@@ -65,6 +73,7 @@ const ProvAPIList = () => {
             logo : selectedAPI?.logo || null
         });
     }, [selectedAPI]);
+    
     const handleLogoChange = (e) => {
         const file = e.target.files[0];
         setFormData((prevState) => ({

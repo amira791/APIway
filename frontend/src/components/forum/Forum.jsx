@@ -64,7 +64,7 @@ export default function Forum({ forum_id }) {
           <Heading>{forum.title}</Heading>
           <Text>{forum.description}</Text>
         </Box>
-        <HStack alignSelf={'flex-end'}>
+        {authState.isConsommateur && ( <HStack alignSelf={'flex-end'}>
           <div className="product-button">
             <a href="#" data-toggle="modal" data-target="#popup_bid" className="tf-button">
               <span className="icon-btn-product"></span>New Discussion
@@ -88,6 +88,7 @@ export default function Forum({ forum_id }) {
             )}
           </div>
         </HStack>
+        )}
         <Box>
           <ThreadList key={forum.id_forum} forum_id={forum.id_forum} />
         </Box>

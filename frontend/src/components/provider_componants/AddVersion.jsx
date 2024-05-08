@@ -16,7 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const AddVersion = ({selectedAPI, onReturnClick2}) => {
   $.noConflict();
-  const provider_id = 1;
+
   /**************From hooks****************************/
   const { categories } = ManipulateCat();
   const { addNewAPI } = APIAjout();
