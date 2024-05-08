@@ -11,7 +11,7 @@ const FourAccountManag = () => {
   const [clearSelRows , setClearSelRows] = useState(false);
 
   const customStatusCell = (row) => {
-    const status = row.FRstatus.toLowerCase();
+    const status = row.is_active.toLowerCase();
     let statusClass = '';
   
     switch (status) {
@@ -26,7 +26,7 @@ const FourAccountManag = () => {
         break;
     }
   
-    return <div className={statusClass}>{row.FRstatus}</div>;
+    return <div className={statusClass}>{row.is_active}</div>;
   };
 
 // Define a function to handle the selected row IDs from TheDataTable
@@ -85,7 +85,7 @@ useEffect(() => {
     },
     {
       name: 'Status',
-      selector: (row) => row.FRstatus,
+      selector: (row) => row.is_active,
       sortable: true,
       // Assuming you still need custom status cell rendering
       cell: customStatusCell,
@@ -100,7 +100,7 @@ const data = [
     FR_last_name: 'Doe',
     FRemail: 'john@example.com',
     FRphone: '+1234567890',
-    FRstatus: 'Active',
+    is_active: 'Active',
   },
   {
     FRusername: 'jane_smith',
@@ -108,7 +108,7 @@ const data = [
     FR_last_name: 'Smith',
     FRemail: 'jane@example.com',
     FRphone: '+9876543210',
-    FRstatus: 'Inactive',
+    is_active: 'Inactive',
   },
   {
     FRusername: 'alex_rossi',
@@ -116,7 +116,7 @@ const data = [
     FR_last_name: 'Rossi',
     FRemail: 'alex@example.com',
     FRphone: '+1122334455',
-    FRstatus: 'Active',
+    is_active: 'Active',
   },
   {
     FRusername: 'lisa_wang',
@@ -124,7 +124,7 @@ const data = [
     FR_last_name: 'Wang',
     FRemail: 'lisa@example.com',
     FRphone: '+9988776655',
-    FRstatus: 'Inactive',
+    is_active: 'Inactive',
   },
   {
     FRusername: 'michael_jackson',
@@ -132,7 +132,7 @@ const data = [
     FR_last_name: 'Jackson',
     FRemail: 'michael@example.com',
     FRphone: '+1123456789',
-    FRstatus: 'Active',
+    is_active: 'Active',
   },
   {
     FRusername: 'sarah_anderson',
@@ -140,7 +140,7 @@ const data = [
     FR_last_name: 'Anderson',
     FRemail: 'sarah@example.com',
     FRphone: '+9988776655',
-    FRstatus: 'Active',
+    is_active: 'Active',
   },
   {
     FRusername: 'chris_evans',
@@ -148,7 +148,7 @@ const data = [
     FR_last_name: 'Evans',
     FRemail: 'chris@example.com',
     FRphone: '+1122334455',
-    FRstatus: 'Inactive',
+    is_active: 'Inactive',
   },
   {
     FRusername: 'emily_lee',
@@ -156,7 +156,7 @@ const data = [
     FR_last_name: 'Lee',
     FRemail: 'emily@example.com',
     FRphone: '+1234509876',
-    FRstatus: 'Active',
+    is_active: 'Active',
   },
   {
     FRusername: 'david_kim',
@@ -164,7 +164,7 @@ const data = [
     FR_last_name: 'Kim',
     FRemail: 'david@example.com',
     FRphone: '+1122334455',
-    FRstatus: 'Inactive',
+    is_active: 'Inactive',
   },
   {
     FRusername: 'olivia_smith',
@@ -172,7 +172,7 @@ const data = [
     FR_last_name: 'Smith',
     FRemail: 'olivia@example.com',
     FRphone: '+9988776655',
-    FRstatus: 'Active',
+    is_active: 'Active',
   },
   {
     FRusername: 'james_jones',
@@ -180,7 +180,7 @@ const data = [
     FR_last_name: 'Jones',
     FRemail: 'james@example.com',
     FRphone: '+1122334455',
-    FRstatus: 'Inactive',
+    is_active: 'Inactive',
   },
   {
     FRusername: 'sophia_brown',
@@ -188,7 +188,7 @@ const data = [
     FR_last_name: 'Brown',
     FRemail: 'sophia@example.com',
     FRphone: '+9988776655',
-    FRstatus: 'Active',
+    is_active: 'Active',
   },
   {
     FRusername: 'ethan_nguyen',
@@ -196,7 +196,7 @@ const data = [
     FR_last_name: 'Nguyen',
     FRemail: 'ethan@example.com',
     FRphone: '+1122334455',
-    FRstatus: 'Inactive',
+    is_active: 'Inactive',
   },
   {
     FRusername: 'mia_miller',
@@ -204,7 +204,7 @@ const data = [
     FR_last_name: 'Miller',
     FRemail: 'mia@example.com',
     FRphone: '+9988776655',
-    FRstatus: 'Active',
+    is_active: 'Active',
   },
   {
     FRusername: 'william_davis',
@@ -212,7 +212,7 @@ const data = [
     FR_last_name: 'Davis',
     FRemail: 'william@example.com',
     FRphone: '+1122334455',
-    FRstatus: 'Inactive',
+    is_active: 'Inactive',
   },
   {
     FRusername: 'ava_garcia',
@@ -220,7 +220,7 @@ const data = [
     FR_last_name: 'Garcia',
     FRemail: 'ava@example.com',
     FRphone: '+9988776655',
-    FRstatus: 'Active',
+    is_active: 'Active',
   },
   {
     FRusername: 'noah_rodriguez',
@@ -228,7 +228,7 @@ const data = [
     FR_last_name: 'Rodriguez',
     FRemail: 'noah@example.com',
     FRphone: '+1122334455',
-    FRstatus: 'Inactive',
+    is_active: 'Inactive',
   },
   {
     FRusername: 'emma_martinez',
@@ -236,7 +236,7 @@ const data = [
     FR_last_name: 'Martinez',
     FRemail: 'emma@example.com',
     FRphone: '+9988776655',
-    FRstatus: 'Active',
+    is_active: 'Active',
   },
   {
     FRusername: 'liam_hernandez',
@@ -244,7 +244,7 @@ const data = [
     FR_last_name: 'Hernandez',
     FRemail: 'liam@example.com',
     FRphone: '+1122334455',
-    FRstatus: 'Inactive',
+    is_active: 'Inactive',
   },
   {
     FRusername: 'isabella_lopez',
@@ -252,7 +252,7 @@ const data = [
     FR_last_name: 'Lopez',
     FRemail: 'isabella@example.com',
     FRphone: '+9988776655',
-    FRstatus: 'Active',
+    is_active: 'Active',
   },
 ];
 

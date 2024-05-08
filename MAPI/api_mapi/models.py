@@ -115,7 +115,7 @@ class APIversion(models.Model):
     date_version = models.DateField(auto_now=True)
     api = models.ForeignKey(API, on_delete=models.DO_NOTHING, null=True )
     current = models.BooleanField(default=False, verbose_name="Current Version", null = True)
-    functions = models.ManyToManyField('Functionnality', null=True)
+    functions = models.ManyToManyField('Functionnality')
     base_links = models.ManyToManyField('BaseLink', verbose_name="Base Links", blank=True)
     def __str__(self):
         return self.num_version

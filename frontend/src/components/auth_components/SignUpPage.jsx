@@ -38,9 +38,11 @@ export default function SignUpPage() {
         signUp(newUser)
         if (authState.isAuth && authState.isConsommateur ) {
             navigate('/')
+            return;
         }
         if(authState.isAuth && authState.isFournisseur){
             navigate('/provider_home')
+            return;
         } 
         
     };

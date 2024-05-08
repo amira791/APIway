@@ -22,8 +22,6 @@ const ProvAPIList = ({provider_id}) => {
 
 
     useEffect(() => {
-        console.log("provider iddddd")
-        console.log(provider_id)
         getApisByProvider(provider_id);
     }, [provider_id]);
     

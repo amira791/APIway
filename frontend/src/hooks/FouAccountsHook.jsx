@@ -4,13 +4,12 @@ import { BASEURL ,fetchData } from './API';
 
 export default function useManageAccountsF() {
     const [fournisseurs, setFournisseurs] = useState([]);
-    const [fournisseur , setFournisseur] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         setLoading(true);
-        axios.get(`${BASEURL}/fournisseurs/`)
+        axios.get(`${BASEURL}fournisseurs/`)
             .then(response => {
                 console.log('Fetched Data:', response.data);
                 setFournisseurs(response.data);
@@ -61,18 +60,15 @@ export default function useManageAccountsF() {
             });
     };
 
-    const getFournisseur = (id) => {
-      fetchData(`${BASEURL}fournisseurs/byuser/${id}/`, setFournisseur, setLoading, setError);
-  };
+    
 
     return {
         fournisseurs,
-        fournisseur,
         loading,
         error,
         activateStatus,
         deactivateStatus,
         fetchFournisseursData,
-        getFournisseur
+        
     };
 }

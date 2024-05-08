@@ -169,19 +169,7 @@ class APIendpointView(viewsets.ModelViewSet):
 class FunctionnalityView(viewsets.ModelViewSet):
     queryset = Functionnality.objects.all()
     serializer_class = FunctionnalitySerializer
-    def perform_create(self, serializer):
-        # Call the superclass's perform_create method to save the instance
-        super().perform_create(serializer)
-
-        # Get the created instance
-        instance = serializer.instance
-
-        # Call the other view's method
-        run(['python manage.py search_index --rebuild -f'], shell=True)
-
-
-        # Optionally, you can return a response
-        return Response(serializer.data)
+   
 
 # APIdocumentation View
 class APIdocumentationView(viewsets.ModelViewSet):
@@ -334,7 +322,7 @@ def manage_user_status(request, id, action):
         user_model = Fournisseur
         serializer_class = FournisseurSerializer
         id_field = 'id_fournisseur'
-        status_field = 'FRstatus'
+        status_field = 'is_active'
     elif user_type == 'C':
         user_model = Consommateur
         serializer_class = ConsommateurSerializer

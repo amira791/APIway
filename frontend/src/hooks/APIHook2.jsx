@@ -5,10 +5,11 @@ import { useState, useEffect } from "react";
 import PlansAjout from "./MonetizationHook";
 import { useAuthContext } from '../context/authContext';
 import useManageAccountsF from './FouAccountsHook'
+import useAuth from "./useAuth";
 
 export default function APIAjout() {
   const { authState } = useAuthContext();
-  const {getFournisseur ,fournisseur , error , loading} = useManageAccountsF()
+  const {getFournisseur ,fournisseur , error , loading} = useAuth()
   useEffect(() => {
 
     if (authState.isFournisseur && authState.isAuth) getFournisseur(authState.userId)
@@ -582,7 +583,7 @@ const fetchAPICategorysById = async (id) => {
 
 const fetchAPIProviderById = async (id) => {
   try {
-    const response = await API.get(`/fournisseurs/${id}/`);
+    const response = await API.get(`fournisseurs/${id}/`);
     return response.data;
   } catch (error) {
     throw error.response.data;

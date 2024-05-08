@@ -6,21 +6,42 @@ import React, { useEffect, useState } from "react";
 import {useNavigate} from 'react-router-dom'
 import APIAjout from "../../hooks/ApiHook";
 import TicketsList from "../tickets/TicketsList";
-import useManageAccountsF from '../../hooks/FouAccountsHook'
 import { useAuthContext } from '../../context/authContext';
+import useAuth from "../../hooks/useAuth";
+import{BASEURL , fetchData} from '../../hooks/API'
+import {getFournisseur} from '../../hooks/useAuth'
 const ProviderHomePage = () => {
 
-    const { authState } = useAuthContext();
-    const {getFournisseur ,fournisseur} = useManageAccountsF()
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const { authState } = useAuthContext();
+    const {getFournisseur ,fournisseur} = useAuth()
+    // const id = authState.userId
+    // const [fournisseur , setFournisseur] = useState([]);
 
     useEffect(() => {
-        if(!authState.isAuth || !authState.isFournisseur){
-           navigate('/login')
-        }
-        getFournisseur(authState.userId)
-     }, [authState.userId]);
-  
+
+        getFournisseur(authState.userId)       
+   
+ 
+    }, [authState.userId]);
+    
+    
+    if (loading) {
+        return (
+            <div className="body header-fixed">
+                <div className="preload preload-container">
+                    <div className="preload-logo"></div>
+                </div>
+            </div>
+        );
+    }
+
+    // Render error message if there's an error
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
         return (
         <div className="body header-fixed">
 

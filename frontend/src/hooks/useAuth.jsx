@@ -1,15 +1,19 @@
 import { useState } from 'react';
 import { useToast } from '@chakra-ui/react';
 import {useAuthContext} from '../context/authContext'
-import{BASEURL} from './API'
+import{BASEURL , fetchData} from './API'
 
 export default function useAuth() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [fournisseur , setFournisseur] = useState([]);
     const toast = useToast();
     const { dispatch } = useAuthContext();
 
 
+    const getFournisseur = (id) => {
+        fetchData(`${BASEURL}fournisseurs/byuser/${id}/`, setFournisseur, setLoading, setError);
+    };
 
     const signUp = (data) => {
         setLoading(true);
@@ -87,6 +91,8 @@ export default function useAuth() {
     }
 
     return {
+        getFournisseur,
+        fournisseur,
         signUp,
         signIn,
         logOut,

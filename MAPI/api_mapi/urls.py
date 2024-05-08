@@ -8,6 +8,7 @@ router = routers.SimpleRouter()
 # Register the views with the router
 router.register(r'admins', AdminView, basename='admin')
 router.register(r'consommateurs', ConsommateurView, basename='consommateur')
+router.register(r'fournisseurs', FournisseurView, basename='fournisseurs')
 router.register(r'apis', APIView, basename='api')
 router.register(r'apicategories', APIcategoryView, basename='apicategory')
 router.register(r'apiversions', APIversionView, basename='apiversion')

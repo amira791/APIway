@@ -30,9 +30,11 @@ export default function LoginPage() {
         
         if (authState.isAuth  && authState.isConsommateur  ) {
             navigate('/')
+            return;
         }
         if(authState.isAuth && authState.isFournisseur ){
             navigate('/provider_home')
+            return;
         } 
         
        
