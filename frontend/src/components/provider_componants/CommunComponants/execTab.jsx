@@ -401,7 +401,7 @@ const Example = ({ endpoints , state}) => {
               </Typography>
               <Box sx={{ mt: 1 }}>
                 <input type="text" defaultValue={param.example_value} />
-                <Typography variant="body1">{param.example_value}</Typography>
+                <Typography variant="body1"> Example values: {param.example_value}</Typography>
               </Box>
             </div>
             ))}
@@ -414,7 +414,7 @@ const Example = ({ endpoints , state}) => {
               </Typography>
               <Box sx={{ mt: 1 }}>
                 <input type="text" defaultValue={param.example_value} />
-                <Typography variant="body1">{param.example_value}</Typography>
+                <Typography variant="body1">Example values: {param.example_value}</Typography>
               </Box>
             </div>
           ))}
@@ -434,7 +434,7 @@ const Example = ({ endpoints , state}) => {
               </Typography>
               <Box sx={{ mt: 1 }}>
                 <input type="text" defaultValue={param.example_value} />
-                <Typography variant="body1">{param.example_value}</Typography>
+                <Typography variant="body1">Example values: {param.example_value}</Typography>
               </Box>
             </div>
             ))}
@@ -447,7 +447,7 @@ const Example = ({ endpoints , state}) => {
               </Typography>
               <Box sx={{ mt: 1 }}>
                 <input type="text" defaultValue={param.example_value} />
-                <Typography variant="body1">{param.example_value}</Typography>
+                <Typography variant="body1">Example values: {param.example_value}</Typography>
               </Box>
             </div>
           ))}

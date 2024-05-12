@@ -618,21 +618,28 @@ const fetchAPIEndpointsByVersion = async (versionId) => {
     throw error.response ? error.response.data : error.message;
   }
 };
-/* const fetchAllFunctionalitiesById = async (id) => {
+const fetchAllFunctionalitiesById = async (idsArray) => {
   try {
+    if (idsArray) {
+
     // Fetch all functionalities
     const response = await API.get('/functionnalities/');
     const allFunctionalities = response.data;
     
-    // Filter functionalities by the provided API ID
-    const functionalitiesById = allFunctionalities.filter(func => func.api === id);
-  
+    // Filter functionalities by the provided function IDs
+    const functionalitiesById = allFunctionalities.filter(func => idsArray.includes(func.id_funct));
+   console.log(functionalitiesById);
     return functionalitiesById;
+          
+  }
+  else{
+    return "No functionalities provieded";
+  }
   } catch (error) {
-    console.error('Error fetching functionalities by API ID:', error);
+    console.error('Error fetching functionalities:', error);
     throw error;
   }
-}; */
+};
 
 const fetchAPIHeadersByEndpointId = async (endpointId) => {
   try {
@@ -772,6 +779,7 @@ const fetchAPITarifByModelId = async () => {
     fetchEndpointParametersByEndpointId,
     fetchAPIModelsById,
     fetchAPITarifByModelId,
+    fetchAllFunctionalitiesById,
     tarifTypes,
   };
 }

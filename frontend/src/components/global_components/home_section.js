@@ -80,7 +80,7 @@ const HomeSection = () => {
                                   class="tf-button style-6"
                                 >
                                  <div >
-                            <Link to={"/details/1/"}>Go to</Link>
+                            <Link to={"/details/1"}>Go to</Link>
                         </div>
                                 </a>
                               </div>
