@@ -352,6 +352,7 @@ export default function ManipulateVersion() {
     try {
       const endpointPromises = endpoints.map(async (endpoint) => {
         const endpointResponse = await API.post(`/apiendpoints/`, {
+          
           title: endpoint.name,
           method: endpoint.method,
           link: endpoint.path,

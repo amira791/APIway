@@ -342,12 +342,6 @@ const createModels = async (apiId, models) => {
         await API.put(`/pricing_model/${activeModels[0].id_model}/`, {
           is_active: 0,
         });
-        // Show an alert after deactivating the active models
-        const confirmReload = window.confirm("Your Current Model added successfully");
-        if (confirmReload) {
-          // Reload the page if the user clicks "OK"
-          window.location.reload();
-        }
       }
 
       for (const plan of model.plans) {
@@ -373,7 +367,12 @@ const createModels = async (apiId, models) => {
         );
       }
     }
-    getAPImodels(apiId);
+    // Show an alert after deactivating the active models
+   /* const confirmReload = window.confirm("Your Current Model added successfully");
+    if (confirmReload) {
+      // Reload the page if the user clicks "OK"
+      window.location.reload();
+    }*/
   } catch (error) {
     console.error("Error creating models:", error);
     throw error;
