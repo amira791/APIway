@@ -3,7 +3,7 @@ import APIAjout from "../../hooks/APIHook2.jsx";
 import { ToastContainer } from 'react-toastify';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import ManipulateMonetize from "../../Hooks/MonetizeHook.jsx";
+import ManipulateMonetize from "../../hooks/MonetizeHook.jsx";
 import ModelCheckbox from "./ModelCheckBox.jsx";
 
 const Monetizing = ({apiId}) => {
@@ -288,10 +288,10 @@ const Monetizing = ({apiId}) => {
         );
       } else {
         return (
-          <div class="col-ranking product-button" key={index2}>
+          <div className="col-ranking product-button" key={index2}>
            {planValidated ? (
             <a
-              class="tf-button"
+              className="tf-button"
               href="#"
               data-toggle="modal"
               data-target="#tarif_pop"
@@ -308,8 +308,8 @@ const Monetizing = ({apiId}) => {
               }}
             >
               <span>
-                <div class="img">
-                  <i class="fal fa-plus"></i>
+                <div className="img">
+                  <i className="fal fa-plus"></i>
                 </div>
               </span>
             </a>
@@ -417,32 +417,32 @@ const Monetizing = ({apiId}) => {
         </div>
       </div>
       <div
-        class="modal fade popup"
+        className="modal fade popup"
         id="popup_bid"
-        tabindex="-1"
+        tabIndex="-1"
         aria-modal="true"
         role="dialog"
       >
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-body space-y-20 pd-40">
+        <div className="modal-dialog modal-dialog-centered" role="document">
+          <div className="modal-content">
+            <div className="modal-body space-y-20 pd-40">
               <h3>Add a new plans model</h3>
 
-              <p class="label-1">Name:</p>
+              <p className="label-1">Name:</p>
               <input
                 type="text"
                 id="model-name"
                 placeholder="model name"
                 onChange={(e) => handleModelChange("Name", e.target.value)}
               />
-              <p class="label-1">Description:</p>
-              <fieldset class="message">
+              <p className="label-1">Description:</p>
+              <fieldset className="message">
                 <textarea
                   id="model-description"
                   name="message"
                   rows="4"
                   placeholder="Model's description"
-                  tabindex="4"
+                  tabIndex="4"
                   aria-required="true"
                   required=""
                   onChange={(e) =>
@@ -450,10 +450,10 @@ const Monetizing = ({apiId}) => {
                   }
                 ></textarea>
               </fieldset>
-              <p class="label-1"><i class="fa-solid fa-hourglass-half"></i> Period:</p>
-              <div class="row tf-container">
-                <div class="col-md-12">
-                  <div class="top-menu">
+              <p className="label-1"><i className="fa-solid fa-hourglass-half"></i> Period:</p>
+              <div className="row tf-container">
+                <div className="col-md-12">
+                  <div className="top-menu">
                     <ul className="filter-menu">
                       <li className={activeFilter === "Daily" ? "active" : ""}>
                         <a href="#" onClick={() => handleFilterClick("Daily")}>
@@ -482,7 +482,7 @@ const Monetizing = ({apiId}) => {
            <div  style={{display:"flex",alignItems:"center",justifyContent:"flex-end",gap:"15px" }}>
               <a
                 href="#"
-                class="button-popup"
+                className="button-popup"
                 data-toggle="modal"
                 data-target="#popup_bid_success"
                 data-dismiss="modal"
@@ -492,18 +492,18 @@ const Monetizing = ({apiId}) => {
                   addModel();
                 }}
               >
-               <i class="fa-solid fa-check"></i> Confirm
+               <i className="fa-solid fa-check"></i> Confirm
               </a>
               <a
                 href="#"
-                class="button-popup"
+                className="button-popup"
                 data-toggle="modal"
                 data-target="#popup_bid_success"
                 data-dismiss="modal"
                 aria-label="Close"
                 style={{background:"red",display:"flex",justifyContent:"space-around"}}
               >
-              <i class="fa-solid fa-xmark"></i>
+              <i className="fa-solid fa-xmark"></i>
                 Cancel
               </a></div>
             </div>
@@ -511,12 +511,12 @@ const Monetizing = ({apiId}) => {
         </div>
       </div>
 
-      <section class="tf-ranking tf-filter">
-        <div class="tf-container">
+      <section className="tf-ranking tf-filter">
+        <div className="tf-container">
           
-          <div class="table-ranking">
+          <div className="table-ranking">
             <div
-              class="title-ranking"
+              className="title-ranking"
               style={{
                 display: "flex",
                 justifyContent: "space-evenly",
@@ -524,8 +524,8 @@ const Monetizing = ({apiId}) => {
                 marginTop: "3%",
               }}
             >
-              <div class="col-ranking">#</div>
-              <div class="col-ranking">Model's name</div>
+              <div className="col-ranking">#</div>
+              <div className="col-ranking">Model's name</div>
               {tarifTypes.map((plan) => (
                 <div key={plan.id} className=" col-ranking">
                   <h6 className="title">
@@ -605,7 +605,7 @@ const Monetizing = ({apiId}) => {
                     }}
                     style={{ background: "green", marginRight: "1rem" }}
                   >
-                    <i class="fa-solid fa-check"></i> Validate
+                    <i className="fa-solid fa-check"></i> Validate
                   </button>
                   <button
                     className="button-popup"
@@ -615,7 +615,7 @@ const Monetizing = ({apiId}) => {
                     }}
                     style={{ background: "red" }}
                   >
-                    <i class="fa-solid fa-xmark"></i> Cancel
+                    <i className="fa-solid fa-xmark"></i> Cancel
                   </button>
                 </div>
               )}
@@ -628,16 +628,16 @@ const Monetizing = ({apiId}) => {
         </div>
       </section>
       <div
-        class="modal fade popup"
+        className="modal fade popup"
         id="tarif_pop"
-        tabindex="-1"
+        tabIndex="-1"
         aria-modal="true"
         role="dialog"
       >
       
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-body space-y-20 pd-40">
+        <div className="modal-dialog modal-dialog-centered" role="document">
+          <div className="modal-content">
+            <div className="modal-body space-y-20 pd-40">
               <h3>
                 <h3>
                   {modificationOn ? "Edit " : "Add a New "}
@@ -645,7 +645,7 @@ const Monetizing = ({apiId}) => {
                 </h3>
               </h3>
 
-              <p class="label-1">Quota Limit :</p>
+              <p className="label-1">Quota Limit :</p>
               <p></p>
               <div
                 style={{
@@ -674,7 +674,7 @@ const Monetizing = ({apiId}) => {
                 </p>
               </div>
 
-              <p class="label-1">Subscription Price :</p>
+              <p className="label-1">Subscription Price :</p>
               <p></p>
               <input
                 id="sub-price"
@@ -739,8 +739,8 @@ const Monetizing = ({apiId}) => {
                   <label htmlFor="rate-limit-checkbox">Enable Rate Limit</label>
                 </div>
               )}
-              <p class="label-1">Features:</p>
-              <fieldset class="message">
+              <p className="label-1">Features:</p>
+              <fieldset className="message">
                 <textarea
                   id="features"
                   name="message"
@@ -761,7 +761,7 @@ const Monetizing = ({apiId}) => {
        
               <a
                 href="#"
-                class="button-popup"
+                className="button-popup"
                 data-toggle="modal"
                 data-target="#tarif_pop_success"
                 data-dismiss="modal"
@@ -772,30 +772,30 @@ const Monetizing = ({apiId}) => {
                     : addPlan(newPlan.modelIndex);
                 }}
               >
-              {modificationOn ? <><i class="fa-solid fa-pen"></i></>:<i class="fa-solid fa-check"></i>}
+              {modificationOn ? <><i className="fa-solid fa-pen"></i></>:<i className="fa-solid fa-check"></i>}
                 {modificationOn ? "Edit" : "Confirm"}
               </a>
               <button
                 type="button"
-                class="button-popup"
+                className="button-popup"
                 data-dismiss="modal"
                 aria-label="Close"
                 onClick={() => setModificationOn(false)}
                style={{background:"red",display:"flex",justifyContent:"space-around"}}
               >
-              <i class="fa-solid fa-xmark"></i>
+              <i className="fa-solid fa-xmark"></i>
                 Cancel
               </button>
               {modificationOn && (
                 <button
                   type="button"
-                  class="button-popup"
+                  className="button-popup"
                   data-dismiss="modal"
                   aria-label="Close"
                   style={{backgroundColor:"red"}}
                   onClick={() => deletePlan(editedPlan.modelIndex)}
                 >
-                <i class="fa-solid fa-trash"></i>
+                <i className="fa-solid fa-trash"></i>
                   Delete
                 </button>
               )}
@@ -815,15 +815,15 @@ const Monetizing = ({apiId}) => {
         }}
       >
         {/*   <button>Add new plans model</button> */}
-        <div class="product-button">
+        <div className="product-button">
           <a
             href="#"
             data-toggle="modal"
             data-target="#popup_bid"
-            class="tf-button"
+            className="tf-button"
           >
             {" "}
-            <span class="icon-btn-product"><i class="fa-solid fa-file-invoice"></i></span> Add new plans model
+            <span className="icon-btn-product"><i className="fa-solid fa-file-invoice"></i></span> Add new plans model
           </a>
         </div>
       </div>

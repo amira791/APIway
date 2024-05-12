@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import React, { useRef } from "react";
-import ManipulateCat from "../../Hooks/CategoryHook.jsx";
+import ManipulateCat from "../../hooks/CategoryHook.jsx";
 import APIAjout from "../../hooks/APIHook2.jsx";
 import ManipulateVersion from "../../hooks/VersionHook.jsx";
 import $ from "jquery";
@@ -306,13 +306,13 @@ const AddVersion = ({selectedAPI, onReturnClick2}) => {
                 </button>
             </div>
           </section>
-          <div class="row tf-container">
-            <div class="col-md-12">
+          <div className="row tf-container">
+            <div className="col-md-12">
               <h4 className="page-title-heading" style={{ marginBottom: "5%" }}>
                 Add New API version
               </h4>
 
-              <div class="top-menu">
+              <div className="top-menu">
                 <ul className="filter-menu">
                   <li
                     className={
@@ -375,14 +375,14 @@ const AddVersion = ({selectedAPI, onReturnClick2}) => {
                             />
                         </fieldset>
 
-                        <fieldset class="message">
+                        <fieldset className="message">
                           <label>Version Description*</label>
                           <textarea
                             id="description"
                             name="message"
                             rows="4"
                             placeholder="Description"
-                            tabindex="4"
+                            tabIndex="4"
                           //  aria-required="true"
                          //  required
                             onChange={handleChange}
@@ -522,12 +522,12 @@ const AddVersion = ({selectedAPI, onReturnClick2}) => {
                         Changes made to the endpoints will be reflected in the
                         Hub. Add and define your API endpoints.
                       </p>
-                      <div class="row">
+                      <div className="row">
                         <div className="col-xl-12 col-lg-12 col-md-12">
                         
 
-                            <div class="banner-collection-inner">
-                              <div class="button-top" style={{marginBottom: "200px"}}>
+                            <div className="banner-collection-inner">
+                              <div className="button-top" style={{marginBottom: "200px"}}>
                                 <a
                                   href="#"
                                   className="btn-wishlish"
@@ -539,10 +539,10 @@ const AddVersion = ({selectedAPI, onReturnClick2}) => {
 
                                 <a
                                   href="#"
-                                  class="btn-wishlish"
+                                  className="btn-wishlish"
                                   onClick={handleCreateGroup}
                                 >
-                                  <i class="far fa-plus"></i> Create Group
+                                  <i className="far fa-plus"></i> Create Group
                                 </a>
                               </div>
                             </div>
@@ -584,13 +584,13 @@ const AddVersion = ({selectedAPI, onReturnClick2}) => {
                       }}
                     >
                       <h3>Documentation</h3>
-                      <fieldset class="message">
+                      <fieldset className="message">
                         <textarea
                           id="message"
                           name="message"
                           rows="4"
                           placeholder="documentation"
-                          tabindex="4"
+                          tabIndex="4"
                           aria-required="true"
                           required=""
                         ></textarea>
@@ -604,7 +604,7 @@ const AddVersion = ({selectedAPI, onReturnClick2}) => {
                     display:
                       activeFilter === "#monetize-section" ? "block" : "none",
                   }}
-                  class="tf-section tf-create-and-sell"
+                  className="tf-section tf-create-and-sell"
                 >
                   <Monetizing Models={Models} setModels={setModels} />
                 </section>
@@ -625,8 +625,8 @@ const AddVersion = ({selectedAPI, onReturnClick2}) => {
                         <a href="#" className="heart-icon"></a>
                       </div>
                     </div>
-                    <div class="features">
-                      <div class="product-media">
+                    <div className="features">
+                      <div className="product-media">
                         
                         
                           <div className="avatar">
@@ -638,10 +638,10 @@ const AddVersion = ({selectedAPI, onReturnClick2}) => {
                       
                       </div>
 
-                      <div class="rain-drop1">
+                      <div className="rain-drop1">
                         <img src="assets/images/icon/rain1.svg" alt="images" />
                       </div>
-                      <div class="rain-drop2">
+                      <div className="rain-drop2">
                         <img src="assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>

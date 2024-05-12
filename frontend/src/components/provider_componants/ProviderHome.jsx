@@ -15,17 +15,7 @@ const ProviderHomePage = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const { authState } = useAuthContext();
-    const {getFournisseur ,fournisseur} = useAuth()
-    // const id = authState.userId
-    // const [fournisseur , setFournisseur] = useState([]);
-
-    useEffect(() => {
-
-        getFournisseur(authState.userId)       
-   
- 
-    }, [authState.userId]);
-    
+    const provider = authState.userId;
     
     if (loading) {
         return (
@@ -67,7 +57,10 @@ const ProviderHomePage = () => {
                                             <div className="avatar">
                                                 <img src="/assets/images/author/author-db.jpg" alt="images"/>
                                             </div>
-                                            <div className="name">{fournisseur.user?.first_name ? fournisseur.user.first_name : 'Provider'}</div>
+                                            <div className="name">
+                                                {/* {fournisseur.user?.first_name ? fournisseur.user.first_name : 'Provider'} */}
+                                            {authState.username}
+                                            </div>
                                         </div>
                                         <div className="dashboard-filter">
                                             <ul className="filter-menuu menu-tab">
@@ -92,12 +85,12 @@ const ProviderHomePage = () => {
                                     <div className="dashboard-content inventory content-tab">
                                         <div className="inner-content inventory">
                                             
-                                            <ProvAPIList provider_id={4}/>
+                                            <ProvAPIList provider_id={provider}/>
 
                                         </div>
                                         <div className="inner-content wallet">
                                             <h4 className="title-dashboard">Create New API</h4>
-                                            <AddAPIPage provider={fournisseur}/>
+                                            <AddAPIPage/>
                                         </div>
                                         <div className="inner-content history">
                                             <h4 className="title-dashboard">Tickets</h4>

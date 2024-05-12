@@ -2,8 +2,10 @@
 import { useState, useEffect} from "react";
 import API from "../API";
 import ManipulateMonetize from "./MonetizeHook";
+import { useAuthContext } from "../context/authContext";
 
 export default function APIAjout() {
+  const {authState} =useAuthContext()
 
   const addNewAPI = async (
     formData,
@@ -36,7 +38,7 @@ export default function APIAjout() {
         terms_of_use: formData.termOfUse,
         logo: formData.logo,
         visibility: formData.visibility,
-        provider: formData.providerId,
+        provider: authState.userId,
         category: formData.categoryId,
         website: formData.website,
       },

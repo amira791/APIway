@@ -255,8 +255,6 @@ class Abonnement(models.Model):
     def __str__(self):
         return self.id_subscription
     
-
-    
 class Ticket(models.Model):
     ticket_id = models.AutoField(primary_key=True)
     api_id = models.ForeignKey(API, on_delete=models.CASCADE)

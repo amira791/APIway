@@ -263,13 +263,13 @@ const AddEndpointForm = ({ onSave }) => {
           <div>
             <div className="sc-fTNIDv enJrlk">
               <div>
-                <fieldset class="message">
+                <fieldset className="message">
                   <textarea
                     id="message"
                     name="message"
                     rows="4"
                     placeholder="Description"
-                    tabindex="4"
+                    tabIndex="4"
                     value={endpointDesc}
                     onChange={(e) => setEndpointDesc(e.target.value)}
                     aria-required="true"
@@ -472,14 +472,14 @@ const AddEndpointForm = ({ onSave }) => {
                     }
                     placeholder="Payload Value"
                   />
-                  <fieldset class="message">
+                  <fieldset className="message">
                     <label>Enter un example</label>
                     <textarea
                       id="description"
                       name="message"
                       rows="4"
                       placeholder="Example"
-                      tabindex="4"
+                      tabIndex="4"
                       aria-required="true"
                       required=""
                       onChange={(e) =>
@@ -602,7 +602,7 @@ const AddEndpointForm = ({ onSave }) => {
           onClick={handleSubmit}
         >
           <ToastContainer />
-          <i class="fa-solid fa-bookmark"></i> <span>save</span>
+          <i className="fa-solid fa-bookmark"></i> <span>save</span>
         </button>
         <button
           data-id="cancelSaveEndpointButton"
@@ -610,7 +610,7 @@ const AddEndpointForm = ({ onSave }) => {
           className="ant-btn"
           style={{ backgroundColor: "red" }}
         >
-          <i class="fa-solid fa-xmark"></i> <span>cancel</span>
+          <i className="fa-solid fa-xmark"></i> <span>cancel</span>
         </button>
       </div>
     </div>

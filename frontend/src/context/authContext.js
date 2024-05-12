@@ -17,13 +17,13 @@ const initialState = {
 const authReducer = (state, action) => {
   switch (action.type) {
     case 'SET_AUTH_INFO':
-      const { user_type, user,access , refresh} = action.payload;
+      const { user_type, user_id,user,access , refresh} = action.payload;
       return {
         ...state,
         isAuth:true,
         token: access,
         username: user.username,
-        userId : user.id,
+        userId : user_id,
         isFournisseur: user_type === 'fournisseur',
         isConsommateur: user_type === 'consommateur',
         isAdmin: user_type === 'admin'

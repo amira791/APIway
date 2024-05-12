@@ -71,7 +71,7 @@ const EndpointTable = ({ endpoints,onDelete,onAddTogroup ,groups,onRemoveFromGro
               </div>
             )}
 
-              <button style={{display:"flex",justifyContent:"center",alignItems:"center", gap:"5%", marginTop:"3%"}} onClick={() => onDelete(cell.row.original.name)}> <i class="fa-solid fa-trash"></i> Delete</button>
+              <button style={{display:"flex",justifyContent:"center",alignItems:"center", gap:"5%", marginTop:"3%"}} onClick={() => onDelete(cell.row.original.name)}> <i className="fa-solid fa-trash"></i> Delete</button>
          
           </div>
         ),

@@ -480,7 +480,7 @@ const Example = ({ endpoints , state}) => {
         <Box sx={{ flex: 1, padding: "1rem" }}>
           <Typography variant="h1" style={{fontSize:"20%"}}>{selectedEndpoint.name}</Typography>
           <Divider />
-          <div class="tf-tab">
+          <div className="tf-tab">
           <div>
       <ul className="menu-tab">
         <li className={selectedChoice === 'Response Example' ? 'tab-title active' : 'tab-title'}>

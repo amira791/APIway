@@ -1,18 +1,16 @@
 import { useState, useEffect} from "react";
 import API from "../API";
-import useManageAccountsF from './FouAccountsHook'
 import { useAuthContext } from '../context/authContext';
-import useAuth from "./useAuth";
+
 export default function ManipulateProv() {
   const [providerAPIs, setproviderAPIs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { authState } = useAuthContext();
-  const {getFournisseur ,fournisseur} = useAuth()
+  // const {getFournisseur ,fournisseur} = useAuth()
 
   const getApisByProvider = (provider_id) => {
-    console.log("provider id :")
-    console.log(provider_id)
+  
       setLoading(true);
       API.get(`apis/byprovider/${provider_id}/`)
           .then((res) => {
@@ -27,15 +25,13 @@ export default function ManipulateProv() {
           });
   }
 
-  // useEffect(() => {
-  //   getFournisseur(authState.userId)
-  //   console.log()
-  //   getApisByProvider(4);
+  useEffect(() => {
+    getApisByProvider(authState.userId);
     
-  // }, [authState.userId]);
+  }, [authState.userId]);
 
   return {
     getApisByProvider,
-      providerAPIs: providerAPIs || []
+    providerAPIs: providerAPIs || []
   };
 }

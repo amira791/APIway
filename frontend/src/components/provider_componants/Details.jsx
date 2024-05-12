@@ -97,43 +97,43 @@ const Details = () => {
     }
   
   return (
-    <body class="body header-fixed">
-      <div id="wrapper" class="wrapper-style">
-        <div id="page" class="clearfix">
+    <body className="body header-fixed">
+      <div id="wrapper" className="wrapper-style">
+        <div id="page" className="clearfix">
           <Navbar />
-          <section class="tf-page-title-details ">
-            <h4 class="page-title-heading">API Details</h4>
+          <section className="tf-page-title-details ">
+            <h4 className="page-title-heading">API Details</h4>
           </section>
 
-          <section class="tf-item-detail">
-            <div class="tf-container2">
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="tf-item-detail-inner">
+          <section className="tf-item-detail">
+            <div className="tf-container2">
+              <div className="row">
+                <div className="col-lg-12">
+                  <div className="tf-item-detail-inner">
                    
-                    <div class="content">
-                      <div class="content-top">
-                      <div class="image" style={{ width: "15%", height: "15%" }}>
+                    <div className="content">
+                      <div className="content-top">
+                      <div className="image" style={{ width: "15%", height: "15%" }}>
                       <img src={apiDetails.logo} alt="Image" />
                      
                       
                     </div>
                     <div style={{ width: "100%"}} >
                         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingBottom:"2%",gap:"20%"}}>
-                        <div class="author">
+                        <div className="author">
                           <img
                             src="/assets/images/author/author-detail-3.png"
                             alt="Image"
                           />
-                          <h6 class="title"  style={{fontSize:"17px"}}>Provider: {apiProvider.first_name}  {apiProvider.last_name}</h6>
+                          <h6 className="title"  style={{fontSize:"17px"}}>Provider: {apiProvider.first_name}  {apiProvider.last_name}</h6>
                         </div>
-                        <div class="wishlish" >
-                          <div class="number-wishlish">
-                            <i class="far fa-heart"></i>
+                        <div className="wishlish" >
+                          <div className="number-wishlish">
+                            <i className="far fa-heart"></i>
                           </div>
-                         {/*  <div class="option btn-option">
-                            <i class="far fa-ellipsis-h"></i>
-                            <div class="option_popup">
+                         {/*  <div className="option btn-option">
+                            <i className="far fa-ellipsis-h"></i>
+                            <div className="option_popup">
                               <a href="#">Delete</a>
                               <a href="#">Edit</a>
                             </div>
@@ -142,18 +142,18 @@ const Details = () => {
                         </div>
                         <div>
                           <p></p>
-                        <h2 style={{display:"flex",alignItems:"center",paddingBottom:"2%",gap:"2%"}} class="title-detail">API name: <p>{apiDetails.api_name}</p> </h2>
-                        <div class="author" style={{display:"flex",alignItems:"center",paddingBottom:"2%",gap:"2%"}}>
-                          <h4 class="title" style={{fontSize:"25px"}}>Category:  </h4> <p style={{fontSize:"23px"}}>  {   apiCategory.label}</p>
+                        <h2 style={{display:"flex",alignItems:"center",paddingBottom:"2%",gap:"2%"}} className="title-detail">API name: <p>{apiDetails.api_name}</p> </h2>
+                        <div className="author" style={{display:"flex",alignItems:"center",paddingBottom:"2%",gap:"2%"}}>
+                          <h4 className="title" style={{fontSize:"25px"}}>Category:  </h4> <p style={{fontSize:"23px"}}>  {   apiCategory.label}</p>
                         </div>
-                        <div class="author" style={{display:"flex",alignItems:"center",paddingBottom:"2%",gap:"2%"}}>
-                          <h4 class="title" style={{fontSize:"25px"}}>Description:  </h4> <p style={{fontSize:"23px"}}> {apiDetails.description}</p>
+                        <div className="author" style={{display:"flex",alignItems:"center",paddingBottom:"2%",gap:"2%"}}>
+                          <h4 className="title" style={{fontSize:"25px"}}>Description:  </h4> <p style={{fontSize:"23px"}}> {apiDetails.description}</p>
                         </div>
                        
                       </div>
                       </div>
                       </div>
-                      <div class="tf-tab">
+                      <div className="tf-tab">
                       <ul className="menu-tab" >
                       <li className={activeTab === 'About' ? 'tab-title active' : 'tab-title'}>
           <a href="#" onClick={() => handleTabClick('About')} style={{fontSize:"25px"}}>About</a>
@@ -169,12 +169,12 @@ const Details = () => {
           <a href="#" onClick={() => handleTabClick('Pricing')} style={{fontSize:"25px"}}>Pricing</a>
         </li>
       </ul>
-                        <div class="content-tab">
+                        <div className="content-tab">
                         {activeTab === 'Endpoints' && (
           <div id="Endpoints" className="tab-content">
             <fieldset className="message" style={{display:"flex",justifyContent:"end",alignItems:"center",gap:"3%"}}>
                             <h6>Choose a version</h6>
-                            <div class="form-select" >
+                            <div className="form-select" >
                             <select onChange={handleVersionChange} value={chosenVersion}>
                                     {apiVersions.map(apiVersion => (
                                       <option key={apiVersion.id_version} value={apiVersion.id_version}>
@@ -184,7 +184,7 @@ const Details = () => {
                                   </select>
                             </div>
                             </fieldset>
-                            <div class="tab-details">
+                            <div className="tab-details">
                            { apiEndpoints?    <Example endpoints={apiEndpoints} state={chosenVersionState} /> :<></>}
                             </div>
                           </div> )}

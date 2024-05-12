@@ -32,7 +32,7 @@ function Root() {
       <Router>
         <Routes>
           <Route exact path="/" element={<HomeSection />} />
-          <Route exact path="/adminhome" element={<AdminHome />} />
+          <Route exact path="/adminhome" element={authState.isAdmin ? <AdminHome /> : <Navigate to="/login"/>} />
           <Route exact path='/fourAccounts' element={<FourAccountManag />} />
           <Route exact path='/consomAccounts' element={<ConsomAccountManag />} />
           <Route exact path="/searchApi" element={<SearchApi />} />
@@ -45,7 +45,7 @@ function Root() {
           <Route path='/tickets' element={<TicketsPage/>} />
           {/* <Route exact path="/addAPI" element={<AddAPIPage />} /> */}
           <Route exact path="/details/:id" element={<Details />} />
-          <Route exact path="/provider_home"  element={<ProviderHomePage/>}/>
+          <Route exact path="/provider_home" element={authState.isFournisseur ? <ProviderHomePage /> : <Navigate to="/login"/>}/>
         </Routes>
       </Router>
     </div>

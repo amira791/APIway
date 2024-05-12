@@ -31,21 +31,25 @@ def signup(request):
         user = serializer.save()
 
         if user_type == 'fournisseur':
-            Fournisseur.objects.create(user=user)
+         new = Fournisseur.objects.create(user=user)
+         user_id = new.id  # ID of the created Fournisseur
         elif user_type == 'admin':
-            Admin.objects.create(user=user)
+         new = Admin.objects.create(user=user)
+         user_id = new.id  # ID of the created Admin
         elif user_type == 'consommateur':
-            Consommateur.objects.create(user=user)
-        
-        access = AccessToken.for_user(user)
-        serialized_user = UserSerializer(user).data
+         new = Consommateur.objects.create(user=user)
+         user_id = new.id  # ID of the created Consommateur
+    
+    access = AccessToken.for_user(user)
+    serialized_user = UserSerializer(user).data
 
-        return Response({
-            'success': 'User created successfully',
-            'access': str(access),
-            'user_type': user_type,
-            'user': serialized_user,
-        }, status=status.HTTP_201_CREATED)
+    return Response({
+        'success': 'User created successfully',
+        'access': str(access),
+        'user_type': user_type,
+        'user_id': user_id,
+        'user': serialized_user,
+    }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -77,22 +81,27 @@ def signin(request):
     serialized_user = UserSerializer(user).data
 
     user_type = None
+    user_id = None
     consommateur = Consommateur.objects.filter(user_id=user.id).first()
     if consommateur:
         user_type = 'consommateur'
+        user_id = consommateur.id_consommateur
     else:
         fournisseur = Fournisseur.objects.filter(user_id=user.id).first()
         if fournisseur:
             user_type = 'fournisseur'
+            user_id = fournisseur.id_fournisseur
         else:
             admin = Admin.objects.filter(user_id=user.id).first()
             if admin:
                 user_type = 'admin'
+                user_id = admin.id_admin
 
     return Response({
         'refresh': str(refresh),
         'access': str(access),
-        'user_type':user_type,
+        'user_type': user_type,
+        'user_id': user_id,
         'user': serialized_user,
     }, status=status.HTTP_200_OK)
 

@@ -47,13 +47,13 @@ const AddGroupForm = ({ onSave }) => {
           <div>
             <div className="sc-fTNIDv enJrlk">
               <div>
-                <fieldset class="message">
+                <fieldset className="message">
                   <textarea
                     id="message"
                     name="message"
                     rows="4"
                     placeholder="Description"
-                    tabindex="4"
+                    tabIndex="4"
                     value={groupDescription}
                     onChange={(e) => setGroupDescription(e.target.value)}
                     aria-required="true"

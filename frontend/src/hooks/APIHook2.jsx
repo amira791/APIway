@@ -9,13 +9,7 @@ import useAuth from "./useAuth";
 
 export default function APIAjout() {
   const { authState } = useAuthContext();
-  const {getFournisseur ,fournisseur , error , loading} = useAuth()
-  useEffect(() => {
 
-    if (authState.isFournisseur && authState.isAuth) getFournisseur(authState.userId)
- 
-console.log(fournisseur.id_fournisseur)
-}, [authState.userId,authState.isFournisseur,authState.isAuth]);
 
  /*  const addNewAPI2 = async (
     formData,
@@ -309,8 +303,7 @@ const addNewAPI = async (formData, functionalities, baseLinks, endpoints, Models
 };
 
 const createAPI = async (formData) => {
-  console.log("provider sent ...")
-  console.log(fournisseur.id_fournisseur)
+
   
   if (formData.categoryId === null) {
     const categoryId = await createCategory(formData.category);
@@ -322,7 +315,7 @@ const createAPI = async (formData) => {
     terms_of_use: formData.termOfUse,
     logo: formData.logo,
     visibility: formData.visibility,
-    provider: 4,
+    provider: authState.userId,
     category: formData.categoryId,
     website: formData.website,
   },
@@ -599,7 +592,7 @@ const fetchAllAPIVersionsById = async (id) => {
     
     
     // Filter API versions by the provided API ID
-    const apiVersionsByApiId = allApiVersions.filter(apiVersion => apiVersion.api == id && apiVersion.state !== "Draft");
+    const apiVersionsByApiId = allApiVersions.filter(apiVersion => apiVersion.api === id && apiVersion.state !== "Draft");
   
     return apiVersionsByApiId;
   } catch (error) {
@@ -616,7 +609,7 @@ const fetchAPIEndpointsByVersion = async (versionId) => {
     if (response && response.data) {
       //alert(versionId);
       // Filter endpoints by versionId
-      const endpointsByVersionId = response.data.filter(endpoint => endpoint.version == versionId);
+      const endpointsByVersionId = response.data.filter(endpoint => endpoint.version === versionId);
       
       // Log filtered endpoints for debugging
       console.log('Filtered endpoints:', endpointsByVersionId);
@@ -679,7 +672,7 @@ const fetchAPIEndpointBodyByEndpointId = async (endpointId) => {
   try {
     const response = await API.get(`/apiendpointbody/`);
     const allEndpointBodies = response.data;
-    const endpointBodyByEndpointId = allEndpointBodies.find(endpointBody => endpointBody.endpoint == endpointId);
+    const endpointBodyByEndpointId = allEndpointBodies.find(endpointBody => endpointBody.endpoint === endpointId);
     console.log('Fetched endpoint body by endpointId:', endpointBodyByEndpointId);
     return endpointBodyByEndpointId;
   } catch (error) {
@@ -723,7 +716,7 @@ const fetchAPIModelsById = async (id) => {
     if (response && response.data) {
       //alert(versionId);
       // Filter endpoints by versionId
-      const modelsByApiId = response.data.filter(model => model.api == id  && model.is_active == true);
+      const modelsByApiId = response.data.filter(model => model.api === id  && model.is_active === true);
       
       // Log filtered endpoints for debugging
       console.log('Filtered models:', modelsByApiId);

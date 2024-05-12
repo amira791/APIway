@@ -5,11 +5,12 @@ import { Link } from 'react-router-dom';
 import useTicket from '../../hooks/useTicket';
 
 export default function TicketsList({ api_id }) {
-  const { getAPITickets, tickets, error, loading } = useTicket();
+  const { getTickets ,getAPITickets, tickets,apiTickets, error, loading } = useTicket();
 
   useEffect(() => {
-    console.log(api_id);
-    getAPITickets(api_id);
+    // console.log(api_id);
+    // getAPITickets(api_id);
+    getTickets()
   }, [api_id]);
 
   if (loading) {

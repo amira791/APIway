@@ -1,12 +1,12 @@
-import ManipulateProv from "../../Hooks/ProviderHook";
+import ManipulateProv from "../../hooks/ProviderHook";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import ManipulateCat from "../../Hooks/CategoryHook";
-import APIAjout from "../../Hooks/APiHook";
+import ManipulateCat from "../../hooks/CategoryHook";
+import APIAjout from "../../hooks/ApiHook";
 import VersionTable from "../provider_componants/APIversions";
-import CustomPagination from "../global_componants/Pagination";
+import CustomPagination from "../global_components/pagination";
 import Monetizing from "./ModifyMonetize";
-const ProvAPIList = () => {
+const ProvAPIList = ({provider_id}) => {
     const { providerAPIs } = ManipulateProv();
     const [showUpdateSection, setShowUpdateSection] = useState(false);
     const [showVersionsSection, setShowVersionsSection] = useState(false);
@@ -45,7 +45,7 @@ const ProvAPIList = () => {
     const handleFilterClick = (filterId) => {
       setActiveFilter(filterId);
     };
-    const provider_id = 1;
+  
     const [formData, setFormData] = useState({
         description: selectedAPI?.description || '',
         termOfUse: selectedAPI?.terms_of_use|| '',
@@ -123,7 +123,7 @@ const ProvAPIList = () => {
                                 <i className="fa-solid fa-pencil"></i>
                             </button>
                             <button className="update_btn" onClick={() => handleVersions(api)} title="Manage versions">   
-                                <i class="fa-solid fa-code-compare"></i>
+                                <i className="fa-solid fa-code-compare"></i>
                             </button>
 
                         </div>
@@ -146,7 +146,7 @@ const ProvAPIList = () => {
                 <div id="update-section">
                     <div>
                         <h4 className="title-dashboard" style={{ display: "inline-block", marginRight: "600px" }}>Update Your API</h4>
-                        <button onClick={handleReturnClick} title="Return to APIs"><i class="fa-solid fa-right-from-bracket"></i></button>
+                        <button onClick={handleReturnClick} title="Return to APIs"><i className="fa-solid fa-right-from-bracket"></i></button>
                         {showModifySection && (
                             <button
                                 onClick={handleToggleMonetizeSection}
@@ -175,7 +175,7 @@ const ProvAPIList = () => {
                                     <form onSubmit={handleSubmit}>
                                         <fieldset className="message">
                                             <label>API category</label>
-                                            <div class="form-select">
+                                            <div className="form-select">
                                                 <select
                                                     id="Api-category"
                                                     value={formData.categoryId}
@@ -191,17 +191,17 @@ const ProvAPIList = () => {
                                                         </option>
                                                     ))}
                                                 </select>
-                                                <i class="icon-fl-down"></i>
+                                                <i className="icon-fl-down"></i>
                                             </div>
                                         </fieldset>
 
-                                        <fieldset class="message">
+                                        <fieldset className="message">
                                             <label>API description</label>
                                             <textarea
                                                 id="Api-description"
                                                 name="message"
                                                 rows="4"
-                                                tabindex="4"
+                                                tabIndex="4"
                                                 aria-required="true"
                                                 required=""
                                                 value={formData.description}
@@ -273,7 +273,7 @@ const ProvAPIList = () => {
                                                             width="30"
                                                             height="30"
                                                             fill="currentColor"
-                                                            class="bi bi-lock-fill"
+                                                            className="bi bi-lock-fill"
                                                             viewBox="0 0 16 16"
                                                             >
                                                             <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2" />
@@ -348,7 +348,7 @@ const ProvAPIList = () => {
                 <div id="versions-section">
                     <div>
                         <h4 className="title-dashboard" style={{ display: "inline-block", marginRight: "600px" }}>Manage Versions</h4>
-                        {/* <button onClick={handleReturnClick2} title="Return to APIs"><i class="fa-solid fa-right-from-bracket"></i></button> */}
+                        {/* <button onClick={handleReturnClick2} title="Return to APIs"><i className="fa-solid fa-right-from-bracket"></i></button> */}
                     </div>
                    
                     <VersionTable selectedAPI={selectedAPI} onReturnClick={handleReturnClick2}/>  

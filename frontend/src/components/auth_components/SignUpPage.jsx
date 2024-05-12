@@ -78,9 +78,9 @@ export default function SignUpPage() {
                                 <div className="col-xl-6 col-lg-9 col-md-12">
                                     <form onSubmit={handleFormSubmit}>
                                         <div className='add-nft-inner'>
-                                            <h6 class="title">Choose Role</h6>
-                                            <p class="sub">Connect to APIway as provider to create APIs or as Consumer to use APIs</p>
-                                            <ul class="blockchain-button">
+                                            <h6 className="title">Choose Role</h6>
+                                            <p className="sub">Connect to APIway as provider to create APIs or as Consumer to use APIs</p>
+                                            <ul className="blockchain-button">
                                                 <li><label><input type="radio" name="userType" value="fournisseur" onChange={() => setUserType('fournisseur')} required /> Provider</label></li>
                                                 <li><label><input type="radio" name="userType" value="consommateur" onChange={() => setUserType('consommateur')} required /> Consumer</label></li>
                                             </ul>
