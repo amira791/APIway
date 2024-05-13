@@ -203,10 +203,8 @@ class APIForumView(viewsets.ModelViewSet):
 # Forum Thread View
 class ThreadView(viewsets.ModelViewSet):
     queryset = Thread.objects.all()
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
-    def perform_create(self, serializer):
-        serializer.save(creator=self.request.user)
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:

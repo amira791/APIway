@@ -1,6 +1,7 @@
 import  { useState } from 'react';
 import { useToast } from '@chakra-ui/react';
 import {BASEURL,fetchData, postData } from './API';
+import { useAuthContext } from '../context/authContext';
 
 export default function useTicket() {
     const toast = useToast();
@@ -8,20 +9,22 @@ export default function useTicket() {
     const [error, setError] = useState(null);
     const [tickets, setTickets] = useState([]);
     const [apiTickets,setAPITickets] = useState([])
+    const {authState} = useAuthContext();
+    const token = authState.token;
 
     const getAPITickets = (id) => {
-        fetchData(`${BASEURL}apis/${id}/tickets/`, setAPITickets, setLoading, setError);
+        fetchData(`${BASEURL}apis/${id}/tickets/`, setAPITickets, setLoading, setError,token);
     };
 
     const getTickets = () => {
-        fetchData(`${BASEURL}tickets/`, setTickets, setLoading, setError);
+        fetchData(`${BASEURL}tickets/`, setTickets, setLoading, setError,token);
     };
 
     const addNewTicket = (new_ticket) => {
         postData(`${BASEURL}tickets/`, new_ticket, {
             title: 'Ticket ajoute',
             description: 'Le Ticket a ete ajoute avec succes',
-        }, toast, setError);
+        }, toast, setError,token);
     };
 
     return {

@@ -9,12 +9,14 @@ import {
 } from '@chakra-ui/react'
 import { ChevronLeftIcon, TimeIcon } from '@chakra-ui/icons'
 import formatTime from '../../utils/formatTime';
+import { useAuthContext } from '../../context/authContext';
 
 export default function Thread({ thread_id }) {
   const navigate = useNavigate()
   const [message, setMessage] = useState()
   const { addNewComment, getThread, getThreadComments, thread, comments, error, loading } = useForum();
-
+  const {authState} = useAuthContext();
+  const creator = authState.userId;
 
   useEffect(() => {
     getThread(thread_id);
@@ -29,7 +31,7 @@ export default function Thread({ thread_id }) {
     const newPost = {
       message: message,
       thread: thread_id,
-      created_by: 1
+      created_by: creator,
     }
     e.preventDefault(); // Prevent default form submission behavior
     addNewComment(newPost)

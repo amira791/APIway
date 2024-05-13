@@ -5,18 +5,21 @@ import 'react-quill/dist/quill.snow.css';
 import useTicket from '../../hooks/useTicket';
 import Navbar from '../global_components/navbar'
 import Footer from '../global_components/footer'
+import { useAuthContext } from '../../context/authContext';
 
 export default function TicketForm() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const { addNewTicket, error: addError, loading: addLoading } = useTicket();
+  const {authState} = useAuthContext();
+  const creator = authState.userId;
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const newTicket = {
       api_id: 7,
-      created_by: 1,
+      created_by: creator,
       title: title,
       issue: description
     };

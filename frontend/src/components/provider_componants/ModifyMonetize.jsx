@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import APIAjout from "../../hooks/APIHook2.jsx";
+import APIAjout from "../../hooks/APIHook2";
 import { ToastContainer } from 'react-toastify';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import ManipulateMonetize from "../../hooks/MonetizeHook.jsx";
+import ManipulateMonetize from "../../hooks/MonetizeHook";
 import ModelCheckbox from "./ModelCheckBox.jsx";
 
 const Monetizing = ({apiId}) => {

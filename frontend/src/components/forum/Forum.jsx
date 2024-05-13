@@ -9,8 +9,7 @@ import useManageAccountsC from '../../hooks/ConsomAccountsHook';
 export default function Forum({ forum_id }) {
   const { addNewThread, getForum, forum, error: forumError, loading: forumLoading } = useForum();
   const { authState } = useAuthContext();
-  const user_id = parseInt(authState.userId);
-  const { getConsommateur, consommateur, error: consommateurError } = useManageAccountsC();
+  const user_id = authState.userId;
   const [message, setMessage] = useState('');
   const [showLoginPrompt, setShowLoginPrompt] = useState(false); // State to control login prompt
   const [loading, setLoading] = useState(true); // Component-level loading state
@@ -20,7 +19,6 @@ export default function Forum({ forum_id }) {
     async function fetchData() {
       try {
         await getForum(forum_id);
-        if (authState.isConsommateur) await getConsommateur(user_id);
         setLoading(false); // Set loading to false after data fetching is complete
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -29,14 +27,14 @@ export default function Forum({ forum_id }) {
     }
 
     fetchData();
-  }, [forum_id, user_id, authState.isConsommateur]);
+  }, [forum_id]);
 
   const handleNewDiscussion = () => {
     if (authState.isAuth) {
       const thread = {
         content: message,
         forum: forum_id,
-        creator: consommateur.id_consommateur,
+        creator: user_id,
       };
       console.log(thread)
       addNewThread(thread);
@@ -54,8 +52,8 @@ export default function Forum({ forum_id }) {
     return <div>Loading...</div>; // Display a loading indicator while fetching data
   }
 
-  if (forumError || consommateurError) {
-    return <div>Error: {forumError || consommateurError}</div>; // Display error message if an error occurs
+  if (forumError) {
+    return <div>Error: {forumError}</div>; // Display error message if an error occurs
   }
 
   return (
@@ -91,7 +89,7 @@ export default function Forum({ forum_id }) {
         </HStack>
         )}
         <Box>
-          <ThreadList key={forum.id_forum} forum_id={forum.id_forum} />
+          <ThreadList key={forum.id_forum} forum_id={forum_id} />
         </Box>
       </Flex>
 

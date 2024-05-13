@@ -1,22 +1,31 @@
-const BASEURL = "http://127.0.0.1:8000/api_mapi/"
-const ConsumerBASEURL = "http://127.0.0.1:8000/Consumer/"
+const BASEURL = "http://127.0.0.1:8000/api_mapi/";
+const ConsumerBASEURL = "http://127.0.0.1:8000/Consumer/";
 
-const createHeaders = () => {
-    return {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+const createHeaders = (token) => {
+    if (token != null) {
+        console.log(token)
+        console.log("not nullllll")
+        return {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        };
+    } else {
+        return {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        };
     }
-}
+};
 
-const fetchData = async (url, setter, setLoading, setError) => {
-
+const fetchData = async (url, setter, setLoading, setError, token) => {
     setLoading(true);
     setError(null);
 
     try {
         const response = await fetch(url, {
             method: 'GET',
-            headers: createHeaders()
+            headers: createHeaders(token)
         });
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -30,12 +39,11 @@ const fetchData = async (url, setter, setLoading, setError) => {
     }
 };
 
-const postData = async (url, data, successMessage, toast, setError) => {
-
+const postData = async (url, data, successMessage, toast, setError, token) => {
     try {
         const response = await fetch(url, {
             method: 'POST',
-            headers: createHeaders(),
+            headers: createHeaders(token),
             body: JSON.stringify(data),
         });
         if (!response.ok) {
@@ -59,4 +67,4 @@ const postData = async (url, data, successMessage, toast, setError) => {
     }
 };
 
-export { BASEURL,ConsumerBASEURL,fetchData, postData };
+export { BASEURL, ConsumerBASEURL, fetchData, postData };

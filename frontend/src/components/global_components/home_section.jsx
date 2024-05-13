@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "./navbar";
 import Footer from "./footer";
-import ManipulateCat from "../../hooks/CategoryHook.jsx";
+import ManipulateCat from "../../hooks/CategoryHook";
 import { useEffect } from "react";
 
 function useExternalScript(url) {

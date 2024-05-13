@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BASEURL,ConsumerBASEURL,fetchData, postData } from './API';
 import axios from 'axios';
-
-
+import { useAuthContext } from '../context/authContext';
 
 export default function useApi() {
     const [APIs, setAPIs] = useState([]);
@@ -13,9 +12,10 @@ export default function useApi() {
     const [searchResults, setSearchResults] = useState([]);
     const [functionalities, setFunctionalities] = useState([]);
     const [suggestions, setSuggestions] = useState([]);
-
+    const {authState} = useAuthContext();
+    const token = authState.token;
     useEffect(() => {
-        fetchData(`${BASEURL}apis/`,setAPIs,setLoading,setError)
+        fetchData(`${BASEURL}apis/`,setAPIs,setLoading,setError,token)
     }, []);
 
     useEffect(() => {

@@ -4,7 +4,6 @@ import { BASEURL ,fetchData } from './API'
 
 export default function useManageAccountsC() {
     const [consommateurs, setConsommateurs] = useState([]);
-    const [consommateur, setConsommateur] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -64,18 +63,13 @@ export default function useManageAccountsC() {
             });
     };
 
-    const getConsommateur = (id) => {
-      fetchData(`${BASEURL}consommateurs/byuser/${id}/`, setConsommateur, setLoading, setError);
-  };
-
+   
     return {
         consommateurs,
-        consommateur,
         loading,
         error,
         activateStatus,
         deactivateStatus,
-        fetchConsomsData,
-        getConsommateur
+        fetchConsomsData
     };
 }

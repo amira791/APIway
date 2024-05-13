@@ -53,20 +53,6 @@ export default function SignUpPage() {
                 <div id="page" className="clearfix">
                     <Navbar />
 
-                    <section className="tf-page-title style-2">
-                        <div className="tf-container">
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <ul className="breadcrumbs">
-                                        <li><a href="blog2.html">Home</a></li>
-                                        <li>Sign Up</li>
-                                    </ul>
-
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
                     <section className="tf-login">
                         <div className="tf-container">
                             <div className="row justify-content-center">
@@ -95,10 +81,7 @@ export default function SignUpPage() {
                                             <span className="btn-show-pass2"><i className="far fa-eye-slash"></i></span></fieldset>
                                         <button className="submit button-gg" type="submit">Sign Up</button>
 
-                                        <div className="title-login">Or login with social</div>
-                                        <div className="button-gg"><a href="#" ><i className="fab fa-facebook"></i>Facebook</a></div>
-                                        <div className="button-gg mb33"><a href="#" ><i className="fab fa-google"></i>Google</a>
-                                        </div>
+                                        
 
                                     </form>
 

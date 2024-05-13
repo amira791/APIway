@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import React, { useRef } from "react";
-import ManipulateCat from "../../hooks/CategoryHook.jsx";
-import APIAjout from "../../hooks/APIHook2.jsx";
-import ManipulateVersion from "../../hooks/VersionHook.jsx";
+import ManipulateCat from "../../hooks/CategoryHook";
+import APIAjout from "../../hooks/APIHook2";
+import ManipulateVersion from "../../hooks/VersionHook";
 import $ from "jquery";
 import "datatables.net";
 import CreateEndpointForm from "./CreateEndpointForm.jsx";

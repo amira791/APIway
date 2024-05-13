@@ -48,21 +48,6 @@ export default function LoginPage() {
  <div id="wrapper" className="wrapper-style">
         <div id="page" className="clearfix">
         <Navbar />
-
-            <section className="tf-page-title style-2">    
-                <div className="tf-container">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <ul className="breadcrumbs">
-                                <li><a href="blog2.html">Home</a></li>
-                                <li>Sign In</li>
-                            </ul>
-                   
-                        </div>
-                    </div>
-                </div>                    
-            </section>
-                
             <section className="tf-login">
                 <div className="tf-container">
                     <div className="row justify-content-center">
