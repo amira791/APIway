@@ -1,15 +1,10 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState , useEffect } from "react";
 import React, { useRef } from "react";
-import Footer from "../global_components/footer.jsx";
-import Navbar from "../global_components/navbar.jsx";
-import DataTable from "../global_components/Datatable.jsx";
 import ManipulateCat from "../../hooks/CategoryHook";
 import APIAjout from "../../hooks/APIHook2";
 import $ from "jquery";
 import "datatables.net";
 import CreateEndpointForm from "./CreateEndpointForm.jsx";
-import TextEditor from "./CommunComponants/textEditor.jsx";
 import AddGroupForm from "./CreateGroupEndpoint.jsx";
 import EndpointTable from "./CommunComponants/endpointable.jsx";
 import Monetizing from "./Monetize.jsx";

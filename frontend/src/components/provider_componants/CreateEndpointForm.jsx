@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios"; // Import axios for making HTTP requests
 import { Button, Input, Checkbox, Switch, Radio, Select, Tabs } from "antd";
 import ManipulateTypes from "../../hooks/EndpointHook";
 import ParamsTable from "./CommunComponants/paramTable";

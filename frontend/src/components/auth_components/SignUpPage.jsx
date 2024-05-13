@@ -1,27 +1,25 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../global_components/navbar';
 import Footer from '../global_components/footer';
 import useAuth from '../../hooks/useAuth';
-import {useAuthContext} from '../../context/authContext';
+import { useAuthContext } from '../../context/authContext';
 
 export default function SignUpPage() {
-
-    const navigate = useNavigate()
-    const [last_name, setLastName] = useState("")
-    const [first_name, setFirstName] = useState("")
-    const [email, setEmail] = useState("")
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
+    const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
+    const [last_name, setLastName] = useState('');
+    const [first_name, setFirstName] = useState('');
+    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [user_type, setUserType] = useState('');
 
-    const { signUp } = useAuth()
+    const { signUp } = useAuth();
     const { authState } = useAuthContext();
-
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-
         const newUser = {
             user_type: user_type,
             user: {
@@ -30,21 +28,23 @@ export default function SignUpPage() {
                 first_name: first_name,
                 last_name: last_name,
                 password: password,
-                phone: "00000000000"
-            }
+                phone: '00000000000',
+            },
+        };
+        console.log(newUser);
+        signUp(newUser);
+        if (authState.isAuth && authState.isConsommateur) {
+            navigate('/');
+            return;
         }
+        if (authState.isAuth && authState.isFournisseur) {
+            navigate('/provider_home');
+            return;
+        }
+    };
 
-        console.log(newUser)
-        signUp(newUser)
-        if (authState.isAuth && authState.isConsommateur ) {
-            navigate('/')
-            return;
-        }
-        if(authState.isAuth && authState.isFournisseur){
-            navigate('/provider_home')
-            return;
-        } 
-        
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
     };
 
     return (
@@ -67,38 +67,33 @@ export default function SignUpPage() {
                                             <h6 className="title">Choose Role</h6>
                                             <p className="sub">Connect to APIway as provider to create APIs or as Consumer to use APIs</p>
                                             <ul className="blockchain-button">
-                                                <li><label><input type="radio" name="userType" value="fournisseur" onChange={() => setUserType('fournisseur')} required /> Provider</label></li>
-                                                <li><label><input type="radio" name="userType" value="consommateur" onChange={() => setUserType('consommateur')} required /> Consumer</label></li>
+                                                <li><a href="#" onClick={() => setUserType('fournisseur')}><img src="assets/images/svg/torus.svg" alt="Image" />Fournisseur</a></li>
+                                                <li><a href="#" onClick={() => setUserType('consommateur')}><img src="assets/images/svg/coinbase.svg" alt="Image" />Consommateur</a></li>
                                             </ul>
                                         </div>
                                         <fieldset><input value={first_name} onChange={(e) => setFirstName(e.target.value)} id="first_name" name="first_name" tabIndex="1" aria-required="true" required type="text" placeholder="First name" /></fieldset>
                                         <fieldset><input value={last_name} onChange={(e) => setLastName(e.target.value)} id="last_name" name="last_name" tabIndex="1" aria-required="true" required type="text" placeholder="Last name" /></fieldset>
                                         <fieldset><input value={username} onChange={(e) => setUsername(e.target.value)} id="username" name="username" tabIndex="1" aria-required="true" required type="text" placeholder="Username" /></fieldset>
                                         <fieldset><input value={email} onChange={(e) => setEmail(e.target.value)} id="email" name="email" tabIndex="1" aria-required="true" required type="text" placeholder="Email" /></fieldset>
-                                        <fieldset> <input value={password} onChange={(e) => setPassword(e.target.value)} id="showpassword" name="password" tabIndex="2" aria-required="true" type="password" placeholder="Password" required />
-                                            <span className="btn-show-pass"><i className="far fa-eye-slash"></i></span></fieldset>
-                                        <fieldset className="mb24"> <input id="showpassword2" name="password" tabIndex="2" aria-required="true" type="password" placeholder="Confirm password" required="" />
-                                            <span className="btn-show-pass2"><i className="far fa-eye-slash"></i></span></fieldset>
+                                        <fieldset>
+                                            <input value={password} onChange={(e) => setPassword(e.target.value)} id="showpassword" name="password" tabIndex="2" aria-required="true" type={showPassword ? "text" : "password"} placeholder="Password" required />
+                                            <span className="btn-show-pass" onClick={togglePasswordVisibility}><i className="far fa-eye-slash"></i></span>
+                                        </fieldset>
+                                        <fieldset className="mb24">
+                                            <input id="showpassword2" name="password" tabIndex="2" aria-required="true" type="password" placeholder="Confirm password" required="" />
+                                            <span className="btn-show-pass2" onClick={togglePasswordVisibility}><i className="far fa-eye-slash"></i></span>
+                                        </fieldset>
                                         <button className="submit button-gg" type="submit">Sign Up</button>
-
-                                        
-
                                     </form>
-
-
                                 </div>
                             </div>
                         </div>
                     </section>
-
                     <Footer />
-
                 </div>
-
             </div>
-
-
             <a id="scroll-top"></a>
+    
         </>
-    )
+    );
 }

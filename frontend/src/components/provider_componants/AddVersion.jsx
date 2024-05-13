@@ -1,6 +1,4 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import React, { useRef } from "react";
+import { useState , useEffect ,React,  useRef } from "react";
 import ManipulateCat from "../../hooks/CategoryHook";
 import APIAjout from "../../hooks/APIHook2";
 import ManipulateVersion from "../../hooks/VersionHook";
@@ -10,8 +8,7 @@ import CreateEndpointForm from "./CreateEndpointForm.jsx";
 import AddGroupForm from "./CreateGroupEndpoint.jsx";
 import EndpointTable from "./CommunComponants/endpointable.jsx";
 import Monetizing from "./ModifyMonetize.jsx";
-import { ToastContainer } from 'react-toastify';
-import { toast } from "react-toastify";
+import { ToastContainer , toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 const AddVersion = ({selectedAPI, onReturnClick2}) => {
