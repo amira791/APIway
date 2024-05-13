@@ -1,18 +1,29 @@
-const BASEURL = "http://127.0.0.1:5000/api_mapi/"
+const BASEURL="http://127.0.0.1:8000/api_mapi/";
 
-const setHeaders = () => ({
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-});
+const createHeaders = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        return {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        };
+    }
+    return {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    }
+}
 
 const fetchData = async (url, setter, setLoading, setError) => {
+
     setLoading(true);
     setError(null);
 
     try {
         const response = await fetch(url, {
             method: 'GET',
-            headers: setHeaders(),
+            headers: createHeaders()
         });
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -27,10 +38,11 @@ const fetchData = async (url, setter, setLoading, setError) => {
 };
 
 const postData = async (url, data, successMessage, toast, setError) => {
+
     try {
         const response = await fetch(url, {
             method: 'POST',
-            headers: setHeaders(),
+            headers: createHeaders(),
             body: JSON.stringify(data),
         });
         if (!response.ok) {
@@ -54,4 +66,7 @@ const postData = async (url, data, successMessage, toast, setError) => {
     }
 };
 
-export { BASEURL  ,fetchData, postData };
+
+export { BASEURL , fetchData, postData }
+
+

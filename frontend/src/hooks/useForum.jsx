@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { useToast } from '@chakra-ui/react';
 import { BASEURL ,fetchData, postData } from './API';
 
@@ -8,9 +8,10 @@ export default function useForum() {
     const [error, setError] = useState(null);
     const [forum, setForum] = useState([]);
     const [threads, setThreads] = useState([]);
-    const [posts, setPosts] = useState([]);
+    const [comments, setComments] = useState([]);
     const [thread, setThread] = useState([]);
 
+    
     const getForum = (id) => {
         fetchData(`${BASEURL}apiforum/${id}/`, setForum, setLoading, setError);
     };
@@ -19,8 +20,8 @@ export default function useForum() {
         fetchData(`${BASEURL}apiforum/${id}/threads/`, setThreads, setLoading, setError);
     };
 
-    const getThreadPosts = (id) => {
-        fetchData(`${BASEURL}threads/${id}/posts/`, setPosts, setLoading, setError);
+    const getThreadComments = (id) => {
+        fetchData(`${BASEURL}threads/${id}/comments/`, setComments, setLoading, setError);
     };
 
     const getThread = (id) => {
@@ -34,8 +35,8 @@ export default function useForum() {
         }, toast, setError);
     };
 
-    const addNewPost = (new_post) => {
-        postData(`${BASEURL}posts/`, new_post, {
+    const addNewComment = (new_comment) => {
+        postData(`${BASEURL}comments/`, new_comment, {
             title: 'Comment ajoute',
             description: 'Le comment a ete ajoute avec succes',
         }, toast, setError);
@@ -43,15 +44,15 @@ export default function useForum() {
 
     return {
         addNewThread,
-        addNewPost,
+        addNewComment,
         getForum,
         getForumThreads,
         getThread,
-        getThreadPosts,
+        getThreadComments,
         forum,
         threads,
         thread,
-        posts,
+        comments,
         error,
         loading,
     };

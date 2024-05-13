@@ -78,7 +78,6 @@ s,
 samp,
 small,
 strike,
-
 strong,
 sub,
 sup,
@@ -230,11 +229,43 @@ img {
 select {
   max-width: 100%;
 }
+.form-select {
+  position: relative;
+}
+.form-select i {
+  position: absolute;
+  top: 20px;
+  right: 23px;
+  color: var(--primary-color8);
+  font-size: 10px;
+}
+.dt-layout-row{
+  display: flex;
+  justify-content: space-between;
+}
 
+select.dt-input option{
+  color: #565660;
+}
+select.dt-input , input[type=search].dt-input,button.dt-paging-button{
+  width: auto;
+  padding: 7.5px 16px;
+  margin-right: 14.5px;
+  border-radius: 100px;
+  border: 1px solid var(--primary-color36);
+  background-color: var(--primary-color22);
+  margin: 20px;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
 /* General
 -------------------------------------------------------------- */
 body,
-
+button,
 input,
 select,
 textarea {
@@ -448,12 +479,12 @@ p > video {
 -------------------------------------------------------------- */
 /* Fixes */
 button,
-input {
+input,select {
   line-height: normal;
 }
 
 button,
-
+input,
 select,
 textarea {
   font-size: 100%;
@@ -521,7 +552,7 @@ input::-moz-focus-inner {
 }
 
 /* Remove chrome yellow autofill */
-input:-webkit-autofill {
+input:-webkit-autofill,select:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px #f7f7f7 inset;
 }
 
@@ -582,29 +613,7 @@ select option {
   color: #1F1F2C;
 }
 
-/* Apply styles to all input fields on hover */
-textarea:hover,
-input[type=text]:hover,
-input[type=password]:hover,
-input[type=datetime]:hover,
-input[type=datetime-local]:hover,
-input[type=date]:hover,
-input[type=month]:hover,
-input[type=time]:hover,
-input[type=week]:hover,
-input[type=number]:hover,
-input[type=email]:hover,
-input[type=url]:hover,
-input[type=search]:hover,
-input[type=tel]:hover,
-input[type=color]:hover {
-  border-color: #3749E9; /* Change border color on hover */
-  background-color: #4a4f581e;
-}
-
-/* Add transitions for smooth animation */
 textarea,
-
 input[type=text],
 input[type=password],
 input[type=datetime],
@@ -619,25 +628,34 @@ input[type=url],
 input[type=search],
 input[type=tel],
 input[type=color] {
-  transition: border-color 0.3s ease; /* Add transition for border color change */
-  border: 1px solid #8A8AA0;
+  border: 1px solid var(--primary-color21);
   outline: 0;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
   font-size: 18px;
   line-height: 26px;
-  border-bottom-left-radius: 34px; /* Corrected the border-radius property */
-  border-top-left-radius: 34px; /* Corrected the border-radius property */
-  border-top-right-radius: 2px; /* Corrected the border-radius property */
-  border-bottom-right-radius: 2px; /* Corrected the border-radius property */
+  border-radius: 4px;
   padding: 15px;
   width: 100%;
   background-color: transparent;
   color: var(--primary-color2);
 }
-
-
+select {
+  border: 1px solid var(--primary-color21);
+  outline: 0;
+  border-radius: 50%;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  font-size: 18px;
+  line-height: 26px;
+  border-radius: 4px;
+  padding: 15px;
+  width: 100%;
+  background-color: transparent;
+  color: var(--primary-color2);
+}
 /* Input focus */
 textarea:focus,
 input[type=text]:focus,
@@ -653,9 +671,8 @@ input[type=email]:focus,
 input[type=url]:focus,
 input[type=search]:focus,
 input[type=tel]:focus,
-input[type=color]:focus {
+input[type=color]:focus,select:focus {
   border: 1px solid #8A8AA0;
-  border-color:#3749E9; /* Change border color on focus */
   outline: 0;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -663,7 +680,7 @@ input[type=color]:focus {
 }
 
 textarea::placeholder,
-
+input[type=text]::placeholder,
 input[type=password]::placeholder,
 input[type=datetime]::placeholder,
 input[type=datetime-local]::placeholder,
@@ -676,7 +693,7 @@ input[type=email]::placeholder,
 input[type=url]::placeholder,
 input[type=search]::placeholder,
 input[type=tel]::placeholder,
-input[type=color]::placeholder {
+input[type=color]::placeholder, ::selection {
   font-size: 18px;
   font-weight: 400;
   line-height: 26px;
@@ -896,6 +913,14 @@ label.error {
   max-width: 100%;
 }
 
+.tf-container2 {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  padding:0 12%;
+  
+  max-width: 100%;
+}
 .mb63 {
   margin-bottom: 63px;
 }
@@ -1674,6 +1699,11 @@ header.absolute {
 
 /* Page Title  */
 .tf-page-title {
+  margin: 20%;
+  padding: 24px 0 0;
+}
+.tf-page-title-details {
+  margin:7% 0 3%  20% ;
   padding: 24px 0 0;
 }
 .tf-page-title.style-2 {
@@ -1710,12 +1740,36 @@ header.absolute {
   right: 0;
 }
 .tf-page-title .page-title-heading {
+
   color: var(--primary-color5);
+
+}
+#endpointcreationform{
+  margin-top: 10%;
+}
+.header-center{
+  display: flex;
+  
+}
+.btn-slider .tf-button.style-3:hover {
+  background: #3749E9;
+  color: #fff;
+  border-color: #3749E9;
+}
+.page-title-heading {
+ font-size: 5em;
+  color: var(--primary-color5);
+
+}
+#creatingEndpoint{
+  background-color: #444346;
 }
 .tf-page-title.style-2 .breadcrumbs {
   margin-bottom: 0;
 }
-
+.page-title .tf-container{
+  margin: 5% 0;
+}
 /* Pagination
 -------------------------------------------------------------- */
 .themesflat-pagination ul {
@@ -2540,6 +2594,127 @@ header.absolute {
 .button-slide-home-3-prev {
   left: 15px;
 }
-
+.update_btn {
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 24px;
+  background-color: #3749E9;
+  color: #fff;
+  border-radius: 50px;
+  padding: 17px 30px;
+  display: inline-block;
+  -webkit-appearance: none;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
 /*# sourceMappingURL=style.css.map */
 
+#general-section label{
+ font-size: 25px;
+ margin-bottom: 3%;
+}
+
+#general-section input{
+  font-size: 21px;
+  margin-bottom: 3%;
+ }
+
+ .tf-product-category {
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.tf-product-category img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.category a {
+  color: #333;
+  text-decoration: none;
+}
+
+.category a:hover {
+  color: #555;
+}
+
+.confirmation-btn{
+  width:"5%";
+  display:"flex";
+  align-items:"center";
+  justify-content:"center";
+  background-color:"green"
+}
+
+.small-title{
+  margin-bottom: "3%" 
+}
+
+/* styles.css */
+.pricing-container {
+ justify-content: center;
+}
+
+.pricing-plan {
+  flex: 1;
+  margin: 0 20px;
+}
+
+.tarifications {
+  display: flex;
+ justify-content: center;
+ align-items: center;
+  gap: 20px;
+}
+
+.tarification-card {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.tarification-card h3 {
+  margin-top: 0;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.quota, .rate {
+  margin-top: 10px;
+}
+
+.feature-list {
+  list-style-type: none; /* Remove default bullets */
+}
+
+.bullet-point {
+  margin-right: 0.5rem; /* Adjust the space between the bullet point and text */
+}
+.update_btn {
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 24px;
+  background-color: #3749E9;
+  color: #fff;
+  border-radius: 50px;
+  padding: 17px 30px;
+  display: inline-block;
+  -webkit-appearance: none;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}

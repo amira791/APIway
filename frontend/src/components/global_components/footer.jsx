@@ -26,7 +26,7 @@ class Footer extends Component {
                                     <li><a href="#"><i className="icon-fl-tik-tok-2"></i></a></li>
                                     <li><a href="#"><i className="icon-fl-vt"></i></a></li>
                                 </ul>
-                                <p className="copy-right">Copyright © 2024 Esi TeXmart Team. All Rights Reserved.
+                                <p className="copy-right">Copyright © 2022 Themesflat. All Rights Reserved.
 
                                 </p>
                             </div>

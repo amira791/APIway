@@ -1,23 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
+import { BASEURL ,fetchData } from './API';
 
 export default function useManageAccountsC() {
     const [consommateurs, setConsommateurs] = useState([]);
+    const [consommateur, setConsommateur] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        setLoading(true);
-        axios.get('http://127.0.0.1:5000/consommateurs/')
-            .then(response => {
-                setConsommateurs(response.data);
-                setLoading(false);
-            })
-            .catch(error => {
-                setError(error);
-                setLoading(false);
-            });
-    }, []);
+    // useEffect(() => {
+    //     setLoading(true);
+    //     axios.get('http://127.0.0.1:5000/consommateurs/')
+    //         .then(response => {
+    //             setConsommateurs(response.data);
+    //             setLoading(false);
+    //         })
+    //         .catch(error => {
+    //             setError(error);
+    //             setLoading(false);
+    //         });
+    // }, []);
 
     
     const activateStatus = async (userId) => {
@@ -62,14 +64,18 @@ export default function useManageAccountsC() {
             });
     };
 
-
+    const getConsommateur = (id) => {
+      fetchData(`${BASEURL}consommateurs/${id}/`, setConsommateur, setLoading, setError);
+  };
 
     return {
         consommateurs,
+        consommateur,
         loading,
         error,
         activateStatus,
         deactivateStatus,
-        fetchConsomsData
+        fetchConsomsData,
+        getConsommateur
     };
 }

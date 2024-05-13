@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import Navbar from '../global_components/navbar';
 import Footer from '../global_components/footer';
 import FourAcountM from './fourAccountManag';

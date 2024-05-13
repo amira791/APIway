@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { useToast } from '@chakra-ui/react';
-import { BASEURL, fetchData, postData } from './API';
+import {BASEURL,fetchData, postData } from './API';
 
 export default function useTicket() {
     const toast = useToast();
@@ -14,8 +14,8 @@ export default function useTicket() {
 
     const addNewTicket = (new_ticket) => {
         postData(`${BASEURL}tickets/`, new_ticket, {
-            title: 'Discussion ajoutee',
-            description: 'La discussion a ete ajoutee avec succes',
+            title: 'Ticket ajoute',
+            description: 'Le Ticket a ete ajoute avec succes',
         }, toast, setError);
     };
 

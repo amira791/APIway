@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import Navbar from '../global_components/navbar';
 import Footer from '../global_components/footer';
 import TheDataTable from './CsDatatable';
-import useManageAccountsC from '../../hooks/ConsomAccountsHook';
+import useManageAccountsC from '../../../src/hooks/ConsomAccountsHook';
 import { Button } from '@chakra-ui/react'; // Import Chakra UI Button or your preferred button component
 
 

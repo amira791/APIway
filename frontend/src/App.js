@@ -1,8 +1,9 @@
  
 import "./App.css";
+import AddAPIPage from "./Componants/provider_componants/AddApi";
  
 function App() {
-  return <div className="App"><h2>Welcome !</h2></div>;
+  return <AddAPIPage/>;
 }
  
 export default App;

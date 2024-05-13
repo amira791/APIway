@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-const Card = ({ apiName, description, logo, termsOfUse, website, categoryLabel, token }) => {
+const Card = ({ idApi ,apiName, description, logo, termsOfUse, website, categoryLabel, token }) => {
     const navigate = useNavigate();
     const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
@@ -53,13 +53,14 @@ const Card = ({ apiName, description, logo, termsOfUse, website, categoryLabel, 
                         </div>
                     </div>
                     <div className="product-button">
-                        <Link className='tf-button flex items-center' to={`/ApiDetail/`}>
+                        <Link className='tf-button flex items-center' to={`/details/${idApi}`}>
                           <span className="fas fa-info-circle" style={{ marginRight: '-15px' }}></span>
                            See Details
                         </Link>
                     </div>
                 </div>
             </div>
+            
             <div className="modal fade popup" id="popup_bid" tabIndex="-1" aria-modal="true" role="dialog">
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">

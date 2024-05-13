@@ -19,29 +19,44 @@ function useExternalScript(url) {
   }, [url]);
 }
 const HomeSection = () => {
+  let publicUrl = process.env.PUBLIC_URL + "/";
+  /*   useExternalScript(`${publicUrl}assets/js/jquery-3.7.0.js`);
+  useExternalScript(`${publicUrl}assets/js/jquery.dataTables.min.js`);
+  useExternalScript(`${publicUrl}assets/js/jquery.easing.js`);
+  useExternalScript(`${publicUrl}assets/js/bootstrap.min.js`);
+  useExternalScript(`${publicUrl}assets/js/swiper-bundle.min.js`);
+  useExternalScript(`${publicUrl}assets/js/swiper.js`);
+  useExternalScript(`${publicUrl}assets/js/count-down.js`);
+  useExternalScript(`${publicUrl}assets/js/jquery.isotope.min.js`);
+  useExternalScript(`${publicUrl}assets/js/switchmode.js`);
+  useExternalScript(`${publicUrl}assets/js/plugin.js`);
+  useExternalScript(`${publicUrl}assets/js/shortcodes.js`);
+  useExternalScript(`${publicUrl}assets/js/main.js`);
+ */
+
   return (
-    <body className="body header-fixed home-6">
-      <div id="wrapper" className="wrapper-style">
-        <div id="page" className="clearfix">
+    <body class="body header-fixed home-6">
+      <div id="wrapper" class="wrapper-style">
+        <div id="page" class="clearfix">
           <Navbar />
-          <section className="tf-slider">
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-md-12">
+          <section class="tf-slider">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-12">
                   <img
                     src="assets/images/slider/bg-slider-2.png"
                     alt="Image"
-                    className="img-slider-1"
+                    class="img-slider-1"
                   />
-                  <div className="swiper-container slider-home ">
-                    <div className="swiper-wrapper">
-                      <div className="swiper-slide">
-                        <div className="slider-item">
-                          <div className="tf-slider-item style-6">
-                            <div className="content-inner">
-                              <h1 className="title">
-                                <span className="animationtext clip">
-                                  <span className="cd-words-wrapper">
+                  <div class="swiper-container slider-home ">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide">
+                        <div class="slider-item">
+                          <div class="tf-slider-item style-6">
+                            <div class="content-inner">
+                              <h1 class="title">
+                                <span class="animationtext clip">
+                                  <span class="cd-words-wrapper">
                                     Empower Your Apps
                                   </span>{" "}
                                 </span>
@@ -61,345 +76,347 @@ const HomeSection = () => {
                               </p>
                               <div style={{ fontSize: "20px", gap: "20px" }}>
                                 <a
-                                  href="searchApi"
-                                  className="tf-button style-6"
+                                  
+                                  class="tf-button style-6"
                                 >
-                                  Discover now
+                                 <div >
+                            <Link to={"/details/1/"}>Go to</Link>
+                        </div>
                                 </a>
                               </div>
                             </div>
-                            <div className="image ">
-                              <div className="slider-card-img">
+                            <div class="image ">
+                              <div class="slider-card-img">
                                 <ul>
-                                  <li className="prev2">
-                                    <div className="sc-product style1 ">
-                                    <div className="top">
-                                        <a href="item-details.html" className="tag">
+                                  <li class="prev2">
+                                    <div class="sc-product style1 ">
+                                    <div class="top">
+                                        <a href="item-details.html" class="tag">
                                           MusicAPI
                                         </a>
-                                        <div className="wish-list">
-                                          <a href="#" className="heart-icon"></a>
+                                        <div class="wish-list">
+                                          <a href="#" class="heart-icon"></a>
                                         </div>
                                       </div>
-                                      <div className="features">
-                                        <div className="product-media">
+                                      <div class="features">
+                                        <div class="product-media">
                                           <img
                                             src="assets/images/product/product79.jpg"
                                             alt="images"
                                           />
                                         </div>
-                                        <div className="featured-countdown">
+                                        <div class="featured-countdown">
                                          
                                         </div>
-                                        <div className="rain-drop1">
+                                        <div class="rain-drop1">
                                           <img
                                             src="assets/images/icon/rain1.svg"
                                             alt="images"
                                           />
                                         </div>
-                                        <div className="rain-drop2">
+                                        <div class="rain-drop2">
                                           <img
                                             src="assets/images/icon/rain2.svg"
                                             alt="images"
                                           />
                                         </div>
                                       </div>
-                                      <div className="bottom">
-                                        <div className="details-product">
-                                          <div className="author">
-                                            <div className="avatar">
+                                      <div class="bottom">
+                                        <div class="details-product">
+                                          <div class="author">
+                                            <div class="avatar">
                                               <img
                                                 src="assets/images/author/author1.png"
                                                 alt="images"
                                               />
                                             </div>
-                                            <div className="content">
-                                              <div className="position">
+                                            <div class="content">
+                                              <div class="position">
                                                 Owner
                                               </div>
-                                              <div className="name">
+                                              <div class="name">
                                                 {" "}
                                                 <a href="#">Magnus Perry</a>
                                               </div>
                                             </div>
                                           </div>
-                                          <div className="bid">
-                                            <div className="subtitle">
+                                          <div class="bid">
+                                            <div class="subtitle">
                                               Price
                                             </div>
-                                            <div className="price">
-                                              <span className="cash">$70.00</span>
-                                              <span className="icon">
+                                            <div class="price">
+                                              <span class="cash">$70.00</span>
+                                              <span class="icon">
                                              
                                               </span>
                                             </div>
                                           </div>
                                         </div>
-                                        <div className="product-button">
+                                        <div class="product-button">
                                           <a
                                             href="#"
                                             data-toggle="modal"
                                             data-target="#popup_bid"
-                                            className="tf-button"
+                                            class="tf-button"
                                           >
                                             {" "}
-                                            <span className="icon-btn-product"></span>{" "}
+                                            <span class="icon-btn-product"></span>{" "}
                                             Purchase
                                           </a>
                                         </div>
                                       </div>
                                     </div>
                                   </li>
-                                  <li className="prev1">
-                                    <div className="sc-product style1 ">
-                                      <div className="top">
-                                        <a href="item-details.html" className="tag">
+                                  <li class="prev1">
+                                    <div class="sc-product style1 ">
+                                      <div class="top">
+                                        <a href="item-details.html" class="tag">
                                           TransportationAPI
                                         </a>
-                                        <div className="wish-list">
-                                          <a href="#" className="heart-icon"></a>
+                                        <div class="wish-list">
+                                          <a href="#" class="heart-icon"></a>
                                         </div>
                                       </div>
-                                      <div className="features">
-                                        <div className="product-media">
+                                      <div class="features">
+                                        <div class="product-media">
                                           <img
                                             src="assets/images/product/product75.jpg"
                                             alt="images"
                                           />
                                         </div>
-                                        <div className="featured-countdown">
+                                        <div class="featured-countdown">
                                          
                                         </div>
-                                        <div className="rain-drop1">
+                                        <div class="rain-drop1">
                                           <img
                                             src="assets/images/icon/rain1.svg"
                                             alt="images"
                                           />
                                         </div>
-                                        <div className="rain-drop2">
+                                        <div class="rain-drop2">
                                           <img
                                             src="assets/images/icon/rain2.svg"
                                             alt="images"
                                           />
                                         </div>
                                       </div>
-                                      <div className="bottom">
-                                        <div className="product-button">
+                                      <div class="bottom">
+                                        <div class="product-button">
                                           <a
                                             href="#"
                                             data-toggle="modal"
                                             data-target="#popup_bid"
-                                            className="tf-button"
+                                            class="tf-button"
                                           >
                                             {" "}
-                                            <span className="icon-btn-product"></span>{" "}
+                                            <span class="icon-btn-product"></span>{" "}
                                             Purchase
                                           </a>
                                         </div>
                                       </div>
                                     </div>
                                   </li>
-                                  <li className="current">
-                                    <div className="sc-product style1 ">
-                                    <div className="top">
-                                        <a href="item-details.html" className="tag">
+                                  <li class="current">
+                                    <div class="sc-product style1 ">
+                                    <div class="top">
+                                        <a href="item-details.html" class="tag">
                                           WeatherAPI
                                         </a>
-                                        <div className="wish-list">
-                                          <a href="#" className="heart-icon"></a>
+                                        <div class="wish-list">
+                                          <a href="#" class="heart-icon"></a>
                                         </div>
                                       </div>
-                                      <div className="features">
-                                        <div className="product-media">
+                                      <div class="features">
+                                        <div class="product-media">
                                           <img
                                             src="assets/images/product/product79.jpg"
                                             alt="images"
                                           />
                                         </div>
-                                        <div className="featured-countdown">
+                                        <div class="featured-countdown">
                                          
                                         </div>
-                                        <div className="rain-drop1">
+                                        <div class="rain-drop1">
                                           <img
                                             src="assets/images/icon/rain1.svg"
                                             alt="images"
                                           />
                                         </div>
-                                        <div className="rain-drop2">
+                                        <div class="rain-drop2">
                                           <img
                                             src="assets/images/icon/rain2.svg"
                                             alt="images"
                                           />
                                         </div>
                                       </div>
-                                      <div className="bottom">
-                                        <div className="details-product">
-                                          <div className="author">
-                                            <div className="avatar">
+                                      <div class="bottom">
+                                        <div class="details-product">
+                                          <div class="author">
+                                            <div class="avatar">
                                               <img
                                                 src="assets/images/author/author1.png"
                                                 alt="images"
                                               />
                                             </div>
-                                            <div className="content">
-                                              <div className="position">
+                                            <div class="content">
+                                              <div class="position">
                                                 Owner
                                               </div>
-                                              <div className="name">
+                                              <div class="name">
                                                 {" "}
                                                 <a href="#">Magnus Perry</a>
                                               </div>
                                             </div>
                                           </div>
-                                          <div className="bid">
-                                            <div className="subtitle">
+                                          <div class="bid">
+                                            <div class="subtitle">
                                               Price
                                             </div>
-                                            <div className="price">
-                                              <span className="cash">$70.00</span>
-                                              <span className="icon">
+                                            <div class="price">
+                                              <span class="cash">$70.00</span>
+                                              <span class="icon">
                                              
                                               </span>
                                             </div>
                                           </div>
                                         </div>
-                                        <div className="product-button">
+                                        <div class="product-button">
                                           <a
                                             href="#"
                                             data-toggle="modal"
                                             data-target="#popup_bid"
-                                            className="tf-button"
+                                            class="tf-button"
                                           >
                                             {" "}
-                                            <span className="icon-btn-product"></span>{" "}
+                                            <span class="icon-btn-product"></span>{" "}
                                             Purchase
                                           </a>
                                         </div>
                                       </div>
                                     </div>
                                   </li>
-                                  <li className="next1">
-                                    <div className="sc-product style1 ">
-                                      <div className="top">
-                                        <a href="item-details.html" className="tag">
+                                  <li class="next1">
+                                    <div class="sc-product style1 ">
+                                      <div class="top">
+                                        <a href="item-details.html" class="tag">
                                           SportAPI
                                         </a>
-                                        <div className="wish-list">
-                                          <a href="#" className="heart-icon"></a>
+                                        <div class="wish-list">
+                                          <a href="#" class="heart-icon"></a>
                                         </div>
                                       </div>
-                                      <div className="features">
-                                        <div className="product-media">
+                                      <div class="features">
+                                        <div class="product-media">
                                           <img
                                             src="assets/images/product/product75.jpg"
                                             alt="images"
                                           />
                                         </div>
-                                        <div className="featured-countdown">
+                                        <div class="featured-countdown">
                                          
                                         </div>
-                                        <div className="rain-drop1">
+                                        <div class="rain-drop1">
                                           <img
                                             src="assets/images/icon/rain1.svg"
                                             alt="images"
                                           />
                                         </div>
-                                        <div className="rain-drop2">
+                                        <div class="rain-drop2">
                                           <img
                                             src="assets/images/icon/rain2.svg"
                                             alt="images"
                                           />
                                         </div>
                                       </div>
-                                      <div className="bottom">
-                                        <div className="product-button">
+                                      <div class="bottom">
+                                        <div class="product-button">
                                           <a
                                             href="#"
                                             data-toggle="modal"
                                             data-target="#popup_bid"
-                                            className="tf-button"
+                                            class="tf-button"
                                           >
                                             {" "}
-                                            <span className="icon-btn-product"></span>{" "}
+                                            <span class="icon-btn-product"></span>{" "}
                                             Purchase
                                           </a>
                                         </div>
                                       </div>
                                     </div>
                                   </li>
-                                  <li className="next2">
-                                    <div className="sc-product style1 ">
-                                    <div className="top">
-                                        <a href="item-details.html" className="tag">
+                                  <li class="next2">
+                                    <div class="sc-product style1 ">
+                                    <div class="top">
+                                        <a href="item-details.html" class="tag">
                                          GameAPI
                                         </a>
-                                        <div className="wish-list">
-                                          <a href="#" className="heart-icon"></a>
+                                        <div class="wish-list">
+                                          <a href="#" class="heart-icon"></a>
                                         </div>
                                       </div>
-                                      <div className="features">
-                                        <div className="product-media">
+                                      <div class="features">
+                                        <div class="product-media">
                                           <img
                                             src="assets/images/product/product79.jpg"
                                             alt="images"
                                           />
                                         </div>
-                                        <div className="featured-countdown">
+                                        <div class="featured-countdown">
                                          
                                         </div>
-                                        <div className="rain-drop1">
+                                        <div class="rain-drop1">
                                           <img
                                             src="assets/images/icon/rain1.svg"
                                             alt="images"
                                           />
                                         </div>
-                                        <div className="rain-drop2">
+                                        <div class="rain-drop2">
                                           <img
                                             src="assets/images/icon/rain2.svg"
                                             alt="images"
                                           />
                                         </div>
                                       </div>
-                                      <div className="bottom">
-                                        <div className="details-product">
-                                          <div className="author">
-                                            <div className="avatar">
+                                      <div class="bottom">
+                                        <div class="details-product">
+                                          <div class="author">
+                                            <div class="avatar">
                                               <img
                                                 src="assets/images/author/author1.png"
                                                 alt="images"
                                               />
                                             </div>
-                                            <div className="content">
-                                              <div className="position">
+                                            <div class="content">
+                                              <div class="position">
                                                 Owner
                                               </div>
-                                              <div className="name">
+                                              <div class="name">
                                                 {" "}
                                                 <a href="#">Magnus Perry</a>
                                               </div>
                                             </div>
                                           </div>
-                                          <div className="bid">
-                                            <div className="subtitle">
+                                          <div class="bid">
+                                            <div class="subtitle">
                                               Price
                                             </div>
-                                            <div className="price">
-                                              <span className="cash">$99.99</span>
-                                              <span className="icon">
+                                            <div class="price">
+                                              <span class="cash">$99.99</span>
+                                              <span class="icon">
                                              
                                               </span>
                                             </div>
                                           </div>
                                         </div>
-                                        <div className="product-button">
+                                        <div class="product-button">
                                           <a
                                             href="#"
                                             data-toggle="modal"
                                             data-target="#popup_bid"
-                                            className="tf-button"
+                                            class="tf-button"
                                           >
                                             {" "}
-                                            <span className="icon-btn-product"></span>{" "}
+                                            <span class="icon-btn-product"></span>{" "}
                                             Purchase
                                           </a>
                                         </div>
@@ -419,119 +436,119 @@ const HomeSection = () => {
             </div>
           </section>
           {/* 
-          <section className="tf-section tf-category">
-                <div className="tf-container">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <div className="tf-heading style-4 mb40 wow fadeInUp">
-                                <h4 className="heading">All Categories</h4>
+          <section class="tf-section tf-category">
+                <div class="tf-container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="tf-heading style-4 mb40 wow fadeInUp">
+                                <h4 class="heading">All Categories</h4>
                             </div>
                         </div>
-                        <div className="col-md-12 wow fadeInUp">
-                            <div className="swiper-container product-category ">
-                                <div className="swiper-wrapper">
+                        <div class="col-md-12 wow fadeInUp">
+                            <div class="swiper-container product-category ">
+                                <div class="swiper-wrapper">
                                   {/*   {categories.map((category) => 
-                               <div className="swiper-slide">
-                               <div className="slider-item">
-                                   <div className="tf-product-category">
+                               <div class="swiper-slide">
+                               <div class="slider-item">
+                                   <div class="tf-product-category">
                                        <img src="assets/images/product-category/product-category-1.jpg" alt="Image"/>
-                                       <div className="category"><a href="#">{category.label}</a></div>
+                                       <div class="category"><a href="#">{category.label}</a></div>
                                    </div>
                                </div>
                            </div>)} *
-                                    <div className="swiper-slide">
-                                        <div className="slider-item">
-                                            <div className="tf-product-category">
+                                    <div class="swiper-slide">
+                                        <div class="slider-item">
+                                            <div class="tf-product-category">
                                                 <img src="assets/images/product-category/product-category-1.jpg" alt="Image"/>
-                                                <div className="category"><a href="#">Digital art</a></div>
+                                                <div class="category"><a href="#">Digital art</a></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="swiper-slide">
-                                        <div className="slider-item">
-                                            <div className="tf-product-category">
+                                    <div class="swiper-slide">
+                                        <div class="slider-item">
+                                            <div class="tf-product-category">
                                                 <img src="assets/images/product-category/product-category-2.jpg" alt="Image"/>
-                                                <div className="category"><a href="#">Style</a></div>
+                                                <div class="category"><a href="#">Style</a></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="swiper-slide">
-                                        <div className="slider-item">
-                                            <div className="tf-product-category">
+                                    <div class="swiper-slide">
+                                        <div class="slider-item">
+                                            <div class="tf-product-category">
                                                 <img src="assets/images/product-category/product-category-3.jpg" alt="Image"/>
-                                                <div className="category"><a href="#">Music</a></div>
+                                                <div class="category"><a href="#">Music</a></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="swiper-slide">
-                                        <div className="slider-item">
-                                            <div className="tf-product-category">
+                                    <div class="swiper-slide">
+                                        <div class="slider-item">
+                                            <div class="tf-product-category">
                                                 <img src="assets/images/product-category/product-category-4.jpg" alt="Image"/>
-                                                <div className="category"><a href="#">Sport</a></div>
+                                                <div class="category"><a href="#">Sport</a></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="swiper-slide">
-                                        <div className="slider-item">
-                                            <div className="tf-product-category">
+                                    <div class="swiper-slide">
+                                        <div class="slider-item">
+                                            <div class="tf-product-category">
                                                 <img src="assets/images/product-category/product-category-1.jpg" alt="Image"/>
-                                                <div className="category"><a href="#">Digital art</a></div>
+                                                <div class="category"><a href="#">Digital art</a></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="swiper-slide">
-                                        <div className="slider-item">
-                                            <div className="tf-product-category">
+                                    <div class="swiper-slide">
+                                        <div class="slider-item">
+                                            <div class="tf-product-category">
                                                 <img src="assets/images/product-category/product-category-2.jpg" alt="Image"/>
-                                                <div className="category"><a href="#">Style</a></div>
+                                                <div class="category"><a href="#">Style</a></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 
                             </div> 
-                            <div className="swiper-button-next button-product-category-next"></div>
-                            <div className="swiper-button-prev button-product-category-prev"></div>     
+                            <div class="swiper-button-next button-product-category-next"></div>
+                            <div class="swiper-button-prev button-product-category-prev"></div>     
                         </div>
                     </div>
                 </div>
             </section> */}
 
-          <section className="tf-section tf-hot-pick tf-filter">
-            <div className="tf-container">
-              <div className="row ">
-                <div className="col-md-12">
-                  <div className="tf-heading style-4 mb26 wow fadeInUp">
-                    <h3 className="heading">Hot Sales</h3>
-                    <p className="sub-heading">
+          <section class="tf-section tf-hot-pick tf-filter">
+            <div class="tf-container">
+              <div class="row ">
+                <div class="col-md-12">
+                  <div class="tf-heading style-4 mb26 wow fadeInUp">
+                    <h3 class="heading">Hot Sales</h3>
+                    <p class="sub-heading">
                       The most purchased APIs - Based on the last 30 days
                     </p>
                   </div>
                 </div>
               </div>
-              <div className="row tf-filter-container wow fadeInUp">
-                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d cyber">
-                  <div className="sc-product style2">
-                    <div className="top">
-                      <a href="item-details.html" className="tag">
+              <div class="row tf-filter-container wow fadeInUp">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d cyber">
+                  <div class="sc-product style2">
+                    <div class="top">
+                      <a href="item-details.html" class="tag">
                         FinanceAPI
                       </a>
-                      <div className="wish-list">
-                        <a href="#" className="heart-icon"></a>
+                      <div class="wish-list">
+                        <a href="#" class="heart-icon"></a>
                       </div>
                     </div>
-                    <div className="bottom">
-                      <div className="details-product">
-                        <div className="author">
-                          <div className="avatar">
+                    <div class="bottom">
+                      <div class="details-product">
+                        <div class="author">
+                          <div class="avatar">
                             <img
                               src="assets/images/author/author1.png"
                               alt="images"
                             />
                           </div>
-                          <div className="content">
-                            <div className="position">Owner</div>
-                            <div className="name">
+                          <div class="content">
+                            <div class="position">Owner</div>
+                            <div class="name">
                               {" "}
                               <a href="#">Financial Solutions Inc.</a>
                             </div>
@@ -539,36 +556,36 @@ const HomeSection = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="features">
-                      <div className="product-media">
+                    <div class="features">
+                      <div class="product-media">
                         <img
                           src="assets/images/product/product74.jpg"
                           alt="images"
                         />
                       </div>
-                      <div className="rain-drop1">
+                      <div class="rain-drop1">
                         <img src="assets/images/icon/rain1.svg" alt="images" />
                       </div>
-                      <div className="rain-drop2">
+                      <div class="rain-drop2">
                         <img src="assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
-                    <div className="bottom-style2">
-                      <div className="price">
-                        <div className="icon">
+                    <div class="bottom-style2">
+                      <div class="price">
+                        <div class="icon">
                         <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
-                        <div className="content">
+                        <div class="content">
                          
-                          <div className="cash">Price: $99.00</div>
+                          <div class="cash">Price: $99.00</div>
                         </div>
                       </div>
-                      <div className="product-button">
+                      <div class="product-button">
                         <a
                           href="#"
                           data-toggle="modal"
                           data-target="#popup_bid"
-                          className="tf-button"
+                          class="tf-button"
                         >
                           {" "}
                           Purchase
@@ -577,28 +594,28 @@ const HomeSection = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
-                  <div className="sc-product style2">
-                    <div className="top">
-                      <a href="item-details.html" className="tag">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
+                  <div class="sc-product style2">
+                    <div class="top">
+                      <a href="item-details.html" class="tag">
                         WeatherAPI 
                       </a>
-                      <div className="wish-list">
-                        <a href="#" className="heart-icon"></a>
+                      <div class="wish-list">
+                        <a href="#" class="heart-icon"></a>
                       </div>
                     </div>
-                    <div className="bottom">
-                      <div className="details-product">
-                        <div className="author">
-                          <div className="avatar">
+                    <div class="bottom">
+                      <div class="details-product">
+                        <div class="author">
+                          <div class="avatar">
                             <img
                               src="assets/images/author/author14.png"
                               alt="images"
                             />
                           </div>
-                          <div className="content">
-                            <div className="position">Owner</div>
-                            <div className="name">
+                          <div class="content">
+                            <div class="position">Owner</div>
+                            <div class="name">
                               {" "}
                               <a href="#">Weather Solutions </a>
                             </div>
@@ -606,36 +623,36 @@ const HomeSection = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="features">
-                      <div className="product-media">
+                    <div class="features">
+                      <div class="product-media">
                         <img
                           src="assets/images/product/product75.jpg"
                           alt="images"
                         />
                       </div>
-                      <div className="rain-drop1">
+                      <div class="rain-drop1">
                         <img src="assets/images/icon/rain1.svg" alt="images" />
                       </div>
-                      <div className="rain-drop2">
+                      <div class="rain-drop2">
                         <img src="assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
-                    <div className="bottom-style2">
-                      <div className="price">
-                        <div className="icon">
+                    <div class="bottom-style2">
+                      <div class="price">
+                        <div class="icon">
                         <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
-                        <div className="content">
+                        <div class="content">
                          
-                          <div className="cash">Price: $70.99</div>
+                          <div class="cash">Price: $70.99</div>
                         </div>
                       </div>
-                      <div className="product-button">
+                      <div class="product-button">
                         <a
                           href="#"
                           data-toggle="modal"
                           data-target="#popup_bid"
-                          className="tf-button"
+                          class="tf-button"
                         >
                           {" "}
                           Purchase
@@ -645,28 +662,28 @@ const HomeSection = () => {
                   </div>
                 </div>
 
-                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
-                  <div className="sc-product style2">
-                    <div className="top">
-                      <a href="item-details.html" className="tag">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
+                  <div class="sc-product style2">
+                    <div class="top">
+                      <a href="item-details.html" class="tag">
                         Health API
                       </a>
-                      <div className="wish-list">
-                        <a href="#" className="heart-icon"></a>
+                      <div class="wish-list">
+                        <a href="#" class="heart-icon"></a>
                       </div>
                     </div>
-                    <div className="bottom">
-                      <div className="details-product">
-                        <div className="author">
-                          <div className="avatar">
+                    <div class="bottom">
+                      <div class="details-product">
+                        <div class="author">
+                          <div class="avatar">
                             <img
                               src="assets/images/author/author14.png"
                               alt="images"
                             />
                           </div>
-                          <div className="content">
-                            <div className="position">Owner</div>
-                            <div className="name">
+                          <div class="content">
+                            <div class="position">Owner</div>
+                            <div class="name">
                               {" "}
                               <a href="#">Health Solutions Inc.</a>
                             </div>
@@ -674,36 +691,36 @@ const HomeSection = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="features">
-                      <div className="product-media">
+                    <div class="features">
+                      <div class="product-media">
                         <img
                           src="assets/images/product/product71.jpg"
                           alt="images"
                         />
                       </div>
-                      <div className="rain-drop1">
+                      <div class="rain-drop1">
                         <img src="assets/images/icon/rain1.svg" alt="images" />
                       </div>
-                      <div className="rain-drop2">
+                      <div class="rain-drop2">
                         <img src="assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
-                    <div className="bottom-style2">
-                      <div className="price">
-                      <div className="icon">
+                    <div class="bottom-style2">
+                      <div class="price">
+                      <div class="icon">
                         <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                     </div>
-                        <div className="content">
+                        <div class="content">
                          
-                          <div className="cash">Price: $61.99</div>
+                          <div class="cash">Price: $61.99</div>
                         </div>
                       </div>
-                      <div className="product-button">
+                      <div class="product-button">
                         <a
                           href="#"
                           data-toggle="modal"
                           data-target="#popup_bid"
-                          className="tf-button"
+                          class="tf-button"
                         >
                           {" "}
                           Purchase
@@ -713,28 +730,28 @@ const HomeSection = () => {
                   </div>
                 </div>
 
-                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
-                  <div className="sc-product style2">
-                    <div className="top">
-                      <a href="item-details.html" className="tag">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
+                  <div class="sc-product style2">
+                    <div class="top">
+                      <a href="item-details.html" class="tag">
                         MusicAPI
                       </a>
-                      <div className="wish-list">
-                        <a href="#" className="heart-icon"></a>
+                      <div class="wish-list">
+                        <a href="#" class="heart-icon"></a>
                       </div>
                     </div>
-                    <div className="bottom">
-                      <div className="details-product">
-                        <div className="author">
-                          <div className="avatar">
+                    <div class="bottom">
+                      <div class="details-product">
+                        <div class="author">
+                          <div class="avatar">
                             <img
                               src="assets/images/author/author1.png"
                               alt="images"
                             />
                           </div>
-                          <div className="content">
-                            <div className="position">Owner</div>
-                            <div className="name">
+                          <div class="content">
+                            <div class="position">Owner</div>
+                            <div class="name">
                               {" "}
                               <a href="#">Music Solutions Ltd.</a>
                             </div>
@@ -742,36 +759,36 @@ const HomeSection = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="features">
-                      <div className="product-media">
+                    <div class="features">
+                      <div class="product-media">
                         <img
                           src="assets/images/product/product70.jpg"
                           alt="images"
                         />
                       </div>
-                      <div className="rain-drop1">
+                      <div class="rain-drop1">
                         <img src="assets/images/icon/rain1.svg" alt="images" />
                       </div>
-                      <div className="rain-drop2">
+                      <div class="rain-drop2">
                         <img src="assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
-                    <div className="bottom-style2">
-                      <div className="price">
-                        <div className="icon">
+                    <div class="bottom-style2">
+                      <div class="price">
+                        <div class="icon">
                         <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
-                        <div className="content">
+                        <div class="content">
                          
-                          <div className="cash">Price: $87.99</div>
+                          <div class="cash">Price: $87.99</div>
                         </div>
                       </div>
-                      <div className="product-button">
+                      <div class="product-button">
                         <a
                           href="#"
                           data-toggle="modal"
                           data-target="#popup_bid"
-                          className="tf-button"
+                          class="tf-button"
                         >
                           {" "}
                           Purchase
@@ -781,28 +798,28 @@ const HomeSection = () => {
                   </div>
                 </div>
 
-                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
-                  <div className="sc-product style2">
-                    <div className="top">
-                      <a href="item-details.html" className="tag">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
+                  <div class="sc-product style2">
+                    <div class="top">
+                      <a href="item-details.html" class="tag">
                         TravelAPI
                       </a>
-                      <div className="wish-list">
-                        <a href="#" className="heart-icon"></a>
+                      <div class="wish-list">
+                        <a href="#" class="heart-icon"></a>
                       </div>
                     </div>
-                    <div className="bottom">
-                      <div className="details-product">
-                        <div className="author">
-                          <div className="avatar">
+                    <div class="bottom">
+                      <div class="details-product">
+                        <div class="author">
+                          <div class="avatar">
                             <img
                               src="assets/images/author/author4.png"
                               alt="images"
                             />
                           </div>
-                          <div className="content">
-                            <div className="position">Owner</div>
-                            <div className="name">
+                          <div class="content">
+                            <div class="position">Owner</div>
+                            <div class="name">
                               {" "}
                               <a href="#">Travel Solutions LLC.</a>
                             </div>
@@ -810,36 +827,36 @@ const HomeSection = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="features">
-                      <div className="product-media">
+                    <div class="features">
+                      <div class="product-media">
                         <img
                           src="assets/images/product/product72.jpg"
                           alt="images"
                         />
                       </div>
-                      <div className="rain-drop1">
+                      <div class="rain-drop1">
                         <img src="assets/images/icon/rain1.svg" alt="images" />
                       </div>
-                      <div className="rain-drop2">
+                      <div class="rain-drop2">
                         <img src="assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
-                    <div className="bottom-style2">
-                      <div className="price">
-                        <div className="icon">
+                    <div class="bottom-style2">
+                      <div class="price">
+                        <div class="icon">
                         <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
-                        <div className="content">
+                        <div class="content">
                          
-                          <div className="cash">Price: $75.99</div>
+                          <div class="cash">Price: $75.99</div>
                         </div>
                       </div>
-                      <div className="product-button">
+                      <div class="product-button">
                         <a
                           href="#"
                           data-toggle="modal"
                           data-target="#popup_bid"
-                          className="tf-button"
+                          class="tf-button"
                         >
                           {" "}
                           Purchase
@@ -849,28 +866,28 @@ const HomeSection = () => {
                   </div>
                 </div>
 
-                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
-                  <div className="sc-product style2">
-                    <div className="top">
-                      <a href="item-details.html" className="tag">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
+                  <div class="sc-product style2">
+                    <div class="top">
+                      <a href="item-details.html" class="tag">
                         SocialAPI
                       </a>
-                      <div className="wish-list">
-                        <a href="#" className="heart-icon"></a>
+                      <div class="wish-list">
+                        <a href="#" class="heart-icon"></a>
                       </div>
                     </div>
-                    <div className="bottom">
-                      <div className="details-product">
-                        <div className="author">
-                          <div className="avatar">
+                    <div class="bottom">
+                      <div class="details-product">
+                        <div class="author">
+                          <div class="avatar">
                             <img
                               src="assets/images/author/author5.png"
                               alt="images"
                             />
                           </div>
-                          <div className="content">
-                            <div className="position">Owner</div>
-                            <div className="name">
+                          <div class="content">
+                            <div class="position">Owner</div>
+                            <div class="name">
                               {" "}
                               <a href="#">Social Solutions Inc.</a>
                             </div>
@@ -878,36 +895,36 @@ const HomeSection = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="features">
-                      <div className="product-media">
+                    <div class="features">
+                      <div class="product-media">
                         <img
                           src="assets/images/product/product73.jpg"
                           alt="images"
                         />
                       </div>
-                      <div className="rain-drop1">
+                      <div class="rain-drop1">
                         <img src="assets/images/icon/rain1.svg" alt="images" />
                       </div>
-                      <div className="rain-drop2">
+                      <div class="rain-drop2">
                         <img src="assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
-                    <div className="bottom-style2">
-                      <div className="price">
-                        <div className="icon">
+                    <div class="bottom-style2">
+                      <div class="price">
+                        <div class="icon">
                         <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
-                        <div className="content">
+                        <div class="content">
                          
-                          <div className="cash">Price: $80.99</div>
+                          <div class="cash">Price: $80.99</div>
                         </div>
                       </div>
-                      <div className="product-button">
+                      <div class="product-button">
                         <a
                           href="#"
                           data-toggle="modal"
                           data-target="#popup_bid"
-                          className="tf-button"
+                          class="tf-button"
                         >
                           {" "}
                           Purchase
@@ -916,28 +933,28 @@ const HomeSection = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
-                  <div className="sc-product style2">
-                    <div className="top">
-                      <a href="item-details.html" className="tag">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
+                  <div class="sc-product style2">
+                    <div class="top">
+                      <a href="item-details.html" class="tag">
                         E-commerceAPI
                       </a>
-                      <div className="wish-list">
-                        <a href="#" className="heart-icon"></a>
+                      <div class="wish-list">
+                        <a href="#" class="heart-icon"></a>
                       </div>
                     </div>
-                    <div className="bottom">
-                      <div className="details-product">
-                        <div className="author">
-                          <div className="avatar">
+                    <div class="bottom">
+                      <div class="details-product">
+                        <div class="author">
+                          <div class="avatar">
                             <img
                               src="assets/images/author/author7.png"
                               alt="images"
                             />
                           </div>
-                          <div className="content">
-                            <div className="position">Owner</div>
-                            <div className="name">
+                          <div class="content">
+                            <div class="position">Owner</div>
+                            <div class="name">
                               {" "}
                               <a href="#">E-commerce Solutions Ltd.</a>
                             </div>
@@ -945,36 +962,36 @@ const HomeSection = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="features">
-                      <div className="product-media">
+                    <div class="features">
+                      <div class="product-media">
                         <img
                           src="assets/images/product/product77.jpg"
                           alt="images"
                         />
                       </div>
-                      <div className="rain-drop1">
+                      <div class="rain-drop1">
                         <img src="assets/images/icon/rain1.svg" alt="images" />
                       </div>
-                      <div className="rain-drop2">
+                      <div class="rain-drop2">
                         <img src="assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
-                    <div className="bottom-style2">
-                      <div className="price">
-                        <div className="icon">
+                    <div class="bottom-style2">
+                      <div class="price">
+                        <div class="icon">
                         <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
-                        <div className="content">
+                        <div class="content">
                          
-                          <div className="cash">Price: $70.99</div>
+                          <div class="cash">Price: $70.99</div>
                         </div>
                       </div>
-                      <div className="product-button">
+                      <div class="product-button">
                         <a
                           href="#"
                           data-toggle="modal"
                           data-target="#popup_bid"
-                          className="tf-button"
+                          class="tf-button"
                         >
                           {" "}
                           Purchase
@@ -983,28 +1000,28 @@ const HomeSection = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
-                  <div className="sc-product style2">
-                    <div className="top">
-                      <a href="item-details.html" className="tag">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
+                  <div class="sc-product style2">
+                    <div class="top">
+                      <a href="item-details.html" class="tag">
                         SecurityAPI
                       </a>
-                      <div className="wish-list">
-                        <a href="#" className="heart-icon"></a>
+                      <div class="wish-list">
+                        <a href="#" class="heart-icon"></a>
                       </div>
                     </div>
-                    <div className="bottom">
-                      <div className="details-product">
-                        <div className="author">
-                          <div className="avatar">
+                    <div class="bottom">
+                      <div class="details-product">
+                        <div class="author">
+                          <div class="avatar">
                             <img
                               src="assets/images/author/author14.png"
                               alt="images"
                             />
                           </div>
-                          <div className="content">
-                            <div className="position">Owner</div>
-                            <div className="name">
+                          <div class="content">
+                            <div class="position">Owner</div>
+                            <div class="name">
                               {" "}
                               <a href="#">Security Solutions Inc.</a>
                             </div>
@@ -1012,36 +1029,36 @@ const HomeSection = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="features">
-                      <div className="product-media">
+                    <div class="features">
+                      <div class="product-media">
                         <img
                           src="assets/images/product/product78.jpg"
                           alt="images"
                         />
                       </div>
-                      <div className="rain-drop1">
+                      <div class="rain-drop1">
                         <img src="assets/images/icon/rain1.svg" alt="images" />
                       </div>
-                      <div className="rain-drop2">
+                      <div class="rain-drop2">
                         <img src="assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
-                    <div className="bottom-style2">
-                      <div className="price">
-                        <div className="icon">
+                    <div class="bottom-style2">
+                      <div class="price">
+                        <div class="icon">
                         <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
-                        <div className="content">
+                        <div class="content">
                          
-                          <div className="cash">Price: $70.99</div>
+                          <div class="cash">Price: $70.99</div>
                         </div>
                       </div>
-                      <div className="product-button">
+                      <div class="product-button">
                         <a
                           href="#"
                           data-toggle="modal"
                           data-target="#popup_bid"
-                          className="tf-button"
+                          class="tf-button"
                         >
                           {" "}
                           Purchase
@@ -1050,28 +1067,28 @@ const HomeSection = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
-                  <div className="sc-product style2">
-                    <div className="top">
-                      <a href="item-details.html" className="tag">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
+                  <div class="sc-product style2">
+                    <div class="top">
+                      <a href="item-details.html" class="tag">
                         FitnessAPI
                       </a>
-                      <div className="wish-list">
-                        <a href="#" className="heart-icon"></a>
+                      <div class="wish-list">
+                        <a href="#" class="heart-icon"></a>
                       </div>
                     </div>
-                    <div className="bottom">
-                      <div className="details-product">
-                        <div className="author">
-                          <div className="avatar">
+                    <div class="bottom">
+                      <div class="details-product">
+                        <div class="author">
+                          <div class="avatar">
                             <img
                               src="assets/images/author/author19.png"
                               alt="images"
                             />
                           </div>
-                          <div className="content">
-                            <div className="position">Owner</div>
-                            <div className="name">
+                          <div class="content">
+                            <div class="position">Owner</div>
+                            <div class="name">
                               {" "}
                               <a href="#">Fitness Tracker Inc.</a>
                             </div>
@@ -1079,36 +1096,36 @@ const HomeSection = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="features">
-                      <div className="product-media">
+                    <div class="features">
+                      <div class="product-media">
                         <img
                           src="assets/images/product/product71.jpg"
                           alt="images"
                         />
                       </div>
-                      <div className="rain-drop1">
+                      <div class="rain-drop1">
                         <img src="assets/images/icon/rain1.svg" alt="images" />
                       </div>
-                      <div className="rain-drop2">
+                      <div class="rain-drop2">
                         <img src="assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
-                    <div className="bottom-style2">
-                      <div className="price">
-                        <div className="icon">
+                    <div class="bottom-style2">
+                      <div class="price">
+                        <div class="icon">
                         <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
-                        <div className="content">
+                        <div class="content">
                          
-                          <div className="cash">Price: $70.99</div>
+                          <div class="cash">Price: $70.99</div>
                         </div>
                       </div>
-                      <div className="product-button">
+                      <div class="product-button">
                         <a
                           href="#"
                           data-toggle="modal"
                           data-target="#popup_bid"
-                          className="tf-button"
+                          class="tf-button"
                         >
                           {" "}
                           Purchase
@@ -1117,28 +1134,28 @@ const HomeSection = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
-                  <div className="sc-product style2">
-                    <div className="top">
-                      <a href="item-details.html" className="tag">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
+                  <div class="sc-product style2">
+                    <div class="top">
+                      <a href="item-details.html" class="tag">
                         FoodAPI
                       </a>
-                      <div className="wish-list">
-                        <a href="#" className="heart-icon"></a>
+                      <div class="wish-list">
+                        <a href="#" class="heart-icon"></a>
                       </div>
                     </div>
-                    <div className="bottom">
-                      <div className="details-product">
-                        <div className="author">
-                          <div className="avatar">
+                    <div class="bottom">
+                      <div class="details-product">
+                        <div class="author">
+                          <div class="avatar">
                             <img
                               src="assets/images/author/author14.png"
                               alt="images"
                             />
                           </div>
-                          <div className="content">
-                            <div className="position">Owner</div>
-                            <div className="name">
+                          <div class="content">
+                            <div class="position">Owner</div>
+                            <div class="name">
                               {" "}
                               <a href="#">Foodie Tech Solutions</a>
                             </div>
@@ -1146,36 +1163,36 @@ const HomeSection = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="features">
-                      <div className="product-media">
+                    <div class="features">
+                      <div class="product-media">
                         <img
                           src="assets/images/product/product77.jpg"
                           alt="images"
                         />
                       </div>
-                      <div className="rain-drop1">
+                      <div class="rain-drop1">
                         <img src="assets/images/icon/rain1.svg" alt="images" />
                       </div>
-                      <div className="rain-drop2">
+                      <div class="rain-drop2">
                         <img src="assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
-                    <div className="bottom-style2">
-                      <div className="price">
-                        <div className="icon">
+                    <div class="bottom-style2">
+                      <div class="price">
+                        <div class="icon">
                         <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
-                        <div className="content">
+                        <div class="content">
                          
-                          <div className="cash">Price: $60.99</div>
+                          <div class="cash">Price: $60.99</div>
                         </div>
                       </div>
-                      <div className="product-button">
+                      <div class="product-button">
                         <a
                           href="#"
                           data-toggle="modal"
                           data-target="#popup_bid"
-                          className="tf-button"
+                          class="tf-button"
                         >
                           {" "}
                           Purchase
@@ -1184,28 +1201,28 @@ const HomeSection = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
-                  <div className="sc-product style2">
-                    <div className="top">
-                      <a href="item-details.html" className="tag">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
+                  <div class="sc-product style2">
+                    <div class="top">
+                      <a href="item-details.html" class="tag">
                         GamingAPI
                       </a>
-                      <div className="wish-list">
-                        <a href="#" className="heart-icon"></a>
+                      <div class="wish-list">
+                        <a href="#" class="heart-icon"></a>
                       </div>
                     </div>
-                    <div className="bottom">
-                      <div className="details-product">
-                        <div className="author">
-                          <div className="avatar">
+                    <div class="bottom">
+                      <div class="details-product">
+                        <div class="author">
+                          <div class="avatar">
                             <img
                               src="assets/images/author/author12.png"
                               alt="images"
                             />
                           </div>
-                          <div className="content">
-                            <div className="position">Owner</div>
-                            <div className="name">
+                          <div class="content">
+                            <div class="position">Owner</div>
+                            <div class="name">
                               {" "}
                               <a href="#">GameTech Innovations</a>
                             </div>
@@ -1213,36 +1230,36 @@ const HomeSection = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="features">
-                      <div className="product-media">
+                    <div class="features">
+                      <div class="product-media">
                         <img
                           src="assets/images/product/product70.jpg"
                           alt="images"
                         />
                       </div>
-                      <div className="rain-drop1">
+                      <div class="rain-drop1">
                         <img src="assets/images/icon/rain1.svg" alt="images" />
                       </div>
-                      <div className="rain-drop2">
+                      <div class="rain-drop2">
                         <img src="assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
-                    <div className="bottom-style2">
-                      <div className="price">
-                        <div className="icon">
+                    <div class="bottom-style2">
+                      <div class="price">
+                        <div class="icon">
                         <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
-                        <div className="content">
+                        <div class="content">
                          
-                          <div className="cash">Price: $120.99</div>
+                          <div class="cash">Price: $120.99</div>
                         </div>
                       </div>
-                      <div className="product-button">
+                      <div class="product-button">
                         <a
                           href="#"
                           data-toggle="modal"
                           data-target="#popup_bid"
-                          className="tf-button"
+                          class="tf-button"
                         >
                           {" "}
                           Purchase
@@ -1251,28 +1268,28 @@ const HomeSection = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
-                  <div className="sc-product style2">
-                    <div className="top">
-                      <a href="item-details.html" className="tag">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 tf-loadmore 3d pixel">
+                  <div class="sc-product style2">
+                    <div class="top">
+                      <a href="item-details.html" class="tag">
                         TransportationAPI
                       </a>
-                      <div className="wish-list">
-                        <a href="#" className="heart-icon"></a>
+                      <div class="wish-list">
+                        <a href="#" class="heart-icon"></a>
                       </div>
                     </div>
-                    <div className="bottom">
-                      <div className="details-product">
-                        <div className="author">
-                          <div className="avatar">
+                    <div class="bottom">
+                      <div class="details-product">
+                        <div class="author">
+                          <div class="avatar">
                             <img
                               src="assets/images/author/author10.png"
                               alt="images"
                             />
                           </div>
-                          <div className="content">
-                            <div className="position">Owner</div>
-                            <div className="name">
+                          <div class="content">
+                            <div class="position">Owner</div>
+                            <div class="name">
                               {" "}
                               <a href="#">TransitTech Solutions</a>
                             </div>
@@ -1280,36 +1297,36 @@ const HomeSection = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="features">
-                      <div className="product-media">
+                    <div class="features">
+                      <div class="product-media">
                         <img
                           src="assets/images/product/product73.jpg"
                           alt="images"
                         />
                       </div>
-                      <div className="rain-drop1">
+                      <div class="rain-drop1">
                         <img src="assets/images/icon/rain1.svg" alt="images" />
                       </div>
-                      <div className="rain-drop2">
+                      <div class="rain-drop2">
                         <img src="assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
-                    <div className="bottom-style2">
-                      <div className="price">
-                        <div className="icon">
+                    <div class="bottom-style2">
+                      <div class="price">
+                        <div class="icon">
                         <img src="assets/images/svg/coinbase.svg" alt="Image"/>
                         </div>
-                        <div className="content">
+                        <div class="content">
                          
-                          <div className="cash">Price: $100.99</div>
+                          <div class="cash">Price: $100.99</div>
                         </div>
                       </div>
-                      <div className="product-button">
+                      <div class="product-button">
                         <a
                           href="#"
                           data-toggle="modal"
                           data-target="#popup_bid"
-                          className="tf-button"
+                          class="tf-button"
                         >
                           {" "}
                           Purchase
@@ -1322,18 +1339,18 @@ const HomeSection = () => {
             </div>
           </section>
 
-          <section className="tf-section tf-top-seller">
-            <div className="tf-container">
-              <div className="row wow fadeInUp">
-                <div className="col-md-12">
-                  <div className="tf-heading style-4 mb44 ">
-                    <h3 className="heading">Top Providers</h3>
+          <section class="tf-section tf-top-seller">
+            <div class="tf-container">
+              <div class="row wow fadeInUp">
+                <div class="col-md-12">
+                  <div class="tf-heading style-4 mb44 ">
+                    <h3 class="heading">Top Providers</h3>
                   </div>
                 </div>
-                <div className="col-xl-3 col-lg-4 col-md-6">
-                  <div className="tf-author style-3">
-                    <span className="number">1</span>
-                    <div className="image">
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                  <div class="tf-author style-3">
+                    <span class="number">1</span>
+                    <div class="image">
                       <img src="assets/images/author/author1.png" alt="Image" />
                       <svg
                         width="18"
@@ -1352,20 +1369,20 @@ const HomeSection = () => {
                         />
                       </svg>
                     </div>
-                    <div className="content">
-                      <div className="title">
+                    <div class="content">
+                      <div class="title">
                         <a href="#">TransitTech Solutions</a>
                       </div>
-                      <div className="price">
-                        <span className="price-eth">10  Shared APIs</span>
+                      <div class="price">
+                        <span class="price-eth">10  Shared APIs</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3 col-lg-4 col-md-6">
-                  <div className="tf-author style-3">
-                    <span className="number">2</span>
-                    <div className="image">
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                  <div class="tf-author style-3">
+                    <span class="number">2</span>
+                    <div class="image">
                       <img
                         src="assets/images/author/author14.png"
                         alt="Image"
@@ -1387,20 +1404,20 @@ const HomeSection = () => {
                         />
                       </svg>
                     </div>
-                    <div className="content">
-                      <div className="title">
+                    <div class="content">
+                      <div class="title">
                         <a href="#">E-commerce Solutions </a>
                       </div>
-                      <div className="price">
-                        <span className="price-eth">8  Shared APIs</span>
+                      <div class="price">
+                        <span class="price-eth">8  Shared APIs</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3 col-lg-4 col-md-6">
-                  <div className="tf-author style-3">
-                    <span className="number">3</span>
-                    <div className="image">
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                  <div class="tf-author style-3">
+                    <span class="number">3</span>
+                    <div class="image">
                       <img
                         src="assets/images/author/author15.png"
                         alt="Image"
@@ -1422,20 +1439,20 @@ const HomeSection = () => {
                         />
                       </svg>
                     </div>
-                    <div className="content">
-                      <div className="title">
+                    <div class="content">
+                      <div class="title">
                         <a href="#">GameTech Innovations</a>
                       </div>
-                      <div className="price">
-                        <span className="price-eth">13  Shared APIs</span>
+                      <div class="price">
+                        <span class="price-eth">13  Shared APIs</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3 col-lg-4 col-md-6">
-                  <div className="tf-author style-3">
-                    <span className="number">4</span>
-                    <div className="image">
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                  <div class="tf-author style-3">
+                    <span class="number">4</span>
+                    <div class="image">
                       <img
                         src="assets/images/author/author16.png"
                         alt="Image"
@@ -1457,21 +1474,21 @@ const HomeSection = () => {
                         />
                       </svg>
                     </div>
-                    <div className="content">
-                      <div className="title">
+                    <div class="content">
+                      <div class="title">
                         <a href="#">Cade Castillo</a>
                       </div>
-                      <div className="price">
-                        <span className="price-eth">17  Shared APIs</span>
+                      <div class="price">
+                        <span class="price-eth">17  Shared APIs</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="col-xl-3 col-lg-4 col-md-6">
-                  <div className="tf-author style-3">
-                    <span className="number">5</span>
-                    <div className="image">
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                  <div class="tf-author style-3">
+                    <span class="number">5</span>
+                    <div class="image">
                       <img
                         src="assets/images/author/author17.png"
                         alt="Image"
@@ -1493,20 +1510,20 @@ const HomeSection = () => {
                         />
                       </svg>
                     </div>
-                    <div className="content">
-                      <div className="title">
+                    <div class="content">
+                      <div class="title">
                         <a href="#">Alma Dunn</a>
                       </div>
-                      <div className="price">
-                        <span className="price-eth">15  Shared APIs</span>
+                      <div class="price">
+                        <span class="price-eth">15  Shared APIs</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3 col-lg-4 col-md-6">
-                  <div className="tf-author style-3">
-                    <span className="number">6</span>
-                    <div className="image">
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                  <div class="tf-author style-3">
+                    <span class="number">6</span>
+                    <div class="image">
                       <img
                         src="assets/images/author/author18.png"
                         alt="Image"
@@ -1528,20 +1545,20 @@ const HomeSection = () => {
                         />
                       </svg>
                     </div>
-                    <div className="content">
-                      <div className="title">
+                    <div class="content">
+                      <div class="title">
                         <a href="#">Kayla Henry</a>
                       </div>
-                      <div className="price">
-                        <span className="price-eth">22  Shared APIs</span>
+                      <div class="price">
+                        <span class="price-eth">22  Shared APIs</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3 col-lg-4 col-md-6">
-                  <div className="tf-author style-3">
-                    <span className="number">7</span>
-                    <div className="image">
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                  <div class="tf-author style-3">
+                    <span class="number">7</span>
+                    <div class="image">
                       <img
                         src="assets/images/author/author19.png"
                         alt="Image"
@@ -1563,20 +1580,20 @@ const HomeSection = () => {
                         />
                       </svg>
                     </div>
-                    <div className="content">
-                      <div className="title">
+                    <div class="content">
+                      <div class="title">
                         <a href="#">Joey Cress</a>
                       </div>
-                      <div className="price">
-                        <span className="price-eth">12  Shared APIs</span>
+                      <div class="price">
+                        <span class="price-eth">12  Shared APIs</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3 col-lg-4 col-md-6">
-                  <div className="tf-author style-3">
-                    <span className="number">8</span>
-                    <div className="image">
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                  <div class="tf-author style-3">
+                    <span class="number">8</span>
+                    <div class="image">
                       <img
                         src="assets/images/author/author20.png"
                         alt="Image"
@@ -1598,20 +1615,20 @@ const HomeSection = () => {
                         />
                       </svg>
                     </div>
-                    <div className="content">
-                      <div className="title">
+                    <div class="content">
+                      <div class="title">
                         <a href="#">Emily Peay</a>
                       </div>
-                      <div className="price">
-                        <span className="price-eth">23  Shared APIs</span>
+                      <div class="price">
+                        <span class="price-eth">23  Shared APIs</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3 col-lg-4 col-md-6">
-                  <div className="tf-author style-3">
-                    <span className="number">9</span>
-                    <div className="image">
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                  <div class="tf-author style-3">
+                    <span class="number">9</span>
+                    <div class="image">
                       <img
                         src="assets/images/author/author21.png"
                         alt="Image"
@@ -1633,20 +1650,20 @@ const HomeSection = () => {
                         />
                       </svg>
                     </div>
-                    <div className="content">
-                      <div className="title">
+                    <div class="content">
+                      <div class="title">
                         <a href="#">Damon Lynch</a>
                       </div>
-                      <div className="price">
-                        <span className="price-eth">14 Shared APIs</span>
+                      <div class="price">
+                        <span class="price-eth">14 Shared APIs</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3 col-lg-4 col-md-6">
-                  <div className="tf-author style-3">
-                    <span className="number">10</span>
-                    <div className="image">
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                  <div class="tf-author style-3">
+                    <span class="number">10</span>
+                    <div class="image">
                       <img
                         src="assets/images/author/author22.png"
                         alt="Image"
@@ -1668,20 +1685,20 @@ const HomeSection = () => {
                         />
                       </svg>
                     </div>
-                    <div className="content">
-                      <div className="title">
+                    <div class="content">
+                      <div class="title">
                         <a href="#">Terence Cobb</a>
                       </div>
-                      <div className="price">
-                        <span className="price-eth">11  Shared APIs</span>
+                      <div class="price">
+                        <span class="price-eth">11  Shared APIs</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3 col-lg-4 col-md-6">
-                  <div className="tf-author style-3">
-                    <span className="number">11</span>
-                    <div className="image">
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                  <div class="tf-author style-3">
+                    <span class="number">11</span>
+                    <div class="image">
                       <img
                         src="assets/images/author/author23.png"
                         alt="Image"
@@ -1703,20 +1720,20 @@ const HomeSection = () => {
                         />
                       </svg>
                     </div>
-                    <div className="content">
-                      <div className="title">
+                    <div class="content">
+                      <div class="title">
                         <a href="#">Clive Schultz</a>
                       </div>
-                      <div className="price">
-                        <span className="price-eth">10  Shared APIs</span>
+                      <div class="price">
+                        <span class="price-eth">10  Shared APIs</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3 col-lg-4 col-md-6">
-                  <div className="tf-author style-3">
-                    <span className="number">12</span>
-                    <div className="image">
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                  <div class="tf-author style-3">
+                    <span class="number">12</span>
+                    <div class="image">
                       <img
                         src="assets/images/author/author24.png"
                         alt="Image"
@@ -1738,12 +1755,12 @@ const HomeSection = () => {
                         />
                       </svg>
                     </div>
-                    <div className="content">
-                      <div className="title">
+                    <div class="content">
+                      <div class="title">
                         <a href="#">Happy Parsons</a>
                       </div>
-                      <div className="price">
-                        <span className="price-eth">13  Shared APIs</span>
+                      <div class="price">
+                        <span class="price-eth">13  Shared APIs</span>
                       </div>
                     </div>
                   </div>
@@ -1751,48 +1768,48 @@ const HomeSection = () => {
               </div>
             </div>
           </section>
-          <section className="tf-section tf-create-and-sell">
-    <div className="tf-container">
-        <div className="row">
-            <div className="col-md-12">
-                <div className="tf-heading style-2 mb40 wow fadeInUp">
-                    <h4 className="heading"> Our Marketplace Services</h4>
+          <section class="tf-section tf-create-and-sell">
+    <div class="tf-container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tf-heading style-2 mb40 wow fadeInUp">
+                    <h4 class="heading"> Our Marketplace Services</h4>
                 </div>
             </div>
-            <div className="col-lg-3 col-md-6">
-                <div className="tf-create wow fadeInUp"  data-wow-delay="0.2s">
-                    <div className="icon">
+            <div class="col-lg-3 col-md-6">
+                <div class="tf-create wow fadeInUp"  data-wow-delay="0.2s">
+                    <div class="icon">
                         <img src="assets/images/svg/icon-create-5.svg" alt="Image"/>
                     </div>
-                    <h6 className="title"><a href="#">API Exploitation</a></h6>
-                    <p className="content">Search, explore, and integrate APIs seamlessly, unlocking endless possibilities for your projects and endeavors.</p>
+                    <h6 class="title"><a href="#">API Exploitation</a></h6>
+                    <p class="content">Search, explore, and integrate APIs seamlessly, unlocking endless possibilities for your projects and endeavors.</p>
                 </div>
             </div>
-            <div className="col-lg-3 col-md-6">
-                <div className="tf-create wow fadeInUp"  data-wow-delay="0.4s">
-                    <div className="icon">
+            <div class="col-lg-3 col-md-6">
+                <div class="tf-create wow fadeInUp"  data-wow-delay="0.4s">
+                    <div class="icon">
                         <img src="assets/images/svg/icon-create-2.svg" alt="Image"/>
                     </div>
-                    <h6 className="title"><a href="#">API Publishing & Management</a> </h6>
-                    <p className="content">Welcome to seamless API management! Easily add and update APIs with our intuitive platform.</p>
+                    <h6 class="title"><a href="#">API Publishing & Management</a> </h6>
+                    <p class="content">Welcome to seamless API management! Easily add and update APIs with our intuitive platform.</p>
                 </div>
             </div>
-            <div className="col-lg-3 col-md-6">
-                <div className="tf-create wow fadeInUp"  data-wow-delay="0.6s">
-                    <div className="icon">
+            <div class="col-lg-3 col-md-6">
+                <div class="tf-create wow fadeInUp"  data-wow-delay="0.6s">
+                    <div class="icon">
                         <img src="assets/images/svg/icon-create-6.svg" alt="Image"/>
                     </div>
-                    <h6 className="title"><a href="#">API Documentation</a> </h6>
-                    <p className="content">Unlock the power of clear documentation! Publish comprehensive API docs effortlessly with our platform.</p>
+                    <h6 class="title"><a href="#">API Documentation</a> </h6>
+                    <p class="content">Unlock the power of clear documentation! Publish comprehensive API docs effortlessly with our platform.</p>
                 </div>
             </div>
-            <div className="col-lg-3 col-md-6">
-                <div className="tf-create wow fadeInUp"  data-wow-delay="0.8s">
-                    <div className="icon">
+            <div class="col-lg-3 col-md-6">
+                <div class="tf-create wow fadeInUp"  data-wow-delay="0.8s">
+                    <div class="icon">
                         <img src="assets/images/svg/icon-create-9.svg" alt="Image"/>
                     </div>
-                    <h6 className="title"><a href="#">API Testing & Monitoring</a></h6>
-                    <p className="content">Seamlessly test functionality, performance, and reliability to guarantee a smooth user experience.</p>
+                    <h6 class="title"><a href="#">API Testing & Monitoring</a></h6>
+                    <p class="content">Seamlessly test functionality, performance, and reliability to guarantee a smooth user experience.</p>
                 </div>
             </div>
         </div>
@@ -1804,44 +1821,44 @@ const HomeSection = () => {
       </div>
 
       <div
-        className="modal fade popup"
+        class="modal fade popup"
         id="popup_bid"
-        tabIndex="-1"
+        tabindex="-1"
         aria-modal="true"
         role="dialog"
       >
-        <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
-            <div className="modal-body space-y-20 pd-40">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body space-y-20 pd-40">
               <h3>Place a Bid</h3>
-              <p className="text-center sub-heading">
+              <p class="text-center sub-heading">
                 You must bid a least{" "}
-                <span className="price color-popup">4.89 ETH</span>
+                <span class="price color-popup">4.89 ETH</span>
               </p>
-              <input type="text" className="form-control" placeholder="00.00 ETH" />
-              <p className="label-1">
-                Enter quantity. <span className="color-popup">5 available</span>
+              <input type="text" class="form-control" placeholder="00.00 ETH" />
+              <p class="label-1">
+                Enter quantity. <span class="color-popup">5 available</span>
               </p>
               <input
                 type="text"
-                className="form-control quantity form-bottom"
+                class="form-control quantity form-bottom"
                 value="1"
               />
-              <div className="d-flex justify-content-between detail-1">
+              <div class="d-flex justify-content-between detail-1">
                 <p> You must bid at least:</p>
-                <p className="text-right price color-popup"> 4.89 ETH </p>
+                <p class="text-right price color-popup"> 4.89 ETH </p>
               </div>
-              <div className="d-flex justify-content-between detail-2">
+              <div class="d-flex justify-content-between detail-2">
                 <p> Service free:</p>
-                <p className="text-right price color-popup"> 0,89 ETH </p>
+                <p class="text-right price color-popup"> 0,89 ETH </p>
               </div>
-              <div className="d-flex justify-content-between detail-3">
+              <div class="d-flex justify-content-between detail-3">
                 <p> Total bid amount:</p>
-                <p className="text-right price color-popup"> 4 ETH </p>
+                <p class="text-right price color-popup"> 4 ETH </p>
               </div>
               <a
                 href="#"
-                className="button-popup"
+                class="button-popup"
                 data-toggle="modal"
                 data-target="#popup_bid_success"
                 data-dismiss="modal"

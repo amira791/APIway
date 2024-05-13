@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom';
-import useForum from '../../hooks/useForum';
-import Post from './Post';
+import { NavLink , useNavigate} from 'react-router-dom';
+import useForum from '../../../src/hooks/useForum';
+import Comment from './Comment';
 import {
   Flex, Avatar, Button, Input, Text, HStack, VStack,
   FormControl,
@@ -11,8 +11,9 @@ import { ChevronLeftIcon, TimeIcon } from '@chakra-ui/icons'
 import formatTime from '../../utils/formatTime';
 
 export default function Thread({ thread_id }) {
+  const navigate = useNavigate()
   const [message, setMessage] = useState()
-  const { addNewPost, getThread, getThreadPosts, thread, posts, error, loading } = useForum();
+  const { addNewComment, getThread, getThreadComments, thread, comments, error, loading } = useForum();
 
 
   useEffect(() => {
@@ -20,8 +21,7 @@ export default function Thread({ thread_id }) {
   }, [thread_id]);
 
   useEffect(() => {
-    // Fetch posts for each thread when threads data changes
-    getThreadPosts(thread_id);
+    getThreadComments(thread_id);
   }, [thread_id]);
 
 
@@ -32,7 +32,8 @@ export default function Thread({ thread_id }) {
       created_by: 1
     }
     e.preventDefault(); // Prevent default form submission behavior
-    addNewPost(newPost)
+    addNewComment(newPost)
+    navigate(`/forum/threads/${thread_id}`)
   };
 
   return (
@@ -55,7 +56,7 @@ export default function Thread({ thread_id }) {
               <div className="history-content"></div>                <div className="history-details tf-loadmore 3d" style={{ width: '100vh' }}>
                 <div className="authorr" style={{ width: '100vh' }}>
                   <div className="avatar">
-                    <img src="assets/images/author/apiLogo.png" alt="images" />
+                    <img src="assets/images/author/history-at5.jpg" alt="images" />
                   </div>
                   <div className="content">
                     <a href="#" className="name">{thread.creator?.CNusername}</a>
@@ -78,13 +79,14 @@ export default function Thread({ thread_id }) {
           <div className='history-content'>
             <div className='inner tf-filter-container'>
               <div className="history-content">
-                {posts.map(post => (
-                  <Post key={post.id_post} post={post} />
+                {comments.map(comment => (
+                  <Comment key={comment.id_comment} comment={comment} />
                 ))}
               </div>
             </div>
           </div>
         </div>
+        
         <div id="comments">
           <h5 className="heading">Add A Comment</h5>
           <form onSubmit={handleFormSubmit} method="post" id="commentform" className="comment-form">
