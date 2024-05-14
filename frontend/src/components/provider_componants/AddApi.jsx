@@ -4,7 +4,7 @@ import ManipulateCat from "../../hooks/CategoryHook";
 import APIAjout from "../../hooks/APIHook2";
 import $ from "jquery";
 import "datatables.net";
-import CreateEndpointForm from "./CreateEndpointForm.jsx";
+import AddEndpointForm from "./CreateEndpointForm.jsx";
 import AddGroupForm from "./CreateGroupEndpoint.jsx";
 import EndpointTable from "./CommunComponants/endpointable.jsx";
 import Monetizing from "./Monetize.jsx";
@@ -745,7 +745,7 @@ const AddAPIPage = ({}) => {
                       </p>
                       <div className="row">
                         <div className="col-xl-12 col-lg-12 col-md-12">
-                          <div>
+                        
                             <div className="banner-collection-inner">
                               <div className="button-top">
                                 <a
@@ -767,12 +767,12 @@ const AddAPIPage = ({}) => {
                               </div>
                             </div>
                             {showForm && (
-                              <CreateEndpointForm onSave={handleAddEndpoints} />
+                              <AddEndpointForm onSave={handleAddEndpoints} />
                             )}
                             {showGroupForm && (
                               <AddGroupForm onSave={handleAddGroup} />
                             )}
-                          </div>
+                      
 
                           <div
                             id="endpoints-section"
