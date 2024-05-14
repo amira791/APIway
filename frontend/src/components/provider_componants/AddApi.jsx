@@ -408,21 +408,7 @@ const AddAPIPage = () => {
                       Definitions
                     </a>
                   </li>
-                  <li
-                    className={activeFilter === "#doc-section" ? "active" : ""}
-                  >
-                    <a
-                      href="#"
-                      onClick={() => handleFilterClick("#doc-section")}
-                    >
-                      Documentation
-                    </a>
-                  </li>
-                  <li className={activeFilter === "#pixel" ? "active" : ""}>
-                    <a href="#" onClick={() => handleFilterClick("#pixel")}>
-                      Gateway
-                    </a>
-                  </li>
+                 
                   <li
                     className={
                       activeFilter === "#monetize-section" ? "active" : ""

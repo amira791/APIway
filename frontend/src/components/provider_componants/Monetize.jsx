@@ -42,7 +42,7 @@ const Monetizing = ({Models ,setModels}) => {
     id: "",
     modelIndex: "",
   
-    ratelimit: "1000",
+    ratelimit: 1000,//changed here
     quotalimit: "",
     price: "",
     features: "",

@@ -15,13 +15,16 @@ const PricingMenu = ({ allPricingData, onSelect }) => {
     return (
       <div className="top-menu">
         <ul className="filter-menu">
-          {allPricingData.map(({ type }) => (
-            <li key={type} className={activeType === type ? "active" : ""}>
-              <a href="#" onClick={() => handleTypeClick(type)}>
-                {type}
-              </a>
-            </li>
-          ))}
+        {allPricingData
+    .slice()  // Create a shallow copy to avoid mutating the original array
+    .sort((a, b) => a.type.localeCompare(b.type))  // Sort alphabetically based on type
+    .map(({ type }) => (
+      <li key={type} className={activeType === type ? "active" : ""}>
+        <a href="#" onClick={() => handleTypeClick(type)}>
+          {type}
+        </a>
+      </li>
+    ))}
         </ul>
       </div>
     );
@@ -34,22 +37,13 @@ const PricingMenu = ({ allPricingData, onSelect }) => {
       <div className="tarifications">
         {tarifications.map((tarif, index) => (
         
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 "  key={index}>
-                            <div class="sc-product style2" >
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 "  key={index} style={{gap:"3%"}}>
+                            <div class="sc-product style2 pricing" >
                                 <div class="top" style={{display:"flex",alignContent:"center",justifyContent:"center"}}>
                                     <a href="item-details.html" class="price" style={{fontSize:"30px",marginBottom:"10%"}}>{tarif.name}</a>
                                    
                                 </div>
-                              {/*   <div class="bottom">
-                                    <div class="details-product">
-                                        <div class="author">
-                                            <div class="content">
-                                                <div class="position">Creator</div>
-                                                <div class="name"> <a href="#">Sirena May</a></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
+                             
                                 <div class="features">
                                 <div class="price">
                                              <div class="content">

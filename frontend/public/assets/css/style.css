@@ -1753,7 +1753,8 @@ header.absolute {
   border-color: #3749E9;
 }
 .page-title-heading {
- font-size: 5em;
+  margin-top: 5%;
+ font-size: 3.5em;
   color: var(--primary-color5);
 
 }
@@ -2032,7 +2033,7 @@ header.absolute {
 .tf-blog {
   padding: 28px 0 80px 0;
 }
-.tf-blog .tf-blog-item {
+.tf-blog-item {
   box-sizing: border-box;
   padding: 24px 24px 32px 24px;
   background: #fff;
@@ -2682,4 +2683,22 @@ header.absolute {
 
 .bullet-point {
   margin-right: 0.5rem; /* Adjust the space between the bullet point and text */
+}
+
+.infos-text {
+  font-size: 20px;
+  line-height: 26px;
+  margin-bottom: 15px;
+  color: var(--primary-color5);
+}
+
+.version{
+  margin-bottom: 20px;
+}
+#About p{
+  margin-top: 2.5%;
+  font-size: 20px;
+  text-transform: capitalize;
+  text-indent: 1.5%;
+  line-height:40px;
 }
