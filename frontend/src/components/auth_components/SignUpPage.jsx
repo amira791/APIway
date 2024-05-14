@@ -33,11 +33,11 @@ export default function SignUpPage() {
         };
         console.log(newUser);
         signUp(newUser);
-        if (authState.isAuth && authState.isConsommateur) {
+        if (authState.isAuth  === "true" && authState.isConsommateur  === "true") {
             navigate('/');
             return;
         }
-        if (authState.isAuth && authState.isFournisseur) {
+        if (authState.isAuth === "true" && authState.isFournisseur === "true" ) {
             navigate('/provider_home');
             return;
         }

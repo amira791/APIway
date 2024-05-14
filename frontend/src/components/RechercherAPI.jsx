@@ -163,7 +163,7 @@ const SearchApi = () => {
                                     <div className="col-md-12">
                                         <div className="image" style={{ maxHeight: "300px", overflow: "hidden", borderRadius: "15px" }}>
                                             <video autoPlay muted loop style={{ width: "100%" }}>
-                                                <source src="/assets/images/explore3.mp4" type="video/mp4" />
+                                                <source src="assets/images/explore3.mp4" type="video/mp4" />
                                                 Your browser does not support the video tag.
                                             </video>
                                         </div>
@@ -174,7 +174,21 @@ const SearchApi = () => {
 
                         <section className="tf-baner-live-auction style-2">
                             <div className="tf-container">
+                            {/* <form action="#">
+                                                        <div id="item_category" class="dropdown">
+                                                            <a href="#" class="btn-selector nolink "><div class="icon"><i class="fab fa-ethereum"></i></div>ETH</a>
+                                                            <ul >
+                                                                <li><span>ETH</span></li>
+                                                                <li class="active"><span>USD</span></li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="search-form">
+                                                            <input type="text" placeholder="Search keyword..." required=""/>
+                                                        <a class="btn-search"><i class="icon-fl-search-filled"></i></a>
+                                                        </div>
+                                                    </form> */}
                                 <div className="mt-6 mb-20 flex flex-col items-center">
+
 
                                     
                                 <div className="mt-6 mb-10 flex justify-center items-center">
@@ -374,21 +388,6 @@ const SearchApi = () => {
                     </div>
                 </div>
             </div>
-
-            <script src="../../../unpkg.com/imagesloaded%405.0.0/imagesloaded.pkgd.min.js"></script>
-            <script src="../../../unpkg.com/imagesloaded%405.0.0/imagesloaded.pkgd.js"></script>
-
-            <script src="/assets/js/jquery.min.js"></script>
-            <script src="/assets/js/jquery.easing.js"></script>
-            <script src="/assets/js/bootstrap.min.js"></script>
-            <script src="/assets/js/swiper-bundle.min.js"></script>
-            <script src="/assets/js/swiper.js"></script>
-            <script src="/assets/js/count-down.js"></script>
-            <script src="/assets/js/jquery.isotope.min.js"></script>
-            <script src="/assets/js/switchmode.js"></script>
-            <script src="/assets/js/plugin.js"></script>
-            <script src="/assets/js/shortcodes.js"></script>
-            <script src="/assets/js/main.js"></script>
         </div>
     );
 };

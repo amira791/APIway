@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { NavLink , useNavigate} from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import useForum from '../../hooks/useForum';
 import Comment from './Comment';
 import {
@@ -11,11 +11,11 @@ import { ChevronLeftIcon, TimeIcon } from '@chakra-ui/icons'
 import formatTime from '../../utils/formatTime';
 import { useAuthContext } from '../../context/authContext';
 
-export default function Thread({ thread_id }) {
+export default function Thread({ thread_id , onThreadClick}) {
   const navigate = useNavigate()
   const [message, setMessage] = useState()
   const { addNewComment, getThread, getThreadComments, thread, comments, error, loading } = useForum();
-  const {authState} = useAuthContext();
+  const { authState } = useAuthContext();
   const creator = authState.userId;
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function Thread({ thread_id }) {
     }
     e.preventDefault(); // Prevent default form submission behavior
     addNewComment(newPost)
-    navigate(`/forum/threads/${thread_id}`)
+
   };
 
   return (
@@ -43,7 +43,7 @@ export default function Thread({ thread_id }) {
       <Flex flexDirection='column' justifyContent='flex-start' m={30}>
 
         <NavLink
-          to='/forum'
+          onClick={()=> onThreadClick(thread_id)}
           display="list-item"
           place-items="center"
           padding-left="1px"
@@ -55,10 +55,11 @@ export default function Thread({ thread_id }) {
         <div className='history-filter'>
           <div className='history-content'>
             <div className='inner tf-filter-container'>
-              <div className="history-content"></div>                <div className="history-details tf-loadmore 3d" style={{ width: '100vh' }}>
+              <div className="history-content"></div>                
+                <div className="history-details tf-loadmore 3d" style={{ width: '100vh' }}>
                 <div className="authorr" style={{ width: '100vh' }}>
                   <div className="avatar">
-                    <img src="assets/images/author/history-at5.jpg" alt="images" />
+                    <img src="/assets/images/author/history-at5.jpg" alt="images" />
                   </div>
                   <div className="content">
                     <a href="#" className="name">{thread.creator?.CNusername}</a>
@@ -88,7 +89,7 @@ export default function Thread({ thread_id }) {
             </div>
           </div>
         </div>
-        
+        { authState.isAuth   === "true" ?(
         <div id="comments">
           <h5 className="heading">Add A Comment</h5>
           <form onSubmit={handleFormSubmit} method="post" id="commentform" className="comment-form">
@@ -101,7 +102,8 @@ export default function Thread({ thread_id }) {
             <div className="btn-submit"><button className="tf-button" type="submit">Send comment</button></div>
           </form>
         </div>
-
+        ): (<div></div>)
+}
       </Flex>
     </>
   )

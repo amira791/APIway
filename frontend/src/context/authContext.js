@@ -8,9 +8,9 @@ const initialState = {
   token: localStorage.getItem('token') || null,
   username: localStorage.getItem('username') || null,
   userId: localStorage.getItem('userId') || null,
-  isFournisseur: localStorage.getItem('isFournisseur') === 'true',
-  isConsommateur: localStorage.getItem('isConsommateur') === 'true',
-  isAdmin: localStorage.getItem('isAdmin') === 'true'
+  isFournisseur: localStorage.getItem('isFournisseur') === "true",
+  isConsommateur: localStorage.getItem('isConsommateur') === "true",
+  isAdmin: localStorage.getItem('isAdmin') === "true"
 };
 
 // Define the reducer function

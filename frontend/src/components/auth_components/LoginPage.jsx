@@ -10,6 +10,7 @@ export default function LoginPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [error,setError] = useState()
 
     const { signIn } = useAuth();
     const { authState } = useAuthContext();
@@ -20,17 +21,17 @@ export default function LoginPage() {
             username_or_email: username,
             password: password,
         };
-        console.log(user);
+  
         signIn(user);
-        if (authState.isAuth && authState.isConsommateur) {
+        
+        if (authState.isAuth  && authState.isConsommateur ) {
             console.log("Consumer is logged in");
             navigate('/');
-            return;
-        }
-        if (authState.isAuth && authState.isFournisseur) {
+  
+        }else if (authState.isAuth && authState.isFournisseur) {
             console.log("Provider is logged in");
             navigate('/provider_home');
-            return;
+      
         }
     };
 

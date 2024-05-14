@@ -5,6 +5,7 @@ import useForum from '../../hooks/useForum';
 import ThreadList from './ThreadList';
 import { useAuthContext } from '../../context/authContext';
 import useManageAccountsC from '../../hooks/ConsomAccountsHook';
+import Thread from './Thread'
 
 export default function Forum({ forum_id }) {
   const { addNewThread, getForum, forum, error: forumError, loading: forumLoading } = useForum();
@@ -14,7 +15,11 @@ export default function Forum({ forum_id }) {
   const [showLoginPrompt, setShowLoginPrompt] = useState(false); // State to control login prompt
   const [loading, setLoading] = useState(true); // Component-level loading state
   const navigate = useNavigate();
+  const [selectedThreadId, setSelectedThreadId] = useState(null);
 
+  const handleThreadClick = (threadId) => {
+    setSelectedThreadId(threadId);
+  };
   useEffect(() => {
     async function fetchData() {
       try {
@@ -30,7 +35,7 @@ export default function Forum({ forum_id }) {
   }, [forum_id]);
 
   const handleNewDiscussion = () => {
-    if (authState.isAuth) {
+    if (authState.isAuth === "true") {
       const thread = {
         content: message,
         forum: forum_id,
@@ -70,7 +75,7 @@ export default function Forum({ forum_id }) {
             </a>
           </div>
           <div className="product-button">
-          {authState.isAuth ? (
+          {authState.isAuth  === "true" ? (
               <Link to={'/tickets/new'} className="tf-button">
                 <span className="icon-btn-product"></span>New ticket
               </Link>
@@ -89,8 +94,9 @@ export default function Forum({ forum_id }) {
         </HStack>
         )}
         <Box>
-          <ThreadList key={forum.id_forum} forum_id={forum_id} />
+        {!selectedThreadId &&  <ThreadList key={forum.id_forum} forum_id={forum_id} onThreadClick={handleThreadClick}/>}
         </Box>
+        {selectedThreadId && <Thread threadId={selectedThreadId} onThreadClick={handleThreadClick}/>}
       </Flex>
 
       {/* Modal for new discussion */}
@@ -108,7 +114,7 @@ export default function Forum({ forum_id }) {
                 onChange={(e) => setMessage(e.target.value)}
               />
               <br />
-              {authState.isAuth ? (
+              {authState.isAuth  === "true" ? (
                 <a
                   onClick={handleNewDiscussion}
                   className="button-popup"

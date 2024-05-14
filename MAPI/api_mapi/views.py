@@ -203,7 +203,7 @@ class APIForumView(viewsets.ModelViewSet):
 # Forum Thread View
 class ThreadView(viewsets.ModelViewSet):
     queryset = Thread.objects.all()
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
 
     def get_serializer_class(self):

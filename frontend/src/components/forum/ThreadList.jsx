@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { TimeIcon, ChatIcon } from '@chakra-ui/icons';
 import formatTime from '../../utils/formatTime';
 
-export default function ThreadList({ forum_id }) {
+export default function ThreadList({ forum_id , onThreadClick }) {
   const { getForumThreads, threads, error, loading } = useForum();
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function ThreadList({ forum_id }) {
                 <div key={thread.id_thread} className="history-details tf-loadmore 3d" style={{ width: '100vh' }}>
                   <div className="authorr" style={{ width: '100vh' }}>
                     <div className="avatar">
-                      <img src="assets/images/author/history-at5.jpg" alt="images" />
+                      <img src="/assets/images/author/history-at5.jpg" alt="images" />
                     </div>
                     <div className="content">
                       <a href="#" className="name">{thread.creator.CNusername}</a>
@@ -42,7 +42,7 @@ export default function ThreadList({ forum_id }) {
                     </div>
                   </div>
 
-                  <NavLink to={`/forum/threads/${thread.id_thread}`}>
+                  <NavLink to="#" onClick={() => onThreadClick(thread.id_thread)}>
                     <div className="category-filter">
                       <ChatIcon mr={2} />
                       {thread.num_posts} Comments
