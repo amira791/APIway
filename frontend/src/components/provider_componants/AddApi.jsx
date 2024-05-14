@@ -1,20 +1,22 @@
-import { useState , useEffect } from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 import React, { useRef } from "react";
-import ManipulateCat from "../../hooks/CategoryHook";
-import APIAjout from "../../hooks/APIHook2";
+import ManipulateCat from "../../hooks/CategoryHook.jsx";
+import APIAjout from "../../hooks/APIHook2.jsx";
 import $ from "jquery";
 import "datatables.net";
 import AddEndpointForm from "./CreateEndpointForm.jsx";
+import TextEditor from "./CommunComponants/textEditor.jsx";
 import AddGroupForm from "./CreateGroupEndpoint.jsx";
 import EndpointTable from "./CommunComponants/endpointable.jsx";
 import Monetizing from "./Monetize.jsx";
-import PlansAjout from "../../hooks/MonetizationHook";
+import PlansAjout from "../../hooks/MonetizationHook.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AddAPIPage = ({}) => {
+const AddAPIPage = () => {
   $.noConflict();
-
+  const provider_id = 1;
   /**************From hooks****************************/
   const { categories } = ManipulateCat();
   const { addNewAPI } = APIAjout();
@@ -40,11 +42,11 @@ const AddAPIPage = ({}) => {
   const tableRef2 = useRef(null);
   const [isNewCategory, setIsNewCategory] = useState(false);
   const [newCategory, setNewCategory] = useState("");
-
   const [formData, setFormData] = useState({
     apiName: "",
     description: "",
     termOfUse: "",
+    providerId: provider_id,
     categoryId: "",
     visibility: false,
     category: "",
@@ -52,7 +54,12 @@ const AddAPIPage = ({}) => {
     /*    baseURLs: [""], */
     logo: null,
   });
-
+  /*  useEffect(() => {
+    if (tableRef.current) {
+      $("#example").DataTable();
+    }
+  }, [tableRef]);
+ */
 
   const handleDeleteEndpoint = (endpointId) => {
     const updatedEndpoints = [...endpoints];
@@ -88,6 +95,11 @@ const AddAPIPage = ({}) => {
     );
   };
 
+  const handleSubmitForm = (formData) => {
+    // Handle form submission here
+    console.log("Form data:", formData);
+    setShowForm(false); // Close the form after submission
+  };
 
   const handleFilterClick = (filterId) => {
     setActiveFilter(filterId);
@@ -239,7 +251,6 @@ const AddAPIPage = ({}) => {
     // If all required data is present, proceed with submission logic
     //alert(formData.apiName);
     addNewAPI(formData, functionalities, baseURLs, endpoints, Models);
-  
   };
   
   const handleRemoveEndpointFromGroup = (endpointId) => {
@@ -351,10 +362,9 @@ const AddAPIPage = ({}) => {
   }, []);
  */
   return (
-<>
+    <>
       <div className="wrapper">
         <div className="page clearfix">
-        
           <section className="page-title">
             <div className="tf-container">
               <div className="row">
@@ -362,10 +372,13 @@ const AddAPIPage = ({}) => {
               </div>
             </div>
           </section>
-          <div className="row tf-container">
-            <div className="col-md-12">
+          <div class="row tf-container">
+            <div class="col-md-12">
+              <h4 className="page-title-heading" style={{ marginBottom: "5%" }}>
+                Add New API
+              </h4>
 
-              <div className="top-menu">
+              <div class="top-menu">
                 <ul className="filter-menu">
                   <li
                     className={
@@ -440,7 +453,7 @@ const AddAPIPage = ({}) => {
                         <div>
                           <fieldset className="message">
                             <label>Choose a category*</label>
-                            <div className="form-select" >
+                            <div class="form-select" >
                               <select
                               
                                 id="categoryId"
@@ -473,7 +486,7 @@ const AddAPIPage = ({}) => {
                                 onChange={handleCheckboxChange}
                               />
                               <span className="btn-checkbox"></span>
-                              <p className="sub" style={{marginTop:"3%"}} >Your Category doesn't exist above ?</p>
+                              <p class="sub" style={{marginTop:"3%"}} >Your Category doesn't exist above ?</p>
                             </span>
                   
                           </label>
@@ -488,14 +501,14 @@ const AddAPIPage = ({}) => {
                             </div>
                           )}
                         </div>
-                        <fieldset className="message">
+                        <fieldset class="message">
                           <label>Enter a description*</label>
                           <textarea
                             id="description"
                             name="message"
                             rows="4"
                             placeholder="Description"
-                            tabIndex="4"
+                            tabindex="4"
                             aria-required="true"
                             required="required"
                             onChange={handleChange}
@@ -532,10 +545,7 @@ const AddAPIPage = ({}) => {
                             </li>
                           </ul>
                         </fieldset>
-                        <h1 className="title">Additional Information</h1>
-                        <p className="sub">
-                          They All Serve The Same Purpose, But Each One Takes.
-                        </p>
+                       
 
                         <fieldset>
                           <label>Terms of Use</label>
@@ -552,7 +562,7 @@ const AddAPIPage = ({}) => {
                             <div className="content-inner active">
                               <div className="tab-create-item">
                                 <h6 className="title">
-                                  Drop file to upload or attach it (optional)
+                                  Drop file to upload or attach it 
                                 </h6>
                                 <p className="sub">
                                   But Each One Takes A Different Approach And
@@ -577,7 +587,7 @@ const AddAPIPage = ({}) => {
                                   </p>
                                 </div>
                                 <div className="list">
-                                  <div className="widget widget-category sc-product style2">
+                                  <div class="widget widget-category sc-product style2">
                                     <div>
                                       
                                           <label  className="widget-title small-title">Website</label>
@@ -617,9 +627,9 @@ const AddAPIPage = ({}) => {
                                           />
                                         </fieldset>
                                       ))}
-                                        <div className="bottom-style2">
-                                        <div className="product-button">
-                                            <a onClick={handleAddURL} className="tf-button">  Add URL</a>
+                                        <div class="bottom-style2">
+                                        <div class="product-button">
+                                            <a onClick={handleAddURL} class="tf-button">  Add URL</a>
                                         </div>
                                 </div>
                                        
@@ -650,7 +660,7 @@ const AddAPIPage = ({}) => {
                                               width="30"
                                               height="30"
                                               fill="currentColor"
-                                              className="bi bi-lock-fill"
+                                              class="bi bi-lock-fill"
                                               viewBox="0 0 16 16"
                                             >
                                               <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2" />
@@ -670,14 +680,14 @@ const AddAPIPage = ({}) => {
                                             </p>
                                           </div>
 
-                                          <div className="button-toggle mt0">
+                                          <div class="button-toggle mt0">
                                             <input
                                               type="checkbox"
                                               id="switch1"
                                               onChange={handleChange}
                                               disabled={!termesAgreed}
                                             />
-                                            <label htmlFor="switch1">
+                                            <label for="switch1">
                                               {" "}
                                               {formData.visibility
                                                 ? "Make API Private"
@@ -686,8 +696,8 @@ const AddAPIPage = ({}) => {
                                           </div>
                                         </div>{" "}
                                         {!formData.visibility && (
-                                          <label className="checkbox-item">
-                                            <span className="custom-checkbox">
+                                          <label class="checkbox-item">
+                                            <span class="custom-checkbox">
                                               <input
                                                 type="checkbox"
                                                 checked={termesAgreed}
@@ -699,7 +709,7 @@ const AddAPIPage = ({}) => {
                                                   //alert(termesAgreed);
                                                 }}
                                               />
-                                              <span className="btn-checkbox"></span>
+                                              <span class="btn-checkbox"></span>
                                             </span>
                                             <span style={{ fontSize: "17px" }}>
                                               I confirm that I own or have
@@ -722,8 +732,8 @@ const AddAPIPage = ({}) => {
                  
                        
                     
-                    <div className="product-button">
-                        <button type="submit" className="tf-button">Submit</button>
+                    <div class="product-button">
+                        <button type="submit" class="tf-button">Submit</button>
                         </div>
                       </form>
                     </div>
@@ -743,11 +753,11 @@ const AddAPIPage = ({}) => {
                         Changes made to the endpoints will be reflected in the
                         Hub. Add and define your API endpoints.
                       </p>
-                      <div className="row">
+                      <div class="row">
                         <div className="col-xl-12 col-lg-12 col-md-12">
-                        
-                            <div className="banner-collection-inner">
-                              <div className="button-top">
+                          
+                          <div class="banner-collection-inner">
+                              <div class="button-top" style={{marginBottom: "200px"}}>
                                 <a
                                   href="#"
                                   className="btn-wishlish"
@@ -759,20 +769,20 @@ const AddAPIPage = ({}) => {
 
                                 <a
                                   href="#"
-                                  className="btn-wishlish"
+                                  class="btn-wishlish"
                                   onClick={handleCreateGroup}
                                 >
-                                  <i className="far fa-plus"></i> Create Group
+                                  <i class="far fa-plus"></i> Create Group
                                 </a>
                               </div>
-                            </div>
+                              
                             {showForm && (
                               <AddEndpointForm onSave={handleAddEndpoints} />
                             )}
                             {showGroupForm && (
                               <AddGroupForm onSave={handleAddGroup} />
                             )}
-                      
+                          </div>
 
                           <div
                             id="endpoints-section"
@@ -804,13 +814,13 @@ const AddAPIPage = ({}) => {
                       }}
                     >
                       <h3>Documentation</h3>
-                      <fieldset className="message">
+                      <fieldset class="message">
                         <textarea
                           id="message"
                           name="message"
                           rows="4"
                           placeholder="documentation"
-                          tabIndex="4"
+                          tabindex="4"
                           aria-required="true"
                           required=""
                         ></textarea>
@@ -824,7 +834,7 @@ const AddAPIPage = ({}) => {
                     display:
                       activeFilter === "#monetize-section" ? "block" : "none",
                   }}
-                  className="tf-section tf-create-and-sell"
+                  class="tf-section tf-create-and-sell"
                 >
                   <Monetizing Models={Models} setModels={setModels} />
               
@@ -846,8 +856,8 @@ const AddAPIPage = ({}) => {
                         <a href="#" className="heart-icon"></a>
                       </div>
                     </div>
-                    <div className="features">
-                      <div className="product-media">
+                    <div class="features">
+                      <div class="product-media">
                         {formData.logo && (
                           <div className="avatar">
                             <img
@@ -858,10 +868,10 @@ const AddAPIPage = ({}) => {
                         )}{" "}
                       </div>
 
-                      <div className="rain-drop1">
+                      <div class="rain-drop1">
                         <img src="/assets/images/icon/rain1.svg" alt="images" />
                       </div>
-                      <div className="rain-drop2">
+                      <div class="rain-drop2">
                         <img src="/assets/images/icon/rain2.svg" alt="images" />
                       </div>
                     </div>
@@ -914,18 +924,8 @@ const AddAPIPage = ({}) => {
             </div>
           </section>
         </div>
- 
-        <div
-          className="modal fade popup"
-          id="popup_bid"
-          tabIndex="-1"
-          aria-modal="true"
-          role="dialog"
-        >
-     
-        </div>
       </div>
-    </>
+  </>
   );
 };
 
