@@ -35,7 +35,7 @@ export default function Forum({ forum_id }) {
   }, [forum_id]);
 
   const handleNewDiscussion = () => {
-    if (authState.isAuth === "true") {
+    if (authState.isAuth ) {
       const thread = {
         content: message,
         forum: forum_id,
@@ -75,7 +75,7 @@ export default function Forum({ forum_id }) {
             </a>
           </div>
           <div className="product-button">
-          {authState.isAuth  === "true" ? (
+          {authState.isAuth ? (
               <Link to={'/tickets/new'} className="tf-button">
                 <span className="icon-btn-product"></span>New ticket
               </Link>
@@ -114,7 +114,7 @@ export default function Forum({ forum_id }) {
                 onChange={(e) => setMessage(e.target.value)}
               />
               <br />
-              {authState.isAuth  === "true" ? (
+              {authState.isAuth  ? (
                 <a
                   onClick={handleNewDiscussion}
                   className="button-popup"

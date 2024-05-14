@@ -33,11 +33,11 @@ export default function SignUpPage() {
         };
         console.log(newUser);
         signUp(newUser);
-        if (authState.isAuth  === "true" && authState.isConsommateur  === "true") {
+        if (authState.isAuth   && authState.isConsommateur) {
             navigate('/');
             return;
         }
-        if (authState.isAuth === "true" && authState.isFournisseur === "true" ) {
+        if (authState.isAuth  && authState.isFournisseur ) {
             navigate('/provider_home');
             return;
         }
@@ -63,12 +63,12 @@ export default function SignUpPage() {
                                 </div>
                                 <div className="col-xl-6 col-lg-9 col-md-12">
                                     <form onSubmit={handleFormSubmit}>
-                                        <div className='add-nft-inner'>
+                                    <div className='add-nft-inner'>
                                             <h6 className="title">Choose Role</h6>
                                             <p className="sub">Connect to APIway as provider to create APIs or as Consumer to use APIs</p>
                                             <ul className="blockchain-button">
-                                                <li><a href="#" onClick={() => setUserType('fournisseur')}><img src="assets/images/svg/torus.svg" alt="Image" />Fournisseur</a></li>
-                                                <li><a href="#" onClick={() => setUserType('consommateur')}><img src="assets/images/svg/coinbase.svg" alt="Image" />Consommateur</a></li>
+                                                <li><label><input type="radio" name="userType" value="fournisseur" onChange={() => setUserType('fournisseur')} required /> Provider</label></li>
+                                                <li><label><input type="radio" name="userType" value="consommateur" onChange={() => setUserType('consommateur')} required /> Consumer</label></li>
                                             </ul>
                                         </div>
                                         <fieldset><input value={first_name} onChange={(e) => setFirstName(e.target.value)} id="first_name" name="first_name" tabIndex="1" aria-required="true" required type="text" placeholder="First name" /></fieldset>

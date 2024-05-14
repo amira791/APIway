@@ -1769,7 +1769,6 @@
 
 .tf-login {
   padding: 27px 0 80px 0;
-  margin-top: 100px;
 }
 .tf-login .tf-heading {
   margin-bottom: 40px;
@@ -2000,10 +1999,10 @@
   height: 120px;
   margin-bottom: 39px;
 }
- .form-select {
+.tf-contact .comment-form .form-select {
   position: relative;
 }
- .form-select i {
+.tf-contact .comment-form .form-select i {
   position: absolute;
   top: 20px;
   right: 23px;
@@ -2372,7 +2371,6 @@
   padding: 24px 0 40px;
 }
 .tf-baner-live-auction.style-2 {
-  margin-top: 100px;
   padding: 27px 0 40px;
 }
 .tf-baner-live-auction.style-2 .banner-liver-auction-wrap .image .img1 {
@@ -2559,7 +2557,7 @@
 /* Item Details 
 --------------------------------------------------*/
 .tf-item-detail {
-  padding: 0 5%;
+  padding: 38px 0 80px;
 }
 
 .tf-item-detail-inner {
@@ -2583,7 +2581,7 @@
   display: -ms-flexbox;
   display: -webkit-flex;
   align-items: center;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   margin-bottom: 18px;
 }
 .tf-item-detail-inner .content .content-top .author {
@@ -2593,8 +2591,7 @@
   display: -ms-flexbox;
   display: -webkit-flex;
   align-items: center;
-  
-/*   justify-content: space-between; */
+  justify-content: space-between;
 }
 .tf-item-detail-inner .content .content-top .author img {
   border-radius: 50%;
@@ -2831,29 +2828,6 @@
   color: var(--primary-color5);
 }
 .tf-tab .content-tab .content-inner {
-}
- form .search-form2 {
-  position: relative;
-  flex-grow: 1; 
-
-}
- form .search-form2 input {
-border-radius: 10rem;
-  color: var(--primary-color8);
-  font-size: 16px;
-  line-height: 24px;
-}
- form .search-form2 input::placeholder {
-  font-size: 16px;
-  color: var(--primary-color8);
-}
- form .search-form2 .btn-search {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--primary-color49);
-  font-size: 21px;
 }
  form .search-form2 {
   position: relative;
@@ -3183,7 +3157,7 @@ border-radius: 10rem;
 }
 
 .banner-collection-inner {
-
+  position: relative;
   margin-bottom: 63px;
 }
 .banner-collection-inner .img-bg {
@@ -3414,10 +3388,8 @@ border-radius: 10rem;
   display: none;
 }
 .add-nft-inner .drag-upload {
-  justify-content: center;
-  align-items: center;
   text-align: center;
-  padding: 10px 0 20px;
+  padding: 94px 0 80px;
   background: var(--primary-color22);
   border-radius: 12px;
   margin-bottom: 34px;
@@ -3435,7 +3407,6 @@ border-radius: 10rem;
   z-index: 2;
 }
 .add-nft-inner .drag-upload img {
-margin-left: 45%;
   margin-bottom: 32px;
 }
 .add-nft-inner .drag-upload .title {
@@ -3488,26 +3459,6 @@ margin-left: 45%;
 }
 .add-nft-inner .propertise .propertise-list li {
   margin-right: 6px;
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 20px;
-  color: var(--primary-color7);
-  background-color: var(--primary-color22);
-  border: 1px solid var(--primary-color36);
-  border-radius: 18px;
-  padding: 8px 17px;
-  display: inline-block;
-}
-.add-nft-inner .propertise .propertise-list li input {
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 20px;
-  color: var(--primary-color7);
-  background-color: var(--primary-color22);
-  border:none;
-  border-radius: 18px;
-  padding: 8px 17px;
-  display: inline-block;
 }
 .add-nft-inner .propertise .propertise-list li a {
   font-weight: 700;
@@ -4427,10 +4378,10 @@ margin-left: 45%;
   width: 16.6%;
 }
 .dashboard-content.inventory .inner-content .table-ranking .content-ranking .col-rankingg:nth-child(3) {
-  width: 30%;
+  width: 35%;
 }
 .dashboard-content.inventory .inner-content .table-ranking .content-ranking .col-rankingg:nth-child(4) {
-  width: 17.2%;
+  width: 17.5%;
 }
 .dashboard-content.inventory .inner-content .table-ranking .content-ranking .col-rankingg:nth-child(5) {
   width: 14%;
@@ -6350,12 +6301,12 @@ margin-left: 45%;
   width: 37%;
   padding-top: 59px;
 }
-.tf-slider-item.style-6 .content-inner .title {
+.tf-slider-item.style-6 .content-inner .heading {
   font-size: 80px;
   line-height: 96px;
   max-width: 600px;
 }
-.tf-slider-item.style-6 .content-inner .title span {
+.tf-slider-item.style-6 .content-inner .heading span {
   background: linear-gradient(to right, rgb(93, 53, 255) 0%, rgb(24, 136, 239) 50%, rgb(247, 56, 251) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -6532,7 +6483,7 @@ margin-left: 45%;
 .tf-slider .swiper-slide .sub-heading {
   transform: translateY(300px);
 }
-.tf-slider .swiper-slide-active .heading,.tf-slider .swiper-slide-active .title, .tf-slider .swiper-slide-active .sub-heading, .tf-slider .swiper-slide-active .btn-slider, .tf-slider .swiper-slide-active form {
+.tf-slider .swiper-slide-active .heading, .tf-slider .swiper-slide-active .sub-heading, .tf-slider .swiper-slide-active .btn-slider, .tf-slider .swiper-slide-active form {
   opacity: 1;
   transform: translateY(0);
   transition-delay: 300ms;

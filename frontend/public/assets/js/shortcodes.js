@@ -291,7 +291,7 @@
     
     var tfFixedSidebar = function () {
         var $window = $(window);  
-        if ($(".sidebar-explore").length) { 
+        if ($(".sidebar-explore").length) { 
             var $sidebar = $(".sidebar-explore"); 
             var $sidebarHeight = $sidebar.innerHeight();   
             var $footerOffsetTop = $(".footer").offset().top; 
@@ -311,7 +311,7 @@
     };
     var tfFixedDashboard = function () {
         var $window = $(window);  
-        if ($(".dashboard-user").length) { 
+        if ($(".dashboard-user").length) { 
             var $dashboard = $(".dashboard-user"); 
             var $dashboardHeight = $dashboard.innerHeight();   
             var $footerOffsetTop = $(".footer").offset().top; 
@@ -338,25 +338,25 @@
    
 
     var calc = function(element){
-        var w               = element.width(),
-            initial_width   = element.data('initial-width'),
-            ratio           = element.data('ratio'),
-            padding         = 15;
+        var w 				= element.width(),
+            initial_width 	= element.data('initial-width'),
+            ratio 			= element.data('ratio'),
+            padding			= 15;
             padding *= 2;
-        var width           = ((w-padding)/2 > initial_width) ? initial_width : (w-padding) / 2,
-            height          = width*ratio + padding,
-            ul              = element.find('ul'),
-            children        = ul.children('li');
+        var width 			= ((w-padding)/2 > initial_width) ? initial_width : (w-padding) / 2,
+            height			= width*ratio + padding,
+            ul				= element.find('ul'),
+            children		= ul.children('li');
 
         ul.height(height + 'px');
         children.css({width: width + 'px', height: (height) + 'px'});
-        var current_left    = w/2 - width/2,
-            next1_left      = current_left + width / 3.5,
-            next2_left      = next1_left + width / 3.5,
-            next3_left      = next2_left + width / 3.5,
-            prev1_left      = current_left - width / 3.5,
-            prev2_left      = prev1_left - width / 3.5,
-            prev3_left      = prev1_left - width / 3.5;
+        var current_left	= w/2 - width/2,
+            next1_left		= current_left + width / 3.5,
+            next2_left		= next1_left + width / 3.5,
+            next3_left		= next2_left + width / 3.5,
+            prev1_left		= current_left - width / 3.5,
+            prev2_left		= prev1_left - width / 3.5,
+            prev3_left		= prev1_left - width / 3.5;
         children.css({left: '50%',transform: 'scale(0)'});
         ul.find('.current').css({left: current_left + 'px',top: 0,transform: ' rotate(0)'});
         ul.find('.next1').css({left: next1_left + 'px',top: '60px',transform: ' rotate(20deg)'});
@@ -384,11 +384,11 @@
     }
 
     var change_slide = function(index, element){
-        var ul              = element.find('ul'),
-            children        = ul.children('li'),
-            length          = children.length;
-            index           = (index + length) % length;
-        var el              = children.eq(index-1);
+        var ul 				= element.find('ul'),
+            children 		= ul.children('li'),
+            length			= children.length;
+            index			= (index + length) % length;
+        var el 				= children.eq(index-1);
 
         if(!el.hasClass('current')){
             children.removeClass('current next1  prev1  next2 prev2');
@@ -408,11 +408,11 @@
     }
 
     var start_autoplay = function(ul,element){
-        var timeout         = 6000;
-        var time            = null;
+        var timeout 		= 6000;
+        var time 			= null;
         clearInterval(time);
         time = setInterval(function(){
-            var index       = ul.find('.current').index() + 2;
+            var index 		= ul.find('.current').index() + 2;
             change_slide(index,element);
         }, timeout);
     } 
@@ -421,18 +421,18 @@
         var slider = $('.slider-card-img');
         if(slider.length){
             slider.each(function(){
-                var element         = $(this),
-                    ul              = element.find('ul'),
-                    children        = ul.children('li'),
-                    length          = children.length;
+                var element 		= $(this),
+                    ul				= element.find('ul'),
+                    children		= ul.children('li'),
+                    length			= children.length;
 
                 if(length<3){return false;}
 
                 change_slide(1,element);
 
                 children.on('click',function(){
-                    var el          = $(this);
-                    var index       = el.index() + 1;
+                    var el 			= $(this);
+                    var index		= el.index() + 1;
                     change_slide(index,element);
                 });
                 start_autoplay(ul,element);
@@ -469,3 +469,5 @@
     });
 
 })(jQuery);
+
+

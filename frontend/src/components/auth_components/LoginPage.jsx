@@ -5,6 +5,7 @@ import Footer from '../global_components/footer';
 import useAuth from '../../hooks/useAuth';
 import { useAuthContext } from '../../context/authContext';
 
+
 export default function LoginPage() {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
@@ -30,6 +31,7 @@ export default function LoginPage() {
   
         }else if (authState.isAuth && authState.isFournisseur) {
             console.log("Provider is logged in");
+            localStorage.setItem('load',true)
             navigate('/provider_home');
       
         }
@@ -44,7 +46,9 @@ export default function LoginPage() {
             <div id="wrapper" className="wrapper-style">
                 <div id="page" className="clearfix">
                     <Navbar />
-                    <section className="tf-login">
+                    <br />
+                    <br />
+                    <section className="tf-login" >
                         <div className="tf-container">
                             <div className="row justify-content-center">
                                 <div className="col-md-12">

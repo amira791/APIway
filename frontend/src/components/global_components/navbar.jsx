@@ -23,6 +23,7 @@ export default function Navbar() {
 
   return (
     <>
+     <div>
       <header className="header absolute">
         <div className="tf-container">
           <div className="row">
@@ -77,6 +78,7 @@ export default function Navbar() {
           </div>
         </div>
       </header>
+      </div>
     </>
   )
 }
