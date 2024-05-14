@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import APIAjout from "../../hooks/APIHook2";
+import APIAjout from "../../hooks/APIHook2.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -42,7 +42,7 @@ const Monetizing = ({Models ,setModels}) => {
     id: "",
     modelIndex: "",
   
-    ratelimit: "1000",
+    ratelimit: 1000,//changed here
     quotalimit: "",
     price: "",
     features: "",
@@ -60,18 +60,29 @@ const Monetizing = ({Models ,setModels}) => {
   const addModel = () => {
     if (!Model.Name || !Model.Description) {
       toast.error("Please fill in all fields before adding the model.");
+      document.getElementById("model-name").value = "";
+      document.getElementById("model-description").value = "";
+     
       return;
     }
+   /*   if (!changedPeriod) {
+      handleFilterClick(filteredPeriods[0]);
+     // handleModelChange("Period", activeFilter);
+    }  */
   //  //alert(activeFilter);
     handleModelChange("Period", activeFilter);
     setModels((prevModels) => [...prevModels, Model]);
    ////alert(filteredPeriods[0]);
- setActiveFilter(filteredPeriods[0]);
+// 
     setModel({ Name: "", Description: "", Period: activeFilter, plans: [] });
     document.getElementById("model-name").value = "";
     document.getElementById("model-description").value = "";
-    setchangedPeriod(false);
+  //  setchangedPeriod(true);
     console.log(Models);
+    if (!Model.Name || !Model.Description) {
+      setActiveFilter(filteredPeriods[0]);
+    }
+    setchangedPeriod(false);
   };
   const handlePlanChange = (key, value) => {
     setNewPlan((prevPlan) => ({ ...prevPlan, [key]: value }));
@@ -84,10 +95,16 @@ const Monetizing = ({Models ,setModels}) => {
       !editedPlan.Name ||
       !editedPlan.features ||
       !editedPlan.price ||
-      !editedPlan.quotalimit ||
-      !editedPlan.ratelimit
+      !editedPlan.quotalimit 
     ) {
       toast.error("Please fill in all fields before editing the plan.");
+      const rateLimitInput = document.getElementById("rate-limit");
+      if (rateLimitInput) {
+        document.getElementById("rate-limit").value = "";
+      }
+      document.getElementById("quota-limit").value = "";
+      document.getElementById("sub-price").value = "";
+      document.getElementById("features").value = "";
       return;
     }
     const model = Models[indexModel];
@@ -138,13 +155,17 @@ const Monetizing = ({Models ,setModels}) => {
       !newPlan.price ||
       !newPlan.quotalimit
     ) {
-      const rateLimitInput = document.getElementById("rate-limit");
-      if (rateLimitInput) {
-        if (!newPlan.ratelimit) {
-          toast.error("Please fill in all fields before adding the plan.");
-          return;
-        }
-      }
+      setNewPlan({
+        Name: "",
+        id: "",
+        ratelimit: "",
+        quotalimit: "",
+        price: "",
+        features: "",
+      });
+      document.getElementById("quota-limit").value = "";
+      document.getElementById("sub-price").value = "";
+      document.getElementById("features").value = "";
       toast.error("Please fill in all fields before adding the plan.");
       return;
     }
@@ -165,7 +186,9 @@ const Monetizing = ({Models ,setModels}) => {
       features: "",
     });
   
-    document.getElementById("rate-limit").value = "";
+    if (document.getElementById("rate-limit")) {
+      document.getElementById("rate-limit").value = "";
+    }
     document.getElementById("quota-limit").value = "";
     document.getElementById("sub-price").value = "";
     document.getElementById("features").value = "";
@@ -191,7 +214,9 @@ const Monetizing = ({Models ,setModels}) => {
         features: "",
       });
       
-      document.getElementById("rate-limit").value = "";
+      if ( document.getElementById("rate-limit")) {
+        document.getElementById("rate-limit").value = "";
+      }
       document.getElementById("quota-limit").value = "";
       document.getElementById("sub-price").value = "";
       document.getElementById("features").value = "";
@@ -206,11 +231,15 @@ const Monetizing = ({Models ,setModels}) => {
       // Perform other actions that rely on the updated state
     });
     console.log("the modiffiedblan is");
-    console.log(modifiedPlan);
-    setEditedPlan(modifiedPlan);
-
+  ///  console.log(modifiedPlan);
+    setEditedPlan(modifiedPlan,() => {
+      console.log("ModificationOn:", editedPlan); // This will log the updated value
+      // Perform other actions that rely on the updated state
+    });
+ 
     console.log(editedPlan);
   };
+  
   const checkExistence = (index, planName, type, index2) => {
     // Find the model with the given index
     const model = Models[index];
@@ -233,7 +262,7 @@ console.log(Models[index].Period);
             href="#"
             data-toggle="modal"
             data-target="#tarif_pop"
-            className="tf-button"
+            class="tf-button"
             style={{ textDecorationLine: "underline" }}
             onClick={() => {
               activateModification(plan);
@@ -251,9 +280,9 @@ console.log(Models[index].Period);
         );
       } else {
         return (
-          <div className="col-ranking product-button" key={index2}>
+          <div class="col-ranking product-button" key={index2}>
             <a
-              className="tf-button"
+              class="tf-button"
               href="#"
               data-toggle="modal"
               data-target="#tarif_pop"
@@ -270,8 +299,8 @@ console.log(Models[index].Period);
               }}
             >
               <span>
-                <div className="img">
-                  <i className="fal fa-plus"></i>
+                <div class="img">
+                  <i class="fal fa-plus"></i>
                 </div>
               </span>
             </a>
@@ -280,9 +309,9 @@ console.log(Models[index].Period);
       }
     } else {
       return (
-        <div className="col-ranking product-button" key={index2}>
+        <div class="col-ranking product-button" key={index2}>
           <a
-            className="tf-button"
+            class="tf-button"
             href="#"
             data-toggle="modal"
             data-target="#tarif_pop"
@@ -299,8 +328,8 @@ console.log(Models[index].Period);
             }}
           >
             <span>
-              <div className="img">
-                <i className="fal fa-plus"></i>
+              <div class="img">
+                <i class="fal fa-plus"></i>
               </div>
             </span>
           </a>
@@ -314,7 +343,8 @@ console.log(Models[index].Period);
     setSelectedPlan(plan);
   };
   const handleFilterClick = (filterId) => {
-    setchangedPeriod(true);
+    console.log("the current period is", filterId);
+   // setchangedPeriod(true);
     setActiveFilter(filterId);
     handleModelChange("Period", filterId);
   };
@@ -344,6 +374,11 @@ console.log(Models[index].Period);
     console.log("editedPlan:", editedPlan); // This will log the updated value
     // Perform other actions that rely on the updated state
   }, [editedPlan]);
+  useEffect(() => {
+    //setActiveFilter(filteredPeriods[0]);
+    console.log("filtered :", activeFilter); // This will log the updated value
+    // Perform other actions that rely on the updated state
+  }, [filteredPeriods]);
 
   useEffect(() => {
     var filteredPeriods = availablePeriods.filter(
@@ -356,7 +391,10 @@ console.log(Models[index].Period);
     
     }, [Models]);
  
-
+    useEffect(() => {
+      console.log(editedPlan);   
+      }, [editedPlan]);
+   
   return (
     <div className="tf-container">
       <div className="row">
@@ -368,32 +406,32 @@ console.log(Models[index].Period);
       </div>
 
       <div
-        className="modal fade popup"
+        class="modal fade popup"
         id="popup_bid"
-        tabIndex="-1"
+        tabindex="-1"
         aria-modal="true"
         role="dialog"
       >
-        <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
-            <div className="modal-body space-y-20 pd-40">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body space-y-20 pd-40">
               <h3>Add a new plans model</h3>
 
-              <p className="label-1">Name:</p>
+              <p class="label-1">Name:</p>
               <input
                 type="text"
                 id="model-name"
                 placeholder="model name"
                 onChange={(e) => handleModelChange("Name", e.target.value)}
               />
-              <p className="label-1">Description:</p>
-              <fieldset className="message">
+              <p class="label-1">Description:</p>
+              <fieldset class="message">
                 <textarea
                   id="model-description"
                   name="message"
                   rows="4"
                   placeholder="Model's description"
-                  tabIndex="4"
+                  tabindex="4"
                   aria-required="true"
                   required=""
                   onChange={(e) =>
@@ -401,17 +439,17 @@ console.log(Models[index].Period);
                   }
                 ></textarea>
               </fieldset>
-              <p className="label-1"><i className="fa-solid fa-hourglass-half"></i> Period:</p>
-              <div className="row tf-container">
-                <div className="col-md-12">
-                  <div className="top-menu">
+              <p class="label-1"><i class="fa-solid fa-hourglass-half"></i> Period:</p>
+              <div class="row tf-container">
+                <div class="col-md-12">
+                  <div class="top-menu">
                     <ul className="filter-menu">
                       {filteredPeriods.map((period) => (
                 <li
                   key={period}
-                  className={activeFilter === period ? "active" : ""}
+                  /* className={activeFilter === period ? "active" : ""} */
                 >
-                  <a href="#" onClick={() =>{setchangedPeriod(true); handleFilterClick(period)}}>
+                  <a href="#" onClick={() =>{/* setchangedPeriod(true); */ handleFilterClick(period)}}>
                     {period}
                   </a>
                 </li>
@@ -423,31 +461,31 @@ console.log(Models[index].Period);
            <div  style={{display:"flex",alignItems:"center",justifyContent:"flex-end",gap:"15px" }}>
               <a
                 href="#"
-                className="button-popup"
+                class="button-popup"
                 data-toggle="modal"
                 data-target="#popup_bid_success"
                 data-dismiss="modal"
 
                 style={{background:"green",display:"flex",justifyContent:"space-around"}}
                 onClick={() => {
-                 if (changedPeriod) {  handleModelChange("Period", filteredPeriods[0])};
+                // if (changedPeriod) {  handleModelChange("Period", filteredPeriods[0])};
     
                   addModel();
                 }}
               >
 
-               <i className="fa-solid fa-check"></i> Confirm
+               <i class="fa-solid fa-check"></i> Confirm
               </a>
               <a
                 href="#"
-                className="button-popup"
+                class="button-popup"
                 data-toggle="modal"
                 data-target="#popup_bid_success"
                 data-dismiss="modal"
                 aria-label="Close"
                 style={{background:"red",display:"flex",justifyContent:"space-around"}}
               >
-              <i className="fa-solid fa-xmark"></i>
+              <i class="fa-solid fa-xmark"></i>
                 Cancel
               </a></div>
             </div>
@@ -455,11 +493,11 @@ console.log(Models[index].Period);
         </div>
       </div>
  <ToastContainer />
-      <section className="tf-ranking tf-filter">
-        <div className="tf-container">
-          <div className="table-ranking">
+      <section class="tf-ranking tf-filter">
+        <div class="tf-container">
+          <div class="table-ranking">
             <div
-              className="title-ranking"
+              class="title-ranking"
               style={{
                 display: "flex",
                 justifyContent: "space-evenly",
@@ -467,8 +505,8 @@ console.log(Models[index].Period);
                 marginTop: "3%",
               }}
             >
-              <div className="col-ranking">#</div>
-              <div className="col-ranking">Model's name</div>
+              <div class="col-ranking">#</div>
+              <div class="col-ranking">Model's name</div>
               {tarifTypes.map((plan) => (
                 <div key={plan.id} className=" col-ranking">
                   <h6 className="title">
@@ -478,11 +516,11 @@ console.log(Models[index].Period);
               ))}
             </div>
           </div>
-          <div className="table-ranking tf-filter-container">
+          <div class="table-ranking tf-filter-container">
             {Models.map((model, index) => (
               <div
                 key={index} // You need to assign a unique key to each mapped element
-                className="content-ranking tf-loadmore 3d anime music"
+                class="content-ranking tf-loadmore 3d anime music"
                 style={{
                   display: "flex",
                   justifyContent: "space-evenly",
@@ -490,8 +528,8 @@ console.log(Models[index].Period);
                   marginTop: "3%",
                 }}
               >
-                <div className="col-ranking">{index + 1}</div>
-                <div className="col-ranking">
+                <div class="col-ranking">{index + 1}</div>
+                <div class="col-ranking">
                 
                   {model.Name}
                 </div>
@@ -506,24 +544,24 @@ console.log(Models[index].Period);
       </section>
 
       <div
-        className="modal fade popup"
+        class="modal fade popup"
         id="tarif_pop"
-        tabIndex="-1"
+        tabindex="-1"
         aria-modal="true"
         role="dialog"
       >
-        <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
-            <div className="modal-body space-y-20 pd-40">
-              
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body space-y-20 pd-40">
+              <h3>
                 <h3>
                   {modificationOn ? "Edit " : "Add a New "}
                   {modificationOn ? editedPlan.Name : newPlan.Name} Plan
                 </h3>
-          
+              </h3>
 
          
-              <p className="label-1">Quota Limit :</p>
+              <p class="label-1">Quota Limit :</p>
               <p></p>
               <div
                 style={{
@@ -535,7 +573,8 @@ console.log(Models[index].Period);
                 <input
                   id="quota-limit"
                   type="number"
-                  defaultValue={modificationOn ? editedPlan.quotalimit : ""}
+                 // defaultValue={}
+                  value={modificationOn ? editedPlan.quotalimit : newPlan.quotalimit}
                   placeholder="Quota limit"
                   onChange={(e) => {
                     modificationOn
@@ -556,12 +595,13 @@ console.log(Models[index].Period);
                 </p>
               </div>
 
-              <p className="label-1">Subscription Price :</p>
+              <p class="label-1">Subscription Price :</p>
               <p></p>
               <input
                 id="sub-price"
                 type="number"
-                defaultValue={modificationOn ? editedPlan.price : ""}
+               // defaultValue={modificationOn ? editedPlan.price : ""}
+                value={modificationOn ? editedPlan.price : newPlan.price}
                 placeholder="Price"
                 onChange={(e) => {
                   handleSubscriptionPriceChange(e);
@@ -621,8 +661,8 @@ console.log(Models[index].Period);
                   <label htmlFor="rate-limit-checkbox">Enable Rate Limit</label>
                 </div>
               )}
-              <p className="label-1">Features:</p>
-              <fieldset className="message">
+              <p class="label-1">Features:</p>
+              <fieldset class="message">
                 <textarea
                   id="features"
                   name="message"
@@ -630,7 +670,7 @@ console.log(Models[index].Period);
                   placeholder="The plan's features"
                   tabIndex="4"
                   aria-required="true"
-                  defaultValue={modificationOn ? editedPlan.features : ""}
+                  value={modificationOn ? editedPlan.features : newPlan.features}
                   required=""
                   onChange={(e) => {
                     modificationOn
@@ -643,7 +683,7 @@ console.log(Models[index].Period);
        
               <a
                 href="#"
-                className="button-popup"
+                class="button-popup"
                 data-toggle="modal"
                 data-target="#tarif_pop_success"
                 data-dismiss="modal"
@@ -654,30 +694,30 @@ console.log(Models[index].Period);
                     : addPlan(newPlan.modelIndex);
                 }}
               >
-              {modificationOn ? <><i className="fa-solid fa-pen"></i></>:<i className="fa-solid fa-check"></i>}
+              {modificationOn ? <><i class="fa-solid fa-pen"></i></>:<i class="fa-solid fa-check"></i>}
                 {modificationOn ? "Edit" : "Confirm"}
               </a>
               <button
                 type="button"
-                className="button-popup"
+                class="button-popup"
                 data-dismiss="modal"
                 aria-label="Close"
                 onClick={() => setModificationOn(false)}
                style={{background:"red",display:"flex",justifyContent:"space-around"}}
               >
-              <i className="fa-solid fa-xmark"></i>
+              <i class="fa-solid fa-xmark"></i>
                 Cancel
               </button>
               {modificationOn && (
                 <button
                   type="button"
-                  className="button-popup"
+                  class="button-popup"
                   data-dismiss="modal"
                   aria-label="Close"
                   style={{backgroundColor:"red"}}
                   onClick={() => deletePlan(editedPlan.modelIndex)}
                 >
-                <i className="fa-solid fa-trash"></i>
+                <i class="fa-solid fa-trash"></i>
                   Delete
                 </button>
               )}
@@ -695,7 +735,7 @@ console.log(Models[index].Period);
         }}
       >
         {/*   <button>Add new plans model</button> */}
-       {!isAddButtonDisabled? <div className="product-button">
+       {!isAddButtonDisabled? <div class="product-button">
          <a
           href="#"
           data-toggle="modal"
@@ -704,7 +744,7 @@ console.log(Models[index].Period);
         
         >
             {" "}
-            <span className="icon-btn-product"><i className="fa-solid fa-file-invoice"></i></span> Add new plans model
+            <span class="icon-btn-product"><i class="fa-solid fa-file-invoice"></i></span> Add new plans model
           </a>
         </div>:""}
       </div>

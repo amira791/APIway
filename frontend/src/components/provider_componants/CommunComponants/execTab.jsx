@@ -57,6 +57,13 @@ const getColorForMethod = (method) => {
   }
 };
 const useStyles = makeStyles({
+  tableHeader: {
+    fontSize: '20px', // Adjust the font size as needed
+    fontWeight: 'bold', // You can adjust other typography styles here
+  },
+  tableCell: {
+    fontSize: '1rem', // Adjust the font size as needed
+  },
   endpointDetails: {
     padding: "20px",
     border: "1px solid #ccc",
@@ -72,9 +79,15 @@ const useStyles = makeStyles({
   text: {
     fontSize: "20px", // Increase font size for text elements
   },
+  insidertext: {
+    fontSize: "15px", // Increase font size for text elements
+  },
+  selecttext: {
+    fontSize: "13px", // Increase font size for text elements
+  },
 });
 
-const Example = ({ endpoints , state}) => {
+const Example = ({ endpoints , state,isSubscribed,navigate}) => {
   const classes = useStyles(); // Initialize the styles
   const [selectedEndpoint, setSelectedEndpoint] = useState(endpoints[0]); // Initialize selected endpoint state
   const [headers, setHeaders] = useState([]);
@@ -222,9 +235,9 @@ const Example = ({ endpoints , state}) => {
     return <div>No endpoint selected</div>;
   }
   return (
-    <Box display="flex" justifyContent="space-between">
+    <Box display="flex" justifyContent="space-between" gap="25px">
       <Box sx={{ flex: 1, maxHeight: 700 }}>
-        <MaterialReactTable table={table} />
+        <MaterialReactTable    table={table} />
       </Box>
 
       <>
@@ -247,7 +260,8 @@ const Example = ({ endpoints , state}) => {
             >
               {selectedEndpoint.method} {selectedEndpoint.path}
             </Typography>
-            {state!="Deprecated"? <Button
+            {state!="Deprecated"?
+             <Button
               variant="contained"
               color="primary"
               style={{
@@ -255,8 +269,9 @@ const Example = ({ endpoints , state}) => {
                 fontSize: "15px", // Increase font size for buttons
                 padding: "10px 20px", // Increase padding for buttons
               }}
+              onClick={navigate}
             >
-              Subscribe{" "}
+             {isSubscribed? "Test":"Subscribe"}
             </Button>:<></>}
           </div>
           <Divider />
@@ -272,9 +287,9 @@ const Example = ({ endpoints , state}) => {
             <Typography variant="h5" sx={{ mt: 2 }}>
               APIway App
             </Typography>
-            <Box sx={{ mt: 1 }}>
+            <Box className={classes.insidertext} sx={{ mt: 1 }}>
               {/* <Typography variant="body1">Select Application:</Typography> */}
-              <select name="" id="" disabled="disabled">
+              <select  name="" id="" disabled="disabled">
                 <option value="">Default Application{" "}</option>
               </select>
               {/* <Select disabled value="default">
@@ -311,9 +326,9 @@ const Example = ({ endpoints , state}) => {
             </Box>
           </div>
           <Divider />
-          <Accordion sx={{ mt: 2 }}>
+          <Accordion  sx={{ mt: 2 }}>
             <AccordionSummary expandIcon={<StepIcon />}>
-              <Typography style={{fontSize:"20px"}}>Header Parameters</Typography>
+              <Typography className={classes.text}>Header Parameters</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <div
@@ -323,13 +338,13 @@ const Example = ({ endpoints , state}) => {
                   justifyContent: "space-between",
                 }}
               >
-                <Typography style={{fontSize:"13px"}} sx={{ mt: 2 }}>
-                  APIway App
+                <Typography variant="h5" sx={{ mt: 2 }}>
+                X-APIway-Key
                 </Typography>
                 <Box sx={{ mt: 1 }}>
                   {/* <Typography variant="body1">Select Application:</Typography> */}
-                  <Select disabled value="default">
-                    <MenuItem value="default" disabled>
+                  <Select className={classes.insidertext} disabled value="default">
+                    <MenuItem  value="default" disabled>
                       Default Application{" "}
                     </MenuItem>
                   </Select>
@@ -344,12 +359,12 @@ const Example = ({ endpoints , state}) => {
                   justifyContent: "space-between",
                 }}
               >
-                <Typography style={{fontSize:"12px"}} sx={{ mt: 2 }}>
-                  Request URL
+                <Typography variant="h5" sx={{ mt: 2 }}>
+                X-APIway-Host
                 </Typography>
                 <Box sx={{ mt: 1 }}>
                   {/* <Typography variant="body1">Select Application:</Typography> */}
-                  <Select disabled value="default">
+                  <Select className={classes.insidertext} disabled value="default">
                     <MenuItem value="default" disabled>
                       {" "}
                       Apiway.com{" "}
@@ -371,7 +386,7 @@ const Example = ({ endpoints , state}) => {
                       {parameter.key}
                     </Typography>
                     <Box sx={{ mt: 1 }}>
-                      <Select disabled value="default">
+                      <Select className={classes.insidertext}   disabled value="default">
                         <MenuItem value="default" disabled>
                           {parameter.example_value}
                         </MenuItem>
@@ -388,12 +403,12 @@ const Example = ({ endpoints , state}) => {
               ))}
             </AccordionDetails>
           </Accordion>
-          <Accordion sx={{ mt: 2 }}>
+          <Accordion  sx={{ mt: 2 }}>
             <AccordionSummary expandIcon={<StepIcon />}>
-              <Typography style={{fontSize:"20px"}}>Required Parameters</Typography>
+              <Typography className={classes.text}>Required Parameters</Typography>
             </AccordionSummary>
             <AccordionDetails>
-            <Typography style={{fontSize:"15px"}}>Query Parameters</Typography>
+            <Typography className={classes.insidertext}>Query Parameters</Typography>
             {queryParams.filter(param => param.required).map((param, index) => (
             <div key={index}>
               <Typography variant="h5" sx={{ mt: 2 }}>
@@ -401,12 +416,12 @@ const Example = ({ endpoints , state}) => {
               </Typography>
               <Box sx={{ mt: 1 }}>
                 <input type="text" defaultValue={param.example_value} />
-                <Typography variant="body1">{param.example_value}</Typography>
+                <Typography variant="body1"> Example values: {param.example_value}</Typography>
               </Box>
             </div>
             ))}
               <Divider />
-              <Typography style={{fontSize:"15px"}}>Endpoint Parameters</Typography>
+              <Typography className={classes.insidertext}>Endpoint Parameters</Typography>
               {endpointParameters.filter(param => param.required).map((param, index) => (
             <div key={index}>
               <Typography variant="h5" sx={{ mt: 2 }}>
@@ -414,19 +429,19 @@ const Example = ({ endpoints , state}) => {
               </Typography>
               <Box sx={{ mt: 1 }}>
                 <input type="text" defaultValue={param.example_value} />
-                <Typography variant="body1">{param.example_value}</Typography>
+                <Typography variant="body1">Example values: {param.example_value}</Typography>
               </Box>
             </div>
           ))}
             
             </AccordionDetails>
           </Accordion>
-          <Accordion sx={{ mt: 2 }}>
+          <Accordion  sx={{ mt: 2 }}>
             <AccordionSummary expandIcon={<StepIcon />}>
-              <Typography style={{fontSize:"20px"}}>Optional Parameters</Typography>
+              <Typography className={classes.text}>Optional Parameters</Typography>
             </AccordionSummary>
             <AccordionDetails>
-            <Typography style={{fontSize:"15px"}}>Query Parameters</Typography>
+            <Typography className={classes.insidertext}>Query Parameters</Typography>
             {queryParams.filter(param => !param.required).map((param, index) => (
             <div key={index}>
               <Typography variant="h5" sx={{ mt: 2 }}>
@@ -434,12 +449,12 @@ const Example = ({ endpoints , state}) => {
               </Typography>
               <Box sx={{ mt: 1 }}>
                 <input type="text" defaultValue={param.example_value} />
-                <Typography variant="body1">{param.example_value}</Typography>
+                <Typography variant="body1">Example values: {param.example_value}</Typography>
               </Box>
             </div>
             ))}
               <Divider />
-              <Typography style={{fontSize:"15px"}}>Endpoint Parameters</Typography>
+              <Typography className={classes.insidertext}>Endpoint Parameters</Typography>
               {endpointParameters.filter(param => !param.required).map((param, index) => (
             <div key={index}>
               <Typography variant="h5" sx={{ mt: 2 }}>
@@ -447,7 +462,7 @@ const Example = ({ endpoints , state}) => {
               </Typography>
               <Box sx={{ mt: 1 }}>
                 <input type="text" defaultValue={param.example_value} />
-                <Typography variant="body1">{param.example_value}</Typography>
+                <Typography variant="body1">Example values: {param.example_value}</Typography>
               </Box>
             </div>
           ))}
@@ -455,21 +470,30 @@ const Example = ({ endpoints , state}) => {
             </AccordionDetails>
           </Accordion>
           {selectedEndpoint.method === "POST" && (
-            <Accordion sx={{ mt: 2 }}>
+            <Accordion  sx={{ mt: 2 }}>
               <AccordionSummary expandIcon={<StepIcon />}>
-                <Typography style={{fontSize:"20px"}}>Request Body</Typography>
+                <Typography className={classes.text}>Request Body</Typography>
               </AccordionSummary>
               <AccordionDetails>
               {endpointBody && (
-  <div>
-    <Typography  style={{fontSize:"15px"}}sx={{ mt: 2 }}>
-      Request Body
-    </Typography>
-    <Box sx={{ mt: 1 }}>
-      <Typography variant="body1">Media Type: {endpointBody.media_type}</Typography>
-      <Typography variant="body1">Payload Name: {endpointBody.payload_name}</Typography>
-      <Typography variant="body1">Description: {endpointBody.payload_description}</Typography>
-      <input type="text" defaultValue={endpointBody.body_example} />
+  <div >
+    <Box sx={{ mt: 1 , lineHeight:"120px"}}>
+      <Typography className={classes.insidertext}>Media Type: {endpointBody.media_type}</Typography>
+      <Typography className={classes.insidertext}>Payload Name: {endpointBody.payload_name}</Typography>
+      <Typography className={classes.insidertext}>Description: {endpointBody.payload_description}</Typography>
+      <fieldset class="message">
+                        <textarea
+                          id="message"
+                          name="message"
+                          rows="4"
+                          placeholder="documentation"
+                          tabindex="4"
+                          defaultValue={endpointBody.body_example}
+                          aria-required="true"
+                          required=""
+                        ></textarea>
+                      </fieldset>
+     
     </Box>
   </div>
 )}
@@ -478,14 +502,14 @@ const Example = ({ endpoints , state}) => {
           )}
         </Box>
         <Box sx={{ flex: 1, padding: "1rem" }}>
-          <Typography variant="h1" style={{fontSize:"20%"}}>{selectedEndpoint.name}</Typography>
+          <Typography variant="h1" className={classes.text}>{selectedEndpoint.name}</Typography>
           <Divider />
-          <div className="tf-tab">
+          <div class="tf-tab">
           <div>
       <ul className="menu-tab">
         <li className={selectedChoice === 'Response Example' ? 'tab-title active' : 'tab-title'}>
           <a href="#" onClick={() => handleChoiceClick('Response Example')}>
-            Response Example
+          <h6>Response Example</h6>  
           </a>
         </li>
         <li className={selectedChoice === 'View Results' ? 'tab-title active' : 'tab-title'}>

@@ -15,13 +15,16 @@ const PricingMenu = ({ allPricingData, onSelect }) => {
     return (
       <div className="top-menu">
         <ul className="filter-menu">
-          {allPricingData.map(({ type }) => (
-            <li key={type} className={activeType === type ? "active" : ""}>
-              <a href="#" onClick={() => handleTypeClick(type)}>
-                {type}
-              </a>
-            </li>
-          ))}
+        {allPricingData
+    .slice()  // Create a shallow copy to avoid mutating the original array
+    .sort((a, b) => a.type.localeCompare(b.type))  // Sort alphabetically based on type
+    .map(({ type }) => (
+      <li key={type} className={activeType === type ? "active" : ""}>
+        <a href="#" onClick={() => handleTypeClick(type)}>
+          {type}
+        </a>
+      </li>
+    ))}
         </ul>
       </div>
     );
@@ -34,26 +37,17 @@ const PricingMenu = ({ allPricingData, onSelect }) => {
       <div className="tarifications">
         {tarifications.map((tarif, index) => (
         
-            <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6 "  key={index}>
-                            <div className="sc-product style2" >
-                                <div className="top" style={{display:"flex",alignContent:"center",justifyContent:"center"}}>
-                                    <a href="item-details.html" className="price" style={{fontSize:"30px",marginBottom:"10%"}}>{tarif.name}</a>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 "  key={index} style={{gap:"3%"}}>
+                            <div class="sc-product style2 pricing" >
+                                <div class="top" style={{display:"flex",alignContent:"center",justifyContent:"center"}}>
+                                    <a href="item-details.html" class="price" style={{fontSize:"30px",marginBottom:"10%"}}>{tarif.name}</a>
                                    
                                 </div>
-                              {/*   <div className="bottom">
-                                    <div className="details-product">
-                                        <div className="author">
-                                            <div className="content">
-                                                <div className="position">Creator</div>
-                                                <div className="name"> <a href="#">Sirena May</a></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
-                                <div className="features">
-                                <div className="price">
-                                             <div className="content">
-                                  <div className="cash" style={{paddingBottom:"6%"}}> The plan's features:  </div>
+                             
+                                <div class="features">
+                                <div class="price">
+                                             <div class="content">
+                                  <div class="cash" style={{paddingBottom:"6%"}}> The plan's features:  </div>
                                     </div>
                                    
                                 </div>
@@ -61,30 +55,30 @@ const PricingMenu = ({ allPricingData, onSelect }) => {
             {tarif.features}
           </ul>
                                 </div>
-                                <div className="bottom-style2" style={{paddingBottom:"6%",fontSize:"25px"}}>
-                                <div className="price">
-                                             <div className="content">
-                                  <div className="cash">Quota Limit: {tarif.quota}/{type}</div>
+                                <div class="bottom-style2" style={{paddingBottom:"6%",fontSize:"25px"}}>
+                                <div class="price">
+                                             <div class="content">
+                                  <div class="cash">Quota Limit: {tarif.quota}/{type}</div>
                                         </div>
                                     </div>
-                                    <div className="price">
-                                             <div className="content">
-                                  <div className="cash">Rate Limit: {tarif.rate}/hour</div>
+                                    <div class="price">
+                                             <div class="content">
+                                  <div class="cash">Rate Limit: {tarif.rate}/hour</div>
                                         </div>
                                     </div>
                                     </div>
-                                <div className="bottom-style2">
-                                    <div className="price">
-                                             <div className="content">
-                                  <div className="cash">Price: {tarif.price} DA</div>
+                                <div class="bottom-style2">
+                                    <div class="price">
+                                             <div class="content">
+                                  <div class="cash">Price: {tarif.price} DA</div>
                                         </div>
                                     </div>
                                    
                                 </div>
-                                <div className="content" style={{marginTop:"4%"}}>
-                                <div className="cash">          
- <div className="product-button">
-                                        <a href="#" data-toggle="modal"  className="tf-button"> Purchase id is {tarif.id}</a>
+                                <div class="content" style={{marginTop:"4%"}}>
+                                <div class="cash">          
+ <div class="product-button">
+                                        <a href="#" data-toggle="modal"  class="tf-button"> Purchase id is {tarif.id}</a>
                                     </div>
                                     </div>
                                      </div>
