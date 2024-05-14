@@ -27,7 +27,7 @@ export default function useAuth() {
         .then((result) => {
             
             dispatch({
-                type: 'SET_AUTH_INFO',
+                type: 'SIGNUP',
                 payload: result
               });
             toast({

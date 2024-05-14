@@ -13,28 +13,39 @@ const initialState = {
   isAdmin: localStorage.getItem('isAdmin') === "true"
 };
 
-// Define the reducer function
 const authReducer = (state, action) => {
   switch (action.type) {
     case 'SET_AUTH_INFO':
-      const { user_type, user_id,user,access , refresh} = action.payload;
+      const { user_type, user_id, user, access, refresh } = action.payload;
       return {
         ...state,
-        isAuth:true,
+        isAuth: true,
         token: access,
         username: user.username,
-        userId : user_id,
+        userId: user_id,
         isFournisseur: user_type === 'fournisseur',
         isConsommateur: user_type === 'consommateur',
         isAdmin: user_type === 'admin'
       };
+    case 'SIGNUP':
+      const { user_type: signUpType, user_id: signUpId, user: signUpUser, access: signUpAccess, refresh: signUpRefresh } = action.payload;
+      return {
+        ...state,
+        isAuth: true,
+        token: signUpAccess,
+        username: signUpUser.username,
+        userId: signUpId,
+        isFournisseur: signUpType === 'fournisseur',
+        isConsommateur: signUpType === 'consommateur',
+        isAdmin: signUpType === 'admin'
+      };
     case 'LOGOUT':
       return {
         ...initialState,
-        isAuth:false,
+        isAuth: false,
         token: null,
         username: null,
-        userId:null,
+        userId: null,
         isFournisseur: false,
         isConsommateur: false,
         isAdmin: false
@@ -43,6 +54,7 @@ const authReducer = (state, action) => {
       return state;
   }
 };
+
 
 // Create a provider component
 export const AuthProvider = ({ children }) => {

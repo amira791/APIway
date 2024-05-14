@@ -30,28 +30,29 @@ def signup(request):
     if serializer.is_valid():
         user = serializer.save()
 
+        user_id = None
         if user_type == 'fournisseur':
-         new = Fournisseur.objects.create(user=user)
-         user_id = new.id  # ID of the created Fournisseur
+            fournisseur = Fournisseur.objects.create(user=user)
+            user_id = fournisseur.id_fournisseur
         elif user_type == 'admin':
-         new = Admin.objects.create(user=user)
-         user_id = new.id  # ID of the created Admin
+            admin = Admin.objects.create(user=user)
+            user_id = admin.id_admin
         elif user_type == 'consommateur':
-         new = Consommateur.objects.create(user=user)
-         user_id = new.id  # ID of the created Consommateur
-    
-    access = AccessToken.for_user(user)
-    serialized_user = UserSerializer(user).data
+            consommateur = Consommateur.objects.create(user=user)
+            user_id = consommateur.id_consommateur
+        
+        access = AccessToken.for_user(user)
+        serialized_user = UserSerializer(user).data
 
-    return Response({
-        'success': 'User created successfully',
-        'access': str(access),
-        'user_type': user_type,
-        'user_id': user_id,
-        'user': serialized_user,
-    }, status=status.HTTP_201_CREATED)
-
+        return Response({
+            'success': 'User created successfully',
+            'access': str(access),
+            'user_type': user_type,
+            'user_id': user_id,
+            'user': serialized_user,
+        }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 @api_view(['POST'])

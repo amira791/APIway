@@ -1,5 +1,5 @@
 import Footer from "../global_components/footer";
-import Navbar from "../global_components/navbar";
+import Navbar from "../provider_componants/CommunComponants/NavBar";
 import AddAPIPage from "../provider_componants/AddApi";
 import ProvAPIList from "../provider_componants/ListProvAPI";
 import React, { useState  , useEffect } from "react";
@@ -26,6 +26,7 @@ const ProviderHomePage = () => {
             <div id="wrapper" className="wrapper-style">
                 <div id="page" className="clearfix">
                     <Navbar />
+<br />
 <br />
 <br />
 <br />

@@ -31,15 +31,18 @@ export default function SignUpPage() {
                 phone: '00000000000',
             },
         };
-        console.log(newUser);
+  
+
         signUp(newUser);
-        if (authState.isAuth   && authState.isConsommateur) {
+        if (authState.isAuth  && authState.isConsommateur ) {
+            console.log("Consumer is logged in");
             navigate('/');
-            return;
-        }
-        if (authState.isAuth  && authState.isFournisseur ) {
+  
+        }else if (authState.isAuth && authState.isFournisseur) {
+            console.log("Provider is logged in");
+            localStorage.setItem('load',true)
             navigate('/provider_home');
-            return;
+      
         }
     };
 
