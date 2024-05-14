@@ -2702,3 +2702,7 @@ header.absolute {
   text-indent: 1.5%;
   line-height:40px;
 }
+.endpoints-btn{
+  padding: 10px;
+  margin: 20px 10px;
+}

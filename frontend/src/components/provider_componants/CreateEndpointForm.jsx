@@ -231,9 +231,9 @@ const AddEndpointForm = ({ onSave }) => {
   return (
     <div className="ant-spin-container">
       <section className="sc-wQkWr kawync">
-        <h5 className="sc-dmlrTW jWdUg title">
-          <span>Add Endpoint</span>
-        </h5>
+        <h4>
+         Add Endpoint
+        </h4>
       </section>
       <section className="description-section">
         <div className="sub-section">
@@ -504,7 +504,7 @@ const AddEndpointForm = ({ onSave }) => {
                     ))
                   )}
                 </select>
-                <button onClick={handleAddNewExample}>Add New Example</button>
+                <button className="endpoints-btn" onClick={handleAddNewExample}>  <i className="far fa-plus"></i> Add New Example</button>
                 {isAddingNewExample && (
                   <div>
                     <input
@@ -538,8 +538,8 @@ const AddEndpointForm = ({ onSave }) => {
                       }
                       placeholder="Response Body"
                     ></textarea>
-                    <button onClick={handleSaveNewExample}>Save</button>
-                    <button onClick={handleCancelAddNewExample}>Cancel</button>
+                    <button className="endpoints-btn" style={{background:"green"}} onClick={handleSaveNewExample}>  <i class="fa-solid fa-check"></i>  Confirm example</button>
+                    <button className="endpoints-btn" onClick={handleCancelAddNewExample}> <i class="fa-solid fa-xmark"></i>  Cancel</button>
                   </div>
                 )}
                 {selectedExampleIndex !== null && (
@@ -581,11 +581,11 @@ const AddEndpointForm = ({ onSave }) => {
                       }
                       placeholder="Response Body"
                     ></textarea>
-                    <button onClick={handleConfirmEditExample}>
+                    <button  className="endpoints-btn" onClick={handleConfirmEditExample}>
                       Confirm Edit
                     </button>
-                    <button onClick={handleDeleteExample}>Delete</button>
-                    <button onClick={handleCancelEditExample}>Cancel</button>
+                    <button bclassName="endpoints-btn" onClick={handleDeleteExample}>Delete</button>
+                    <button className="endpoints-btn" onClick={handleCancelEditExample}> <i class="fa-solid fa-xmark"></i>Cancel</button>
                   </div>
                 )}
               </div>
@@ -598,16 +598,16 @@ const AddEndpointForm = ({ onSave }) => {
         <button
           data-id="saveEndpoint"
           type="button"
-          className="ant-btn ant-btn-primary"
+        className="ant-btn ant-btn-primary endpoints-btn"
           onClick={handleSubmit}
         >
           <ToastContainer />
-          <i class="fa-solid fa-bookmark"></i> <span>save</span>
+          <i class="fa-solid fa-bookmark"></i> <span>Save Endpoint</span>
         </button>
         <button
           data-id="cancelSaveEndpointButton"
           type="button"
-          className="ant-btn"
+          className="ant-btn endpoints-btn"
           style={{ backgroundColor: "red" }}
         >
           <i class="fa-solid fa-xmark"></i> <span>cancel</span>

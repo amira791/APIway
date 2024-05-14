@@ -549,10 +549,7 @@ const AddAPIPage = () => {
                             </li>
                           </ul>
                         </fieldset>
-                        <h1 className="title">Additional Information</h1>
-                        <p className="sub">
-                          They All Serve The Same Purpose, But Each One Takes.
-                        </p>
+                       
 
                         <fieldset>
                           <label>Terms of Use</label>
@@ -569,7 +566,7 @@ const AddAPIPage = () => {
                             <div className="content-inner active">
                               <div className="tab-create-item">
                                 <h6 className="title">
-                                  Drop file to upload or attach it (optional)
+                                  Drop file to upload or attach it 
                                 </h6>
                                 <p className="sub">
                                   But Each One Takes A Different Approach And

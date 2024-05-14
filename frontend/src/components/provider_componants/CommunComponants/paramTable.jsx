@@ -114,7 +114,7 @@ const ParamsTable = ({ data, params, onAddRow, onChange, onDelete, activeTab }) 
                 ))}
                 <td>
                 <ToastContainer />
-                  <button className="confirmation-btn" onClick={handleEditConfirm}>Confirm</button>
+                  <button className="confirmation-btn endpoints-btn"  onClick={handleEditConfirm}>  <i class="fa-solid fa-check"></i>   Confirm</button>
                 </td>
               </tr>
             ) : (
@@ -155,13 +155,20 @@ const ParamsTable = ({ data, params, onAddRow, onChange, onDelete, activeTab }) 
                       value={info[key]}
                       checked={info[key] }
                       disabled />):
-                     info[key] 
+                      key === 'type' ?
+                     (  types
+                      .filter((type) => type.id_TypeParam == info[key])
+                      .map((type) => (
+                        <span key={type.id_TypeParam}>
+                          {type.name}
+                        </span>
+                      ))):(info[key]) 
                     )}
                   </td>
                 ))}
                 <td>
-                  {editedRowIndex === null && <button onClick={() => handleEditRow(rowIndex)}>Edit</button>}
-                  <button onClick={() => handleDeleteRow(rowIndex)}>Delete</button>
+                  {editedRowIndex === null && <button className="endpoints-btn" onClick={() => handleEditRow(rowIndex)}><i class="fa-solid fa-pen"></i>  Edit</button>}
+                  <button className="endpoints-btn" onClick={() => handleDeleteRow(rowIndex)}> <i class="fa-solid fa-trash"></i>   Delete</button>
                 </td>
               </tr>
             )
@@ -236,7 +243,7 @@ const ParamsTable = ({ data, params, onAddRow, onChange, onDelete, activeTab }) 
               {newRow.required}
             </td>
             <td>
-              <button className="confirmation-btn"  onClick={handleConfirmRow}>Confirm</button>
+              <button className="confirmation-btn endpoints-btn"   onClick={handleConfirmRow}> <i class="fa-solid fa-check"></i> Confirm</button>
             </td>
           </tr>
         </tbody>
