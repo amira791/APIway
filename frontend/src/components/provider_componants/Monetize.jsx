@@ -42,7 +42,7 @@ const Monetizing = ({Models ,setModels}) => {
     id: "",
     modelIndex: "",
   
-    ratelimit: "1000",
+    ratelimit: 1000,//changed here
     quotalimit: "",
     price: "",
     features: "",
@@ -60,18 +60,29 @@ const Monetizing = ({Models ,setModels}) => {
   const addModel = () => {
     if (!Model.Name || !Model.Description) {
       toast.error("Please fill in all fields before adding the model.");
+      document.getElementById("model-name").value = "";
+      document.getElementById("model-description").value = "";
+     
       return;
     }
+   /*   if (!changedPeriod) {
+      handleFilterClick(filteredPeriods[0]);
+     // handleModelChange("Period", activeFilter);
+    }  */
   //  //alert(activeFilter);
     handleModelChange("Period", activeFilter);
     setModels((prevModels) => [...prevModels, Model]);
    ////alert(filteredPeriods[0]);
- setActiveFilter(filteredPeriods[0]);
+// 
     setModel({ Name: "", Description: "", Period: activeFilter, plans: [] });
     document.getElementById("model-name").value = "";
     document.getElementById("model-description").value = "";
-    setchangedPeriod(false);
+  //  setchangedPeriod(true);
     console.log(Models);
+    if (!Model.Name || !Model.Description) {
+      setActiveFilter(filteredPeriods[0]);
+    }
+    setchangedPeriod(false);
   };
   const handlePlanChange = (key, value) => {
     setNewPlan((prevPlan) => ({ ...prevPlan, [key]: value }));
@@ -84,10 +95,16 @@ const Monetizing = ({Models ,setModels}) => {
       !editedPlan.Name ||
       !editedPlan.features ||
       !editedPlan.price ||
-      !editedPlan.quotalimit ||
-      !editedPlan.ratelimit
+      !editedPlan.quotalimit 
     ) {
       toast.error("Please fill in all fields before editing the plan.");
+      const rateLimitInput = document.getElementById("rate-limit");
+      if (rateLimitInput) {
+        document.getElementById("rate-limit").value = "";
+      }
+      document.getElementById("quota-limit").value = "";
+      document.getElementById("sub-price").value = "";
+      document.getElementById("features").value = "";
       return;
     }
     const model = Models[indexModel];
@@ -138,13 +155,17 @@ const Monetizing = ({Models ,setModels}) => {
       !newPlan.price ||
       !newPlan.quotalimit
     ) {
-      const rateLimitInput = document.getElementById("rate-limit");
-      if (rateLimitInput) {
-        if (!newPlan.ratelimit) {
-          toast.error("Please fill in all fields before adding the plan.");
-          return;
-        }
-      }
+      setNewPlan({
+        Name: "",
+        id: "",
+        ratelimit: "",
+        quotalimit: "",
+        price: "",
+        features: "",
+      });
+      document.getElementById("quota-limit").value = "";
+      document.getElementById("sub-price").value = "";
+      document.getElementById("features").value = "";
       toast.error("Please fill in all fields before adding the plan.");
       return;
     }
@@ -165,7 +186,9 @@ const Monetizing = ({Models ,setModels}) => {
       features: "",
     });
   
-    document.getElementById("rate-limit").value = "";
+    if (document.getElementById("rate-limit")) {
+      document.getElementById("rate-limit").value = "";
+    }
     document.getElementById("quota-limit").value = "";
     document.getElementById("sub-price").value = "";
     document.getElementById("features").value = "";
@@ -191,7 +214,9 @@ const Monetizing = ({Models ,setModels}) => {
         features: "",
       });
       
-      document.getElementById("rate-limit").value = "";
+      if ( document.getElementById("rate-limit")) {
+        document.getElementById("rate-limit").value = "";
+      }
       document.getElementById("quota-limit").value = "";
       document.getElementById("sub-price").value = "";
       document.getElementById("features").value = "";
@@ -206,11 +231,15 @@ const Monetizing = ({Models ,setModels}) => {
       // Perform other actions that rely on the updated state
     });
     console.log("the modiffiedblan is");
-    console.log(modifiedPlan);
-    setEditedPlan(modifiedPlan);
-
+  ///  console.log(modifiedPlan);
+    setEditedPlan(modifiedPlan,() => {
+      console.log("ModificationOn:", editedPlan); // This will log the updated value
+      // Perform other actions that rely on the updated state
+    });
+ 
     console.log(editedPlan);
   };
+  
   const checkExistence = (index, planName, type, index2) => {
     // Find the model with the given index
     const model = Models[index];
@@ -314,7 +343,8 @@ console.log(Models[index].Period);
     setSelectedPlan(plan);
   };
   const handleFilterClick = (filterId) => {
-    setchangedPeriod(true);
+    console.log("the current period is", filterId);
+   // setchangedPeriod(true);
     setActiveFilter(filterId);
     handleModelChange("Period", filterId);
   };
@@ -344,6 +374,11 @@ console.log(Models[index].Period);
     console.log("editedPlan:", editedPlan); // This will log the updated value
     // Perform other actions that rely on the updated state
   }, [editedPlan]);
+  useEffect(() => {
+    //setActiveFilter(filteredPeriods[0]);
+    console.log("filtered :", activeFilter); // This will log the updated value
+    // Perform other actions that rely on the updated state
+  }, [filteredPeriods]);
 
   useEffect(() => {
     var filteredPeriods = availablePeriods.filter(
@@ -356,7 +391,10 @@ console.log(Models[index].Period);
     
     }, [Models]);
  
-
+    useEffect(() => {
+      console.log(editedPlan);   
+      }, [editedPlan]);
+   
   return (
     <div className="tf-container">
       <div className="row">
@@ -409,9 +447,9 @@ console.log(Models[index].Period);
                       {filteredPeriods.map((period) => (
                 <li
                   key={period}
-                  className={activeFilter === period ? "active" : ""}
+                  /* className={activeFilter === period ? "active" : ""} */
                 >
-                  <a href="#" onClick={() =>{setchangedPeriod(true); handleFilterClick(period)}}>
+                  <a href="#" onClick={() =>{/* setchangedPeriod(true); */ handleFilterClick(period)}}>
                     {period}
                   </a>
                 </li>
@@ -430,7 +468,7 @@ console.log(Models[index].Period);
 
                 style={{background:"green",display:"flex",justifyContent:"space-around"}}
                 onClick={() => {
-                 if (changedPeriod) {  handleModelChange("Period", filteredPeriods[0])};
+                // if (changedPeriod) {  handleModelChange("Period", filteredPeriods[0])};
     
                   addModel();
                 }}
@@ -535,7 +573,8 @@ console.log(Models[index].Period);
                 <input
                   id="quota-limit"
                   type="number"
-                  defaultValue={modificationOn ? editedPlan.quotalimit : ""}
+                 // defaultValue={}
+                  value={modificationOn ? editedPlan.quotalimit : newPlan.quotalimit}
                   placeholder="Quota limit"
                   onChange={(e) => {
                     modificationOn
@@ -561,7 +600,8 @@ console.log(Models[index].Period);
               <input
                 id="sub-price"
                 type="number"
-                defaultValue={modificationOn ? editedPlan.price : ""}
+               // defaultValue={modificationOn ? editedPlan.price : ""}
+                value={modificationOn ? editedPlan.price : newPlan.price}
                 placeholder="Price"
                 onChange={(e) => {
                   handleSubscriptionPriceChange(e);
@@ -630,7 +670,7 @@ console.log(Models[index].Period);
                   placeholder="The plan's features"
                   tabIndex="4"
                   aria-required="true"
-                  defaultValue={modificationOn ? editedPlan.features : ""}
+                  value={modificationOn ? editedPlan.features : newPlan.features}
                   required=""
                   onChange={(e) => {
                     modificationOn

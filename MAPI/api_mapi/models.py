@@ -146,7 +146,6 @@ class TypeParam(models.Model):
 class ApiHeader(models.Model):
     id_header =models.AutoField(primary_key=True)
     key = models.CharField(max_length=255)
-    type_id = models.ForeignKey(TypeParam, on_delete=models.DO_NOTHING )
     example_value = models.CharField(max_length=255)
     required = models.BooleanField(default=False)
     endpoint = models.ForeignKey(APIendpoint, related_name='headers', on_delete=models.CASCADE)
@@ -160,6 +159,7 @@ class ApiQueryParam(models.Model):
     key = models.CharField(max_length=255)
     type_id = models.ForeignKey(TypeParam, on_delete=models.DO_NOTHING,default=1)
     example_value = models.CharField(max_length=255)
+    required = models.BooleanField(default=False)
     endpoint = models.ForeignKey(APIendpoint, related_name='query_params', on_delete=models.CASCADE)
     def __str__(self):
         return self.key

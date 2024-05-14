@@ -67,7 +67,7 @@ const ProviderHomePage = () => {
 
                                         </div>
                                         <div className="inner-content wallet">
-                                            <h4 className="title-dashboard">Create New API</h4>
+                                           
                                             <AddAPIPage/>
                                         </div>
                                         <div className="inner-content inventory favorite">

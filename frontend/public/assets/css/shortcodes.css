@@ -886,6 +886,12 @@
   box-shadow: 0px 15px 40px -10px rgba(12, 18, 38, 0.1);
   padding: 20px 18.5px 17px 18.5px;
 }
+.sc-product.style2.pricing {
+  box-shadow: 0px 15px 40px -10px rgba(12, 18, 38, 0.1);
+  padding: 40px;
+  width: 300px;
+  
+}
 .sc-product.style2 .details-product {
   margin-bottom: 12px;
 }
@@ -2918,6 +2924,12 @@ border-radius: 10rem;
   font-size: 12px;
   line-height: 20px;
   color: var(--primary-color7);
+ gap: 15px;
+}
+.tab-details .properties li a p{
+
+  font-size: 22px;
+  color: var(--primary-color8);
 }
 .tab-details .properties li a svg {
   margin-right: 9px;
@@ -3407,6 +3419,7 @@ border-radius: 10rem;
   z-index: 2;
 }
 .add-nft-inner .drag-upload img {
+
   margin-bottom: 32px;
 }
 .add-nft-inner .drag-upload .title {

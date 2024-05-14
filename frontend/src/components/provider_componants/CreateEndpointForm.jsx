@@ -230,14 +230,14 @@ const AddEndpointForm = ({ onSave }) => {
   return (
     <div className="ant-spin-container">
       <section className="sc-wQkWr kawync">
-        <h5 className="sc-dmlrTW jWdUg title">
-          <span>Add Endpoint</span>
-        </h5>
+        <h4>
+         Add Endpoint
+        </h4>
       </section>
       <section className="description-section">
         <div className="sub-section">
           <label>
-            <span className="capitalize is-required">Name</span>
+            <span className="capitalize is-required infos-text">Name</span>
           </label>
           <div>
             <input
@@ -256,7 +256,7 @@ const AddEndpointForm = ({ onSave }) => {
       <section className="description-md-section section-with-md">
         <div className="sub-section">
           <label>
-            <span className="capitalize is-required">Description</span>
+            <span className="capitalize is-required infos-text">Description</span>
           </label>
           <br />
           <div>
@@ -286,7 +286,7 @@ const AddEndpointForm = ({ onSave }) => {
         <section className="sc-wQkWr kawync">
           <div>
             <label>
-              <span>Methode</span>
+              <span className="capitalize is-required infos-text">Methode</span>
             </label>
 
             <div
@@ -306,7 +306,7 @@ const AddEndpointForm = ({ onSave }) => {
             </div>
           </div>
           <label>
-            <span>Path</span>
+            <span className="capitalize is-required infos-text">Path</span>
           </label>
           <div>
             <input
@@ -322,8 +322,8 @@ const AddEndpointForm = ({ onSave }) => {
         </section>
         {/* Tab section for headers, query parameters, etc. */}
         <section className="tab-section">
-          <Tabs defaultActiveKey="headers">
-            <TabPane tab="Endpoint params" key="params">
+          <Tabs defaultActiveKey="headers" style={{fontSize:"20px"}}>
+            <TabPane tab="Endpoint params" key="params" >
               {dynamicTabs.length === 0 ? (
                 <p>No parameters yet.</p>
               ) : (
@@ -407,11 +407,11 @@ const AddEndpointForm = ({ onSave }) => {
             </TabPane>
             <TabPane tab="Headers" key="headers">
               <div>
-                <label>Headers</label>
+                <label className="capitalize is-required infos-text">Headers</label>
 
                 <ParamsTable
                   data={headers}
-                  params={["Key", "Type", "Example value", "Required"]}
+                  params={["Key", "Example value", "Required"]}
                   onChange={handleHeaderChange}
                   onAddRow={handleAddHeader}
                   onDelete={handleDeleteHeader}
@@ -422,7 +422,7 @@ const AddEndpointForm = ({ onSave }) => {
             {method === "GET" && (
               <TabPane tab="Query Parameters" key="queryParameters">
                 <div>
-                  <label>Query Parameters</label>
+                  <label className="capitalize is-required infos-text">Query Parameters</label>
 
                   <ParamsTable
                     data={queryParams}
@@ -438,7 +438,7 @@ const AddEndpointForm = ({ onSave }) => {
             {(method === "POST" || method === "PUT" || method === "PATCH") && (
               <TabPane tab="Body" key="body">
                 <div>
-                  <label>Media Type</label>
+                  <label className="capitalize is-required infos-text">Media Type</label>
                   <select
                     value={body.mediaType}
                     onClick={(e) =>
@@ -453,7 +453,7 @@ const AddEndpointForm = ({ onSave }) => {
                     <option value="text/plain">text/plain</option>
                     <option value="form-data">form-data</option>
                   </select>
-                  <label>Payload name</label>
+                  <label className="capitalize is-required infos-text">Payload name</label>
                   <input
                     type="text"
                     value={body.payloadName}
@@ -462,14 +462,14 @@ const AddEndpointForm = ({ onSave }) => {
                     }
                     placeholder="Payload Name"
                   />
-                  <label>Payload description</label>
+                  <label className="infos-text">Payload description</label>
                   <input
                     type="text"
                     value={body.payloadValue}
                     onChange={(e) =>
                       setBody({ ...body, payloadValue: e.target.value })
                     }
-                    placeholder="Payload Value"
+                    placeholder="Payload Description"
                   />
                   <fieldset className="message">
                     <label>Enter un example</label>
@@ -503,7 +503,7 @@ const AddEndpointForm = ({ onSave }) => {
                     ))
                   )}
                 </select>
-                <button onClick={handleAddNewExample}>Add New Example</button>
+                <button className="endpoints-btn" onClick={handleAddNewExample}>  <i className="far fa-plus"></i> Add New Example</button>
                 {isAddingNewExample && (
                   <div>
                     <input
@@ -537,8 +537,8 @@ const AddEndpointForm = ({ onSave }) => {
                       }
                       placeholder="Response Body"
                     ></textarea>
-                    <button onClick={handleSaveNewExample}>Save</button>
-                    <button onClick={handleCancelAddNewExample}>Cancel</button>
+                    <button className="endpoints-btn" style={{background:"green"}} onClick={handleSaveNewExample}>  <i class="fa-solid fa-check"></i>  Confirm example</button>
+                    <button className="endpoints-btn" onClick={handleCancelAddNewExample}> <i class="fa-solid fa-xmark"></i>  Cancel</button>
                   </div>
                 )}
                 {selectedExampleIndex !== null && (
@@ -580,11 +580,11 @@ const AddEndpointForm = ({ onSave }) => {
                       }
                       placeholder="Response Body"
                     ></textarea>
-                    <button onClick={handleConfirmEditExample}>
+                    <button  className="endpoints-btn" onClick={handleConfirmEditExample}>
                       Confirm Edit
                     </button>
-                    <button onClick={handleDeleteExample}>Delete</button>
-                    <button onClick={handleCancelEditExample}>Cancel</button>
+                    <button bclassName="endpoints-btn" onClick={handleDeleteExample}>Delete</button>
+                    <button className="endpoints-btn" onClick={handleCancelEditExample}> <i class="fa-solid fa-xmark"></i>Cancel</button>
                   </div>
                 )}
               </div>
@@ -597,16 +597,16 @@ const AddEndpointForm = ({ onSave }) => {
         <button
           data-id="saveEndpoint"
           type="button"
-          className="ant-btn ant-btn-primary"
+        className="ant-btn ant-btn-primary endpoints-btn"
           onClick={handleSubmit}
         >
           <ToastContainer />
-          <i className="fa-solid fa-bookmark"></i> <span>save</span>
+          <i className="fa-solid fa-bookmark"></i> <span>Save Endpoint</span>
         </button>
         <button
           data-id="cancelSaveEndpointButton"
           type="button"
-          className="ant-btn"
+          className="ant-btn endpoints-btn"
           style={{ backgroundColor: "red" }}
         >
           <i className="fa-solid fa-xmark"></i> <span>cancel</span>
