@@ -232,28 +232,32 @@ class TypeTarif(models.Model):
     name= models.CharField(max_length=100)
     def __str__(self):
         return self.name   
+    
 class Tarification(models.Model):
-    id_tarif= models.AutoField(primary_key=True)
-    pricingModel = models.ForeignKey(PricingModel, on_delete=models.DO_NOTHING )
-    type = models.ForeignKey(TypeTarif, on_delete=models.DO_NOTHING )
+    id_tarif = models.AutoField(primary_key=True)
+    pricingModel = models.ForeignKey(PricingModel, on_delete=models.DO_NOTHING)
+    type = models.ForeignKey(TypeTarif, on_delete=models.DO_NOTHING)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     features = models.TextField()
-    quota_limit = models.IntegerField() #Total limit
-    rate_limit = models.IntegerField(default=1000) #Per hour
+    quota_limit = models.IntegerField()  # Total limit
+    rate_limit = models.IntegerField()  # Per hour
+    priceId = models.CharField(max_length= 50, default="price_1PDneKEwLPoE4RaHXfQcbdpj")
+
     def __str__(self):
-        return self.features
+        return self.pricingModel.name + " " + self.type.name
 
 class Abonnement(models.Model):
     id_subscription = models.AutoField(primary_key=True)
     api_key = models.CharField(max_length=100)
     start_date = models.DateField(auto_now=True)
     end_date = models.DateField(auto_now=True)
-    consumer = models.ForeignKey(Consommateur, on_delete=models.DO_NOTHING )
-    pricing = models.ForeignKey(Tarification, on_delete=models.DO_NOTHING )
-    api = models.ForeignKey(API, on_delete=models.DO_NOTHING )
+    statut = models.CharField(max_length=20,default="ended")
+    consumer = models.ForeignKey(Consommateur, on_delete=models.DO_NOTHING)
+    pricing = models.ForeignKey(Tarification, on_delete=models.DO_NOTHING)
+    api = models.ForeignKey(API, on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return self.id_subscription
+        return self.consumer.CNusername + " on " + self.pricing.type.name
     
 class Ticket(models.Model):
     ticket_id = models.AutoField(primary_key=True)

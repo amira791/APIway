@@ -23,9 +23,15 @@ import SignUpPage from './components/auth_components/SignUpPage';
 import AddAPIPage from './components/provider_componants/AddApi';
 import Details from './components/provider_componants/Details';
 import {useAuthContext} from './context/authContext'
+
+import { loadStripe } from '@stripe/stripe-js'
+import {Elements} from '@stripe/react-stripe-js'
+import Subscrib from './components/Subscrib/Subscrib';
+import Payment from './components/Payment/Payment'
 function Root() {
 
   const { authState } = useAuthContext();
+  const stripe = loadStripe("pk_test_51OygXvLDzFR9kcMzeb7UST3IEa8SXi7CD3pXxIcTSQFunxMWcnaKqIJiCHZWO7fLFvnpgauFm9XArtMtZ9xjBJGl00FHM5TiPB");
 
   return (
     <div id="App">
@@ -46,6 +52,17 @@ function Root() {
           {/* <Route exact path="/addAPI" element={<AddAPIPage />} /> */}
           <Route exact path="/details/:id" element={<Details />} />
           <Route exact path="/provider_home" element={authState.isFournisseur ? <ProviderHomePage /> : <Navigate to="/login"/>}/>
+
+          <Route exact path="/payment/:id" 
+          element={authState.isConsommateur ?  
+            <Elements stripe={stripe}>
+              <Payment/>
+            </Elements>
+            : <Navigate to="/login"/>} 
+          />
+
+          <Route exact path="/subscrib" element={<Subscrib/>} />
+
         </Routes>
       </Router>
     </div>

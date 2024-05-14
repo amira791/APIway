@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import APIAjout from '../../hooks/APIHook2';
 import { Alert } from '@mui/material';
-
+import { Link } from 'react-router-dom';
 
   
 const PricingMenu = ({ allPricingData, onSelect }) => {
@@ -78,7 +78,8 @@ const PricingMenu = ({ allPricingData, onSelect }) => {
                                 <div className="content" style={{marginTop:"4%"}}>
                                 <div className="cash">          
  <div className="product-button">
-                                        <a href="#" data-toggle="modal"  className="tf-button"> Purchase id is {tarif.id}</a>
+  <Link to={`/payment/${tarif.id}`}>Purchase</Link>
+                                        {/* <a href="#" data-toggle="modal"  className="tf-button"> Purchase id is {tarif.id}</a> */}
                                     </div>
                                     </div>
                                      </div>

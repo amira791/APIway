@@ -11,5 +11,7 @@ router = routers.SimpleRouter()
 # Get the urlpatterns from the router
 urlpatterns = [
     path('api/search/', search_api, name='search_api'),
+    path('subscribe', subscribe, name = 'subscribe'),
+    path('subscription', getsubscription, name = 'subscription')
    
     ] + router.urls

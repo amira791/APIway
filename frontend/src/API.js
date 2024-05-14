@@ -7,3 +7,14 @@ export default axios.create({
         'Content-Type':'application/json',
     }
 })
+
+
+const payementApiClient = axios.create({
+    baseURL: "http://localhost:8000/Consumer/",
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    }
+});
+
+export { payementApiClient };
