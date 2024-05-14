@@ -6,8 +6,9 @@ import APIAjout from "../../Hooks/APIHook";
 import VersionTable from "../provider_componants/APIversions";
 import CustomPagination from "../global_componants/Pagination";
 import Monetizing from "./ModifyMonetize";
+import DataTable from "react-data-table-component";
 const ProvAPIList = () => {
-    const { providerAPIs } = ManipulateProv();
+    const { providerAPIs,getApisByProvider  } = ManipulateProv();
     const [showUpdateSection, setShowUpdateSection] = useState(false);
     const [showVersionsSection, setShowVersionsSection] = useState(false);
     const [selectedAPI, setSelectedAPI] = useState(null);
@@ -22,6 +23,7 @@ const ProvAPIList = () => {
       setSelectedAPI(api);
       setShowUpdateSection(true);
     };
+
 
     const handleReturnClick = () => {
       if(showMonetizeSection){
@@ -77,14 +79,89 @@ const ProvAPIList = () => {
       e.preventDefault();
 
       //console.log("submittedForm",formData);
-      updateAPI(selectedAPI.id_api,formData);
+      if(window.confirm("Are you sure you want to save your modifications?")){
+        updateAPI(selectedAPI.id_api,formData);
+        window.location.reload();
+      }
     };
 
     const handleToggleMonetizeSection = () => {
         setShowMonetizeSection(!showMonetizeSection);
         setShowModifySection(!showModifySection);
     };
+    const columns= [
+        {
+            name:"Logo",
+            selector:(row)=><img  height ={70} width={80} src={ row.logo}/>,
+        },
+        {
+            name:"Name",
+            selector:(row)=>row.api_name,
+        },
+        {
+            name:"Website",
+            selector:(row)=>row.website,
+        },
+        {
+            name:"Category",
+            selector:(row)=>row.category_label,
+        },
+        {
+            name:"Visibility",
+            selector:(row)=>row.visibility ? 'Visible' : 'Not Visible',
+        },
+        {
+            name:"Action",
+            cell:(row)=>(
+                <><button className="update_btn" onClick={() => handleUpdateClick(row)} title="Update API">
+                    <i className="fa-solid fa-pencil"></i>
+                </button>
+                <button className="update_btn" onClick={() => handleVersions(row)} title="Manage versions">
+                    <i class="fa-solid fa-code-compare"></i>
+                </button></>
+            )
 
+        }
+
+    ];
+    const [search, SetSearch]= useState('');
+    const [filter, setFilter]= useState([]);
+    useEffect(()=>{
+        const result= providerAPIs.filter((item)=>{
+         return item.api_name.toLowerCase().match(search.toLocaleLowerCase());
+        });
+        setFilter(result);
+    },[search]);
+    const tableHeaderstyle={
+        headCells:{
+            style:{
+                fontWeight:"bold",
+                fontSize:"14px",
+                backgroundColor: "#F5ECFF"
+    
+            },
+        },
+        pagination: {
+            style: {
+              width: '100%',
+            },
+            pageButtonsStyle: {
+              borderColor: '#fff',
+              
+            },
+            pageButtonsActiveStyle: {
+              backgroundColor: '#fff',
+              color: '#333',
+            },
+        },
+        subHeader: {
+            style: {
+                backgroundColor: '#1f1f2cs',
+                
+            }
+        },
+        
+    }
 
     return(
         <div>
@@ -93,7 +170,7 @@ const ProvAPIList = () => {
                 style={{ display: !showUpdateSection && !showVersionsSection ? "block" : "none" }}
             > 
                 <h4 className="title-dashboard">API List</h4>
-                <div className="table-ranking top">
+{/*                 <div className="table-ranking top">
                     <div className="title-ranking">
                         <div className="col-rankingg">Logo</div>
                         <div className="col-rankingg">Name</div>
@@ -132,13 +209,37 @@ const ProvAPIList = () => {
                 })}
 
                 </div>
-
+                
                 <CustomPagination
                     currentPage={currentPage}
                     totalPages={totalPages}
                     handlePageChange={setCurrentPage}
-                />
+                /> */}
 
+               <React.Fragment>
+                <DataTable
+                    customStyles={ tableHeaderstyle}
+                    columns={columns}
+                    data={filter.length > 0 ? filter : providerAPIs}
+                    pagination
+                    fixedHeader
+                    highlightOnHover
+                    subHeader
+                    subHeaderComponent={
+                       <input type="text"
+                       className="w-25 form-control"
+                       placeholder="Search..."
+                       value={ search}
+                       onChange={(e)=>SetSearch(e.target.value)}
+                       
+                       />
+                    }
+                    subHeaderAlign="right"
+
+                >
+
+                </DataTable>
+               </React.Fragment>
             </div>
 
             <div>

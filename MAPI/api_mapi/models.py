@@ -196,7 +196,6 @@ class Tarification(models.Model):
     pricingModel = models.ForeignKey(PricingModel, on_delete=models.DO_NOTHING, null=True )
     type = models.ForeignKey(TypeTarif, on_delete=models.DO_NOTHING )
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-    recommended=models.BooleanField(default=False, verbose_name="Recommended")
     features = models.TextField(default="")
     Quota_CHOICES = (
         ('Daily', 'Daily'),
@@ -204,7 +203,7 @@ class Tarification(models.Model):
         ('Yearly', 'Yearly'),
     )
     quota_limit = models.IntegerField(null=True)
-    rate_limit = models.IntegerField(default=10000)
+    rate_limit = models.IntegerField(null=True)
     def __str__(self):
         return self.id_tarif
 

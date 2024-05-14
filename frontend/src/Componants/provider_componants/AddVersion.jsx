@@ -396,8 +396,9 @@ const AddVersion = ({selectedAPI, onReturnClick2}) => {
                             rows="4"
                             placeholder="Description"
                             tabindex="4"
-                          //  aria-required="true"
-                         //  required
+                            //  aria-required="true"
+                          //  required
+                            value={formData.description}
                             onChange={handleChange}
                           ></textarea>
                         </fieldset>

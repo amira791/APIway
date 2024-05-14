@@ -3,10 +3,8 @@ import axios from "axios"; // Import axios for making HTTP requests
 import { Button, Input, Checkbox, Switch, Radio, Select, Tabs } from "antd";
 import ManipulateTypes from "../../Hooks/EndpointHook";
 import ParamsTable from "./CommunComponants/headerTable";
-import { ToastContainer } from 'react-toastify';
-import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const { Option } = Select;
 
 const { TabPane } = Tabs;
@@ -25,6 +23,7 @@ const AddEndpointForm = ({ onSave }) => {
     mediaType: "application/json",
     payloadName: "",
     payloadValue: "",
+    bodyExample: "",
   });
   const [dynamicTabs, setDynamicTabs] = useState([]);
   const [responseExamples, setResponseExamples] = useState([]);
@@ -36,13 +35,12 @@ const AddEndpointForm = ({ onSave }) => {
   const [isAddingNewExample, setIsAddingNewExample] = useState(false);
   const [selectedExampleIndex, setSelectedExampleIndex] = useState(null);
   const [isEditingExample, setIsEditingExample] = useState(false);
-  
+
   const handleAddNewExample = () => {
     if (!isEditingExample) {
       setIsAddingNewExample(true);
     }
   };
-  
 
   const handleSaveNewExample = () => {
     setResponseExamples([...responseExamples, newExample]);
@@ -84,7 +82,6 @@ const AddEndpointForm = ({ onSave }) => {
     setSelectedExampleIndex(null);
     setIsEditingExample(false);
   };
-  
 
   const handleCancelEditExample = () => {
     setSelectedExampleIndex(null);
@@ -94,15 +91,13 @@ const AddEndpointForm = ({ onSave }) => {
     const newPath = e.target.value;
     setEndpointPath(newPath);
 
-    // Regular expression to match text enclosed within curly braces {}
     const regex = /{(.*?)}/g;
     let matches = [];
     let match;
     while ((match = regex.exec(newPath)) !== null) {
-      matches.push(match[1]); // Extracted names from curly braces
+      matches.push(match[1]);
     }
 
-    // Create dynamic tabs for each match found
     const newTabs = matches.map((name, index) => ({
       key: `dynamic_${index}`,
       title: name,
@@ -110,6 +105,15 @@ const AddEndpointForm = ({ onSave }) => {
     }));
 
     setDynamicTabs(newTabs);
+
+    // Adjust params array to match the length of dynamicTabs
+    const newParams = newTabs.map((tab) => ({
+      name: tab.content,
+      type: "",
+      value: "",
+      required: false,
+    }));
+    setParams(newParams);
   };
   const [params, setParams] = useState([
     { name: "", type: "", value: "", required: false },
@@ -117,19 +121,33 @@ const AddEndpointForm = ({ onSave }) => {
   const handleParamChange = (index, key, value) => {
     const updatedParams = [...params];
     updatedParams[index][key] = value;
-    // alert("the value is",value);
     setParams(updatedParams);
   };
 
   const handleSubmit = async () => {
-    // Check if name, description, method, or path is null or empty
-    if (!endpointName || !endpointDesc|| !method || !endpointPath) {
-      toast.error("Please fill in all required fields (name, description, method, path)");
-      return;
+    var formData = {};
+    // Check if all required fields are filled
+    const requiredFields = ["endpointName", "endpointDesc", "endpointPath"];
+    const emptyFields = requiredFields.filter(
+      (field) => !eval(field) && eval(field) !== 0
+    );
+
+    if (emptyFields.length > 0) {
+      // Construct message indicating which fields are empty
+      const emptyFieldsMessage = emptyFields.join(", ");
+      toast.error(`Please fill in the following fields: ${emptyFieldsMessage}`);
+      return; // Stop execution if any required field is empty
     }
-    var formData ={}
-    if (params.length === 1 && params[0].name == "" ) {
-       formData = {
+    const emptyFieldIndex = dynamicTabs.findIndex((tab, index) => {
+      return !params[index].value;
+    });
+
+    if (emptyFieldIndex !== -1) {
+      toast.error("Please fill in all the fields in the params table.");
+      return; // Stop execution if any field is empty
+    }
+    if (params.length === 1 && params[0].name == "") {
+      formData = {
         name: endpointName,
         method: method,
         description: endpointDesc,
@@ -141,25 +159,24 @@ const AddEndpointForm = ({ onSave }) => {
         responseExamples: responseExamples,
         group: null,
       };
-  } else{
-     formData = {
-      name: endpointName,
-      method: method,
-      description: endpointDesc,
-      path: endpointPath,
-      params: params,
-      headers: headers,
-      queryParams: queryParams,
-      body: body,
-      responseExamples: responseExamples,
-      group: null,
-    };
-  }
-  //alert("params is",params);
- 
+    } else {
+      formData = {
+        name: endpointName,
+        method: method,
+        description: endpointDesc,
+        path: endpointPath,
+        params: params,
+        headers: headers,
+        queryParams: queryParams,
+        body: body,
+        responseExamples: responseExamples,
+        group: null,
+      };
+    }
+    ////alert("params is",params);
 
     try {
-      alert("params is",params);
+      //alert("params is",params);
       // Send endpoint data to parent component to save to database
       onSave(formData);
       // Clear form fields
@@ -167,7 +184,7 @@ const AddEndpointForm = ({ onSave }) => {
       setMethod("GET");
       setEndpointPath("/");
       setHeaders([]);
-      setParams([ { name: "", type: "", value: "", required: false }]);
+      setParams([{ name: "", type: "", value: "", required: false }]);
       setQueryParams([]);
       setResponseExamples([]);
     } catch (error) {
@@ -231,8 +248,8 @@ const AddEndpointForm = ({ onSave }) => {
               type="text"
               className="ant-input"
               value={endpointName}
+              required="required"
               onChange={(e) => setEndpointName(e.target.value)}
-              required
             />
           </div>
         </div>
@@ -256,7 +273,7 @@ const AddEndpointForm = ({ onSave }) => {
                     value={endpointDesc}
                     onChange={(e) => setEndpointDesc(e.target.value)}
                     aria-required="true"
-                    required
+                    required="required"
                   ></textarea>
                 </fieldset>
               </div>
@@ -264,8 +281,7 @@ const AddEndpointForm = ({ onSave }) => {
           </div>
         </div>
       </section>
-      <div className="sc-eQdLTE jpYRrF">
-      </div>
+
       <section className="graphql-updater-section"></section>
       <div className="definition-inner-section">
         <section className="sc-wQkWr kawync">
@@ -360,7 +376,7 @@ const AddEndpointForm = ({ onSave }) => {
                             <input
                               type="text"
                               placeholder="Value"
-                              value={params[index].value}
+                              value={params[index] ? params[index].value : ""} // Check if params[index] exists before accessing its properties
                               onChange={(e) =>
                                 handleParamChange(
                                   index,
@@ -373,7 +389,7 @@ const AddEndpointForm = ({ onSave }) => {
                           <td>
                             <input
                               type="checkbox"
-                              checked={params[index].required}
+                              checked={params[index] ? params[index].required : false} 
                               onChange={(e) =>
                                 handleParamChange(
                                   index,
@@ -473,7 +489,7 @@ const AddEndpointForm = ({ onSave }) => {
                   </fieldset>
                 </div>
               </TabPane>
-            )} 
+            )}
             <TabPane tab="Response" key="response">
               <div>
                 <select onChange={handleSelectResponseExample}>
@@ -585,6 +601,7 @@ const AddEndpointForm = ({ onSave }) => {
           className="ant-btn ant-btn-primary"
           onClick={handleSubmit}
         >
+          <ToastContainer />
           <i class="fa-solid fa-bookmark"></i> <span>save</span>
         </button>
         <button
@@ -596,7 +613,6 @@ const AddEndpointForm = ({ onSave }) => {
           <i class="fa-solid fa-xmark"></i> <span>cancel</span>
         </button>
       </div>
-      <ToastContainer />
     </div>
   );
 };

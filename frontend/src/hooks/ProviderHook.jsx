@@ -25,6 +25,7 @@ export default function ManipulateProv() {
   }, []);
 
   return {
-      providerAPIs: providerAPIs || []
+      providerAPIs: providerAPIs || [],
+
   };
 }

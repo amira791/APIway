@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import ManipulateMonetize from "../../Hooks/MonetizeHook.jsx";
 import ModelCheckbox from "./ModelCheckBox.jsx";
-
+import CustomPagination from "../global_componants/Pagination.jsx";
 const Monetizing = ({apiId}) => {
   
   // State to track the selected plan
@@ -31,8 +31,7 @@ const Monetizing = ({apiId}) => {
     Name: "",
     id: "",
     modelIndex: "",
-    Recommended: false,
-    ratelimit: "1000",
+    ratelimit: 100,
     quotalimit: "",
     price: "",
     features: "",
@@ -41,8 +40,7 @@ const Monetizing = ({apiId}) => {
     Name: "",
     id: "",
     modelIndex: "",
-    Recommended: false,
-    ratelimit: "1000",
+    ratelimit: 1000,
     quotalimit: "",
     price: "",
     features: "",
@@ -95,10 +93,16 @@ const Monetizing = ({apiId}) => {
       !editedPlan.Name ||
       !editedPlan.features ||
       !editedPlan.price ||
-      !editedPlan.quotalimit ||
-      !editedPlan.ratelimit
+      !editedPlan.quotalimit 
     ) {
       toast.error("Please fill in all fields before editing the plan.");
+      const rateLimitInput = document.getElementById("rate-limit");
+      if (rateLimitInput) {
+        document.getElementById("rate-limit").value = "";
+      }
+      document.getElementById("quota-limit").value = "";
+      document.getElementById("sub-price").value = "";
+      document.getElementById("features").value = "";
       return;
     }
     const model = Models[indexModel];
@@ -113,8 +117,7 @@ const Monetizing = ({apiId}) => {
         Models[indexModel].plans[planIndex].price = editedPlan.price; // Modify price to "1000"
         Models[indexModel].plans[planIndex].features = editedPlan.features; // Modify quotalimit to "100"
         Models[indexModel].plans[planIndex].ratelimit = editedPlan.ratelimit; // Modify quotalimit to "100"
-        Models[indexModel].plans[planIndex].Recommended =
-          editedPlan.Recommended; // Modify price to "1000"
+
       } else {
         console.log("Plan not found.");
       }
@@ -126,7 +129,6 @@ const Monetizing = ({apiId}) => {
     setEditedPlan({
       Name: "",
       id: "",
-      Recommended: false,
       ratelimit: "",
       quotalimit: "",
       price: "",
@@ -149,14 +151,18 @@ const Monetizing = ({apiId}) => {
       !newPlan.price ||
       !newPlan.quotalimit
     ) {
-      const rateLimitInput = document.getElementById("rate-limit");
-      if (rateLimitInput) {
-        if (!newPlan.ratelimit) {
-          alert("Please fill in all fields before adding the plan.");
-          return;
-        }
-      }
-      alert("Please fill in all fields before adding the plan.");
+      setNewPlan({
+        Name: "",
+        id: "",
+        ratelimit: "",
+        quotalimit: "",
+        price: "",
+        features: "",
+      });
+      document.getElementById("quota-limit").value = "";
+      document.getElementById("sub-price").value = "";
+      document.getElementById("features").value = "";
+      toast.error("Please fill in all fields before adding the plan.");
       return;
     }
 
@@ -181,13 +187,11 @@ const Monetizing = ({apiId}) => {
     setNewPlan({
       Name: "",
       id: "",
-      Recommended: false,
       ratelimit: "",
       quotalimit: "",
       price: "",
       features: "",
     });
-    document.getElementById("rate-limit").value = "";
     document.getElementById("quota-limit").value = "";
     document.getElementById("sub-price").value = "";
     document.getElementById("features").value = "";
@@ -209,7 +213,6 @@ const Monetizing = ({apiId}) => {
       setEditedPlan({
         Name: "",
         id: "",
-        Recommended: false,
         ratelimit: "",
         quotalimit: "",
         price: "",
@@ -407,6 +410,19 @@ const Monetizing = ({apiId}) => {
     }
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(4);
+
+  const totalPages = Math.ceil(Models.length / itemsPerPage);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = Models.concat(pricingModels).slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <div className="tf-container">
       <div className="row">
@@ -536,7 +552,7 @@ const Monetizing = ({apiId}) => {
             </div>
           </div>
         <div className="table-ranking tf-filter-container">
-          {[...Models, ...pricingModels].map((model, index) => (
+          {currentItems.map((model, index) => (
             <div
               key={index}
               className="content-ranking tf-loadmore 3d anime music"
@@ -571,9 +587,10 @@ const Monetizing = ({apiId}) => {
                                 </div>
                             )
                         ))}
-                        {!hasTarification && <div>No plan</div>}
+                        {!hasTarification && <div>No plan/ {model.period}</div>}
                     </React.Fragment>
                     );
+                    
 
                   }
                 )
@@ -600,7 +617,7 @@ const Monetizing = ({apiId}) => {
                         await createModels(apiId, Models);
                         setNewModelAdded(false);
                         setPlanValidated(false);
-                        console.log("planVal2",planValidated);
+                        window.location.reload();
                       }
                     }}
                     style={{ background: "green", marginRight: "1rem" }}
@@ -626,6 +643,11 @@ const Monetizing = ({apiId}) => {
           ))}
         </div>
         </div>
+        <CustomPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePageChange={handlePageChange}
+        />
       </section>
       <div
         class="modal fade popup"

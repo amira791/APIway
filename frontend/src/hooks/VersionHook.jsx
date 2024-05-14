@@ -330,8 +330,10 @@ export default function ManipulateVersion() {
     }
     // Check if baseLinkIds is empty and set base_links accordingly
      const base_links = baseLinkIds.length > 0 ? baseLinkIds : [];
+     console.log("description:",formData.description);
     return {
       num_version: formData.num_version,
+      description: formData.description,
       state: formData.state,
       api: formData.api,
       functions: functionalityIds,
