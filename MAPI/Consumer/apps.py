@@ -5,4 +5,5 @@ class ConsumerConfig(AppConfig):
     name = 'Consumer'
     
     def ready(self):
-      import Consumer.signals 
+        import Consumer.signals
+

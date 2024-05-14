@@ -3,6 +3,8 @@ from django_elasticsearch_dsl.registries import registry
 from elasticsearch_dsl import Index, Text, Keyword, Date, Object
 from api_mapi.models import API, APIversion, Functionnality
 
+from django.db.models.signals import post_save, post_delete
+
 @registry.register_document
 class APIDocument(Document):
     
@@ -39,3 +41,5 @@ class APIDocument(Document):
         
         # Prepare the functions data for indexing
         return [{'functName': func.functName} for func in functions]
+    
+    

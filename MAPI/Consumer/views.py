@@ -19,6 +19,13 @@ from elasticsearch_dsl import Index
 from .document import APIDocument
 from elasticsearch import Elasticsearch
 from elasticsearch_dsl import Search, Q, Index
+from django.utils.text import slugify
+import re
+
+
+
+
+
 
 
 
@@ -58,16 +65,28 @@ def index_api(request):
 
 
 
-# Search function 
+
+
+
 @api_view(['POST'])
 def search_api(request, index='api_index'):
     query = request.data.get('query', '')
     search_field = request.data.get('filter')
     category_label = request.data.get('category')
 
+    # Split the query string into individual words
+    query_words = query.split()
+
+    # Preprocess each word of the query string
+    processed_query_words = []
+    for word in query_words:
+        processed_word = re.sub(r'\W+', '', word)  # Remove special characters
+        processed_word = slugify(processed_word)  # Convert spaces and special characters to hyphens
+        processed_query_words.append(processed_word)
+
     # Define Elasticsearch multi_match query
     if search_field == 'Name':
-        search_fields = ["api_name^3","category.label^2"]
+        search_fields = ["api_name^3", "category.label^2"]
     elif search_field == 'Description':
         search_fields = ["description^3"]
     elif search_field == 'Category':
@@ -77,36 +96,22 @@ def search_api(request, index='api_index'):
     else:
         return Response({'error': 'Invalid search field'}, status=status.HTTP_400_BAD_REQUEST)
 
-    # Define Elasticsearch multi_match query
-    search_query = {
-        "multi_match": {
-            "query": query,
-            "fields": search_fields,
-            "fuzziness":'AUTO'
-       
-        }
-        
-    }
+    # Build query for each processed word
+    queries = []
+    for processed_word in processed_query_words:
+        query_string = "*" + processed_word + "*"  # Add wildcard characters to the processed word
+        reversed_query_string = "*" + processed_word[::-1] + "*"  # Add wildcard characters to the reversed processed word
 
-    # Define wildcard queries for partial word matches
-    wildcard_queries = []
-    for field in search_fields:
-        wildcard_queries.append({
-            "wildcard": {
-                field: {
-                    "value": f"*{query.lower()}*"
-                }
-            }
-        })
+        query = Q('bool',
+                  should=[
+                      Q('query_string', query=query_string, fields=search_fields),
+                      Q('query_string', query=reversed_query_string, fields=search_fields)
+                  ],
+                  minimum_should_match=1)
+        queries.append(query)
 
-    # Combine multi_match and wildcard queries using Bool Query
-    combined_query = {
-        "bool": {
-            "should": [search_query] + wildcard_queries,
-            "minimum_should_match": 1
-        }
-    }
-
+    # Combine queries with a boolean OR
+    combined_query = Q('bool', should=queries)
 
     sort = '_score'  # Tri par défaut (pertinence)
 
@@ -116,7 +121,6 @@ def search_api(request, index='api_index'):
     # Filter by category if provided
     if category_label and category_label != 'All':
         search = search.filter('match_phrase', category__label=category_label)
-   
 
     # Execute the search
     results = search.execute()
@@ -125,7 +129,6 @@ def search_api(request, index='api_index'):
     response_data = []
 
     for hit in results:
-
         response_data.append({
             'id_api': hit.meta.id,
             'api_name': hit.api_name,
@@ -136,7 +139,6 @@ def search_api(request, index='api_index'):
             'website': hit.website,
             'category_label': hit.category.label,
             'functions': [func.functName for func in hit.functions]  # assuming functions is a related field
-       
-         })
+        })
 
     return Response(response_data)
