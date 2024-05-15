@@ -852,9 +852,7 @@ const AddAPIPage = () => {
                       <a href="#" className="tag">
                         {formData.apiName}
                       </a>
-                      <div className="wish-list">
-                        <a href="#" className="heart-icon"></a>
-                      </div>
+                     
                     </div>
                     <div class="features">
                       <div class="product-media">

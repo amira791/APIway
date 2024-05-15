@@ -26,7 +26,7 @@ export default function TicketForm() {
 
     try {
       await addNewTicket(newTicket);
-      navigate('/tickets');
+      navigate('/searchApi');
     } catch (error) {
       console.error('Error submitting ticket:', error);
       // Handle error state here

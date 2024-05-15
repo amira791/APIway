@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { useToast } from '@chakra-ui/react';
 import {useAuthContext} from '../context/authContext'
 import{BASEURL , fetchData} from './API'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function useAuth() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [fournisseur , setFournisseur] = useState([]);
-    const toast = useToast();
+    // const toast = useToast();
     const { dispatch } = useAuthContext();
 
 
@@ -30,23 +32,26 @@ export default function useAuth() {
                 type: 'SIGNUP',
                 payload: result
               });
-            toast({
-                title: 'User signed up',
-                description: "User signed up successfully",
-                status: 'success',
-                duration: 5000,
-                isClosable: true,
-            });
+            
+            // toast({
+            //     title: 'User signed up',
+            //     description: "User signed up successfully",
+            //     status: 'success',
+            //     duration: 5000,
+            //     isClosable: true,
+            // });
         })
         .catch((error) => {
             setError(error);
             setLoading(false);
-            toast({
-                title: 'An error occurred',
-                description: 'Failed to sign up user',
-                status: 'error',
-                duration: 5000,
-            });
+           
+           
+            // toast({
+            //     title: 'An error occurred',
+            //     description: 'Failed to sign up user',
+            //     status: 'error',
+            //     duration: 5000,
+            // });
         });
     }
     
@@ -65,23 +70,25 @@ export default function useAuth() {
                 type: 'SET_AUTH_INFO',
                 payload: result
               });
-            toast({
-                title: 'User authenticated',
-                description: "User authenticated successfully",
-                status: 'success',
-                duration: 5000,
-                isClosable: true,
-            });
+            
+            // toast({
+            //     title: 'User authenticated',
+            //     description: "User authenticated successfully",
+            //     status: 'success',
+            //     duration: 5000,
+            //     isClosable: true,
+            // });
         })
         .catch((error) => {
             setError(error);
             setLoading(false);
-            toast({
-                title: 'An error occurred',
-                description: 'Failed to authenticate user',
-                status: 'error',
-                duration: 5000,
-            });
+
+            // toast({
+            //     title: 'An error occurred',
+            //     description: 'Failed to authenticate user',
+            //     status: 'error',
+            //     duration: 5000,
+            // });
         });
     }
     

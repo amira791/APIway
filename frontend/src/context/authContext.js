@@ -1,4 +1,6 @@
 import React, { createContext, useReducer, useContext, useEffect } from 'react';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AuthContext = createContext(null);
 
@@ -16,29 +18,44 @@ const initialState = {
 const authReducer = (state, action) => {
   switch (action.type) {
     case 'SET_AUTH_INFO':
-      const { user_type, user_id, user, access, refresh } = action.payload;
-      return {
-        ...state,
-        isAuth: true,
-        token: access,
-        username: user.username,
-        userId: user_id,
-        isFournisseur: user_type === 'fournisseur',
-        isConsommateur: user_type === 'consommateur',
-        isAdmin: user_type === 'admin'
-      };
+      try {
+        const { user_type, user_id, user, access, refresh } = action.payload;
+        return {
+          ...state,
+          isAuth: true,
+          token: access,
+          username: user.username,
+          userId: user_id,
+          isFournisseur: user_type === 'fournisseur',
+          isConsommateur: user_type === 'consommateur',
+          isAdmin: user_type === 'admin'
+        };
+      } catch (error) {
+        console.error('Error occurred while setting auth info:', error);
+        toast.error("An error occured while signin");
+        // You can return the state as is or handle it differently based on your application's logic
+        return state;
+      }
+
     case 'SIGNUP':
-      const { user_type: signUpType, user_id: signUpId, user: signUpUser, access: signUpAccess, refresh: signUpRefresh } = action.payload;
-      return {
-        ...state,
-        isAuth: true,
-        token: signUpAccess,
-        username: signUpUser.username,
-        userId: signUpId,
-        isFournisseur: signUpType === 'fournisseur',
-        isConsommateur: signUpType === 'consommateur',
-        isAdmin: signUpType === 'admin'
-      };
+      try {
+        const { user_type: signUpType, user_id: signUpId, user: signUpUser, access: signUpAccess, refresh: signUpRefresh } = action.payload;
+        return {
+          ...state,
+          isAuth: true,
+          token: signUpAccess,
+          username: signUpUser.username,
+          userId: signUpId,
+          isFournisseur: signUpType === 'fournisseur',
+          isConsommateur: signUpType === 'consommateur',
+          isAdmin: signUpType === 'admin'
+        };
+      } catch (error) {
+        console.error('Error occurred during signup:', error);
+        toast.error("An error occured while signup");
+        return state;
+      }
+
     case 'LOGOUT':
       return {
         ...initialState,

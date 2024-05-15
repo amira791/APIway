@@ -4,6 +4,9 @@ import Navbar from '../global_components/navbar';
 import Footer from '../global_components/footer';
 import useAuth from '../../hooks/useAuth';
 import { useAuthContext } from '../../context/authContext';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 export default function SignUpPage() {
     const navigate = useNavigate();
@@ -66,6 +69,7 @@ export default function SignUpPage() {
                                 </div>
                                 <div className="col-xl-6 col-lg-9 col-md-12">
                                     <form onSubmit={handleFormSubmit}>
+                                    <ToastContainer />
                                     <div className='add-nft-inner'>
                                             <h6 className="title">Choose Role</h6>
                                             <p className="sub">Connect to APIway as provider to create APIs or as Consumer to use APIs</p>

@@ -89,7 +89,7 @@ export default function Thread({ thread_id , onThreadClick}) {
             </div>
           </div>
         </div>
-        { authState.isAuth ?(
+        { authState.isConsommateur ?(
         <div id="comments">
           <h5 className="heading">Add A Comment</h5>
           <form onSubmit={handleFormSubmit} method="post" id="commentform" className="comment-form">

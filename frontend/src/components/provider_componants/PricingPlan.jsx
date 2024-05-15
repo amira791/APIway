@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import APIAjout from '../../hooks/APIHook2';
 import { Alert } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useAuthContext } from '../../context/authContext';
 
 
 const PricingMenu = ({ allPricingData, onSelect }) => {
@@ -30,7 +31,10 @@ const PricingMenu = ({ allPricingData, onSelect }) => {
   );
 };
 
-const PricingPlan = ({ type, tarifications }) => (
+const PricingPlan = ({ type, tarifications }) =>
+  {
+      const { authState } = useAuthContext();
+    return (
   <>
 
     <div className="pricing-plan">
@@ -77,10 +81,14 @@ const PricingPlan = ({ type, tarifications }) => (
               </div>
               <div className="content" style={{ marginTop: "4%" }}>
                 <div className="cash">
+                { authState.isConsommateur ?(
                   <div className="product-button">
                     <Link to={`/payment/${tarif.id}`}>Purchase</Link>
                     {/* <a href="#" data-toggle="modal"  className="tf-button"> Purchase id is {tarif.id}</a> */}
                   </div>
+                ):(
+                  <div></div>
+                )}
                 </div>
               </div>
             </div>
@@ -91,6 +99,7 @@ const PricingPlan = ({ type, tarifications }) => (
     </div>
   </>
 );
+}
 
 const PricingContainer = ({ id, tarifs }) => {
   const [pricingData, setPricingData] = useState([]);

@@ -93,9 +93,10 @@ function Payment() {
               <p><strong>Offre sélectionnée :</strong> {subscribed.api} </p>
               <p><strong>Date de début d'abonnement : </strong> {subscribed.start_date} </p>
               <p><strong>Date de fin d'abonnement : </strong> {subscribed.end_date} </p>
+              <p><strong>API key : </strong> {subscribed.api_key} </p>
             </div>
             <div className="receipt-actions">
-              <button onClick={() => handleDownload(subscribed.facture.pdf)} >Télécharger la facture &#11015;</button>
+              <button onClick={() => handleDownload(subscribed.invoice)} >Télécharger la facture &#11015;</button>
               <button onClick={() => navigate(`/details/${subscribed.api}`) } >Page des details  &#128462;</button>
             </div>
           </section>
@@ -202,6 +203,7 @@ function Payment() {
                   />
                   {errors.DateExp && <span className='error-message'>{errors.DateExp}</span>}
                 </div>
+                
               </div>
             }
             <div className='payment-button-container'>

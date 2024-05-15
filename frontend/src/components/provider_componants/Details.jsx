@@ -118,7 +118,8 @@ const Details = () => {
         const { data, error } = await subscribtion(id);
         if (!error) {
           setIsSubscribed(true);
-          setAPIKey(data.api_key)
+          setAPIKey(data[0].api_key)
+          console.log(data[0].api_key)
         }
       } catch (error) {
        

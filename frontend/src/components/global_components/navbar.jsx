@@ -12,7 +12,6 @@ export default function Navbar() {
   const menuItems = [
     { name: "Home", url: "/", active: true },
     { name: "Explore", url: "/searchApi" },
-    { name: "Help Center", url: "help-center.html" },
     { name: "FAQ", url: "/tickets" },
     { name: "Contact", url: "/signup" }
   ];
@@ -50,7 +49,7 @@ export default function Navbar() {
                 </div>
 
                 <div className="header-right">
-                  {authState.isAuth ? (
+                  {authState.isConsommateur ? (
                     <>
                       <button onClick={logOut} className="tf-button">
                         Logout
