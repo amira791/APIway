@@ -24,6 +24,7 @@ const Details = () => {
   const [chosenVersion, setChosenVersion] = useState(null);
   const [chosenVersionInfo, setChosenVersionInfo] = useState(null);
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [api_key ,setAPIKey] = useState()
 
   const [apiVersions, setApiVersions] = useState([]);
   const [apiEndpoints, setApiEndpoints] = useState(null);
@@ -117,10 +118,10 @@ const Details = () => {
         const { data, error } = await subscribtion(id);
         if (!error) {
           setIsSubscribed(true);
-          console.log(data[0].api_key);
+          setAPIKey(data.api_key)
         }
       } catch (error) {
-        // Handle error if needed
+       
       }
     };
   
@@ -230,7 +231,7 @@ const Details = () => {
                                 </div>
                               </fieldset>
                               <div class="tab-details">
-                                {apiEndpoints ? <Example endpoints={apiEndpoints} state={chosenVersionState} isSubscribed={isSubscribed} navigate={() => handleTabClick('Pricing')} /> : <></>}
+                                {apiEndpoints ? <Example  api_key={api_key} endpoints={apiEndpoints} state={chosenVersionState} isSubscribed={isSubscribed} navigate={() => handleTabClick('Pricing')} /> : <></>}
                               </div>
                             </div>)}
                           {activeTab === 'Functionalities' && (

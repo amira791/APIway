@@ -87,7 +87,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Example = ({ endpoints , state,isSubscribed,navigate}) => {
+const Example = ({ api_key , endpoints , state,isSubscribed,navigate}) => {
   const classes = useStyles(); // Initialize the styles
   const [selectedEndpoint, setSelectedEndpoint] = useState(endpoints[0]); // Initialize selected endpoint state
   const [headers, setHeaders] = useState([]);
@@ -130,6 +130,10 @@ const Example = ({ endpoints , state,isSubscribed,navigate}) => {
       setResponseContent('');
     }
   };
+  useEffect(() => {
+     console.log(api_key)
+  }, [api_key])
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -345,34 +349,14 @@ const Example = ({ endpoints , state,isSubscribed,navigate}) => {
                   {/* <Typography variant="body1">Select Application:</Typography> */}
                   <Select className={classes.insidertext} disabled value="default">
                     <MenuItem  value="default" disabled>
-                      Default Application{" "}
+                      {api_key}{" "}
                     </MenuItem>
                   </Select>
                   <Typography variant="body1">Required</Typography>
                 </Box>
               </div>
               <Divider />
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Typography variant="h5" sx={{ mt: 2 }}>
-                X-APIway-Host
-                </Typography>
-                <Box sx={{ mt: 1 }}>
-                  {/* <Typography variant="body1">Select Application:</Typography> */}
-                  <Select className={classes.insidertext} disabled value="default">
-                    <MenuItem value="default" disabled>
-                      {" "}
-                      Apiway.com{" "}
-                    </MenuItem>
-                  </Select>
-                  <Typography variant="body1">Required</Typography>
-                </Box>
-              </div>
+              
               {headers.map((parameter) => (
                 <div key={parameter.id}>
                   <div
