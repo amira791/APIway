@@ -463,14 +463,14 @@ const Example = ({ api_key , endpoints , state,isSubscribed,navigate}) => {
   <div >
     <Box sx={{ mt: 1 , lineHeight:"120px"}}>
       <Typography className={classes.insidertext}>Media Type: {endpointBody.media_type}</Typography>
-      <Typography className={classes.insidertext}>Payload Name: {endpointBody.payload_name}</Typography>
+      <Typography className={classes.insidertext}> Name: {endpointBody.payload_name}</Typography>
       <Typography className={classes.insidertext}>Description: {endpointBody.payload_description}</Typography>
       <fieldset class="message">
                         <textarea
                           id="message"
                           name="message"
                           rows="4"
-                          placeholder="documentation"
+                          
                           tabindex="4"
                           defaultValue={endpointBody.body_example}
                           aria-required="true"

@@ -5,13 +5,14 @@ import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../global_components/navbar.jsx";
 import Footer from "../global_components/footer.jsx";
 import EndpointExacTable from "./CommunComponants/EndpointExecTable.jsx";
-
+import NavbarProvider from "./CommunComponants/NavBar.jsx";
 import Example from "./CommunComponants/execTab.jsx";
 import PricingContainer from "./PricingPlan.jsx";
 import { useParams } from "react-router-dom";
 import API from "../../API.js";
 import Forum from "../forum/Forum.jsx";
 import usePayment from "../../hooks/usePayment.jsx";
+import { useAuthContext } from "../../context/authContext.js";
 
 const Details = () => {
   const { id } = useParams(); // Get the ID parameter from the URL
@@ -33,6 +34,7 @@ const Details = () => {
   const [chosenVersionState, setChosenVersionState] = useState(null);
   const { fetchAPIDetailsById, fetchAPICategorysById, fetchAPIProviderById, fetchAllAPIVersionsById, fetchAPIEndpointsByVersion, fetchAllFunctionalitiesById, fetchAPIVersionsInfoById, tarifTypes } = APIAjout();
 
+  const { authState } = useAuthContext();
 
 
   const handleVersionChange = (event) => {
@@ -117,7 +119,7 @@ const Details = () => {
       try {
         const { data, error } = await subscribtion(id);
         if (!error) {
-          setIsSubscribed(true);
+          // setIsSubscribed(true);
           setAPIKey(data[0].api_key)
           console.log(data[0].api_key)
         }
@@ -144,7 +146,8 @@ const Details = () => {
     <body className="body header-fixed">
       <div id="wrapper" className="wrapper-style">
         <div id="page" className="clearfix">
-          <Navbar />
+       
+        {authState.isConsommateur ? ( <Navbar /> ) : (<NavbarProvider/>)}
           <section className="tf-page-title-details ">
             <h4 className="page-title-heading">API Details</h4>
           </section>
@@ -165,10 +168,6 @@ const Details = () => {
                         <div style={{ width: "100%" }} >
                           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: "2%", gap: "20%" }}>
                             <div className="author">
-                              <img
-                                src="/assets/images/author/author-detail-3.png"
-                                alt="Image"
-                              />
                               <h6 className="title" style={{ fontSize: "17px" }}>Provider: {apiProvider.user.first_name}  {apiProvider.user.last_name}</h6>
                             </div>
                             <div className="wishlish" >

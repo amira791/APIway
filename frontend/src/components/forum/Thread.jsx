@@ -59,10 +59,10 @@ export default function Thread({ thread_id , onThreadClick}) {
                 <div className="history-details tf-loadmore 3d" style={{ width: '100vh' }}>
                 <div className="authorr" style={{ width: '100vh' }}>
                   <div className="avatar">
-                    <img src="/assets/images/author/history-at5.jpg" alt="images" />
+                    <img src="/assets/images/author/user.png" alt="images" />
                   </div>
                   <div className="content">
-                    <a href="#" className="name">{thread.creator?.CNusername}</a>
+                    <a href="#" className="name">{thread.creator?.username}</a>
                     <div className="description"> {thread.content}</div>
                     <div className="date">
                       <span> <TimeIcon /></span>

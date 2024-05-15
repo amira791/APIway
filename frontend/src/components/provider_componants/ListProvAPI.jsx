@@ -92,7 +92,7 @@ const ProvAPIList = () => {
     const columns= [
         {
             name:"Logo",
-            selector:(row)=><img  height ={70} width={80} src={ row.logo}/>,
+            selector:(row)=><img  height ={70} width={80} src={row.logo}/>,
         },
         {
             name:"Name",

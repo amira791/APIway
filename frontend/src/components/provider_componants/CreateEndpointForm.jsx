@@ -453,31 +453,31 @@ const AddEndpointForm = ({ onSave }) => {
                     <option value="text/plain">text/plain</option>
                     <option value="form-data">form-data</option>
                   </select>
-                  <label className="capitalize is-required infos-text">Payload name</label>
+                  <label className="capitalize is-required infos-text">Body name</label>
                   <input
                     type="text"
                     value={body.payloadName}
                     onChange={(e) =>
                       setBody({ ...body, payloadName: e.target.value })
                     }
-                    placeholder="Payload Name"
+                    placeholder="Body Name"
                   />
-                  <label className="infos-text">Payload description</label>
+                  <label className="infos-text">Body description</label>
                   <input
                     type="text"
                     value={body.payloadValue}
                     onChange={(e) =>
                       setBody({ ...body, payloadValue: e.target.value })
                     }
-                    placeholder="Payload Description"
+                    placeholder="Body Description"
                   />
                   <fieldset className="message">
-                    <label>Enter un example</label>
+                    <label>Enter The Body</label>
                     <textarea
                       id="description"
                       name="message"
                       rows="4"
-                      placeholder="Example"
+                      placeholder="Body"
                       tabIndex="4"
                       aria-required="true"
                       required=""
@@ -508,6 +508,7 @@ const AddEndpointForm = ({ onSave }) => {
                   <div>
                     <input
                       type="number"
+                      placeholder="Code status"
                       value={newExample.codeStatus}
                       onChange={(e) =>
                         setNewExample({
