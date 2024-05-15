@@ -2,12 +2,13 @@ import ManipulateProv from "../../hooks/ProviderHook";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ManipulateCat from "../../hooks/CategoryHook";
-import APIAjout from "../../hooks/ApiHook";
+import APIAjout from "../../hooks/APIHook";
 import VersionTable from "../provider_componants/APIversions";
 import CustomPagination from "../global_components/pagination";
 import Monetizing from "./ModifyMonetize";
-const ProvAPIList = ({provider_id}) => {
-    const { providerAPIs } = ManipulateProv();
+import DataTable from "react-data-table-component";
+const ProvAPIList = () => {
+    const { providerAPIs,getApisByProvider  } = ManipulateProv();
     const [showUpdateSection, setShowUpdateSection] = useState(false);
     const [showVersionsSection, setShowVersionsSection] = useState(false);
     const [selectedAPI, setSelectedAPI] = useState(null);
@@ -22,6 +23,7 @@ const ProvAPIList = ({provider_id}) => {
       setSelectedAPI(api);
       setShowUpdateSection(true);
     };
+
 
     const handleReturnClick = () => {
       if(showMonetizeSection){
@@ -45,7 +47,7 @@ const ProvAPIList = ({provider_id}) => {
     const handleFilterClick = (filterId) => {
       setActiveFilter(filterId);
     };
-  
+    const provider_id = 1;
     const [formData, setFormData] = useState({
         description: selectedAPI?.description || '',
         termOfUse: selectedAPI?.terms_of_use|| '',
@@ -77,14 +79,90 @@ const ProvAPIList = ({provider_id}) => {
       e.preventDefault();
 
       //console.log("submittedForm",formData);
-      updateAPI(selectedAPI.id_api,formData);
+      if(window.confirm("Are you sure you want to save your modifications?")){
+        updateAPI(selectedAPI.id_api,formData);
+        window.location.reload();
+      }
     };
 
     const handleToggleMonetizeSection = () => {
         setShowMonetizeSection(!showMonetizeSection);
         setShowModifySection(!showModifySection);
     };
+    const columns= [
+        {
+            name:"Logo",
+            selector:(row)=><img  height ={70} width={80} src={ row.logo}/>,
+        },
+        {
+            name:"Name",
+            selector:(row)=>row.api_name,
+        },
+        {
+            name:"Website",
+            selector:(row)=>row.website,
+        },
+        {
+            name:"Category",
+            selector:(row)=>row.category_label,
+        },
+        {
+            name:"Visibility",
+            selector:(row)=>row.visibility ? 'Visible' : 'Not Visible',
+        },
+        {
+            name:"Action",
+            cell:(row)=>(
+                <><button className="update_btn" onClick={() => handleUpdateClick(row)} title="Update API">
+                    <i className="fa-solid fa-pencil"></i>
+                </button>
+                <button className="update_btn" onClick={() => handleVersions(row)} title="Manage versions">
+                    <i class="fa-solid fa-code-compare"></i>
+                </button>
+                <Link to={`/details/${row.id_api}`}>Go to</Link></>
+            )
 
+        }
+
+    ];
+    const [search, SetSearch]= useState('');
+    const [filter, setFilter]= useState([]);
+    useEffect(()=>{
+        const result= providerAPIs.filter((item)=>{
+         return item.api_name.toLowerCase().match(search.toLocaleLowerCase());
+        });
+        setFilter(result);
+    },[search]);
+    const tableHeaderstyle={
+        headCells:{
+            style:{
+                fontWeight:"bold",
+                fontSize:"14px",
+                backgroundColor: "#F5ECFF"
+    
+            },
+        },
+        pagination: {
+            style: {
+              width: '100%',
+            },
+            pageButtonsStyle: {
+              borderColor: '#fff',
+              
+            },
+            pageButtonsActiveStyle: {
+              backgroundColor: '#fff',
+              color: '#333',
+            },
+        },
+        subHeader: {
+            style: {
+                backgroundColor: '#1f1f2cs',
+                
+            }
+        },
+        
+    }
 
     return(
         <div>
@@ -93,52 +171,31 @@ const ProvAPIList = ({provider_id}) => {
                 style={{ display: !showUpdateSection && !showVersionsSection ? "block" : "none" }}
             > 
                 <h4 className="title-dashboard">API List</h4>
-                <div className="table-ranking top">
-                    <div className="title-ranking">
-                        <div className="col-rankingg">Logo</div>
-                        <div className="col-rankingg">Name</div>
-                        <div className="col-rankingg">WebSite</div>
-                        <div className="col-rankingg">Category</div>
-                        <div className="col-rankingg">Visibility</div>
-                        <div className="col-rankingg">Action</div>
-                    </div>
-                </div>
-                <div className="table-ranking">
-                {providerAPIs.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((api) => {
-                  const logoFileNameWithExtension = api.logo.replace(/^.*[\\\/]/, '');
-                  const logoFileName = logoFileNameWithExtension.split('%0D%0A')[0];
-                  
-                 
-                    return (
-                    <div className="content-ranking" key={api.id_api}>
-                        <div className="col-rankingg">
-                        <div className="image"><img src={api.logo} /></div>
-                        </div>
-                        <div className="col-rankingg">{api.api_name}</div>
-                        <div className="col-rankingg">{api.website}</div>
-                        <div className="col-rankingg">{api.category_label}</div>
-                        <div className="col-rankingg">{api.visibility ? 'Visible' : 'Not Visible'}</div>
-                        <div className="col-rankingg" style={{ display: 'flex', gap: '10px' }}>
-                            <button className="update_btn"onClick={() => handleUpdateClick(api)} title="Update API">   
-                                <i className="fa-solid fa-pencil"></i>
-                            </button>
-                            <button className="update_btn" onClick={() => handleVersions(api)} title="Manage versions">   
-                                <i className="fa-solid fa-code-compare"></i>
-                            </button>
 
-                        </div>
-                    </div>
-                    );
-                })}
+               <React.Fragment>
+                <DataTable
+                    customStyles={ tableHeaderstyle}
+                    columns={columns}
+                    data={filter.length > 0 ? filter : providerAPIs}
+                    pagination
+                    fixedHeader
+                    highlightOnHover
+                    subHeader
+                    subHeaderComponent={
+                       <input type="text"
+                       className="w-25 form-control"
+                       placeholder="Search..."
+                       value={ search}
+                       onChange={(e)=>SetSearch(e.target.value)}
+                       
+                       />
+                    }
+                    subHeaderAlign="right"
 
-                </div>
+                >
 
-                <CustomPagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    handlePageChange={setCurrentPage}
-                />
-
+                </DataTable>
+               </React.Fragment>
             </div>
 
             <div>
@@ -146,7 +203,7 @@ const ProvAPIList = ({provider_id}) => {
                 <div id="update-section">
                     <div>
                         <h4 className="title-dashboard" style={{ display: "inline-block", marginRight: "600px" }}>Update Your API</h4>
-                        <button onClick={handleReturnClick} title="Return to APIs"><i className="fa-solid fa-right-from-bracket"></i></button>
+                        <button onClick={handleReturnClick} title="Return to APIs"><i class="fa-solid fa-right-from-bracket"></i></button>
                         {showModifySection && (
                             <button
                                 onClick={handleToggleMonetizeSection}
@@ -158,7 +215,8 @@ const ProvAPIList = ({provider_id}) => {
                     </div>
                     <div>
                     {showModifySection && (
-                        <section className="add-nft tf-section tf-hot-pick tf-filter">
+                        <div>
+                         <section className="add-nft tf-section tf-hot-pick tf-filter">
                             <div className="tf-container">
                             <div className="row ">
                                 <div className="col-xl-9 col-lg-8 content-inner">
@@ -175,7 +233,7 @@ const ProvAPIList = ({provider_id}) => {
                                     <form onSubmit={handleSubmit}>
                                         <fieldset className="message">
                                             <label>API category</label>
-                                            <div className="form-select">
+                                            <div class="form-select">
                                                 <select
                                                     id="Api-category"
                                                     value={formData.categoryId}
@@ -191,17 +249,17 @@ const ProvAPIList = ({provider_id}) => {
                                                         </option>
                                                     ))}
                                                 </select>
-                                                <i className="icon-fl-down"></i>
+                                                <i class="icon-fl-down"></i>
                                             </div>
                                         </fieldset>
 
-                                        <fieldset className="message">
+                                        <fieldset class="message">
                                             <label>API description</label>
                                             <textarea
                                                 id="Api-description"
                                                 name="message"
                                                 rows="4"
-                                                tabIndex="4"
+                                                tabindex="4"
                                                 aria-required="true"
                                                 required=""
                                                 value={formData.description}
@@ -273,7 +331,7 @@ const ProvAPIList = ({provider_id}) => {
                                                             width="30"
                                                             height="30"
                                                             fill="currentColor"
-                                                            className="bi bi-lock-fill"
+                                                            class="bi bi-lock-fill"
                                                             viewBox="0 0 16 16"
                                                             >
                                                             <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2" />
@@ -319,14 +377,15 @@ const ProvAPIList = ({provider_id}) => {
                                         </div>
                                         </div>
                                         <button type="submit">Submit</button>
-                                    </form>
+                                    </form> 
                                     </div>
 
                                 </div>
                                 </div>
                             </div>
                             </div>
-                        </section>
+                        </section> 
+              </div>
                     )}
                     {showMonetizeSection && (
                         <section
@@ -348,7 +407,7 @@ const ProvAPIList = ({provider_id}) => {
                 <div id="versions-section">
                     <div>
                         <h4 className="title-dashboard" style={{ display: "inline-block", marginRight: "600px" }}>Manage Versions</h4>
-                        {/* <button onClick={handleReturnClick2} title="Return to APIs"><i className="fa-solid fa-right-from-bracket"></i></button> */}
+                        {/* <button onClick={handleReturnClick2} title="Return to APIs"><i class="fa-solid fa-right-from-bracket"></i></button> */}
                     </div>
                    
                     <VersionTable selectedAPI={selectedAPI} onReturnClick={handleReturnClick2}/>  
@@ -360,4 +419,3 @@ const ProvAPIList = ({provider_id}) => {
     );
 };
 export default ProvAPIList;
-

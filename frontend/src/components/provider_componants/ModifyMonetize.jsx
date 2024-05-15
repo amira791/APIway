@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import APIAjout from "../../hooks/APIHook2";
+import APIAjout from "../../hooks/APIHook.jsx";
 import { ToastContainer } from 'react-toastify';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import ManipulateMonetize from "../../hooks/MonetizeHook";
+import ManipulateMonetize from "../../hooks/MonetizeHook.jsx";
 import ModelCheckbox from "./ModelCheckBox.jsx";
-
+import CustomPagination from "../global_components/pagination.jsx";
 const Monetizing = ({apiId}) => {
   
   // State to track the selected plan
@@ -31,8 +31,7 @@ const Monetizing = ({apiId}) => {
     Name: "",
     id: "",
     modelIndex: "",
-    Recommended: false,
-    ratelimit: "1000",
+    ratelimit: 100,
     quotalimit: "",
     price: "",
     features: "",
@@ -41,8 +40,7 @@ const Monetizing = ({apiId}) => {
     Name: "",
     id: "",
     modelIndex: "",
-    Recommended: false,
-    ratelimit: "1000",
+    ratelimit: 1000,
     quotalimit: "",
     price: "",
     features: "",
@@ -95,10 +93,16 @@ const Monetizing = ({apiId}) => {
       !editedPlan.Name ||
       !editedPlan.features ||
       !editedPlan.price ||
-      !editedPlan.quotalimit ||
-      !editedPlan.ratelimit
+      !editedPlan.quotalimit 
     ) {
       toast.error("Please fill in all fields before editing the plan.");
+      const rateLimitInput = document.getElementById("rate-limit");
+      if (rateLimitInput) {
+        document.getElementById("rate-limit").value = "";
+      }
+      document.getElementById("quota-limit").value = "";
+      document.getElementById("sub-price").value = "";
+      document.getElementById("features").value = "";
       return;
     }
     const model = Models[indexModel];
@@ -113,8 +117,7 @@ const Monetizing = ({apiId}) => {
         Models[indexModel].plans[planIndex].price = editedPlan.price; // Modify price to "1000"
         Models[indexModel].plans[planIndex].features = editedPlan.features; // Modify quotalimit to "100"
         Models[indexModel].plans[planIndex].ratelimit = editedPlan.ratelimit; // Modify quotalimit to "100"
-        Models[indexModel].plans[planIndex].Recommended =
-          editedPlan.Recommended; // Modify price to "1000"
+
       } else {
         console.log("Plan not found.");
       }
@@ -126,7 +129,6 @@ const Monetizing = ({apiId}) => {
     setEditedPlan({
       Name: "",
       id: "",
-      Recommended: false,
       ratelimit: "",
       quotalimit: "",
       price: "",
@@ -149,14 +151,18 @@ const Monetizing = ({apiId}) => {
       !newPlan.price ||
       !newPlan.quotalimit
     ) {
-      const rateLimitInput = document.getElementById("rate-limit");
-      if (rateLimitInput) {
-        if (!newPlan.ratelimit) {
-          alert("Please fill in all fields before adding the plan.");
-          return;
-        }
-      }
-      alert("Please fill in all fields before adding the plan.");
+      setNewPlan({
+        Name: "",
+        id: "",
+        ratelimit: "",
+        quotalimit: "",
+        price: "",
+        features: "",
+      });
+      document.getElementById("quota-limit").value = "";
+      document.getElementById("sub-price").value = "";
+      document.getElementById("features").value = "";
+      toast.error("Please fill in all fields before adding the plan.");
       return;
     }
 
@@ -181,13 +187,11 @@ const Monetizing = ({apiId}) => {
     setNewPlan({
       Name: "",
       id: "",
-      Recommended: false,
       ratelimit: "",
       quotalimit: "",
       price: "",
       features: "",
     });
-    document.getElementById("rate-limit").value = "";
     document.getElementById("quota-limit").value = "";
     document.getElementById("sub-price").value = "";
     document.getElementById("features").value = "";
@@ -209,7 +213,6 @@ const Monetizing = ({apiId}) => {
       setEditedPlan({
         Name: "",
         id: "",
-        Recommended: false,
         ratelimit: "",
         quotalimit: "",
         price: "",
@@ -288,10 +291,10 @@ const Monetizing = ({apiId}) => {
         );
       } else {
         return (
-          <div className="col-ranking product-button" key={index2}>
+          <div class="col-ranking product-button" key={index2}>
            {planValidated ? (
             <a
-              className="tf-button"
+              class="tf-button"
               href="#"
               data-toggle="modal"
               data-target="#tarif_pop"
@@ -308,8 +311,8 @@ const Monetizing = ({apiId}) => {
               }}
             >
               <span>
-                <div className="img">
-                  <i className="fal fa-plus"></i>
+                <div class="img">
+                  <i class="fal fa-plus"></i>
                 </div>
               </span>
             </a>
@@ -407,6 +410,19 @@ const Monetizing = ({apiId}) => {
     }
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(4);
+
+  const totalPages = Math.ceil(Models.length / itemsPerPage);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = Models.concat(pricingModels).slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <div className="tf-container">
       <div className="row">
@@ -417,32 +433,32 @@ const Monetizing = ({apiId}) => {
         </div>
       </div>
       <div
-        className="modal fade popup"
+        class="modal fade popup"
         id="popup_bid"
-        tabIndex="-1"
+        tabindex="-1"
         aria-modal="true"
         role="dialog"
       >
-        <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
-            <div className="modal-body space-y-20 pd-40">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body space-y-20 pd-40">
               <h3>Add a new plans model</h3>
 
-              <p className="label-1">Name:</p>
+              <p class="label-1">Name:</p>
               <input
                 type="text"
                 id="model-name"
                 placeholder="model name"
                 onChange={(e) => handleModelChange("Name", e.target.value)}
               />
-              <p className="label-1">Description:</p>
-              <fieldset className="message">
+              <p class="label-1">Description:</p>
+              <fieldset class="message">
                 <textarea
                   id="model-description"
                   name="message"
                   rows="4"
                   placeholder="Model's description"
-                  tabIndex="4"
+                  tabindex="4"
                   aria-required="true"
                   required=""
                   onChange={(e) =>
@@ -450,10 +466,10 @@ const Monetizing = ({apiId}) => {
                   }
                 ></textarea>
               </fieldset>
-              <p className="label-1"><i className="fa-solid fa-hourglass-half"></i> Period:</p>
-              <div className="row tf-container">
-                <div className="col-md-12">
-                  <div className="top-menu">
+              <p class="label-1"><i class="fa-solid fa-hourglass-half"></i> Period:</p>
+              <div class="row tf-container">
+                <div class="col-md-12">
+                  <div class="top-menu">
                     <ul className="filter-menu">
                       <li className={activeFilter === "Daily" ? "active" : ""}>
                         <a href="#" onClick={() => handleFilterClick("Daily")}>
@@ -482,7 +498,7 @@ const Monetizing = ({apiId}) => {
            <div  style={{display:"flex",alignItems:"center",justifyContent:"flex-end",gap:"15px" }}>
               <a
                 href="#"
-                className="button-popup"
+                class="button-popup"
                 data-toggle="modal"
                 data-target="#popup_bid_success"
                 data-dismiss="modal"
@@ -492,18 +508,18 @@ const Monetizing = ({apiId}) => {
                   addModel();
                 }}
               >
-               <i className="fa-solid fa-check"></i> Confirm
+               <i class="fa-solid fa-check"></i> Confirm
               </a>
               <a
                 href="#"
-                className="button-popup"
+                class="button-popup"
                 data-toggle="modal"
                 data-target="#popup_bid_success"
                 data-dismiss="modal"
                 aria-label="Close"
                 style={{background:"red",display:"flex",justifyContent:"space-around"}}
               >
-              <i className="fa-solid fa-xmark"></i>
+              <i class="fa-solid fa-xmark"></i>
                 Cancel
               </a></div>
             </div>
@@ -511,12 +527,12 @@ const Monetizing = ({apiId}) => {
         </div>
       </div>
 
-      <section className="tf-ranking tf-filter">
-        <div className="tf-container">
+      <section class="tf-ranking tf-filter">
+        <div class="tf-container">
           
-          <div className="table-ranking">
+          <div class="table-ranking">
             <div
-              className="title-ranking"
+              class="title-ranking"
               style={{
                 display: "flex",
                 justifyContent: "space-evenly",
@@ -524,8 +540,8 @@ const Monetizing = ({apiId}) => {
                 marginTop: "3%",
               }}
             >
-              <div className="col-ranking">#</div>
-              <div className="col-ranking">Model's name</div>
+              <div class="col-ranking">#</div>
+              <div class="col-ranking">Model's name</div>
               {tarifTypes.map((plan) => (
                 <div key={plan.id} className=" col-ranking">
                   <h6 className="title">
@@ -536,7 +552,7 @@ const Monetizing = ({apiId}) => {
             </div>
           </div>
         <div className="table-ranking tf-filter-container">
-          {[...Models, ...pricingModels].map((model, index) => (
+          {currentItems.map((model, index) => (
             <div
               key={index}
               className="content-ranking tf-loadmore 3d anime music"
@@ -571,9 +587,10 @@ const Monetizing = ({apiId}) => {
                                 </div>
                             )
                         ))}
-                        {!hasTarification && <div>No plan</div>}
+                        {!hasTarification && <div>No plan/ {model.period}</div>}
                     </React.Fragment>
                     );
+                    
 
                   }
                 )
@@ -600,12 +617,12 @@ const Monetizing = ({apiId}) => {
                         await createModels(apiId, Models);
                         setNewModelAdded(false);
                         setPlanValidated(false);
-                        console.log("planVal2",planValidated);
+                        window.location.reload();
                       }
                     }}
                     style={{ background: "green", marginRight: "1rem" }}
                   >
-                    <i className="fa-solid fa-check"></i> Validate
+                    <i class="fa-solid fa-check"></i> Validate
                   </button>
                   <button
                     className="button-popup"
@@ -615,7 +632,7 @@ const Monetizing = ({apiId}) => {
                     }}
                     style={{ background: "red" }}
                   >
-                    <i className="fa-solid fa-xmark"></i> Cancel
+                    <i class="fa-solid fa-xmark"></i> Cancel
                   </button>
                 </div>
               )}
@@ -626,18 +643,23 @@ const Monetizing = ({apiId}) => {
           ))}
         </div>
         </div>
+        <CustomPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePageChange={handlePageChange}
+        />
       </section>
       <div
-        className="modal fade popup"
+        class="modal fade popup"
         id="tarif_pop"
-        tabIndex="-1"
+        tabindex="-1"
         aria-modal="true"
         role="dialog"
       >
       
-        <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
-            <div className="modal-body space-y-20 pd-40">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body space-y-20 pd-40">
               <h3>
                 <h3>
                   {modificationOn ? "Edit " : "Add a New "}
@@ -645,7 +667,7 @@ const Monetizing = ({apiId}) => {
                 </h3>
               </h3>
 
-              <p className="label-1">Quota Limit :</p>
+              <p class="label-1">Quota Limit :</p>
               <p></p>
               <div
                 style={{
@@ -674,7 +696,7 @@ const Monetizing = ({apiId}) => {
                 </p>
               </div>
 
-              <p className="label-1">Subscription Price :</p>
+              <p class="label-1">Subscription Price :</p>
               <p></p>
               <input
                 id="sub-price"
@@ -739,8 +761,8 @@ const Monetizing = ({apiId}) => {
                   <label htmlFor="rate-limit-checkbox">Enable Rate Limit</label>
                 </div>
               )}
-              <p className="label-1">Features:</p>
-              <fieldset className="message">
+              <p class="label-1">Features:</p>
+              <fieldset class="message">
                 <textarea
                   id="features"
                   name="message"
@@ -761,7 +783,7 @@ const Monetizing = ({apiId}) => {
        
               <a
                 href="#"
-                className="button-popup"
+                class="button-popup"
                 data-toggle="modal"
                 data-target="#tarif_pop_success"
                 data-dismiss="modal"
@@ -772,30 +794,30 @@ const Monetizing = ({apiId}) => {
                     : addPlan(newPlan.modelIndex);
                 }}
               >
-              {modificationOn ? <><i className="fa-solid fa-pen"></i></>:<i className="fa-solid fa-check"></i>}
+              {modificationOn ? <><i class="fa-solid fa-pen"></i></>:<i class="fa-solid fa-check"></i>}
                 {modificationOn ? "Edit" : "Confirm"}
               </a>
               <button
                 type="button"
-                className="button-popup"
+                class="button-popup"
                 data-dismiss="modal"
                 aria-label="Close"
                 onClick={() => setModificationOn(false)}
                style={{background:"red",display:"flex",justifyContent:"space-around"}}
               >
-              <i className="fa-solid fa-xmark"></i>
+              <i class="fa-solid fa-xmark"></i>
                 Cancel
               </button>
               {modificationOn && (
                 <button
                   type="button"
-                  className="button-popup"
+                  class="button-popup"
                   data-dismiss="modal"
                   aria-label="Close"
                   style={{backgroundColor:"red"}}
                   onClick={() => deletePlan(editedPlan.modelIndex)}
                 >
-                <i className="fa-solid fa-trash"></i>
+                <i class="fa-solid fa-trash"></i>
                   Delete
                 </button>
               )}
@@ -815,15 +837,15 @@ const Monetizing = ({apiId}) => {
         }}
       >
         {/*   <button>Add new plans model</button> */}
-        <div className="product-button">
+        <div class="product-button">
           <a
             href="#"
             data-toggle="modal"
             data-target="#popup_bid"
-            className="tf-button"
+            class="tf-button"
           >
             {" "}
-            <span className="icon-btn-product"><i className="fa-solid fa-file-invoice"></i></span> Add new plans model
+            <span class="icon-btn-product"><i class="fa-solid fa-file-invoice"></i></span> Add new plans model
           </a>
         </div>
       </div>

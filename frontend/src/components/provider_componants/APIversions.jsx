@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ManipulateVersion from "../../hooks/VersionHook";
 import AddVersion from "./AddVersion";
-
-
 const VersionTable = ({ selectedAPI, onReturnClick }) => {
     const [isVisibleActive, setIsVisibleActive] = useState(true);
     const [isArrowDownActive, setIsArrowDownActive] = useState(true);
