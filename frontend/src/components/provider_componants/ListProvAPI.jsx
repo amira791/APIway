@@ -119,7 +119,7 @@ const ProvAPIList = () => {
                 <button className="update_btn" onClick={() => handleVersions(row)} title="Manage versions">
                     <i class="fa-solid fa-code-compare"></i>
                 </button>
-                <Link to={`/details/${row.id_api}`}>Go to</Link></>
+                <div className="likToDetails update_btn" ><Link to={`/details/${row.id_api}`}><i className="fa-solid fa-eye" style={{fontSize:"15px"}}></i></Link></div></>
             )
 
         }

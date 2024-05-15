@@ -2602,7 +2602,7 @@ header.absolute {
   background-color: #3749E9;
   color: #fff;
   border-radius: 50px;
-  padding: 17px 30px;
+  padding: 17px 20px;
   display: inline-block;
   -webkit-appearance: none;
   -webkit-transition: all 0.3s ease;
@@ -2610,6 +2610,12 @@ header.absolute {
   -ms-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
+}
+.linkToDetails {
+  background-color: #3749E9;
+  color: #fff;
+ display: inline-block;
+ 
 }
 /*# sourceMappingURL=style.css.map */
 

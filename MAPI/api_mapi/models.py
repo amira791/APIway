@@ -213,15 +213,15 @@ class APIdocumentation(models.Model):
 
 class PricingModel(models.Model):
     id_model= models.AutoField(primary_key=True)
-    api = models.ForeignKey(API, on_delete=models.DO_NOTHING )
-    name = models.CharField(max_length=255)
+    api = models.ForeignKey(API, on_delete=models.DO_NOTHING, null=True)
+    name = models.CharField(max_length=255, blank=True)
     CHOICES = (
         ('Daily', 'Daily'),
         ('Monthly', 'Monthly'),
         ('Yearly', 'Yearly'),
     )
-    period = models.CharField(max_length=100, choices=CHOICES)
-    description = models.TextField( help_text="Brief description of the pricing model")
+    period = models.CharField(max_length=100, choices=CHOICES, blank=True)
+    description = models.TextField( help_text="Brief description of the pricing model", blank=True)
     is_active = models.BooleanField(default=True)   
     def __str__(self):
         return self.name
@@ -255,6 +255,7 @@ class Abonnement(models.Model):
     consumer = models.ForeignKey(Consommateur, on_delete=models.DO_NOTHING)
     pricing = models.ForeignKey(Tarification, on_delete=models.DO_NOTHING)
     api = models.ForeignKey(API, on_delete=models.DO_NOTHING)
+    invoice = models.TextField()
 
     def __str__(self):
         return self.consumer.CNusername + " on " + self.pricing.type.name

@@ -262,7 +262,8 @@ def subscribe(request):
             "consumer": userId,
             "pricing": tarificationId,
             "api": apiId,
-            "api_key": "API_WAY_KEY_"+generate_api_key()
+            "api_key": "API_WAY_KEY_"+generate_api_key(),
+            "invoice" : invoice.invoice_pdf,
         }
 
 
@@ -275,7 +276,7 @@ def subscribe(request):
 
     except stripe.error.StripeError as e:
         return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-    
+
 @api_view(['Get'])
 def getsubscription(request):
     userId = request.GET.get('userId')

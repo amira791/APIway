@@ -5,6 +5,7 @@ import { CardCvcElement, CardExpiryElement, CardNumberElement, useElements, useS
 import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import { Elements } from '@stripe/react-stripe-js';
 import usePayment from '../../hooks/usePayment';
+import Navbar from '../global_components/navbar'
 
 function Payment() {
   const navigate = useNavigate();
@@ -83,6 +84,7 @@ function Payment() {
 
   return (
     <>
+    <Navbar/>
       <div className='payment-form'>
         {paymentSuccess ?
           <section className="successful-payment">
@@ -101,7 +103,7 @@ function Payment() {
           <form onSubmit={handleSubmit} className='payment_sub'>
             <div className='payment-section1'>
               <div className='mini-invoice'>
-              <ShoppingCart sx={{ width: '2em', height: '2em', color: 'white' }} />
+              
                 <div>
                   <span>{name}</span> <br />
                   <span>{price}</span>
