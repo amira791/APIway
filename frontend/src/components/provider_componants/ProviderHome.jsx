@@ -34,7 +34,7 @@ const ProviderHomePage = () => {
                                     <div className="dashboard-user">
                                         <div className="dashboard-infor">
                                             <div className="avatar">
-                                                <img src="assets/images/author/user.png" alt="images"/>
+                                                <img src="/assets/images/author/user.png" alt="images"/>
                                             </div>
                                             <div className="name"> {authState.username}</div>
                                             

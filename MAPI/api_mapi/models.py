@@ -60,7 +60,7 @@ class Comment(models.Model):
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
-    created_by = models.ForeignKey(UserBase, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(Consommateur, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.message

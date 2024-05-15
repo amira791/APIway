@@ -16,7 +16,7 @@ export default function Thread({ thread_id , onThreadClick}) {
   const [message, setMessage] = useState()
   const { addNewComment, getThread, getThreadComments, thread, comments, error, loading } = useForum();
   const { authState } = useAuthContext();
-  const creator = authState.userId;
+  const creator = parseInt(authState.userId);
 
   useEffect(() => {
     getThread(thread_id);

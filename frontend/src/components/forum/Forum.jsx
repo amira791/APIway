@@ -96,7 +96,7 @@ export default function Forum({ forum_id }) {
         <Box>
         {!selectedThreadId &&  <ThreadList key={forum.id_forum} forum_id={forum_id} onThreadClick={handleThreadClick}/>}
         </Box>
-        {selectedThreadId && <Thread threadId={selectedThreadId} onThreadClick={handleThreadClick}/>}
+        {selectedThreadId && <Thread thread_id={selectedThreadId} onThreadClick={handleThreadClick}/>}
       </Flex>
 
       {/* Modal for new discussion */}
