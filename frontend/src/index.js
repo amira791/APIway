@@ -38,19 +38,22 @@ function Root() {
       <Router>
         <Routes>
           <Route exact path="/" element={<HomeSection />} />
-          <Route exact path="/adminhome" element={authState.isAdmin ? <AdminHome /> : <Navigate to="/login"/>} />
-          <Route exact path='/fourAccounts' element={<FourAccountManag />} />
-          <Route exact path='/consomAccounts' element={<ConsomAccountManag />} />
-          <Route exact path="/searchApi" element={<SearchApi />} />
           <Route exact path="/login" element={<LoginPage />} />
           <Route exact path="/signup" element={<SignUpPage/>}/>
+
+
+          <Route exact path="/adminhome" element={authState.isAdmin ? <AdminHome /> : <Navigate to="/login"/>} />
+          <Route exact path='/fourAccounts' element={authState.isAdmin ?<FourAccountManag /> : <Navigate to="/login"/>} />
+          <Route exact path='/consomAccounts' element={authState.isAdmin ? <ConsomAccountManag /> : <Navigate to="/login"/>} />
+          <Route exact path="/searchApi" element={authState.isConsommateur ? <SearchApi /> : <Navigate to="/login"/>} />
+          
           {/* <Route path='/ApiDetail/:api_id' element={<ApiDetails />}></Route> */}
           <Route path="/forum" element={<ForumPage />} />
           <Route path="/forum/threads/:thread_id" element={<ThreadPage />} />
           <Route path="/tickets/new" element={<TicketForm />} />
-          <Route path='/tickets' element={<TicketsPage/>} />
+          <Route path='/tickets' element={authState.isConsommateur ||  authState.isFournisseur ? <TicketsPage/> : <Navigate to="/login"/>} />
           {/* <Route exact path="/addAPI" element={<AddAPIPage />} /> */}
-          <Route exact path="/details/:id" element={<Details />} />
+          <Route exact path="/details/:id" element={authState.isConsommateur ||  authState.isFournisseur ?  <Details /> :<Navigate to="/login"/> }/>
           <Route exact path="/provider_home" element={authState.isFournisseur ? <ProviderHomePage /> : <Navigate to="/login"/>}/>
 
           <Route exact path="/payment/:id" 
@@ -61,7 +64,7 @@ function Root() {
             : <Navigate to="/login"/>} 
           />
 
-          <Route exact path="/subscrib" element={<Subscrib/>} />
+          <Route exact path="/subscrib" element={authState.isConsommateur ?  <Subscrib/> : <Navigate to="/login"/>} />
 
         </Routes>
       </Router>
