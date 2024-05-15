@@ -102,7 +102,7 @@ const AddVersion = ({selectedAPI, onReturnClick2}) => {
     setEndpoints([...endpoints, newEndpoint]);
     console.log("endpoints2");
     console.log(endpoints);
-    $("#example").DataTable().destroy();
+    // $("#example").DataTable().destroy();
   };
 
 

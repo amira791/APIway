@@ -47,10 +47,26 @@ export default function usePayment() {
         return { success, error };
     }
 
+    const subscribtion = async (apiId)=>{
+
+        let success = false;
+        let error = null;
+        try {
+            const response = await payementApiClient.get(`/subscription?userId=${authState.userId}&apiId=${apiId}`);
+            console.log("User is subscribed: " + response.data);
+            success = response.data;
+        } catch (err) {
+            error = err.response?.data?.message || err.message;
+        }
+        
+        return { success, error };
+    }
+
 
 
   return {
     generateStripeToeken,
     subscribe,
+    subscribtion
   };
 }

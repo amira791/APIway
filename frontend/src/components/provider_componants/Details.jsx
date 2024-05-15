@@ -11,9 +11,12 @@ import PricingContainer from "./PricingPlan.jsx";
 import { useParams } from "react-router-dom";
 import API from "../../API.js";
 import Forum from "../forum/Forum.jsx";
+import usePayment from "../../hooks/usePayment.jsx";
 
 const Details = () => {
   const { id } = useParams(); // Get the ID parameter from the URL
+  const {subscribtion} = usePayment();
+
   const [activeTab, setActiveTab] = useState('About');
   const [apiDetails, setAPIDetails] = useState(null);
   const [apiCategory, setAPICategory] = useState(null);
@@ -29,6 +32,8 @@ const Details = () => {
   const [chosenVersionState, setChosenVersionState] = useState(null);
   const { fetchAPIDetailsById, fetchAPICategorysById, fetchAPIProviderById, fetchAllAPIVersionsById, fetchAPIEndpointsByVersion, fetchAllFunctionalitiesById, fetchAPIVersionsInfoById, tarifTypes } = APIAjout();
 
+
+
   const handleVersionChange = (event) => {
     const selectedVersionId = event.target.value;
     //  alert(selectedVersionId);
@@ -43,6 +48,9 @@ const Details = () => {
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
   };
+
+
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -103,6 +111,23 @@ const Details = () => {
     fetchData();
   }, [chosenVersion]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data, error } = await subscribtion(id);
+        if (!error) {
+          setIsSubscribed(true);
+          console.log(data[0].api_key);
+        }
+      } catch (error) {
+        // Handle error if needed
+      }
+    };
+  
+    fetchData();
+  
+  }, [id]);
+  
   if (!apiDetails) {
     return <div>Loading...</div>;
   }

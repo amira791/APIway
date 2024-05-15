@@ -114,7 +114,7 @@ const AddAPIPage = () => {
     setEndpoints([...endpoints, newEndpoint]);
     console.log("endpoints2");
     console.log(endpoints);
-    $("#example").DataTable().destroy();
+    // $("#example").DataTable().destroy();
   };
   const handleCheckboxChange = () => {
     setIsNewCategory(!isNewCategory);

@@ -90,7 +90,7 @@ function Payment() {
             <div className="success-payment-details">
               <p><strong>Offre sélectionnée :</strong> {subscribed.api} </p>
               <p><strong>Date de début d'abonnement : </strong> {subscribed.start_date} </p>
-              <p><strong>Date de fin d'abonnement : </strong> {subscribed.start_date} </p>
+              <p><strong>Date de fin d'abonnement : </strong> {subscribed.end_date} </p>
             </div>
             <div className="receipt-actions">
               <button onClick={() => handleDownload(subscribed.facture.pdf)} >Télécharger la facture &#11015;</button>
