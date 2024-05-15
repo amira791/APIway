@@ -48,15 +48,17 @@ export default function useApi() {
     const fetchApis = () => {
         axios.get(`${BASEURL}apis/`)
             .then(response => {
-                console.log('Fetched Data:', response.data);
-                setAPIs(response.data);
+                const visibleAPIs = response.data.filter(api => api.visibility === true);
+                console.log('Fetched Data:', visibleAPIs);
+                setAPIs(visibleAPIs);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
                 setError(error);
             });
     };
-
+    
+    
     const fetchApiCategories = () => {
         axios.get(`${BASEURL}apicategories/`)
             .then(response => {
@@ -72,9 +74,10 @@ export default function useApi() {
     const fetchApiSearchResults = (queryParams) => {
         axios.post(`${ConsumerBASEURL}api/search/`, queryParams)
             .then(response => {
+                const visibleAPIs = response.data.filter(api => api.visibility === true);
                 console.log('QueryParams:', queryParams);
                 console.log('Fetched Searched APIs:', response.data);
-                setSearchResults(response.data);
+                setSearchResults(visibleAPIs);
             })
     
             .catch(error => {

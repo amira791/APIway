@@ -157,20 +157,20 @@ const SearchApi = () => {
                                 </div>
                             </div>
                         </section>
-                        <section className="tf-baner-live-auction style-2">
+                        {/* <section className="tf-baner-live-auction style-2">
                             <div className="tf-container">
                                 <div className="row">
                                     <div className="col-md-12">
                                         <div className="image" style={{ maxHeight: "300px", overflow: "hidden", borderRadius: "15px" }}>
                                             <video autoPlay muted loop style={{ width: "100%" }}>
-                                                <source src="assets/images/explore3.mp4" type="video/mp4" />
+                                                <source src="/assets/images/explore3.mp4" type="video/mp4" />
                                                 Your browser does not support the video tag.
                                             </video>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </section>
+                        </section> */}
 
                         <section className="tf-baner-live-auction style-2">
                             <div className="tf-container">
@@ -333,6 +333,7 @@ const SearchApi = () => {
                                                 website={api.website}
                                                 categoryLabel={api.category_label}
                                                 searchQuery={searchQuery}
+                                                searchFilter={searchFilter}
                                                 
                                             />
                                         );

@@ -66,7 +66,8 @@ def index_api(request):
 
 
 
-
+# Import necessary modules
+from elasticsearch_dsl import Q
 
 @api_view(['POST'])
 def search_api(request, index='api_index'):
@@ -96,16 +97,18 @@ def search_api(request, index='api_index'):
     else:
         return Response({'error': 'Invalid search field'}, status=status.HTTP_400_BAD_REQUEST)
 
-    # Build query for each processed word
+    # Building query for each processed word
     queries = []
     for processed_word in processed_query_words:
-        query_string = "*" + processed_word + "*"  # Add wildcard characters to the processed word
-        reversed_query_string = "*" + processed_word[::-1] + "*"  # Add wildcard characters to the reversed processed word
+        query_string = "*" + processed_word + "*"  # Adding wildcard characters to the processed word
+        reversed_query_string = "*" + processed_word[::-1] + "*"  # Adding wildcard characters to the reversed processed word
 
+        #  fuzziness in the query_string part
+        fuzziness = 'AUTO'  
         query = Q('bool',
                   should=[
-                      Q('query_string', query=query_string, fields=search_fields),
-                      Q('query_string', query=reversed_query_string, fields=search_fields)
+                      Q('query_string', query=query_string, fields=search_fields, fuzziness=fuzziness),
+                      Q('query_string', query=reversed_query_string, fields=search_fields, fuzziness=fuzziness)
                   ],
                   minimum_should_match=1)
         queries.append(query)
@@ -115,7 +118,7 @@ def search_api(request, index='api_index'):
 
     sort = '_score'  # Tri par défaut (pertinence)
 
-    # Execute search query
+    # Execute elasticsearch query
     search = Search(index=index).using(client).query(combined_query).sort(sort)
 
     # Filter by category if provided

@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import useApi from '../../hooks/ApiHook';
 
-const Card = ({ apiName, description, logo, termsOfUse, website, categoryLabel, token, searchQuery, idApi }) => {
+const Card = ({ apiName, description, logo, termsOfUse, website, categoryLabel, token, searchQuery, idApi,searchFilter }) => {
     const navigate = useNavigate();
     const [functions, setFunctions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showLoginPrompt, setShowLoginPrompt] = useState(false);
     const { fetchApiFunctions } = useApi();
+
+    
     
     useEffect(() => {
         const fetchAPIFunctions = async () => {
@@ -41,34 +43,33 @@ const Card = ({ apiName, description, logo, termsOfUse, website, categoryLabel, 
 
     const highlightSearchQuery = (text, query) => {
         if (!query || query.trim() === '') {
-            return text;
+          return text;
         }
-
+    
         const queryWords = query.trim().toLowerCase().split(/\s+/);
-        let highlightedText = [];
-        let highlightedWords = [];
-
+        const highlightedText = [];
+    
         for (let i = 0; i < text.length; i++) {
-            const char = text[i];
-            highlightedWords = [];
-
-            queryWords.forEach((word) => {
-                const lowerCaseWord = word.toLowerCase();
-                if (text.substr(i, lowerCaseWord.length).toLowerCase() === lowerCaseWord) {
-                    highlightedWords.push(word);
-                }
-            });
-
-            if (highlightedWords.length > 0) {
-                highlightedText.push(<span key={i} className="highlight">{highlightedWords[0]}</span>);
-                i += highlightedWords[0].length - 1;
-            } else {
-                highlightedText.push(char);
+          const char = text[i];
+          let isWordHighlighted = false;
+    
+          queryWords.forEach((word) => {
+            const lowerCaseWord = word.toLowerCase();
+            if (text.substr(i, lowerCaseWord.length).toLowerCase() === lowerCaseWord) {
+              highlightedText.push(<span key={i} className="highlight">{word}</span>);
+              i += lowerCaseWord.length - 1;
+              isWordHighlighted = true;
             }
+          });
+    
+          if (!isWordHighlighted) {
+            highlightedText.push(char);
+          }
         }
-
+    
         return <>{highlightedText}</>;
-    };
+      };
+    
 
     // Function to truncate text after a certain number of characters
     const truncateText = (text, maxLength) => {
@@ -111,39 +112,45 @@ const Card = ({ apiName, description, logo, termsOfUse, website, categoryLabel, 
                         </div>
                     </div>
                     
-                    {searchQuery && description.toLowerCase().includes(searchQuery.toLowerCase()) && (
-                    <div className="details-product">
-                        <div className="author">
-                            <div className="content">
-                                <div className="position">Description</div>
+                    {searchQuery && searchFilter === 'Description' && (
+                        <div className="details-product">
+                            <div className="author">
+                                <div className="content">
+                                    <div className="position">Description</div>
                                     <div className="name">
                                         {highlightSearchQuery(truncateText(description, 100), searchQuery)}
+                                        {!description.toLowerCase().split(/\s+/).some((word) =>
+                                            searchQuery.trim().toLowerCase().split(/\s+/).includes(word)
+                                        ) }
                                     </div>
-                            </div>
-                        </div>
-                    </div>
-                     )}
-
-                    {searchQuery && functions.some(func => func.functName.toLowerCase().includes(searchQuery.toLowerCase())) && (
-                    <div className="details-product">
-                        <div className="author">
-                            <div className="content">
-                                <div className="position">Functions</div>
-                                <div className="name">
-                                    {loading
-                                        ? 'Loading...'
-                                        : functions
-                                            .filter(func => func.functName.toLowerCase().includes(searchQuery.toLowerCase()))
-                                            .map((func, index) => (
-                                                <span key={func.id}>
-                                                    {highlightSearchQuery(truncateText(func.functName, 50), searchQuery)}
-                                                    {index !== functions.length - 1 && ', '}
-                                                </span>
-                                            ))}
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    )}
+
+                    {searchQuery && searchFilter === 'Functionalities' && (
+                        <div className="details-product">
+                            <div className="author">
+                                <div className="content">
+                                    <div className="position">Functions</div>
+                                    <div className="name">
+                                        {loading
+                                            ? 'Loading...'
+                                            : functions.length > 0 ? (
+                                                functions.map((func, index) => (
+                                                    <span key={func.id}>
+                                                        {highlightSearchQuery(truncateText(func.functName, 50), searchQuery)}
+                                                        {index !== functions.length - 1 && ', '}
+                                                    </span>
+                                                ))
+                                            ) : (
+                                                <span className="placeholder">No functions available.</span>
+                                            )
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     )}
 
                     <br />

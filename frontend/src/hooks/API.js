@@ -19,13 +19,17 @@ const fetchData = async (url, setter, setLoading, setError) => {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        setter(data);
+        
+        // Filter APIs based on visibility attribute
+        const visibleData = data.filter(item => item.visibility === true);
+        setter(visibleData);
     } catch (error) {
         setError(error.message);
     } finally {
         setLoading(false);
     }
 };
+
 
 const postData = async (url, data, successMessage, toast, setError) => {
     try {
