@@ -81,29 +81,6 @@ export default function Ticket({ ticket_id, onTicketClick }) {
                                 <div className="content-inner">
                                     {parse(issueContent)}
                                 </div>
-
-
-
-                                <div className="content-bottom">
-                                    <div className="widget widget-socical">
-                                        <h6 className="widget-title">Share:</h6>
-                                        <ul>
-                                            <li><a href="#" className="icon-fl-mess"></a></li>
-                                            <li><a href="#" className="icon-fl-coolicon"></a></li>
-                                            <li><a href="#" className="icon-fl-facebook"></a></li>
-                                        </ul>
-
-                                    </div>
-                                    <div className="widget widget-tag">
-                                        <h6 className="widget-title">Tags:</h6>
-                                        <ul>
-                                            <li><a href="#" >Bitcoin,</a></li>
-                                            <li><a href="#" >Token,</a></li>
-                                            <li><a href="#" >Wallet</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-
                                 <div id="comments">
                                     <h5 className="heading">Leave A Comment</h5>
                                     <form onSubmit={handleFormSubmit} method="post" id="commentform" className="comment-form">

@@ -7,7 +7,7 @@ import { useAuthContext } from '../../context/authContext';
 import useManageAccountsC from '../../hooks/ConsomAccountsHook';
 import Thread from './Thread'
 
-export default function Forum({ forum_id }) {
+export default function Forum({ forum_id , api_id }) {
   const { addNewThread, getForum, forum, error: forumError, loading: forumLoading } = useForum();
   const { authState } = useAuthContext();
   const user_id = authState.userId;
@@ -76,7 +76,7 @@ export default function Forum({ forum_id }) {
           </div>
           <div className="product-button">
           {authState.isAuth ? (
-              <Link to={'/tickets/new'} className="tf-button">
+              <Link to={`/tickets/new/${api_id}`} className="tf-button">
                 <span className="icon-btn-product"></span>New ticket
               </Link>
             ) : (

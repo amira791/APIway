@@ -265,6 +265,16 @@ class TicketView(viewsets.ModelViewSet):
             queryset = queryset.filter(api_id=api_id)
         return queryset 
 
+class TicketsByProviderView(viewsets.ModelViewSet):
+    serializer_class = TicketSerializer
+    lookup_field = 'provider'
+
+    def get_queryset(self):
+        provider_id = self.kwargs.get('provider')  # Get provider_id from URL kwargs
+        if provider_id:
+            return Ticket.objects.filter(api_id__provider=provider_id)
+        return Ticket.objects.none() 
+    
 # Tarification View
 class TarificationView(viewsets.ModelViewSet):
     queryset = Tarification.objects.all()

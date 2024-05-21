@@ -29,11 +29,11 @@ const fetchData = async (url, setter, setLoading, setError) => {
     }
 };
 
-const postData = async (url, data, successMessage, toast, setError, token) => {
+const postData = async (url, data, successMessage, toast, setError) => {
     try {
         const response = await fetch(url, {
             method: 'POST',
-            headers: createHeaders(token),
+            headers: createHeaders(),
             body: JSON.stringify(data),
         });
         if (!response.ok) {

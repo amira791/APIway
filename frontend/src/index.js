@@ -53,7 +53,7 @@ function Root() {
           {/* <Route path='/ApiDetail/:api_id' element={<ApiDetails />}></Route> */}
           <Route path="/forum" element={<ForumPage />} />
           <Route path="/forum/threads/:thread_id" element={<ThreadPage />} />
-          <Route path="/tickets/new" element={<TicketForm />} />
+          <Route path="/tickets/new/:api_id" element={<TicketForm />} />
           <Route path='/tickets' element={authState.isConsommateur ||  authState.isFournisseur ? <TicketsPage/> : <Navigate to="/login"/>} />
           <Route path='/ticket/:ticket_id' element={authState.isConsommateur ||  authState.isFournisseur ? <Ticket/> : <Navigate to="/login"/>} />
           

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import useTicket from '../../hooks/useTicket';
@@ -14,11 +14,12 @@ export default function TicketForm() {
   const { addNewTicket, error: addError, loading: addLoading } = useTicket();
   const {authState} = useAuthContext();
   const creator = authState.userId;
+  const {api_id} = useParams(); 
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const newTicket = {
-      api_id: 7,
+      api_id: api_id,
       created_by: creator,
       title: title,
       issue: description
@@ -26,7 +27,7 @@ export default function TicketForm() {
 
     try {
       await addNewTicket(newTicket);
-      navigate('/searchApi');
+      
     } catch (error) {
       console.error('Error submitting ticket:', error);
       // Handle error state here
@@ -52,7 +53,7 @@ export default function TicketForm() {
             <div className="col-xl-6 col-lg-9 col-md-12">
               <form onSubmit={handleFormSubmit}>
               <fieldset><label htmlFor="title">Title</label>
-                <input type="text" name="title" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                <input type="text" name="title" id="title" value={title} onChange={(e) => setTitle(e.target.value)} required />
                 </fieldset>
                 <fieldset><label htmlFor="description">Description</label>
                 <ReactQuill
@@ -61,7 +62,7 @@ export default function TicketForm() {
                   value={description}
                   onChange={handleDescriptionChange}
                 /></fieldset>
-                <input type="submit" value="Submit" disabled={addLoading} />
+                <input type="submit" value="Submit" disabled={addLoading} required />
               </form>
               {addError && <div>Error: {addError.message}</div>}
             </div>

@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useTicket from '../../hooks/useTicket';
+import { useAuthContext } from '../../context/authContext';
 
-export default function TicketsList({ ticket_id , onTicketClick}) {
-  const { getTickets, getAPITickets, tickets, apiTickets, error, loading } = useTicket();
+export default function TicketsList({ ticket_id, onTicketClick }) {
+  const {  getProviderTickets, tickets, error, loading } = useTicket();
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
+  const { authState } = useAuthContext();
+
 
   useEffect(() => {
-    getTickets();
-  }, []);
+    getProviderTickets(authState.userId);
+  }, [authState.userId]);
 
   if (loading) {
     return <div>Loading...</div>; // Display a loading indicator while fetching data
@@ -36,15 +39,19 @@ export default function TicketsList({ ticket_id , onTicketClick}) {
         <div className="content-ranking" key={index}>
           <div className="col-rankingg">
             <div className="box-product-favorite">
-              <Link to="#"  onClick={() => onTicketClick(ticket.ticket_id)} className="name">
-              {ticket.title}
+              <a href="#" class="bookmark">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M12.7617 2.25H5.23828C4.42969 2.25 3.76172 2.91797 3.76172 3.76172V15.75L9 13.5L14.2383 15.75V3.76172C14.2383 2.91797 13.5703 2.25 12.7617 2.25Z" fill="#3749E9" />
+                </svg>
+              </a>
+              <Link to="#" onClick={() => onTicketClick(ticket.ticket_id)} className="name">
+                {ticket.title}
               </Link>
             </div>
           </div>
           <div className="col-rankingg coin">
-            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
-              <path fillRule="evenodd" clipRule="evenodd" d="M16.0138 5.65275C15.2277 5.65275 14.5905 6.29113 14.5905 7.07865V8.21954H19.2162V12.5686H14.5193V14.4223C14.5193 17.848 11.7474 20.625 8.32802 20.625C4.90869 20.625 2.13672 17.848 2.13672 14.4223C2.13672 10.9966 4.90869 8.21954 8.32802 8.21954H10.3206V7.07865C10.3206 3.92866 12.8695 1.375 16.0138 1.375H21.3867V5.65275H16.0138ZM10.3203 8.25586V12.5694H14.519V8.25586H10.3203ZM6.40625 14.423C6.40625 13.3598 7.26655 12.498 8.32767 12.498H10.2492V14.423C10.2492 15.4862 9.38889 16.348 8.32767 16.348C7.26655 16.348 6.40625 15.4862 6.40625 14.423Z" fill="#03DB80" />
-            </svg>{ticket.api_info?.api_name}
+            <img src={ticket.api_info?.logo} alt="images" id="circular-image"  />
+            {ticket.api_info?.api_name}
           </div>
           <div className="col-rankingg">
             <div className="author-pd">
@@ -55,7 +62,7 @@ export default function TicketsList({ ticket_id , onTicketClick}) {
             </div>
           </div>
           <div className="col-rankingg">{ticket.status}</div>
-          <div className="dot"><a href="#"><i className="far fa-ellipsis-h"></i></a></div>
+
         </div>
       ))}
 

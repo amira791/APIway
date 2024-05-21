@@ -9,12 +9,11 @@ export default function useTicket() {
     const [error, setError] = useState(null);
     const [tickets, setTickets] = useState([]);
     const [ticket, setTicket] = useState([]);
-    const [apiTickets,setAPITickets] = useState([])
     const {authState} = useAuthContext();
     const token = authState.token;
 
-    const getAPITickets = (id) => {
-        fetchData(`${BASEURL}apis/${id}/tickets/`, setAPITickets, setLoading, setError,token);
+    const getProviderTickets = (id) => {
+        fetchData(`${BASEURL}tickets/byprovider/${id}/`, setTickets, setLoading, setError,token);
     };
 
     const getTickets = () => {
@@ -34,12 +33,11 @@ export default function useTicket() {
 
     return {
         addNewTicket,
-        getAPITickets,
+        getProviderTickets,
         getTickets,
         getTicket,
         ticket,
         tickets,
-        apiTickets,
         loading,
         error
     };

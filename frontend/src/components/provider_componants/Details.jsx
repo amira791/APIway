@@ -273,7 +273,7 @@ const Details = () => {
                             </div>)}
                           {activeTab === 'Discussion' && (
                             <div id="Discussion" className="tab-content">
-                              <Forum forum_id={apiDetails.forum} />
+                              <Forum forum_id={apiDetails.forum} api_id={id} />
                             </div>)}
                           {activeTab === 'Pricing' && (
                             <div id="Pricing" className="tab-content">
