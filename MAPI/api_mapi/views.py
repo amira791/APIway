@@ -295,6 +295,14 @@ class TicketsByProviderView(viewsets.ModelViewSet):
             return Ticket.objects.filter(api_id__provider=provider_id)
         return Ticket.objects.none() 
     
+class TicketResponseView(viewsets.ModelViewSet):
+    queryset = TicketResponse.objects.all()
+    serializer_class = TicketResponseSerializer
+
+    def get_queryset(self):
+        ticket_id = self.kwargs.get('ticket_id')
+        return TicketResponse.objects.filter(ticket=ticket_id)
+    
 # Tarification View
 class TarificationView(viewsets.ModelViewSet):
     queryset = Tarification.objects.all()

@@ -125,6 +125,13 @@ class TicketSerializer(serializers.ModelSerializer):
         model = Ticket
         fields = '__all__'
 
+class TicketResponseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TicketResponse
+        fields = '__all__'
+        read_only_fields = ['id', 'created_at']
+
+
 class TarificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tarification

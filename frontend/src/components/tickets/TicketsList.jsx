@@ -62,17 +62,13 @@ export default function TicketsList({ ticket_id, onTicketClick }) {
           </form>
         </div>
         <select value={statusFilter} onChange={handleStatusChange}>
-        <option value="">All</option>
-        <option value="open">Open</option>
-        <option value="closed">Closed</option>
-      </select>
+          <option value="">All</option>
+          <option value="open">Open</option>
+          <option value="closed">Closed</option>
+        </select>
 
       </div>
-<br />
-
-      
-
-
+      <br />
 
       <div className="table-ranking top">
         <div className="title-ranking">

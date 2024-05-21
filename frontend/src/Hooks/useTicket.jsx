@@ -45,10 +45,17 @@ export default function useTicket() {
         }, toast, setError,token);
     }
 
+    const addTicketResponse = (id ,response)=>{
+        postData(`${BASEURL}tickets/${id}/responses/`, response, {
+            title: 'Ticket ajoute',
+            description: 'Le Ticket a ete ajoute avec succes',
+        }, toast, setError,token);
+    }
     return {
         addNewTicket,
         closeTicket,
         openTicket,
+        addTicketResponse,
         getProviderTickets,
         getTickets,
         getTicket,

@@ -53,8 +53,8 @@ export default function TicketForm() {
             <div className="col-xl-6 col-lg-9 col-md-12">
               <form onSubmit={handleFormSubmit}>
               <fieldset><label htmlFor="title">Title</label>
-              <textarea name="title" id="title" value={title} onChange={(e) => setTitle(e.target.value)} required />
-                </fieldset>
+                 <textarea name="title" id="title" value={title} onChange={(e) => setTitle(e.target.value)} required />
+              </fieldset>
                 <fieldset><label htmlFor="description">Description</label>
                 <ReactQuill
                   theme='snow'

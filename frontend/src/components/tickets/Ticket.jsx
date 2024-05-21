@@ -5,10 +5,16 @@ import parse from 'html-react-parser';
 import formatTime from '../../utils/formatTime';
 import { Flex } from '@chakra-ui/react';
 import { ChevronLeftIcon } from '@chakra-ui/icons';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { useAuthContext } from '../../context/authContext';
 
 
 export default function Ticket({ ticket_id, onTicketClick }) {
-    const { openTicket ,closeTicket ,getTicket, ticket, error, loading } = useTicket();
+    const { addTicketResponse ,openTicket, closeTicket, getTicket, ticket, error, loading } = useTicket();
+    const [response, setResponse] = useState('');
+    const {authState} = useAuthContext()
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -21,10 +27,26 @@ export default function Ticket({ ticket_id, onTicketClick }) {
         fetchData();
     }, [ticket_id]);
 
-    const [message, setMessage] = useState('');
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault(); 
+    const handleResponseChange = (value)=>{
+        setResponse(value);
+    }
+
+    const handleFormSubmit = async (e) => {
+        e.preventDefault();
+
+        const ticketResponse = {
+          ticket : ticket_id,
+          created_by:authState.userId,
+          response_text: response
+        };
+
+        try {
+            await addTicketResponse(ticket_id , ticketResponse); 
+          } catch (error) {
+            console.error('Error submitting ticket:', error);
+           
+          }
     };
 
     const handleToggleStatus = async (e) => {
@@ -66,18 +88,14 @@ export default function Ticket({ ticket_id, onTicketClick }) {
                         <div className="detail-wrap">
                             <div className="detail-inner">
                                 <div className="content-top">
-                                    <Flex alignItems="center">
                                         <h4 className="title">{ticket?.title}</h4>
-                                        
-                                    </Flex>
-
                                     <div className="meta-blog">
                                         <div className="meta">
                                             <h6>API</h6>
                                             <p>{ticket.api_info?.api_name}</p>
-                                            
+
                                         </div>
-                                      
+
                                         <div className="meta meta-right">
                                             <div className="meta-inner">
                                                 <h6>WRITER</h6>
@@ -89,43 +107,46 @@ export default function Ticket({ ticket_id, onTicketClick }) {
                                             </div>
                                             <div className="meta-inner">
                                                 <span className={`status-badge status-${ticket?.status}`}>
-                                                {ticket?.status}
+                                                    {ticket?.status}
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                               
+
                                 <div className="content-inner">
                                     {parse(issueContent)}
                                 </div>
-                                
-                                <div id="comments">
-                                    <h5 className="heading">Leave A Comment</h5>
-                                    <form onSubmit={handleFormSubmit} method="post" id="commentform" className="comment-form">
-                                        <fieldset className="message">
-                                            <textarea
-                                                value={message}
-                                                onChange={(e) => setMessage(e.target.value)}
-                                                id="message" name="message" rows="4" placeholder="Message" tabIndex="4" aria-required="true" required="" />
-                                        </fieldset>
-                                        <div className="btn-submit">
-                                            <button className="tf-button" type="submit">Send comment</button>
-                                        </div>
-                                    </form>
-                                </div> 
+
+
+                            <div id="comments">
+                                <h5 class="heading">Add a response</h5>
+                                <form onSubmit={handleFormSubmit}
+                                 id="commentform"  class="comment-form">
+                                    <fieldset class="message">
+                                    <ReactQuill
+                                                theme='snow'
+                                                placeholder="Enter your response"
+                                                value={response}
+                                                onChange={handleResponseChange}
+                                            />  </fieldset>
+                                    <div class="btn-submit mg-t-36"><button class="tf-button" type="submit">Send comment</button>
+                                 </div>
+                                </form>
+                            </div>
+                       
                             </div>
                             <div className="side-bar">
                                 <div className="widget widget-recent-post">
-                                <button className="tf-button" onClick={handleToggleStatus}>
-                                            {ticket.status === 'open' ? 'Close Ticket' : 'Open Ticket'}
-                                </button>
+                                    <button className="tf-button" onClick={handleToggleStatus}>
+                                        {ticket.status === 'open' ? 'Close Ticket' : 'Open Ticket'}
+                                    </button>
                                 </div>
-                              
-                    </div>
+
+                            </div>
                         </div>
                     </div>
-                 
+
 
                 </section>
             </Flex>
