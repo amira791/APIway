@@ -15,9 +15,12 @@ import ConsomAccountManag from "./components/admin/consAccountManag";
 import SearchApi from "./components/RechercherAPI";
 import AdminHome from "./components/admin/adminHomePage";
 import ApiDetails from './components/ApiDetails'
+
 import LoginPage from './components/auth_components/LoginPage';
 import TicketForm from './components/tickets/TicketForm';
 import TicketsPage from './components/pages/TicketsPage';
+import Ticket from './components/tickets/Ticket';
+
 import { AuthProvider} from './context/authContext';
 import SignUpPage from './components/auth_components/SignUpPage';
 import AddAPIPage from './components/provider_componants/AddApi';
@@ -52,6 +55,8 @@ function Root() {
           <Route path="/forum/threads/:thread_id" element={<ThreadPage />} />
           <Route path="/tickets/new" element={<TicketForm />} />
           <Route path='/tickets' element={authState.isConsommateur ||  authState.isFournisseur ? <TicketsPage/> : <Navigate to="/login"/>} />
+          <Route path='/ticket/:ticket_id' element={authState.isConsommateur ||  authState.isFournisseur ? <Ticket/> : <Navigate to="/login"/>} />
+          
           {/* <Route exact path="/addAPI" element={<AddAPIPage />} /> */}
           <Route exact path="/details/:id" element={authState.isConsommateur ||  authState.isFournisseur ?  <Details /> :<Navigate to="/login"/> }/>
           <Route exact path="/provider_home" element={authState.isFournisseur ? <ProviderHomePage /> : <Navigate to="/login"/>}/>

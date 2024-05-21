@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import parse from 'html-react-parser';
-import { Button, Flex, Box } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import useTicket from '../../hooks/useTicket';
 
-export default function TicketsList() {
+export default function TicketsList({ ticket_id , onTicketClick}) {
   const { getTickets, getAPITickets, tickets, apiTickets, error, loading } = useTicket();
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,7 +36,9 @@ export default function TicketsList() {
         <div className="content-ranking" key={index}>
           <div className="col-rankingg">
             <div className="box-product-favorite">
-              <a href="#" className="name">{ticket.title}</a>
+              <Link to="#"  onClick={() => onTicketClick(ticket.ticket_id)} className="name">
+              {ticket.title}
+              </Link>
             </div>
           </div>
           <div className="col-rankingg coin">

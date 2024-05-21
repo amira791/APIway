@@ -48,7 +48,8 @@ export default function Thread({ thread_id , onThreadClick}) {
       <Flex flexDirection='column' justifyContent='flex-start' m={30}>
 
         <NavLink
-          onClick={()=> onThreadClick(thread_id)}
+          to="#" 
+          onClick={()=> onThreadClick(null)}
           display="list-item"
           place-items="center"
           padding-left="1px"

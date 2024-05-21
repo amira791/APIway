@@ -6,11 +6,19 @@ import React, { useState, useEffect } from "react";
 import APIAjout from "../../hooks/APIHook";
 import { useAuthContext } from "../../context/authContext";
 import TicketsList from "../tickets/TicketsList";
+import ProviderProfile from "./ProviderProfile";
+import Ticket from "../tickets/Ticket";
+
 
 const ProviderHomePage = () => {
 
     const { authState } = useAuthContext();
     const provider = authState.userId;
+    const [selectedTicketId, setSelectedTicketId] = useState(null);
+
+    const handleTicketClick = (ticketId) => {
+        setSelectedTicketId(ticketId);
+    };
 
     useEffect(() => {
         const load = localStorage.getItem('load');
@@ -74,8 +82,10 @@ const ProviderHomePage = () => {
 
                                             <AddAPIPage />
                                         </div>
-                                        <div className="inner-content inventory favorite">
-                                            <h4 className="title-dashboard">Tickets</h4>
+                                       
+                                        {!selectedTicketId ? ( 
+                                         <div className="inner-content inventory favorite">
+                                        <h4 className="title-dashboard">Tickets</h4>
                                             <div className="table-ranking top">
                                                 <div className="title-ranking">
                                                     <div className="col-rankingg"><a href="#">Title</a></div>
@@ -85,47 +95,18 @@ const ProviderHomePage = () => {
                                                 </div>
                                             </div>
                                             <div className="table-ranking ">
-                                                <TicketsList/>
+                                                 <TicketsList ticket_id={selectedTicketId} onTicketClick={handleTicketClick}/>
+                                                 </div>
+                                        </div>)
+                                        :( <Ticket ticket_id={selectedTicketId} onTicketClick={handleTicketClick}/>)
+                                                 
+                                        }
                                                 
-                                            </div>
-                                        </div>
+      
+                                         
                                         <div className="inner-content profile">
                                             <h4 className="title-dashboard">Edit Profile</h4>
-                                            <form action="#" className="form-edit-profile">
-                                                <div className="user-profile">
-                                                    <div className="title">Contact details</div>
-                                                    <fieldset>
-                                                        <h6>Full Name</h6>
-                                                        <input type="text" placeholder="Francisco Maia" required />
-                                                    </fieldset>
-                                                    <fieldset>
-                                                        <h6>Gender</h6>
-                                                        <input type="text" placeholder="Female" required />
-                                                    </fieldset>
-                                                    <fieldset>
-                                                        <h6>Date of birth</h6>
-                                                        <input type="text" placeholder="January 24, 1983" required />
-                                                    </fieldset>
-                                                </div>
-                                                <div className="user-profile">
-                                                    <div className="title">Contact details</div>
-                                                    <fieldset>
-                                                        <h6>Email Address</h6>
-                                                        <input type="text" placeholder="Francisco Maia" required />
-                                                    </fieldset>
-                                                    <fieldset>
-                                                        <h6>Gender</h6>
-                                                        <input type="text" placeholder="seb.bennett@gmail.com" required />
-                                                    </fieldset>
-                                                    <fieldset>
-                                                        <h6>Address</h6>
-                                                        <input type="text" placeholder="83222 Dicki View, South Pasqualeview, RI 79216-3100" required />
-                                                    </fieldset>
-                                                </div>
-                                                <button className="btn-form" type="submit">
-                                                    Update Settings
-                                                </button>
-                                            </form>
+                                             <ProviderProfile/>
                                         </div>
                                     </div>
                                 </div>
