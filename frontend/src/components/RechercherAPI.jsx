@@ -316,7 +316,7 @@ const SearchApi = () => {
                                                 idApi={api.id_api}
                                                 apiName={api.api_name}
                                                 description={api.description}
-                                                logo={imagePath}
+                                                logo={api.logo}
                                                 termsOfUse={api.terms_of_use}
                                                 website={api.website}
                                                 categoryLabel={api.category_label}

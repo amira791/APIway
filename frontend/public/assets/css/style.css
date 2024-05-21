@@ -2753,7 +2753,7 @@ header.absolute {
   height: 50px;  /* Adjust height as needed */
   line-height: 50px;  /* Center text vertically */
   text-align: center;  /* Center text horizontally */
-  border-radius: 4px;
+  border-radius: 25px;
   margin-left: 8px;
   font-size: 1em;  /* Adjust font size as needed */
   font-weight: bold;
