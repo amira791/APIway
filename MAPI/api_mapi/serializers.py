@@ -117,8 +117,10 @@ class CommentSerializer(serializers.ModelSerializer):
             fields.pop('created_by', None)
         return fields
 
-
 class TicketSerializer(serializers.ModelSerializer):
+    api_info = APISerializer(source='api_id', read_only=True)
+    user_info = ConsommateurSerializer(source='created_by', read_only=True)
+    
     class Meta:
         model = Ticket
         fields = '__all__'
