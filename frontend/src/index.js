@@ -6,6 +6,7 @@ import {
   Routes,
   Route,Navigate
 } from 'react-router-dom';
+import { ChakraProvider } from '@chakra-ui/react'
 import ForumPage from './components/pages/ForumPage';
 import ThreadPage from './components/pages/ThreadPage';
 import ProviderHomePage from './components/provider_componants/ProviderHome';
@@ -81,9 +82,10 @@ function Root() {
 // Use createRoot instead of ReactDOM.render
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+   
     <AuthProvider>
      <Root />
     </AuthProvider>
-   
+ 
   </React.StrictMode>
 );

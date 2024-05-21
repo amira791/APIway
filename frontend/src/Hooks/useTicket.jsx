@@ -8,6 +8,7 @@ export default function useTicket() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [tickets, setTickets] = useState([]);
+    const [allTickets,setAllTickets] = useState([]);
     const [ticket, setTicket] = useState([]);
     const {authState} = useAuthContext();
     const token = authState.token;
@@ -17,7 +18,7 @@ export default function useTicket() {
     };
 
     const getTickets = () => {
-        fetchData(`${BASEURL}tickets/`, setTickets, setLoading, setError);
+        fetchData(`${BASEURL}tickets/`, setAllTickets, setLoading, setError);
     };
 
     const getTicket = (id) => {
@@ -30,13 +31,29 @@ export default function useTicket() {
             description: 'Le Ticket a ete ajoute avec succes',
         }, toast, setError,token);
     };
+    const closeTicket = (id)=>{
+        postData(`${BASEURL}tickets/close/${id}/`, null, {
+            title: 'Ticket ajoute',
+            description: 'Le Ticket a ete ajoute avec succes',
+        }, toast, setError,token);
+    }
+
+    const openTicket = (id) =>{
+        postData(`${BASEURL}tickets/open/${id}/`, null, {
+            title: 'Ticket ajoute',
+            description: 'Le Ticket a ete ajoute avec succes',
+        }, toast, setError,token);
+    }
 
     return {
         addNewTicket,
+        closeTicket,
+        openTicket,
         getProviderTickets,
         getTickets,
         getTicket,
         ticket,
+        allTickets,
         tickets,
         loading,
         error

@@ -36,7 +36,7 @@ export default function ThreadList({ forum_id , onThreadClick }) {
                       <a href="#" className="name">{thread.creator.user.username}</a>
                       <div className="description">{thread.content.substring(0, 70)}</div>
                       <div className="date">
-                        <span> <TimeIcon mr={5} /></span>
+                        <span><TimeIcon mr={5} /></span>
                         <span className="month">{formatTime(thread.created_at)}</span>
                       </div>
                     </div>

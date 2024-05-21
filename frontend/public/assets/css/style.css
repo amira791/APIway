@@ -2469,8 +2469,11 @@ header.absolute {
   align-items: center;
   justify-content: space-between;
 }
+.meta-inner{
+  padding-left: 23px;
+}
 .detail-wrap .detail-inner .content-top .meta-blog .meta.meta-right .meta-inner:first-child {
-  padding-right: 24px;
+  padding-right: 14px;
   border-right: 1px solid var(--primary-color3);
 }
 .detail-wrap .detail-inner .content-top .meta-blog .meta.meta-right .meta-inner:last-child {
@@ -2740,4 +2743,28 @@ header.absolute {
   height: 50px;
   border-radius: 50%;
   object-fit: cover; 
+}
+
+/* Ticket.css */
+
+.status-badge {
+  display: inline-block;
+  width: 100px;
+  height: 50px;  /* Adjust height as needed */
+  line-height: 50px;  /* Center text vertically */
+  text-align: center;  /* Center text horizontally */
+  border-radius: 4px;
+  margin-left: 8px;
+  font-size: 1em;  /* Adjust font size as needed */
+  font-weight: bold;
+}
+
+.status-open {
+  background-color: #c6f6d5;
+  color: #2a5b44;
+}
+
+.status-closed {
+  background-color: #fed7d7;
+  color: #8f3a3a;
 }

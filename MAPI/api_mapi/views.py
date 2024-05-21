@@ -1,6 +1,6 @@
 from rest_framework import  status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
 from .models import *
@@ -264,7 +264,27 @@ class TicketView(viewsets.ModelViewSet):
         if api_id:
             queryset = queryset.filter(api_id=api_id)
         return queryset 
+    
+    @action(detail=True, methods=['post'])
+    def close_ticket(self, request, pk=None):
+        try:
+            ticket = self.get_object()
+            ticket.status = 'closed'
+            ticket.save()
+            return Response({'status': 'Ticket closed'}, status=status.HTTP_200_OK)
+        except Ticket.DoesNotExist:
+            return Response({'error': 'Ticket not found'}, status=status.HTTP_404_NOT_FOUND)
 
+    @action(detail=True, methods=['post'])
+    def open_ticket(self, request, pk=None):
+        try:
+            ticket = self.get_object()
+            ticket.status = 'open'
+            ticket.save()
+            return Response({'status': 'Ticket opened'}, status=status.HTTP_200_OK)
+        except Ticket.DoesNotExist:
+            return Response({'error': 'Ticket not found'}, status=status.HTTP_404_NOT_FOUND)
+        
 class TicketsByProviderView(viewsets.ModelViewSet):
     serializer_class = TicketSerializer
     lookup_field = 'provider'

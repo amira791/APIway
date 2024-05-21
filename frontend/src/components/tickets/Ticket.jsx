@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink , useParams } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import useTicket from '../../hooks/useTicket';
 import parse from 'html-react-parser';
 import formatTime from '../../utils/formatTime';
-import { Flex } from '@chakra-ui/react'
-import { ChevronLeftIcon, TimeIcon } from '@chakra-ui/icons'
+import { Flex } from '@chakra-ui/react';
+import { ChevronLeftIcon } from '@chakra-ui/icons';
+
 
 export default function Ticket({ ticket_id, onTicketClick }) {
-    // const { ticket_id } = useParams();
-    const { getTicket, ticket, error, loading } = useTicket();
+    const { openTicket ,closeTicket ,getTicket, ticket, error, loading } = useTicket();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -20,13 +20,20 @@ export default function Ticket({ ticket_id, onTicketClick }) {
         };
         fetchData();
     }, [ticket_id]);
-    const [message, setMessage] = useState();
+
+    const [message, setMessage] = useState('');
 
     const handleFormSubmit = (e) => {
+        e.preventDefault(); 
+    };
 
-
-        e.preventDefault(); // Prevent default form submission behavior
-
+    const handleToggleStatus = async (e) => {
+        e.preventDefault();
+        if (ticket.status === 'open') {
+            await closeTicket(ticket_id);
+        } else {
+            await openTicket(ticket_id);
+        }
     };
 
     if (loading) {
@@ -43,7 +50,6 @@ export default function Ticket({ ticket_id, onTicketClick }) {
     return (
         <>
             <Flex flexDirection='column' justifyContent='flex-start' m={30}>
-
                 <NavLink
                     to="#"
                     onClick={() => onTicketClick(null)}
@@ -51,19 +57,27 @@ export default function Ticket({ ticket_id, onTicketClick }) {
                     place-items="center"
                     padding-left="1px"
                     margin="10px"
-                > <ChevronLeftIcon /> Back to all tickets</NavLink>
+                >
+                    <ChevronLeftIcon /> Back to all tickets
+                </NavLink>
 
                 <section className="tf-blog">
                     <div className="tf-container">
                         <div className="detail-wrap">
                             <div className="detail-inner">
                                 <div className="content-top">
-                                    <h4 className="title">{ticket?.title}</h4>
+                                    <Flex alignItems="center">
+                                        <h4 className="title">{ticket?.title}</h4>
+                                        
+                                    </Flex>
+
                                     <div className="meta-blog">
                                         <div className="meta">
                                             <h6>API</h6>
                                             <p>{ticket.api_info?.api_name}</p>
+                                            
                                         </div>
+                                      
                                         <div className="meta meta-right">
                                             <div className="meta-inner">
                                                 <h6>WRITER</h6>
@@ -73,14 +87,19 @@ export default function Ticket({ ticket_id, onTicketClick }) {
                                                 <h6>DATE</h6>
                                                 <p>{formatTime(ticket.created_at)}</p>
                                             </div>
+                                            <div className="meta-inner">
+                                                <span className={`status-badge status-${ticket?.status}`}>
+                                                {ticket?.status}
+                                                </span>
+                                            </div>
                                         </div>
-
                                     </div>
                                 </div>
-
+                               
                                 <div className="content-inner">
                                     {parse(issueContent)}
                                 </div>
+                                
                                 <div id="comments">
                                     <h5 className="heading">Leave A Comment</h5>
                                     <form onSubmit={handleFormSubmit} method="post" id="commentform" className="comment-form">
@@ -90,82 +109,24 @@ export default function Ticket({ ticket_id, onTicketClick }) {
                                                 onChange={(e) => setMessage(e.target.value)}
                                                 id="message" name="message" rows="4" placeholder="Message" tabIndex="4" aria-required="true" required="" />
                                         </fieldset>
-                                        <div className="btn-submit"><button className="tf-button" type="submit">Send comment</button></div>
+                                        <div className="btn-submit">
+                                            <button className="tf-button" type="submit">Send comment</button>
+                                        </div>
                                     </form>
-                                </div>
+                                </div> 
                             </div>
                             <div className="side-bar">
                                 <div className="widget widget-recent-post">
-                                    <h6 className="widget-title">Recent Post</h6>
-                                    <ul>
-                                        <li>
-                                            <div className="post-img">
-                                                <img src="assets/images/blog/recent-post-5.jpg" alt="Post New" />
-                                            </div>
-                                            <div className="post-content">
-                                                <h6 className="title"><a href="blog-details.html">6 Make Mobile Website Faster </a></h6>
-                                                <div className="post-meta">
-                                                    <span>Lorem ipsum dolor sit amer....</span>
-                                                    <span>August 10, 2021</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="post-img">
-                                                <img src="assets/images/blog/recent-post-6.jpg" alt="Post New" />
-                                            </div>
-                                            <div className="post-content">
-                                                <h6 className="title"><a href="blog-details.html">6 Make Mobile Website Faster </a></h6>
-                                                <div className="post-meta">
-                                                    <span>Lorem ipsum dolor sit amer....</span>
-                                                    <span>August 10, 2021</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="post-img">
-                                                <img src="assets/images/blog/recent-post-7.jpg" alt="Post New" />
-                                            </div>
-                                            <div className="post-content">
-                                                <h6 className="title"><a href="blog-details.html">6 Make Mobile Website Faster </a></h6>
-                                                <div className="post-meta">
-                                                    <span>Lorem ipsum dolor sit amer....</span>
-                                                    <span>August 10, 2021</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="post-img">
-                                                <img src="assets/images/blog/recent-post-8.jpg" alt="Post New" />
-                                            </div>
-                                            <div className="post-content">
-                                                <h6 className="title"><a href="blog-details.html">6 Make Mobile Website Faster </a></h6>
-                                                <div className="post-meta">
-                                                    <span>Lorem ipsum dolor sit amer....</span>
-                                                    <span>August 10, 2021</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                <button className="tf-button" onClick={handleToggleStatus}>
+                                            {ticket.status === 'open' ? 'Close Ticket' : 'Open Ticket'}
+                                </button>
                                 </div>
-                                <div className="widget widget-tag ">
-                                    <h6 className="widget-title">Popular Tag</h6>
-                                    <ul>
-                                        <li><a href="#">Bitcoin</a></li>
-                                        <li><a href="#">NFT</a></li>
-                                        <li><a href="#">Bids</a></li>
-                                        <li><a href="#">Digital</a></li>
-                                        <li><a href="#">Arts</a></li>
-                                        <li><a href="#">Maketplace</a></li>
-                                        <li><a href="#">Token</a></li>
-                                        <li><a href="#">Wallet</a></li>
-                                        <li><a href="#">Crypto</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
+                              
                     </div>
+                        </div>
+                    </div>
+                 
+
                 </section>
             </Flex>
         </>
