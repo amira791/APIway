@@ -85,19 +85,11 @@ const ProviderHomePage = () => {
                                        
                                         {!selectedTicketId ? ( 
                                          <div className="inner-content inventory favorite">
-                                        <h4 className="title-dashboard">Tickets</h4>
-                                            <div className="table-ranking top">
-                                                <div className="title-ranking">
-                                                    <div className="col-rankingg"><a href="#">Title</a></div>
-                                                    <div className="col-rankingg"><a href="#">API</a></div>
-                                                    <div className="col-rankingg"><a href="#">Author</a></div>
-                                                    <div className="col-rankingg"><a href="#">State</a></div>
-                                                </div>
-                                            </div>
-                                            <div className="table-ranking ">
+                                          <h4 className="title-dashboard">Tickets</h4>
+                                        
                                                  <TicketsList ticket_id={selectedTicketId} onTicketClick={handleTicketClick}/>
-                                                 </div>
-                                        </div>)
+                                         </div>
+                                       )
                                         :( <Ticket ticket_id={selectedTicketId} onTicketClick={handleTicketClick}/>)
                                                  
                                         }

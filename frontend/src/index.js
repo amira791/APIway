@@ -7,8 +7,6 @@ import {
   Route,Navigate
 } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react'
-import ForumPage from './components/pages/ForumPage';
-import ThreadPage from './components/pages/ThreadPage';
 import ProviderHomePage from './components/provider_componants/ProviderHome';
 import HomeSection from './components/global_components/home_section';
 import FourAccountManag from "./components/admin/fourAccountManag";
@@ -19,7 +17,6 @@ import ApiDetails from './components/ApiDetails'
 
 import LoginPage from './components/auth_components/LoginPage';
 import TicketForm from './components/tickets/TicketForm';
-import TicketsPage from './components/pages/TicketsPage';
 import Ticket from './components/tickets/Ticket';
 
 import { AuthProvider} from './context/authContext';
@@ -51,19 +48,14 @@ function Root() {
           <Route exact path='/consomAccounts' element={authState.isAdmin ? <ConsomAccountManag /> : <Navigate to="/login"/>} />
           <Route exact path="/searchApi" element={authState.isConsommateur ? <SearchApi /> : <Navigate to="/login"/>} />
           
-          {/* <Route path='/ApiDetail/:api_id' element={<ApiDetails />}></Route> */}
-          <Route path="/forum" element={<ForumPage />} />
-          <Route path="/forum/threads/:thread_id" element={<ThreadPage />} />
-          <Route path="/tickets/new/:api_id" element={<TicketForm />} />
-          <Route path='/tickets' element={authState.isConsommateur ||  authState.isFournisseur ? <TicketsPage/> : <Navigate to="/login"/>} />
+          <Route path="/tickets/new/:api_id" element={authState.isConsommateur ? <TicketForm /> : <Navigate to="/login"/>} />
           <Route path='/ticket/:ticket_id' element={authState.isConsommateur ||  authState.isFournisseur ? <Ticket/> : <Navigate to="/login"/>} />
           
-          {/* <Route exact path="/addAPI" element={<AddAPIPage />} /> */}
           <Route exact path="/details/:id" element={authState.isConsommateur ||  authState.isFournisseur ?  <Details /> :<Navigate to="/login"/> }/>
           <Route exact path="/provider_home" element={authState.isFournisseur ? <ProviderHomePage /> : <Navigate to="/login"/>}/>
 
           <Route exact path="/payment/:id" 
-          element={authState.isConsommateur ?  
+            element={authState.isConsommateur ?  
             <Elements stripe={stripe}>
               <Payment/>
             </Elements>
