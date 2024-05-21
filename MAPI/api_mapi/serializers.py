@@ -21,7 +21,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 class FournisseurSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-
     class Meta:
         model = Fournisseur
         fields = ['id_fournisseur', 'user']
@@ -34,6 +33,7 @@ class AdminSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ConsommateurSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
     class Meta:
         model = Consommateur
         fields = ['id_consommateur', 'user']

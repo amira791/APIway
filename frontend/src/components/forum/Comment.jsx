@@ -18,7 +18,7 @@ export default function Comment({ comment }) {
                       <img src="/assets/images/author/user.png" alt="images" />
                     </div>
                   <div className="content">
-                    <a href="#" className="name">{comment.created_by.CNusername}</a>
+                    <a href="#" className="name">{comment.created_by.user.username}</a>
                     <div className="description">{comment.message}</div>
                     <div className="date">
                       <span> <TimeIcon /></span>

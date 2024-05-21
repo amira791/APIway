@@ -62,7 +62,7 @@ export default function Thread({ thread_id , onThreadClick}) {
                     <img src="/assets/images/author/user.png" alt="images" />
                   </div>
                   <div className="content">
-                    <a href="#" className="name">{thread.creator?.username}</a>
+                    <a href="#" className="name">{thread.creator?.user.username}</a>
                     <div className="description"> {thread.content}</div>
                     <div className="date">
                       <span> <TimeIcon /></span>
@@ -89,7 +89,7 @@ export default function Thread({ thread_id , onThreadClick}) {
             </div>
           </div>
         </div>
-        { authState.isConsommateur ?(
+      
         <div id="comments">
           <h5 className="heading">Add A Comment</h5>
           <form onSubmit={handleFormSubmit} method="post" id="commentform" className="comment-form">
@@ -102,8 +102,7 @@ export default function Thread({ thread_id , onThreadClick}) {
             <div className="btn-submit"><button className="tf-button" type="submit">Send comment</button></div>
           </form>
         </div>
-        ): (<div></div>)
-}
+
       </Flex>
     </>
   )
