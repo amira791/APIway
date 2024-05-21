@@ -2,6 +2,7 @@ from rest_framework import  status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import ValidationError
 from .models import *
 from .serializers import *
 from Consumer.views import index_api
@@ -226,10 +227,25 @@ class CommentView(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
-
     def perform_create(self, serializer):
-            created_by_id = self.request.data.get('created_by')
-            serializer.save(created_by_id=created_by_id)
+        id_fournisseur = self.request.data.get('id_fournisseur')
+        id_consommateur = self.request.data.get('id_consommateur')
+
+        if id_fournisseur:
+            try:
+                user_profile = Fournisseur.objects.get(pk=id_fournisseur)
+            except Fournisseur.DoesNotExist:
+                raise ValidationError("Invalid Fournisseur ID")
+        elif id_consommateur:
+            try:
+                user_profile = Consommateur.objects.get(pk=id_consommateur)
+            except Consommateur.DoesNotExist:
+                raise ValidationError("Invalid Consommateur ID")
+        else:
+            raise ValidationError("No user identifier provided")
+
+        user = user_profile.user
+        serializer.save(created_by=user)
 
     def get_queryset(self):
         queryset = self.queryset
@@ -237,7 +253,6 @@ class CommentView(viewsets.ModelViewSet):
         if thread_id:
             queryset = queryset.filter(thread_id=thread_id)
         return queryset
-
 #Ticket View
 class TicketView(viewsets.ModelViewSet):
     queryset = Ticket.objects.all()

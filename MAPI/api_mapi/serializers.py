@@ -95,18 +95,28 @@ class ThreadWriteSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    created_by = serializers.ReadOnlyField(source='created_by.username')  # Make it read-only
+    creator_details = serializers.SerializerMethodField()
+    
     class Meta:
         model = Comment
         fields = '__all__'
-        def create(self, validated_data):
-            # Get the current authenticated user
-            user = self.context['request'].user
-            
-            # Add the creator (user) to the validated data before creating the comment
-            validated_data['creator'] = user
-            
-            # Create and return the comment
-            return Comment.objects.create(**validated_data)
+
+    def get_creator_details(self, obj):
+        creator = obj.created_by
+        return {
+            'username': creator.username,
+            'first_name': creator.first_name,
+            'last_name': creator.last_name,
+            'email': creator.email,
+        }
+    def get_fields(self):
+        fields = super().get_fields()
+        request = self.context.get('request')
+        if request and request.method == 'POST':  # Exclude created_by only for POST requests
+            fields.pop('created_by', None)
+        return fields
+
 
 class TicketSerializer(serializers.ModelSerializer):
     class Meta:

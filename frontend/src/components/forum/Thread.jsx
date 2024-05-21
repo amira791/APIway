@@ -16,7 +16,7 @@ export default function Thread({ thread_id , onThreadClick}) {
   const [message, setMessage] = useState()
   const { addNewComment, getThread, getThreadComments, thread, comments, error, loading } = useForum();
   const { authState } = useAuthContext();
-  const creator = parseInt(authState.userId);
+  const commentCreator = parseInt(authState.userId);
 
   useEffect(() => {
     getThread(thread_id);
@@ -28,15 +28,20 @@ export default function Thread({ thread_id , onThreadClick}) {
 
 
   const handleFormSubmit = (e) => {
-    const newPost = {
-      message: message,
-      thread: thread_id,
-      created_by: creator,
-    }
-    e.preventDefault(); // Prevent default form submission behavior
-    addNewComment(newPost)
+    // Determine the correct field name based on user role
+    const creatorFieldName = authState.isFournisseur ? 'id_fournisseur' : 'id_consommateur';
 
-  };
+    // Construct the new post object
+    const newPost = {
+        message: message,
+        thread: thread_id,
+        [creatorFieldName]: commentCreator
+    };
+
+    e.preventDefault(); // Prevent default form submission behavior
+    addNewComment(newPost);
+};
+
 
   return (
     <>
