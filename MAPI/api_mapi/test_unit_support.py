@@ -7,68 +7,71 @@ from .models import Ticket, TicketResponse,APIForum, Thread, Comment, Fournisseu
 
 User = get_user_model()
 
-# class APIForumTests(TestCase):
+class APIForumTests(TestCase):
 
-#     def setUp(self):
-#         self.user = User.objects.create_user(email='user@example.com', username='user', password='password')
-#         self.provider = Fournisseur.objects.create(user=self.user)
-#         self.forum = APIForum.objects.create(name='Test Forum', description='Forum description')
+    def setUp(self):
+        self.user = User.objects.create_user(email='user@example.com', username='user', password='password')
+        self.provider = Fournisseur.objects.create(user=self.user)
+        self.forum = APIForum.objects.create(name='Test Forum', description='Forum description')
 
-#     def test_get_forums(self):
-#         client = Client()
-#         url = reverse('apiforum-list')
-#         response = client.get(url, format='json')
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertEqual(len(response.data), 1)
-
-
-# class ThreadTests(APITestCase):
-
-#     def setUp(self):
-#         self.user = User.objects.create_user(email='user@example.com', username='user', password='password')
-#         self.consumer = Consommateur.objects.create(user=self.user)
-#         self.forum = APIForum.objects.create(name='Test Forum', description='Forum description')
-#         self.thread = Thread.objects.create(content='Test Thread', forum=self.forum, creator=self.consumer)
-
-#     def test_create_thread(self):
-#         client = Client()
-#         url = reverse('threads-list')
-#         data = {'content': 'New Thread', 'forum': self.forum.id_forum, 'creator': self.consumer.id_consommateur}
-#         response = client.post(url, data, format='json')
-#         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-#         self.assertEqual(Thread.objects.count(), 2)
-
-#     def test_get_threads(self):
-#         client = Client()
-#         url = reverse('forum_threads', args=[self.forum.id_forum])
-#         response = client.get(url, format='json')
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertEqual(len(response.data), 1)
+    
+    def test_get_forums(self):
+        client = Client()
+        url = reverse('apiforum-list')
+        response = client.get(url, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
 
 
-# class CommentTests(APITestCase):
+class ThreadTests(APITestCase):
 
-#     def setUp(self):
-#         self.user = User.objects.create_user(email='user@example.com', username='user', password='password')
-#         self.consumer = Consommateur.objects.create(user=self.user)
-#         self.forum = APIForum.objects.create(name='Test Forum', description='Forum description')
-#         self.thread = Thread.objects.create(content='Test Thread', forum=self.forum, creator=self.consumer)
-#         self.comment = Comment.objects.create(message='Test Comment', thread=self.thread, created_by=self.user)
+    def setUp(self):
+        self.user = User.objects.create_user(email='user@example.com', username='user', password='password')
+        self.consumer = Consommateur.objects.create(user=self.user)
+        self.forum = APIForum.objects.create(name='Test Forum', description='Forum description')
+        self.thread = Thread.objects.create(content='Test Thread', forum=self.forum, creator=self.consumer)
 
-#     def test_create_comment(self):
-#         client = Client()
-#         url = reverse('comments-list')
-#         data = {'message': 'New Comment', 'thread': self.thread.id_thread, 'created_by': self.user.id}
-#         response = client.post(url, data, format='json')
-#         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-#         self.assertEqual(Comment.objects.count(), 2)
+    def test_create_thread(self):
+        client = Client()
+        url = reverse('threads-list')
+        data = {'content': 'New Thread', 'forum': self.forum.id_forum, 'creator': self.consumer.id_consommateur}
+        response = client.post(url, data, format='json')
+        
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Thread.objects.count(), 2)
 
-#     def test_get_comments(self):
-#         client = Client()
-#         url = reverse('thread_comments', args=[self.thread.id_thread])
-#         response = client.get(url, format='json')
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertEqual(len(response.data), 1)
+    def test_get_threads(self):
+        client = Client()
+        url = reverse('forum_threads', args=[self.forum.id_forum])
+        response = client.get(url, format='json')
+        
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+
+
+class CommentTests(APITestCase):
+
+    def setUp(self):
+        self.user = User.objects.create_user(email='user@example.com', username='user', password='password')
+        self.consumer = Consommateur.objects.create(user=self.user)
+        self.forum = APIForum.objects.create(name='Test Forum', description='Forum description')
+        self.thread = Thread.objects.create(content='Test Thread', forum=self.forum, creator=self.consumer)
+        self.comment = Comment.objects.create(message='Test Comment', thread=self.thread, created_by=self.user)
+
+    # def test_create_comment(self):
+    #     client = Client()
+    #     url = reverse('comments-list')
+    #     data = {'message': 'New Comment', 'thread': self.thread.id_thread, 'created_by': self.user.id}
+    #     response = client.post(url, data, format='json')
+    #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    #     self.assertEqual(Comment.objects.count(), 2)
+
+    def test_get_comments(self):
+        client = Client()
+        url = reverse('thread_comments', args=[self.thread.id_thread])
+        response = client.get(url, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
 
 
 class TicketTests(APITestCase):
@@ -82,10 +85,21 @@ class TicketTests(APITestCase):
     def test_create_ticket(self):
         client = Client()
         url = reverse('tickets-list')
-        data = {'api_id': self.api.id_api, 'created_by': self.consumer.id_consommateur, 'title': 'New Ticket', 'issue': 'New Issue'}
+        data = {
+            'api_id': self.api.id_api,
+            'created_by': self.consumer.id_consommateur,
+            'title': 'New Ticket',
+            'issue': 'New Issue'
+        }
         response = client.post(url, data, format='json')
+        
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Ticket.objects.count(), 2)
+        self.assertEqual(response.data['api_id'],self.api.id_api )
+        self.assertEqual(response.data['created_by'],self.consumer.id_consommateur )
+        self.assertEqual(response.data['title'], 'New Ticket')
+        self.assertEqual(response.data['issue'], 'New Issue')
+
 
     def test_get_tickets(self):
         client = Client()
@@ -93,6 +107,7 @@ class TicketTests(APITestCase):
         response = client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
+
 
     def test_close_ticket(self):
         client = Client()
@@ -116,15 +131,19 @@ class TicketTests(APITestCase):
         client = Client()
         url = reverse('tickets_by_provider', args=[self.provider.id_fournisseur])
         response = client.get(url, format='json')
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
+        # self.assertEqual(response.data['created_by'],self.provider.id_fournisseur )
 
     def test_get_tickets_by_consumer(self):
         client = Client()
         url = reverse('tickets_by_consumer', args=[self.consumer.id_consommateur])
         response = client.get(url, format='json')
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
+        # self.assertEqual(response.data['created_by'],self.consumer.id_consommateur )
 
 
 class TicketResponseTests(APITestCase):
@@ -143,3 +162,9 @@ class TicketResponseTests(APITestCase):
         data = {'ticket': self.ticket.ticket_id, 'response_text': 'New Response', 'created_by': self.consumer.id_consommateur}
         response = client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data['ticket'], self.ticket.ticket_id)
+        self.assertEqual(response.data['response_text'], 'New Response')
+        self.assertEqual(response.data['created_by'], self.consumer.user_id)
+
+    
+
