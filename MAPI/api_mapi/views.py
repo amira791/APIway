@@ -293,7 +293,16 @@ class TicketsByProviderView(viewsets.ModelViewSet):
         if provider_id:
             return Ticket.objects.filter(api_id__provider=provider_id)
         return Ticket.objects.none() 
-    
+class TicketsByConsumerView(viewsets.ModelViewSet):
+    serializer_class = TicketSerializer
+    lookup_field = 'created_by'
+
+    def get_queryset(self):
+        consumer_id = self.kwargs.get('consumer')  # Get provider_id from URL kwargs
+        if consumer_id:
+            return Ticket.objects.filter(created_by=consumer_id)
+        return Ticket.objects.none()    
+
 class TicketResponseView(viewsets.ModelViewSet):
     queryset = TicketResponse.objects.all()
     serializer_class = TicketResponseSerializer

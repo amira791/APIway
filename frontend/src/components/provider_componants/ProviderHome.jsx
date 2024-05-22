@@ -8,12 +8,14 @@ import { useAuthContext } from "../../context/authContext";
 import TicketsList from "../tickets/TicketsList";
 import ProviderProfile from "./ProviderProfile";
 import Ticket from "../tickets/Ticket";
+import useTicket from "../../hooks/useTicket";
 
 
 const ProviderHomePage = () => {
 
     const { authState } = useAuthContext();
     const provider = authState.userId;
+    const { getProviderTickets, tickets, error, loading } = useTicket();
     const [selectedTicketId, setSelectedTicketId] = useState(null);
 
     const handleTicketClick = (ticketId) => {
@@ -27,6 +29,11 @@ const ProviderHomePage = () => {
             setTimeout(() => window.location.reload(), 200);
         }
     }, []);
+
+    
+  useEffect(() => {
+    getProviderTickets(authState.userId);
+  }, [authState.userId]);
 
 
     return (
@@ -87,7 +94,7 @@ const ProviderHomePage = () => {
                                          <div className="inner-content inventory favorite">
                                           <h4 className="title-dashboard">Tickets</h4>
                                         
-                                                 <TicketsList ticket_id={selectedTicketId} onTicketClick={handleTicketClick}/>
+                                                 <TicketsList tickets={tickets} ticket_id={selectedTicketId} onTicketClick={handleTicketClick}/>
                                          </div>
                                        )
                                         :( <Ticket ticket_id={selectedTicketId} onTicketClick={handleTicketClick}/>)

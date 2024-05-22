@@ -37,6 +37,7 @@ urlpatterns = [
     path('threads/<int:thread_id>/comments/', CommentView.as_view({'get': 'list'}), name='thread_comments'),
     path('apis/byprovider/<int:provider>/', APIByProviderView.as_view({'get': 'list'}), name='api_by_provider'),
     path('tickets/byprovider/<int:provider>/', TicketsByProviderView.as_view({'get': 'list'}), name='tickets_by_provider'),
+    path('tickets/byconsumer/<int:consumer>/', TicketsByConsumerView.as_view({'get': 'list'}), name='tickets_by_provider'),
     path('tickets/close/<int:pk>/', TicketView.as_view({'post': 'close_ticket'}), name='close_ticket'),
     path('tickets/open/<int:pk>/', TicketView.as_view({'post': 'open_ticket'}), name='open_ticket'),
     path('tickets/<int:ticket_id>/responses/', TicketResponseView.as_view({'get': 'list', 'post': 'create'}), name='ticket-responses'),

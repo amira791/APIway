@@ -18,6 +18,10 @@ export default function useTicket() {
         fetchData(`${BASEURL}tickets/byprovider/${id}/`, setTickets, setLoading, setError,token);
     };
 
+    const getConsumerTickets = (id) => {
+        fetchData(`${BASEURL}tickets/byconsumer/${id}/`, setTickets, setLoading, setError,token);
+    };
+
     const getTickets = () => {
         fetchData(`${BASEURL}tickets/`, setAllTickets, setLoading, setError);
     };
@@ -63,6 +67,7 @@ export default function useTicket() {
         addTicketResponse,
         getTicketResponses,
         getProviderTickets,
+        getConsumerTickets,
         getTickets,
         getTicket,
         ticket,

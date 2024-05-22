@@ -29,6 +29,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import {Elements} from '@stripe/react-stripe-js'
 import Subscrib from './components/Subscrib/Subscrib';
 import Payment from './components/Payment/Payment'
+import ConsumerProfile from './components/consumer_components/ConsumerProfile';
 function Root() {
 
   const { authState } = useAuthContext();
@@ -47,6 +48,7 @@ function Root() {
           <Route exact path='/fourAccounts' element={authState.isAdmin ?<FourAccountManag /> : <Navigate to="/login"/>} />
           <Route exact path='/consomAccounts' element={authState.isAdmin ? <ConsomAccountManag /> : <Navigate to="/login"/>} />
           <Route exact path="/searchApi" element={authState.isConsommateur ? <SearchApi /> : <Navigate to="/login"/>} />
+          <Route exact path='/consumer_profile' element={authState.isConsommateur ? <ConsumerProfile /> : <Navigate to="/login"/>}/>
           
           <Route path="/tickets/new/:api_id" element={authState.isConsommateur ? <TicketForm /> : <Navigate to="/login"/>} />
           <Route path='/ticket/:ticket_id' element={authState.isConsommateur ||  authState.isFournisseur ? <Ticket/> : <Navigate to="/login"/>} />

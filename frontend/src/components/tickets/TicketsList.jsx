@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import useTicket from '../../hooks/useTicket';
 import { useAuthContext } from '../../context/authContext';
 
-export default function TicketsList({ ticket_id, onTicketClick }) {
-  const { getProviderTickets, tickets, error, loading } = useTicket();
+export default function TicketsList({ tickets , ticket_id, onTicketClick }) {
+
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState(''); // State for status filter
   const itemsPerPage = 10;
@@ -12,9 +12,6 @@ export default function TicketsList({ ticket_id, onTicketClick }) {
   const { authState } = useAuthContext();
 
 
-  useEffect(() => {
-    getProviderTickets(authState.userId);
-  }, [authState.userId]);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -42,14 +39,6 @@ export default function TicketsList({ ticket_id, onTicketClick }) {
   const currentTickets = filteredTickets.slice(indexOfFirstTicket, indexOfLastTicket);
 
   const totalPages = Math.ceil(filteredTickets.length / itemsPerPage);
-
-  if (loading) {
-    return <div>Loading...</div>; // Display a loading indicator while fetching data
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>; // Display error message if an error occurs
-  }
 
 
   return (
