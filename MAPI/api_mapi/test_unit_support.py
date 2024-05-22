@@ -91,10 +91,12 @@ class TicketTests(APITestCase):
             'title': 'New Ticket',
             'issue': 'New Issue'
         }
+
         response = client.post(url, data, format='json')
         
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Ticket.objects.count(), 2)
+
         self.assertEqual(response.data['api_id'],self.api.id_api )
         self.assertEqual(response.data['created_by'],self.consumer.id_consommateur )
         self.assertEqual(response.data['title'], 'New Ticket')
@@ -161,6 +163,7 @@ class TicketResponseTests(APITestCase):
         url = reverse('ticket_responses', args=[self.ticket.ticket_id])
         data = {'ticket': self.ticket.ticket_id, 'response_text': 'New Response', 'created_by': self.consumer.id_consommateur , 'user_type' : 'consommateur'}
         response = client.post(url, data, format='json')
+        
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data['ticket'], self.ticket.ticket_id)
         self.assertEqual(response.data['response_text'], 'New Response')

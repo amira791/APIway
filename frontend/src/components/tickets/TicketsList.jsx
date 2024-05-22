@@ -54,6 +54,7 @@ export default function TicketsList({ tickets , ticket_id, onTicketClick }) {
           <option value="">All</option>
           <option value="open">Open</option>
           <option value="closed">Closed</option>
+          <option value="in progress">In Progress</option>
         </select>
 
       </div>

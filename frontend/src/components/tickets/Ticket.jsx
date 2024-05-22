@@ -12,9 +12,9 @@ import Response from './Response';
 
 
 export default function Ticket({ ticket_id, onTicketClick }) {
-    const { changeTicketStatus , getTicketResponses, addTicketResponse, openTicket, closeTicket, getTicket, responses, ticket, error, loading } = useTicket();
+    const { changeTicketStatus, getTicketResponses, addTicketResponse, openTicket, closeTicket, getTicket, responses, ticket, error, loading } = useTicket();
     const [response, setResponse] = useState('');
-    const [inP,setIn] = useState(false);
+    const [inP, setIn] = useState(false);
     const { authState } = useAuthContext()
 
 
@@ -42,7 +42,7 @@ export default function Ticket({ ticket_id, onTicketClick }) {
             ticket: ticket_id,
             created_by: parseInt(authState.userId),
             response_text: response,
-            user_type : authState.isFournisseur? 'fournisseur' : 'consommateur'
+            user_type: authState.isFournisseur ? 'fournisseur' : 'consommateur'
         };
 
         try {
@@ -57,11 +57,11 @@ export default function Ticket({ ticket_id, onTicketClick }) {
         e.preventDefault();
         if (ticket.status === 'open') {
             if (inP) {
-                await changeTicketStatus(ticket_id , 'in progress');
-            } else{
-                await changeTicketStatus(ticket_id , 'close');
+                await changeTicketStatus(ticket_id, 'in progress');
+            } else {
+                await changeTicketStatus(ticket_id, 'closed');
             }
-            
+
         } else {
             await changeTicketStatus(ticket_id, 'open');
         }
@@ -149,30 +149,30 @@ export default function Ticket({ ticket_id, onTicketClick }) {
                                 </div>
 
 
-                            {ticket.status !== 'closed' && (
-                                <div id="comments">
-                                    <h5 className="heading">Add a response</h5>
-                                    <form onSubmit={handleFormSubmit}
-                                        id="commentform" className="comment-form">
-                                        <fieldset className="message">
-                                            <ReactQuill
-                                                theme='snow'
-                                                placeholder="Enter your response"
-                                                value={response}
-                                                onChange={handleResponseChange}
-                                            />  </fieldset>
-                                        <div className="btn-submit mg-t-36"><button className="tf-button" type="submit">Send comment</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            )}
+                                {ticket.status !== 'closed' && (
+                                    <div id="comments">
+                                        <h5 className="heading">Add a response</h5>
+                                        <form onSubmit={handleFormSubmit}
+                                            id="commentform" className="comment-form">
+                                            <fieldset className="message">
+                                                <ReactQuill
+                                                    theme='snow'
+                                                    placeholder="Enter your response"
+                                                    value={response}
+                                                    onChange={handleResponseChange}
+                                                />  </fieldset>
+                                            <div className="btn-submit mg-t-36"><button className="tf-button" type="submit">Send comment</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                )}
                             </div>
-                              <div className="side-bar">
+                            <div className="side-bar">
                                 <div className="widget widget-tag ">
                                     <button className="tf-button" onClick={handleToggleStatus}>
                                         {ticket.status === 'open' ? 'Close Ticket' : 'Open Ticket'}
                                     </button>
-                                    {authState.isFournisseur && ticket.status === 'open' && <button className="tf-button" onClick={ (e) => {setIn(true); handleToggleStatus(e) }}>
+                                    {authState.isFournisseur && ticket.status === 'open' && <button className="tf-button" onClick={(e) => { setIn(true); handleToggleStatus(e) }}>
                                         In progress Ticket
                                     </button>
                                     }
