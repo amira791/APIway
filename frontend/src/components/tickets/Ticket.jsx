@@ -8,18 +8,20 @@ import { ChevronLeftIcon } from '@chakra-ui/icons';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useAuthContext } from '../../context/authContext';
+import Response from './Response';
 
 
 export default function Ticket({ ticket_id, onTicketClick }) {
-    const { addTicketResponse ,openTicket, closeTicket, getTicket, ticket, error, loading } = useTicket();
+    const { getTicketResponses, addTicketResponse, openTicket, closeTicket, getTicket, responses, ticket, error, loading } = useTicket();
     const [response, setResponse] = useState('');
-    const {authState} = useAuthContext()
+    const { authState } = useAuthContext()
 
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 await getTicket(ticket_id);
+                await getTicketResponses(ticket_id);
             } catch (error) {
                 console.error("Error fetching Ticket details:", error);
             }
@@ -28,7 +30,7 @@ export default function Ticket({ ticket_id, onTicketClick }) {
     }, [ticket_id]);
 
 
-    const handleResponseChange = (value)=>{
+    const handleResponseChange = (value) => {
         setResponse(value);
     }
 
@@ -36,17 +38,17 @@ export default function Ticket({ ticket_id, onTicketClick }) {
         e.preventDefault();
 
         const ticketResponse = {
-          ticket : ticket_id,
-          created_by:authState.userId,
-          response_text: response
+            ticket: ticket_id,
+            created_by: authState.userId,
+            response_text: response
         };
 
         try {
-            await addTicketResponse(ticket_id , ticketResponse); 
-          } catch (error) {
+            await addTicketResponse(ticket_id, ticketResponse);
+        } catch (error) {
             console.error('Error submitting ticket:', error);
-           
-          }
+
+        }
     };
 
     const handleToggleStatus = async (e) => {
@@ -57,6 +59,7 @@ export default function Ticket({ ticket_id, onTicketClick }) {
             await openTicket(ticket_id);
         }
     };
+
 
     if (loading) {
         return <div>Loading...</div>; // Display a loading indicator while fetching data
@@ -88,7 +91,7 @@ export default function Ticket({ ticket_id, onTicketClick }) {
                         <div className="detail-wrap">
                             <div className="detail-inner">
                                 <div className="content-top">
-                                        <h4 className="title">{ticket?.title}</h4>
+                                    <h4 className="title">{ticket?.title}</h4>
                                     <div className="meta-blog">
                                         <div className="meta">
                                             <h6>API</h6>
@@ -116,33 +119,55 @@ export default function Ticket({ ticket_id, onTicketClick }) {
 
                                 <div className="content-inner">
                                     {parse(issueContent)}
+                                    <h6 className="widget-title">{ticket.num_responses} Responses</h6>
+                                    <div className='history-filter'>
+                                        <div className='history-content'>
+                                            <div className='inner tf-filter-container'>
+                                                <div className="history-content">
+
+                                                    <div className='history-filter'>
+                                                        <div className='history-content'>
+                                                            <div className='inner tf-filter-container'>
+                                                                <div className="history-content">
+                                                                    
+
+                                                                    {responses.map(res => (
+                                                                        <Response key={res.id} response={res} />
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
 
-                            <div id="comments">
-                                <h5 class="heading">Add a response</h5>
-                                <form onSubmit={handleFormSubmit}
-                                 id="commentform"  class="comment-form">
-                                    <fieldset class="message">
-                                    <ReactQuill
+                                <div id="comments">
+                                    <h5 className="heading">Add a response</h5>
+                                    <form onSubmit={handleFormSubmit}
+                                        id="commentform" className="comment-form">
+                                        <fieldset className="message">
+                                            <ReactQuill
                                                 theme='snow'
                                                 placeholder="Enter your response"
                                                 value={response}
                                                 onChange={handleResponseChange}
                                             />  </fieldset>
-                                    <div class="btn-submit mg-t-36"><button class="tf-button" type="submit">Send comment</button>
-                                 </div>
-                                </form>
-                            </div>
-                       
+                                        <div className="btn-submit mg-t-36"><button className="tf-button" type="submit">Send comment</button>
+                                        </div>
+                                    </form>
+                                </div>
+
                             </div>
                             <div className="side-bar">
-                                <div className="widget widget-recent-post">
+                                <div className="widget widget-tag ">
                                     <button className="tf-button" onClick={handleToggleStatus}>
                                         {ticket.status === 'open' ? 'Close Ticket' : 'Open Ticket'}
                                     </button>
                                 </div>
-
                             </div>
                         </div>
                     </div>

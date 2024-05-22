@@ -10,6 +10,7 @@ export default function useTicket() {
     const [tickets, setTickets] = useState([]);
     const [allTickets,setAllTickets] = useState([]);
     const [ticket, setTicket] = useState([]);
+    const [responses,setResponses] = useState([]);
     const {authState} = useAuthContext();
     const token = authState.token;
 
@@ -51,17 +52,23 @@ export default function useTicket() {
             description: 'Le Ticket a ete ajoute avec succes',
         }, toast, setError,token);
     }
+
+    const getTicketResponses = (id) =>{
+        fetchData(`${BASEURL}tickets/${id}/responses/`, setResponses, setLoading, setError);
+    }
     return {
         addNewTicket,
         closeTicket,
         openTicket,
         addTicketResponse,
+        getTicketResponses,
         getProviderTickets,
         getTickets,
         getTicket,
         ticket,
         allTickets,
         tickets,
+        responses,
         loading,
         error
     };

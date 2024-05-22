@@ -23,9 +23,7 @@ class FournisseurSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     class Meta:
         model = Fournisseur
-        fields = ['id_fournisseur', 'user']
-
-    
+        fields = ['id_fournisseur', 'user']  
 
 class AdminSerializer(serializers.ModelSerializer):
     class Meta:
@@ -120,16 +118,32 @@ class CommentSerializer(serializers.ModelSerializer):
 class TicketSerializer(serializers.ModelSerializer):
     api_info = APISerializer(source='api_id', read_only=True)
     user_info = ConsommateurSerializer(source='created_by', read_only=True)
-    
+    num_responses = serializers.SerializerMethodField()
     class Meta:
         model = Ticket
         fields = '__all__'
 
+    def get_num_responses(self, obj):
+     return TicketResponse.objects.filter(ticket=obj.ticket_id).count()
 class TicketResponseSerializer(serializers.ModelSerializer):
+    created_by = serializers.ReadOnlyField(source='created_by.username')  # Make it read-only
+    creator_details = serializers.SerializerMethodField()
+
     class Meta:
         model = TicketResponse
         fields = '__all__'
         read_only_fields = ['id', 'created_at']
+    
+    def get_creator_details(self, obj):
+        creator = obj.created_by
+        return {
+            'first_name': creator.first_name,
+            'last_name': creator.last_name,
+            'email': creator.email,
+        }
+    
+
+    
 
 
 class TarificationSerializer(serializers.ModelSerializer):

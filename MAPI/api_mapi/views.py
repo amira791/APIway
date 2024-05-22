@@ -9,6 +9,7 @@ from Consumer.views import index_api
 from rest_framework.parsers import MultiPartParser, FormParser
 from subprocess import run
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from django.contrib.auth import get_user_model
@@ -206,8 +207,6 @@ class APIForumView(viewsets.ModelViewSet):
 # Forum Thread View
 class ThreadView(viewsets.ModelViewSet):
     queryset = Thread.objects.all()
-    # permission_classes = [IsAuthenticated]
-
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:
@@ -302,6 +301,23 @@ class TicketResponseView(viewsets.ModelViewSet):
     def get_queryset(self):
         ticket_id = self.kwargs.get('ticket_id')
         return TicketResponse.objects.filter(ticket=ticket_id)
+    
+    def perform_create(self, serializer):
+        creator_id = self.request.data.get('created_by')
+
+        consommateur = Consommateur.objects.filter(id_consommateur=creator_id).first()
+        if consommateur:
+         user_id = consommateur.user_id
+        else:
+         fournisseur = Fournisseur.objects.filter(id_fournisseur=creator_id).first()
+         if fournisseur:
+            user_id = fournisseur.user_id
+        
+        if user_id is not None:
+            created_by = get_object_or_404(UserBase, id=user_id)
+            serializer.save(created_by=created_by)
+        else:
+            raise serializers.ValidationError("Invalid creator ID provided.")
     
 # Tarification View
 class TarificationView(viewsets.ModelViewSet):

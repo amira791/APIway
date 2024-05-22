@@ -271,10 +271,10 @@ class Ticket(models.Model):
 
 class TicketResponse(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name='responses')
-    created_by = models.ForeignKey(Fournisseur, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(UserBase, on_delete=models.CASCADE)
     response_text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['-created_at']  # Order responses by creation date, latest first
+        ordering = ['created_at']  # Order responses by creation date, latest first
 
