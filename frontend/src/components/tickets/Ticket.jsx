@@ -69,7 +69,6 @@ export default function Ticket({ ticket_id, onTicketClick }) {
         return <div>Error: {error.message}</div>; // Display error message if an error occurs
     }
 
-    // Ensure ticket.issue is a string before parsing it
     const issueContent = ticket?.issue ? ticket.issue : '';
 
     return (
@@ -129,8 +128,6 @@ export default function Ticket({ ticket_id, onTicketClick }) {
                                                         <div className='history-content'>
                                                             <div className='inner tf-filter-container'>
                                                                 <div className="history-content">
-                                                                    
-
                                                                     {responses.map(res => (
                                                                         <Response key={res.id} response={res} />
                                                                     ))}
@@ -145,6 +142,7 @@ export default function Ticket({ ticket_id, onTicketClick }) {
                                 </div>
 
 
+                            {authState.isFournisseur  && ticket.status !== 'closed' && (
                                 <div id="comments">
                                     <h5 className="heading">Add a response</h5>
                                     <form onSubmit={handleFormSubmit}
@@ -160,15 +158,15 @@ export default function Ticket({ ticket_id, onTicketClick }) {
                                         </div>
                                     </form>
                                 </div>
-
+                            )}
                             </div>
-                            <div className="side-bar">
+                            {authState.isFournisseur  &&  <div className="side-bar">
                                 <div className="widget widget-tag ">
                                     <button className="tf-button" onClick={handleToggleStatus}>
                                         {ticket.status === 'open' ? 'Close Ticket' : 'Open Ticket'}
                                     </button>
                                 </div>
-                            </div>
+                            </div>}
                         </div>
                     </div>
 

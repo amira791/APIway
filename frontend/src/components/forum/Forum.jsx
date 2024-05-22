@@ -114,7 +114,7 @@ export default function Forum({ forum_id , api_id }) {
                 onChange={(e) => setMessage(e.target.value)}
               />
               <br />
-              {authState.isAuth  ? (
+              {authState.isConsommateur  ? (
                 <a
                   onClick={handleNewDiscussion}
                   className="button-popup"

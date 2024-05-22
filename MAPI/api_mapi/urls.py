@@ -33,14 +33,20 @@ router.register(r'responseexample', ResponseExampleView, basename='responseexamp
 
 # Get the urlpatterns from the router
 urlpatterns = [
+    path('apiforum/', APIForumView.as_view({'get': 'list', 'post': 'create'}), name='apiforum-list'),
+    path('comments/', CommentView.as_view({'get': 'list', 'post': 'create'}), name='comments-list'),
+    path('tickets/', TicketView.as_view({'get': 'list', 'post': 'create'}), name='tickets-list'),
+
     path('apiforum/<int:forum_id>/threads/', ThreadView.as_view({'get': 'list'}), name='forum_threads'),
     path('threads/<int:thread_id>/comments/', CommentView.as_view({'get': 'list'}), name='thread_comments'),
-    path('apis/byprovider/<int:provider>/', APIByProviderView.as_view({'get': 'list'}), name='api_by_provider'),
+    
     path('tickets/byprovider/<int:provider>/', TicketsByProviderView.as_view({'get': 'list'}), name='tickets_by_provider'),
-    path('tickets/byconsumer/<int:consumer>/', TicketsByConsumerView.as_view({'get': 'list'}), name='tickets_by_provider'),
+    path('tickets/byconsumer/<int:consumer>/', TicketsByConsumerView.as_view({'get': 'list'}), name='tickets_by_consumer'),
     path('tickets/close/<int:pk>/', TicketView.as_view({'post': 'close_ticket'}), name='close_ticket'),
     path('tickets/open/<int:pk>/', TicketView.as_view({'post': 'open_ticket'}), name='open_ticket'),
-    path('tickets/<int:ticket_id>/responses/', TicketResponseView.as_view({'get': 'list', 'post': 'create'}), name='ticket-responses'),
+    path('tickets/<int:ticket_id>/responses/', TicketResponseView.as_view({'get': 'list', 'post': 'create'}), name='ticket_responses'),
+    
+    path('apis/byprovider/<int:provider>/', APIByProviderView.as_view({'get': 'list'}), name='api_by_provider'),
     path('activate/<int:id>/', activate_user, name='activate_user'),
     path('deactivate/<int:id>/', deactivate_user, name='deactivate_user'),
     path('api/search/', search_api, name='search_api'),
