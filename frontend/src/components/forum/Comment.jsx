@@ -13,7 +13,7 @@ export default function Comment({ comment }) {
             <div className="history-content">
 
               <div className="history-details tf-loadmore 3d" style={{ width: '100vh' }}>
-                <div className="authorr" style={{ width: '100vh' }}>
+                <div className="authorr" style={{ width: '100vh' }} >
                     <div className="avatar">
                       <img src="/assets/images/author/user.png" alt="images" />
                     </div>

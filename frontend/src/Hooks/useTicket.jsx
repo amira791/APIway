@@ -50,6 +50,13 @@ export default function useTicket() {
         }, toast, setError,token);
     }
 
+    const changeTicketStatus = (id , status) =>{
+        postData(`${BASEURL}tickets/${id}/status/`, {status : status}, {
+            title: 'Ticket ajoute',
+            description: 'Le Ticket a ete ajoute avec succes',
+        }, toast, setError,token);
+    }
+
     const addTicketResponse = (id ,response)=>{
         postData(`${BASEURL}tickets/${id}/responses/`, response, {
             title: 'Ticket ajoute',
@@ -64,6 +71,7 @@ export default function useTicket() {
         addNewTicket,
         closeTicket,
         openTicket,
+        changeTicketStatus,
         addTicketResponse,
         getTicketResponses,
         getProviderTickets,

@@ -255,6 +255,17 @@ class TicketView(viewsets.ModelViewSet):
         return queryset 
     
     @action(detail=True, methods=['post'])
+    def change_ticket_status(self, request, pk=None):
+        try:
+            ticket = Ticket.objects.get(pk=pk)
+            ticket.status = self.request.data.get('status')
+            ticket.save()
+            return Response({'status': 'Ticket status changed'}, status=status.HTTP_200_OK)
+        except Ticket.DoesNotExist:
+            return Response({'error': 'Ticket not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+    @action(detail=True, methods=['post'])
     def close_ticket(self, request, pk=None):
         try:
             ticket = self.get_object()
@@ -303,20 +314,19 @@ class TicketResponseView(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         creator_id = self.request.data.get('created_by')
+        user_type = self.request.data.get('user_type')
 
-        consommateur = Consommateur.objects.filter(id_consommateur=creator_id).first()
-        if consommateur:
-         user_id = consommateur.user_id
+        if user_type == 'fournisseur':
+            user = Fournisseur.objects.filter(id_fournisseur=creator_id).first()
         else:
-         fournisseur = Fournisseur.objects.filter(id_fournisseur=creator_id).first()
-         if fournisseur:
-            user_id = fournisseur.user_id
+            if user_type == 'consommateur':
+             user = Consommateur.objects.filter(id_consommateur=creator_id).first()
+            else:
+             raise serializers.ValidationError("Invalid creator ID provided.")
         
-        if user_id is not None:
-            created_by = get_object_or_404(UserBase, id=user_id)
-            serializer.save(created_by=created_by)
-        else:
-            raise serializers.ValidationError("Invalid creator ID provided.")
+        userr = UserBase.objects.get(id=user.user_id)
+        serializer.save(created_by=userr)
+        
     
 # Tarification View
 class TarificationView(viewsets.ModelViewSet):

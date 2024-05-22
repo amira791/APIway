@@ -2775,3 +2775,7 @@ header.absolute {
   background-color: #fed7d7;
   color: #8f3a3a;
 }
+
+.vh{
+width: 100vh;
+}

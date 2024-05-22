@@ -45,6 +45,7 @@ urlpatterns = [
     path('tickets/close/<int:pk>/', TicketView.as_view({'post': 'close_ticket'}), name='close_ticket'),
     path('tickets/open/<int:pk>/', TicketView.as_view({'post': 'open_ticket'}), name='open_ticket'),
     path('tickets/<int:ticket_id>/responses/', TicketResponseView.as_view({'get': 'list', 'post': 'create'}), name='ticket_responses'),
+    path('tickets/<int:pk>/status/', TicketView.as_view({'post': 'change_ticket_status'}), name='change_ticket_status'),
     
     path('apis/byprovider/<int:provider>/', APIByProviderView.as_view({'get': 'list'}), name='api_by_provider'),
     path('activate/<int:id>/', activate_user, name='activate_user'),

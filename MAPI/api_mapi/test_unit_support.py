@@ -159,7 +159,7 @@ class TicketResponseTests(APITestCase):
     def test_create_ticket_response(self):
         client = Client()
         url = reverse('ticket_responses', args=[self.ticket.ticket_id])
-        data = {'ticket': self.ticket.ticket_id, 'response_text': 'New Response', 'created_by': self.consumer.id_consommateur}
+        data = {'ticket': self.ticket.ticket_id, 'response_text': 'New Response', 'created_by': self.consumer.id_consommateur , 'user_type' : 'consommateur'}
         response = client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data['ticket'], self.ticket.ticket_id)

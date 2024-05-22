@@ -12,8 +12,9 @@ import Response from './Response';
 
 
 export default function Ticket({ ticket_id, onTicketClick }) {
-    const { getTicketResponses, addTicketResponse, openTicket, closeTicket, getTicket, responses, ticket, error, loading } = useTicket();
+    const { changeTicketStatus , getTicketResponses, addTicketResponse, openTicket, closeTicket, getTicket, responses, ticket, error, loading } = useTicket();
     const [response, setResponse] = useState('');
+    const [inP,setIn] = useState(false);
     const { authState } = useAuthContext()
 
 
@@ -39,8 +40,9 @@ export default function Ticket({ ticket_id, onTicketClick }) {
 
         const ticketResponse = {
             ticket: ticket_id,
-            created_by: authState.userId,
-            response_text: response
+            created_by: parseInt(authState.userId),
+            response_text: response,
+            user_type : authState.isFournisseur? 'fournisseur' : 'consommateur'
         };
 
         try {
@@ -54,9 +56,14 @@ export default function Ticket({ ticket_id, onTicketClick }) {
     const handleToggleStatus = async (e) => {
         e.preventDefault();
         if (ticket.status === 'open') {
-            await closeTicket(ticket_id);
+            if (inP) {
+                await changeTicketStatus(ticket_id , 'in progress');
+            } else{
+                await changeTicketStatus(ticket_id , 'close');
+            }
+            
         } else {
-            await openTicket(ticket_id);
+            await changeTicketStatus(ticket_id, 'open');
         }
     };
 
@@ -142,7 +149,7 @@ export default function Ticket({ ticket_id, onTicketClick }) {
                                 </div>
 
 
-                            {authState.isFournisseur  && ticket.status !== 'closed' && (
+                            {ticket.status !== 'closed' && (
                                 <div id="comments">
                                     <h5 className="heading">Add a response</h5>
                                     <form onSubmit={handleFormSubmit}
@@ -160,13 +167,17 @@ export default function Ticket({ ticket_id, onTicketClick }) {
                                 </div>
                             )}
                             </div>
-                            {authState.isFournisseur  &&  <div className="side-bar">
+                              <div className="side-bar">
                                 <div className="widget widget-tag ">
                                     <button className="tf-button" onClick={handleToggleStatus}>
                                         {ticket.status === 'open' ? 'Close Ticket' : 'Open Ticket'}
                                     </button>
+                                    {authState.isFournisseur && ticket.status === 'open' && <button className="tf-button" onClick={ (e) => {setIn(true); handleToggleStatus(e) }}>
+                                        In progress Ticket
+                                    </button>
+                                    }
                                 </div>
-                            </div>}
+                            </div>
                         </div>
                     </div>
 

@@ -17,9 +17,9 @@ export default function Response({ response }) {
                             <div className="history-details tf-loadmore 3d" style={{ width: '100vh' }}>
                                 <div className="avatar">
                                     <img src="/assets/images/author/user.png" alt="images" id="circular-image" />
-                                    <a href="#" className="name">{response.created_by}</a>
+                                    <a href="#" className="name">{response.creator_details.username}</a>
                                 </div>
-                                <div className="authorr" style={{ width: '100vh' }}>
+                                <div className="authorr" style={{ width: '100vh' }} >
 
                                     <div className="content">
 

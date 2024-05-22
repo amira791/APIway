@@ -137,6 +137,7 @@ class TicketResponseSerializer(serializers.ModelSerializer):
     def get_creator_details(self, obj):
         creator = obj.created_by
         return {
+            'username' : creator.username,
             'first_name': creator.first_name,
             'last_name': creator.last_name,
             'email': creator.email,
