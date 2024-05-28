@@ -9,8 +9,7 @@ import NavbarProvider from "./CommunComponants/NavBar.jsx";
 import Example from "./CommunComponants/execTab.jsx";
 import PricingContainer from "./PricingPlan.jsx";
 import { useParams } from "react-router-dom";
-import API from "../../API.js";
-import Forum from "../forum/Forum.jsx";
+import Forum from "../forum_components/Forum.jsx";
 import usePayment from "../../hooks/usePayment.jsx";
 import { useAuthContext } from "../../context/authContext.js";
 

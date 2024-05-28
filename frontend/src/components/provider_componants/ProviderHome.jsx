@@ -5,9 +5,9 @@ import ProvAPIList from "../provider_componants/ListProvAPI";
 import React, { useState, useEffect } from "react";
 import APIAjout from "../../hooks/APIHook";
 import { useAuthContext } from "../../context/authContext";
-import TicketsList from "../tickets/TicketsList";
+import TicketsList from "../tickets_components/TicketsList";
 import ProviderProfile from "./ProviderProfile";
-import Ticket from "../tickets/Ticket";
+import Ticket from "../tickets_components/Ticket";
 import useTicket from "../../hooks/useTicket";
 
 

@@ -12,8 +12,8 @@ export default function Navbar() {
   const menuItems = [
     { name: "Home", url: "/", active: true },
     { name: "Explore", url: "/searchApi" },
-    { name: "FAQ", url: "/tickets" },
-    { name: "Contact", url: "/signup" }
+    { name: "FAQ", url: "/FAQ" },
+    { name: "Contact", url: "/contact" }
   ];
 
   const { authState } = useAuthContext();

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../global_components/navbar'
 import Footer from '../global_components/footer'
 import { useAuthContext } from '../../context/authContext';
-import Ticket from '../tickets/Ticket';
-import TicketsList from '../tickets/TicketsList';
+import Ticket from '../tickets_components/Ticket';
+import TicketsList from '../tickets_components/TicketsList';
 import ProviderProfile from '../provider_componants/ProviderProfile';
 import useTicket from '../../hooks/useTicket';
 

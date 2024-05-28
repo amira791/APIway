@@ -169,13 +169,10 @@ export default function Ticket({ ticket_id, onTicketClick }) {
                             </div>
                             <div className="side-bar">
                                 <div className="widget widget-tag ">
-                                    <button className="tf-button" onClick={handleToggleStatus}>
+                                   {authState.isConsommateur && <button className="tf-button" onClick={handleToggleStatus}>
                                         {ticket.status === 'open' ? 'Close Ticket' : 'Open Ticket'}
-                                    </button>
-                                    {authState.isFournisseur && ticket.status === 'open' && <button className="tf-button" onClick={(e) => { setIn(true); handleToggleStatus(e) }}>
-                                        In progress Ticket
-                                    </button>
-                                    }
+                                    </button>}
+                                    
                                 </div>
                             </div>
                         </div>

@@ -13,15 +13,14 @@ import FourAccountManag from "./components/admin/fourAccountManag";
 import ConsomAccountManag from "./components/admin/consAccountManag";
 import SearchApi from "./components/RechercherAPI";
 import AdminHome from "./components/admin/adminHomePage";
-import ApiDetails from './components/ApiDetails'
-
+import FAQ from './components/global_components/FAQ';
+import Contact from './components/global_components/Contact';
 import LoginPage from './components/auth_components/LoginPage';
-import TicketForm from './components/tickets/TicketForm';
-import Ticket from './components/tickets/Ticket';
+import TicketForm from './components/tickets_components/TicketForm';
+import Ticket from './components/tickets_components/Ticket';
 
 import { AuthProvider} from './context/authContext';
 import SignUpPage from './components/auth_components/SignUpPage';
-import AddAPIPage from './components/provider_componants/AddApi';
 import Details from './components/provider_componants/Details';
 import {useAuthContext} from './context/authContext'
 
@@ -42,6 +41,8 @@ function Root() {
           <Route exact path="/" element={<HomeSection />} />
           <Route exact path="/login" element={<LoginPage />} />
           <Route exact path="/signup" element={<SignUpPage/>}/>
+          <Route exact path='/FAQ' element={<FAQ/>}/>
+          <Route exact path='/contact' element={<Contact/>}/>
 
 
           <Route exact path="/adminhome" element={authState.isAdmin ? <AdminHome /> : <Navigate to="/login"/>} />
