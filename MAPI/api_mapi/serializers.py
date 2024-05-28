@@ -126,7 +126,7 @@ class TicketSerializer(serializers.ModelSerializer):
     def get_num_responses(self, obj):
      return TicketResponse.objects.filter(ticket=obj.ticket_id).count()
 class TicketResponseSerializer(serializers.ModelSerializer):
-    created_by = serializers.ReadOnlyField(source='created_by.id')  # Make it read-only
+    created_by = serializers.ReadOnlyField(source='created_by.id')  
     creator_details = serializers.SerializerMethodField()
 
     class Meta:

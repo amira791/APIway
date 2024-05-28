@@ -314,7 +314,9 @@ class TicketResponseView(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         creator_id = self.request.data.get('created_by')
-        user_type = 'admin'
+        ticket_id = self.request.data.get('ticket')
+        user_type = self.request.data.get('user_type')
+
 
         if user_type == 'fournisseur':
             user = Fournisseur.objects.filter(id_fournisseur=creator_id).first()
@@ -326,6 +328,12 @@ class TicketResponseView(viewsets.ModelViewSet):
         
         userr = UserBase.objects.get(id=user.user_id)
         serializer.save(created_by=userr)
+        ticket = Ticket.objects.get(ticket_id=ticket_id)
+        
+        if user_type == 'fournisseur':
+            ticket.status = 'in progress'
+            ticket.save()
+
         
     
 # Tarification View
