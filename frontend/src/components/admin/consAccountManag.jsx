@@ -1,22 +1,22 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo , useEffect} from 'react';
 import Navbar from '../global_components/navbar';
 import Footer from '../global_components/footer';
 import TheDataTable from './CsDatatable';
-import useManageAccountsC from '../../hooks/ConsomAccountsHook';
+import useManageAccountsC from '../../Hook/ConsomAccountsHook';
 import { Button } from '@chakra-ui/react'; // Import Chakra UI Button or your preferred button component
 
 
 // Import Tailwind CSS
 
 
-const FourAccountManag = () => {
+const ConsomAccountManag = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const { consommateurs, loading, error, activateStatus, deactivateStatus, fetchConsomsData } = useManageAccountsC();
 
 
   // Custom cell for rendering status with Tailwind CSS classes
   const customStatusCell = (row) => {
-    const status = row.CNstatus.toLowerCase();
+    const status = row.user.is_active ? 'active' : 'inactive';
     let statusClass = '';
   
     switch (status) {
@@ -31,55 +31,64 @@ const FourAccountManag = () => {
         break;
     }
   
-    return <div className={statusClass}>{row.CNstatus}</div>;
+    return <div className={statusClass}>{status}</div>;
   };
 
   const handleActivateStatus =  () => {
     for (const userId of selectedRows) {
-       activateStatus(userId);
+      activateStatus(userId);
     }
-    setSelectedRows([]);
+    setSelectedRows([]); // Use the state updater function
+    console.log("selectedRows ; ",selectedRows); // Log selectedRows after clearing
   };
 
-  const handleDeactivateStatus =  () => {
+  const handleDeactivateStatus = () => {
     for (const userId of selectedRows) {
        deactivateStatus(userId);
     }
-    
-    setSelectedRows([]);
+    fetchConsomsData();
+    setSelectedRows([]); // Use the state updater function
+    console.log("selectedRows ; ",selectedRows); // Log selectedRows after clearing
   };
+
+// Then, you can log the updated state inside the component re-render
+useEffect(() => {
+  console.log("Updated selectedRows:", selectedRows);
+}, [selectedRows]);
+
+
   
- 
-  const columns = [
+    const columns = [
     {
       name: 'User Name',
-      selector: (row) => row.CNusername,
+      selector: (row) => row.user.username,
       sortable: true,
     },
     {
       name: 'First Name',
-      selector: (row) => row.CN_first_name,
+      selector: (row) => row.user.first_name,
       sortable: true,
     },
     {
       name: 'Last Name',
-      selector: (row) => row.CN_last_name,
+      selector: (row) => row.user.last_name,
       sortable: true,
     },
     {
       name: 'Email',
-      selector: (row) => row.CNemail,
+      selector: (row) => row.user.email,
       sortable: true,
     },
     {
       name: 'Phone',
-      selector: (row) => row.CNphone,
+      selector: (row) => row.user.phone,
       sortable: true,
     },
     {
       name: 'Status',
-      selector: (row) => row.CNstatus,
+      selector: (row) => row.user.is_active ? 'Active' : 'Inactive',
       sortable: true,
+      // Assuming you still need custom status cell rendering
       cell: customStatusCell,
     },
   ];
@@ -102,4 +111,4 @@ const FourAccountManag = () => {
   );
 };
 
-export default FourAccountManag;
+export default ConsomAccountManag;

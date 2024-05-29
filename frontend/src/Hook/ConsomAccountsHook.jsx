@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASEURL ,fetchData, postData } from '.././hooks/API';
+
 
 export default function useManageAccountsC() {
     const [consommateurs, setConsommateurs] = useState([]);
@@ -8,21 +10,13 @@ export default function useManageAccountsC() {
 
     useEffect(() => {
         setLoading(true);
-        axios.get('http://127.0.0.1:5000/consommateurs/')
-            .then(response => {
-                setConsommateurs(response.data);
-                setLoading(false);
-            })
-            .catch(error => {
-                setError(error);
-                setLoading(false);
-            });
+        fetchConsomsData();
     }, []);
 
     
     const activateStatus = async (userId) => {
         try {
-          const response = await axios.post(`http://127.0.0.1:5000/activate/${userId}/`, {
+          const response = await axios.post(`${BASEURL}activate/${userId}/`, {
             type: "C" // Include user type in the request body
           });
           console.log(response.data.message);
@@ -36,7 +30,7 @@ export default function useManageAccountsC() {
     
     const deactivateStatus = async (userId) => {
         try {
-          const response = await axios.post(`http://127.0.0.1:5000/deactivate/${userId}/`, {
+          const response = await axios.post(`${BASEURL}deactivate/${userId}/`, {
             type: "C" // Include user type in the request body
           });
            console.log(response.data.message);
@@ -51,9 +45,9 @@ export default function useManageAccountsC() {
 
 
     const fetchConsomsData = () => {
-        axios.get('http://127.0.0.1:5000/consommateurs/')
+        axios.get(`${BASEURL}consommateurs/`)
             .then(response => {
-                console.log('Fetched Data:', response.data);
+                console.log('Fetched Data Consommateur:', response.data);
                 setConsommateurs(response.data);
             })
             .catch(error => {

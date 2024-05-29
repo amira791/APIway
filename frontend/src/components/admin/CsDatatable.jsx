@@ -11,28 +11,68 @@ const ConsomDataTable = ({ columns, data,onSelectedRowsChange }) => {
   const [selectedRows, setSelectedRows] = useState([]); // Array of selected row IDs
   const [arrgids, setArrgIds] = useState([]); // Array of selected row IDs
 
+  
   useEffect(() => {
     setFilteredData(
       data.filter((row) =>
-        Object.values(row).some(
-          (value) => value && value.toString().toLowerCase().includes(filterText.toLowerCase())
+        Object.values(row.user).some(
+          (value) =>
+            value &&
+            value.toString().toLowerCase().includes(filterText.toLowerCase())
         )
       )
     );
   }, [data, filterText]);
+  
+
+  const tableHeaderstyle={
+    headCells:{
+        style:{
+            fontWeight:"bold",
+            fontSize:"14px",
+            backgroundColor: "#E5E7EB"
+
+        },
+    },
+    pagination: {
+        style: {
+          width: '100%',
+        },
+        pageButtonsStyle: {
+          borderColor: '#fff',
+          
+        },
+        pageButtonsActiveStyle: {
+          backgroundColor: '#fff',
+          color: '#333',
+        },
+    },
+    subHeader: {
+        style: {
+            backgroundColor: '#1f1f2cs',
+            
+        }
+    },
+    
+}
+
 
   // Handle filtering logic based on filterText and data types
+  // Handle filtering logic based on filterText and data types
   const handleFilter = (e) => {
-    setFilterText(e.target.value);
     const searchTerm = e.target.value.toLowerCase();
+    setFilterText(searchTerm);
+
     const newData = data.filter((row) =>
       Object.values(row).some((value) =>
-        value?.toString().toLowerCase().includes(searchTerm)
+        value && value.toString().toLowerCase().includes(searchTerm)
       )
     );
+
     setFilteredData(newData);
     setCurrentPage(1); // Reset current page to 1 when filtering
   };
+
   // Handle sorting logic based on sortColumn and sortOrder
   const handleSort = (column) => {
     const newSortColumn = column.selector; // Column ID
@@ -98,7 +138,7 @@ const ConsomDataTable = ({ columns, data,onSelectedRowsChange }) => {
         pagination
         paginationPerPage={rowsPerPage}
         paginationRowsPerPageOptions={[5, 10, 20]}
-        paginationTotalRows={filteredData.length}
+        paginationTotalRows={pageData.length}
         paginationComponentOptions={{
           onPageChange: handlePageChange,
           onRowsPerPageChange: handleRowsPerPageChange
@@ -113,13 +153,7 @@ const ConsomDataTable = ({ columns, data,onSelectedRowsChange }) => {
           },
         }}*/
         highlightOnHover={true} 
-        customStyles={{
-          header: {
-            style: {
-              backgroundColor: '#f2f2f2', // Custom header background color
-            },
-          },
-        }}
+        customStyles={tableHeaderstyle}
       />
     </div>
   );
@@ -130,11 +164,11 @@ export default ConsomDataTable;
 //  FilterInput component 
 const FilterInput = ({ value, onChange }) => (
   <input
-      type="text"
+      id="tableSearch"
+      type="search"
       value={value}
       onChange={onChange}
       placeholder="Search..."
-      className="border border-gray-300 rounded-tl-md rounded-tr-md  pl-10 focus:outline-none focus:border-blue-500 hover:bg-gray-200"
-      style={{ backgroundColor: '#1a1a11' }} // Adjust background color here
-    />);
+      className="filter-input"
+/>);
 

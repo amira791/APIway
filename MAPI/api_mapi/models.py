@@ -41,15 +41,15 @@ class Admin(UserProfileBase):
 class Consommateur(UserProfileBase):
     id_consommateur = models.AutoField(primary_key=True)
 
-#class Fournisseur(UserProfileBase):
+# class Fournisseur(UserProfileBase):
 #     id_fournisseur = models.AutoField(primary_key=True)
-#     FR_first_name = models.CharField(max_length=100)
-#     FR_last_name = models.CharField(max_length=100)
-#     FRemail = models.CharField(max_length=100)
-#     FRusername = models.CharField(max_length=100)
-#     FRpassword = models.CharField(max_length=100)
-#     FRphone = models.CharField(max_length=100)
-#     FRstatus = models.CharField(max_length=100)
+#     FR_first_name = models.CharField(max_length=100,blank=True, default="")
+#     FR_last_name = models.CharField(max_length=100,blank=True, default="")
+#     FRemail = models.CharField(max_length=100,blank=True, default="")
+#     FRusername = models.CharField(max_length=100,blank=True, default="")
+#     FRpassword = models.CharField(max_length=100,blank=True, default="")
+#     FRphone = models.CharField(max_length=100,blank=True, default="")
+#     FRstatus = models.CharField(max_length=100,blank=True, default="")
 
 #     def __str__(self):
 #         return self.FRusername
@@ -67,13 +67,13 @@ class Consommateur(UserProfileBase):
 
 # class Consommateur(UserProfileBase):
 #     id_consommateur = models.AutoField(primary_key=True)
-#     CN_first_name = models.CharField(max_length=100)
-#     CN_last_name = models.CharField(max_length=100)
-#     CNemail = models.CharField(max_length=100)
-#     CNusername = models.CharField(max_length=100)
-#     CNpassword = models.CharField(max_length=100)
-#     CNphone = models.CharField(max_length=100)
-#     CNstatus = models.CharField(max_length=100)
+#     CN_first_name = models.CharField(max_length=100,blank=True, default="")
+#     CN_last_name = models.CharField(max_length=100,blank=True, default="")
+#     CNemail = models.CharField(max_length=100,blank=True, default="")
+#     CNusername = models.CharField(max_length=100,blank=True, default="")
+#     CNpassword = models.CharField(max_length=100,blank=True, default="")
+#     CNphone = models.CharField(max_length=100,blank=True, default="")
+#     CNstatus = models.CharField(max_length=100,blank=True, default="")
 
 #     def __str__(self):
 #         return self.CNusername

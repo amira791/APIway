@@ -213,44 +213,38 @@ def deactivate_user(request, id):
     return manage_user_status(request, id, action='deactivate')
 
 
-#Managing function-----------------------------------------------------
+# Managing function-----------------------------------------------------
 def manage_user_status(request, id, action):
     # Get user type from request data
     user_type = request.data.get('type')
     
-    # Check user type and retrieve the corresponding user object
+    # Check user type and retrieve the corresponding user model
     if user_type == 'F':
         user_model = Fournisseur
-        serializer_class = FournisseurSerializer
-        id_field = 'id_fournisseur'
-        status_field = 'FRstatus'
     elif user_type == 'C':
         user_model = Consommateur
-        serializer_class = ConsommateurSerializer
-        id_field = 'id_consommateur'
-        status_field = 'CNstatus'
     else:
         return Response({'error': 'Invalid user type'}, status=status.HTTP_400_BAD_REQUEST)
     
     # Check if user exists
     try:
-        user_instance = user_model.objects.get(**{id_field: id})
+        user_instance = user_model.objects.get(pk=id)
     except user_model.DoesNotExist:
         return Response({'error': f'{user_model.__name__} does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
     # Update user status based on the action
     if action == 'activate':
-        new_status = 'Active'
+        user_instance.user.is_active = True
     elif action == 'deactivate':
-        new_status = 'Inactive'
+        user_instance.user.is_active = False
     else:
         return Response({'error': 'Invalid action'}, status=status.HTTP_400_BAD_REQUEST)
 
-    # Update user status
-    setattr(user_instance, status_field, new_status)
-    user_instance.save()
+    # Save the user instance
+    user_instance.user.save()
 
     # Serialize and return the updated user data
+    serializer_class = FournisseurSerializer if user_type == 'F' else ConsommateurSerializer
     serializer = serializer_class(user_instance)
     return Response(serializer.data, status=status.HTTP_200_OK)
 

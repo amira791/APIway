@@ -112,7 +112,7 @@ DATABASES = {
     'default': {
 
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'search',
+        'NAME': 'newmapi',
         'USER': 'root',
         'PASSWORD': '',
         'HOST':'localhost',

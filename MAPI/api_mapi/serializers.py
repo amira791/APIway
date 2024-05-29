@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'username', 'first_name', 'last_name', 'phone', 'password']
+        fields = ['id', 'email', 'username', 'first_name', 'last_name', 'phone', 'password','is_active','is_staff']
 
     def create(self, validated_data):
         password = validated_data.pop('password')
@@ -20,20 +20,25 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 class FournisseurSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
     class Meta:
         model = Fournisseur
         fields = ['id_fournisseur', 'user']
 
 class AdminSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
     class Meta:
         model = Admin
         fields = ['id_admin', 'user']
 
 class ConsommateurSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
     class Meta:
         model = Consommateur
-        fields = ['id_consommateur', 'user']
-        
+        fields = ['id_consommateur', 'user']  
 # class FournisseurSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = Fournisseur

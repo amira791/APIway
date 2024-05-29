@@ -15,8 +15,10 @@ const FourDataTable = ({ columns, data , clearSelRows ,onSelectedRowsChange }) =
   useEffect(() => {
     setFilteredData(
       data.filter((row) =>
-        Object.values(row).some(
-          (value) => value && value.toString().toLowerCase().includes(filterText.toLowerCase())
+        Object.values(row.user).some(
+          (value) =>
+            value &&
+            value.toString().toLowerCase().includes(filterText.toLowerCase())
         )
       )
     );
@@ -73,6 +75,37 @@ const FourDataTable = ({ columns, data , clearSelRows ,onSelectedRowsChange }) =
   endIndex = Math.max(endIndex, startIndex + 1);
   const pageData = filteredData.slice(startIndex, endIndex);
 
+
+  const tableHeaderstyle={
+    headCells:{
+        style:{
+            fontWeight:"bold",
+            fontSize:"14px",
+            backgroundColor: "#E5E7EB"
+
+        },
+    },
+    pagination: {
+        style: {
+          width: '100%',
+        },
+        pageButtonsStyle: {
+          borderColor: '#fff',
+          
+        },
+        pageButtonsActiveStyle: {
+          backgroundColor: '#fff',
+          color: '#333',
+        },
+    },
+    subHeader: {
+        style: {
+            backgroundColor: '#1f1f2cs',
+            
+        }
+    },
+    
+}
   
   // Call handleChange when selectedRows change
   
@@ -116,13 +149,7 @@ const FourDataTable = ({ columns, data , clearSelRows ,onSelectedRowsChange }) =
           },
         }}*/
         highlightOnHover={true} 
-        customStyles={{
-          header: {
-            style: {
-              backgroundColor: '#f2f2f2', // Custom header background color
-            },
-          },
-        }}
+        customStyles={tableHeaderstyle}
       />
     </div>
   );
@@ -132,12 +159,18 @@ export default FourDataTable;
 
 //  FilterInput component 
 const FilterInput = ({ value, onChange }) => (
-  <input
-      type="text"
+  <div className="relative">
+   
+    <input
+      id='tableSearch'
+      type="search"
       value={value}
       onChange={onChange}
       placeholder="Search..."
-      className="border border-gray-300 rounded-tl-md rounded-tr-md  pl-10 focus:outline-none focus:border-blue-500 hover:bg-gray-200"
-      style={{ backgroundColor: '#1a1a11' }} // Adjust background color here
-  />);
+      className="filter-input"
+    />
+    <br />
+    
+  </div>
+);
 
