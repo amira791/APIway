@@ -2771,6 +2771,11 @@ header.absolute {
   color: #2a5b44;
 }
 
+.status-in-progress {
+  background-color: #c6ecf6;
+  color: #284f70;
+}
+
 .status-closed {
   background-color: #fed7d7;
   color: #8f3a3a;

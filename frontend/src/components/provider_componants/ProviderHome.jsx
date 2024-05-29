@@ -1,26 +1,37 @@
+import React, { useState, useEffect } from "react";
+import { useAuthContext } from "../../context/authContext";
+
 import Footer from "../global_components/footer";
 import NavbarProvider from "../provider_componants/CommunComponants/NavBar";
+
 import AddAPIPage from "../provider_componants/AddApi";
 import ProvAPIList from "../provider_componants/ListProvAPI";
-import React, { useState, useEffect } from "react";
-import APIAjout from "../../hooks/APIHook";
-import { useAuthContext } from "../../context/authContext";
-import TicketsList from "../tickets_components/TicketsList";
+
 import ProviderProfile from "./ProviderProfile";
+import useAccounts from "../../hooks/useAccounts";
+
 import Ticket from "../tickets_components/Ticket";
+import TicketsList from "../tickets_components/TicketsList";
 import useTicket from "../../hooks/useTicket";
+
 
 
 const ProviderHomePage = () => {
 
     const { authState } = useAuthContext();
-    const provider = authState.userId;
-    const { getProviderTickets, tickets, error, loading } = useTicket();
+    const fournisseur = authState.userId;
+    const { getProviderTickets, tickets } = useTicket();
+    const {provider,getProviderInfos, error ,loading} = useAccounts();
     const [selectedTicketId, setSelectedTicketId] = useState(null);
 
     const handleTicketClick = (ticketId) => {
         setSelectedTicketId(ticketId);
     };
+
+    useEffect(() => {
+        getProviderTickets(authState.userId);
+        getProviderInfos(authState.userId);
+      }, []);
 
     useEffect(() => {
         const load = localStorage.getItem('load');
@@ -30,11 +41,13 @@ const ProviderHomePage = () => {
         }
     }, []);
 
-    
-  useEffect(() => {
-    getProviderTickets(authState.userId);
-  }, [authState.userId]);
+    if (loading) {
+        return <div>Loading...</div>; // Display a loading indicator while fetching data
+    }
 
+    if (error) {
+        return <div>Error: {error.message}</div>; // Display error message if an error occurs
+    }
 
     return (
         <div className="body header-fixed">
@@ -52,7 +65,7 @@ const ProviderHomePage = () => {
                                             <div className="avatar">
                                                 <img src="/assets/images/author/user.png" alt="images" />
                                             </div>
-                                            <div className="name"> {authState.username}</div>
+                                            <div className="name"> {authState.username} {provider?.user?.first_name} {provider?.user?.last_name}</div>
 
                                         </div>
                                         <div className="dashboard-filter">
@@ -82,7 +95,7 @@ const ProviderHomePage = () => {
                                     <div className="dashboard-content inventory content-tab">
                                         <div className="inner-content inventory">
 
-                                            <ProvAPIList provider_id={provider} />
+                                            <ProvAPIList provider_id={fournisseur} />
 
                                         </div>
                                         <div className="inner-content wallet">
@@ -100,12 +113,10 @@ const ProviderHomePage = () => {
                                         :( <Ticket ticket_id={selectedTicketId} onTicketClick={handleTicketClick}/>)
                                                  
                                         }
-                                                
-      
-                                         
+                                                 
                                         <div className="inner-content profile">
                                             <h4 className="title-dashboard">Edit Profile</h4>
-                                             <ProviderProfile/>
+                                             <ProviderProfile provider_id={authState.userId}/>
                                         </div>
                                     </div>
                                 </div>
@@ -120,20 +131,6 @@ const ProviderHomePage = () => {
 
 
             <a id="scroll-top"></a>
-
-
-            <script src="assets/js/jquery.min.js"></script>
-            <script src="assets/js/jquery.easing.js"></script>
-            <script src="assets/js/bootstrap.min.js"></script>
-            <script src="assets/js/swiper-bundle.min.js"></script>
-            <script src="assets/js/swiper.js"></script>
-            <script src="assets/js/count-down.js"></script>
-            <script src="assets/js/jquery.isotope.min.js"></script>
-            <script src="assets/js/switchmode.js"></script>
-            <script src="assets/js/plugin.js"></script>
-            <script src="assets/js/shortcodes.js"></script>
-            <script src="assets/js/main.js"></script>
-
         </div>
 
     );

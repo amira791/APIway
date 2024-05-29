@@ -26,7 +26,7 @@ class Footer extends Component {
                                     <li><a href="#"><i className="icon-fl-tik-tok-2"></i></a></li>
                                     <li><a href="#"><i className="icon-fl-vt"></i></a></li>
                                 </ul>
-                                <p className="copy-right">Copyright © 2022 Themesflat. All Rights Reserved.
+                                <p className="copy-right">Copyright © 2024 Themesflat. All Rights Reserved.
 
                                 </p>
                             </div>
@@ -53,7 +53,6 @@ class Footer extends Component {
                                     <h6 className="widget-title">My account</h6>
                                     <ul >
                                         <li><a href="#">Profile</a></li>
-                                        <li><a href="#">My wallet</a></li>
                                     </ul>
                                 </div>
                             </div>

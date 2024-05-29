@@ -115,10 +115,11 @@ export default function Ticket({ ticket_id, onTicketClick }) {
                                                 <p>{formatTime(ticket.created_at)}</p>
                                             </div>
                                             <div className="meta-inner">
-                                                <span className={`status-badge status-${ticket?.status}`}>
+                                                <span className={`status-badge status-${ticket?.status.replace(/\s+/g, '-').toLowerCase()}`}>
                                                     {ticket?.status}
                                                 </span>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -169,10 +170,10 @@ export default function Ticket({ ticket_id, onTicketClick }) {
                             </div>
                             <div className="side-bar">
                                 <div className="widget widget-tag ">
-                                   {authState.isConsommateur && <button className="tf-button" onClick={handleToggleStatus}>
+                                    {authState.isConsommateur && <button className="tf-button" onClick={handleToggleStatus}>
                                         {ticket.status === 'open' ? 'Close Ticket' : 'Open Ticket'}
                                     </button>}
-                                    
+
                                 </div>
                             </div>
                         </div>

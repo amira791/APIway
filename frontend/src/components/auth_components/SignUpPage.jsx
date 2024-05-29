@@ -16,10 +16,19 @@ export default function SignUpPage() {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [phone, setPhone] = useState('');
     const [user_type, setUserType] = useState('');
+    const [picture, setPicture] = useState(null)
 
     const { signUp } = useAuth();
     const { authState } = useAuthContext();
+
+    const handleLogoChange = (e) => {
+        const file = e.target.files[0];
+        setPicture(file)
+        console.log(picture);
+    };
+
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -31,21 +40,21 @@ export default function SignUpPage() {
                 first_name: first_name,
                 last_name: last_name,
                 password: password,
-                phone: '00000000000',
+                phone: phone,
             },
         };
-  
+
 
         signUp(newUser);
-        if (authState.isAuth  && authState.isConsommateur ) {
+        if (authState.isAuth && authState.isConsommateur) {
             console.log("Consumer is logged in");
             navigate('/');
-  
-        }else if (authState.isAuth && authState.isFournisseur) {
+
+        } else if (authState.isAuth && authState.isFournisseur) {
             console.log("Provider is logged in");
-            localStorage.setItem('load',true)
+            localStorage.setItem('load', true)
             navigate('/provider_home');
-      
+
         }
     };
 
@@ -58,7 +67,37 @@ export default function SignUpPage() {
             <div id="wrapper" className="wrapper-style">
                 <div id="page" className="clearfix">
                     <Navbar />
+                    <div className="col-xl-3 col-lg-4 col-md-6">
 
+                        <div className="sc-product style1">
+                            <div className="top">
+                                <a href="#" className="tag">
+                                    {first_name + last_name} , {username}
+                                </a>
+
+                            </div>
+                            <div class="features">
+                                <div class="product-media">
+                                    {picture && (
+                                        <div className="avatar">
+                                            <img
+                                                src={URL.createObjectURL(picture)}
+                                                alt="Uploaded Picture"
+                                            />
+                                        </div>
+                                    )}{" "}
+                                </div>
+
+                                <div class="rain-drop1">
+                                    <img src="/assets/images/icon/rain1.svg" alt="images" />
+                                </div>
+                                <div class="rain-drop2">
+                                    <img src="/assets/images/icon/rain2.svg" alt="images" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                     <section className="tf-login">
                         <div className="tf-container">
                             <div className="row justify-content-center">
@@ -69,8 +108,8 @@ export default function SignUpPage() {
                                 </div>
                                 <div className="col-xl-6 col-lg-9 col-md-12">
                                     <form onSubmit={handleFormSubmit}>
-                                    <ToastContainer />
-                                    <div className='add-nft-inner'>
+                                        <ToastContainer />
+                                        <div className='add-nft-inner'>
                                             <h6 className="title">Choose Role</h6>
                                             <p className="sub">Connect to APIway as provider to create APIs or as Consumer to use APIs</p>
                                             <ul className="blockchain-button">
@@ -82,6 +121,43 @@ export default function SignUpPage() {
                                         <fieldset><input value={last_name} onChange={(e) => setLastName(e.target.value)} id="last_name" name="last_name" tabIndex="1" aria-required="true" required type="text" placeholder="Last name" /></fieldset>
                                         <fieldset><input value={username} onChange={(e) => setUsername(e.target.value)} id="username" name="username" tabIndex="1" aria-required="true" required type="text" placeholder="Username" /></fieldset>
                                         <fieldset><input value={email} onChange={(e) => setEmail(e.target.value)} id="email" name="email" tabIndex="1" aria-required="true" required type="text" placeholder="Email" /></fieldset>
+                                        <fieldset><input value={phone} onChange={(e) => setPhone(e.target.value)} id="phone" name="phone" tabIndex="1" aria-required="true" required type="text" placeholder="Phone Number" /></fieldset>
+                                        <div className="tf-tab">
+                                            <div className="content-tab">
+                                                <div className="content-inner active">
+                                                    <div className="tab-create-item">
+                                                        <h6 className="title">
+                                                            Drop file to upload or attach it
+                                                        </h6>
+                                                        <p className="sub">
+                                                            But Each One Takes A Different Approach And
+                                                            Makes Different Tradeoffs.
+                                                        </p>
+                                                        <div className="drag-upload">
+                                                            <input
+                                                                type="file"
+                                                                id="logo"
+                                                                accept="image/png, image/jpeg, image/jpg"
+                                                                onChange={handleLogoChange}
+                                                                required="required"
+                                                            />
+                                                            <img
+
+                                                                src="/assets/images/svg/drap-upload.svg"
+                                                                alt="Image"
+                                                            />
+                                                            <h6 className="title">Upload Picture</h6>
+                                                            <p className="sub-title">
+                                                                Maximum Size: 500 x 500px, JPEG / PNG
+                                                            </p>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
                                         <fieldset>
                                             <input value={password} onChange={(e) => setPassword(e.target.value)} id="showpassword" name="password" tabIndex="2" aria-required="true" type={showPassword ? "text" : "password"} placeholder="Password" required />
                                             <span className="btn-show-pass" onClick={togglePasswordVisibility}><i className="far fa-eye-slash"></i></span>
@@ -100,7 +176,7 @@ export default function SignUpPage() {
                 </div>
             </div>
             <a id="scroll-top"></a>
-    
+
         </>
     );
 }

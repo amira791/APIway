@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ValidationError
+from django.contrib.auth.hashers import make_password
 from .models import *
 from .serializers import *
 from Consumer.views import index_api
@@ -109,6 +110,32 @@ def signin(request):
         'user': serialized_user,
     }, status=status.HTTP_200_OK)
 
+@api_view(['POST'])
+def update_user(request, user_id):
+    try:
+        user = UserBase.objects.get(id=user_id)
+    except UserBase.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = UserSerializer(user, data=request.data, partial=True)
+
+    if serializer.is_valid():
+        # Check if the password is provided and not null or empty
+        password = request.data.get('password')
+        if password:
+            serializer.validated_data['password'] = make_password(password)
+
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# class UpdateUserView(viewsets.ModelViewSet):
+#     queryset = UserBase.objects.all()
+#     serializer_class = UserSerializer
+
+#     def get_object(self):
+#         user_id = self.kwargs.get("user_id")
+#         return UserBase.objects.get(id=user_id)
 
 # Fournisseur View
 class FournisseurView(viewsets.ModelViewSet):
@@ -136,15 +163,14 @@ class ConsommateurView(viewsets.ModelViewSet):
     serializer_class = ConsommateurSerializer
     queryset = Consommateur.objects.all()
 
-class ConsommateurByUserView(viewsets.ModelViewSet):
-    serializer_class = ConsommateurSerializer
-    lookup_field = 'user_id'
-
-    def get_queryset(self):
-        user_id = self.kwargs.get('user_id')  # Get user_id from URL kwargs
+    @action(detail=False, methods=['get'], url_path='byuser/(?P<user_id>\d+)')
+    def by_user(self, request, user_id=None):
         if user_id:
-            return Consommateur.objects.filter(user_id=user_id)
-        return Consommateur.objects.none()  # Return an empty queryset if user_id is not provided
+            consommateur = Consommateur.objects.filter(user_id=user_id)
+            serializer = self.get_serializer(consommateur, many=True)
+            return Response(serializer.data)
+        return Response([])  # Return an empty response if user_id is not provided
+
 # APIcategory View
 class APIcategoryView(viewsets.ModelViewSet):
     queryset = APIcategory.objects.all()
@@ -163,7 +189,7 @@ class APIByProviderView(viewsets.ModelViewSet):
     def get_queryset(self):
         provider_id = self.kwargs.get('provider')  # Get provider_id from URL kwargs
         if provider_id:
-            return API.objects.filter(provider=provider_id)
+            return API.objects.get(provider=provider_id)
         return API.objects.none()  # Return an empty queryset if provider_id is not provided
 
 

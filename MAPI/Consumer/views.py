@@ -34,7 +34,7 @@ ELASTIC_HOST = 'http://localhost:9200/'
 # Create the client instance
 client = Elasticsearch(
     [ELASTIC_HOST],
-    basic_auth=('hadilane', '123456789')
+    basic_auth=('soumi', 'soumimks')
 )
 
 
@@ -111,7 +111,6 @@ def search_api(request, index='api_index'):
             "minimum_should_match": 1
         }
     }
-
 
     sort = '_score'  # Tri par défaut (pertinence)
 

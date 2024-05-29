@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "./Subscrib.css";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Link } from 'react-router-dom';
 import ApiIcon from '@mui/icons-material/Api';
 
 function Subscrib() {

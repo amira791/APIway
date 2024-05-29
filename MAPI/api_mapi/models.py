@@ -8,6 +8,7 @@ class UserBase(AbstractUser):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
+    picture = models.ImageField(upload_to="assets/images/users", verbose_name="Picture", null = True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 

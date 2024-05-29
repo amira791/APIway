@@ -33,6 +33,8 @@ router.register(r'responseexample', ResponseExampleView, basename='responseexamp
 
 # Get the urlpatterns from the router
 urlpatterns = [
+    path('user/update/<int:user_id>/', update_user, name='user-update'),
+
     path('apiforum/', APIForumView.as_view({'get': 'list', 'post': 'create'}), name='apiforum-list'),
     path('comments/', CommentView.as_view({'get': 'list', 'post': 'create'}), name='comments-list'),
     path('tickets/', TicketView.as_view({'get': 'list', 'post': 'create'}), name='tickets-list'),
@@ -48,11 +50,13 @@ urlpatterns = [
     path('tickets/<int:pk>/status/', TicketView.as_view({'post': 'change_ticket_status'}), name='change_ticket_status'),
     
     path('apis/byprovider/<int:provider>/', APIByProviderView.as_view({'get': 'list'}), name='api_by_provider'),
-    path('activate/<int:id>/', activate_user, name='activate_user'),
-    path('deactivate/<int:id>/', deactivate_user, name='deactivate_user'),
     path('api/search/', search_api, name='search_api'),
     path('api/versions/', api_versions_view, name='api-versions'),
     path('api/functions/<int:id>/', get_api_functions, name='api-functions'),
+
+    path('activate/<int:id>/', activate_user, name='activate_user'),
+    path('deactivate/<int:id>/', deactivate_user, name='deactivate_user'),
+
     path('signup/',signup),
     path('signin/',signin)
    
