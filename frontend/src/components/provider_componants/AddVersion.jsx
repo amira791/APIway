@@ -13,6 +13,7 @@ import Monetizing from "./ModifyMonetize.jsx";
 import { ToastContainer } from 'react-toastify';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import AddEndpointForm from "./CreateEndpointForm.jsx";
 
 const AddVersion = ({selectedAPI, onReturnClick2}) => {
   $.noConflict();
@@ -184,7 +185,7 @@ const AddVersion = ({selectedAPI, onReturnClick2}) => {
         return;
     }
  //   alert(formData.num_version);
-    addVersion(formData, functionalities, baseURLs, endpoints);
+    addVersion(formData, functionalities, endpoints);
   };
   const handleRemoveEndpointFromGroup = (endpointId) => {
     const updatedEndpoints = endpoints.map((endpoint) => {
@@ -425,32 +426,7 @@ const AddVersion = ({selectedAPI, onReturnClick2}) => {
                               <div className="tab-create-item">
                                 <div className="list">
                                   <div className="widget widget-category sc-product style2">
-                                    <div>
-                                      <h6 className="widget-title">Base URL</h6>
-                                      <p style={{ margin: "3%" }}>
-                                        Add a base URLs for this version 
-                                      </p>
-                                      {baseURLs.map((url, index) => (
-                                        <fieldset key={index}>
-                                          <label>URL {index + 1}</label>
-                                          <input
-                                            type="text"
-                                            placeholder="Api base"
-                                            value={url}
-                                            onChange={(e) =>
-                                              handleChanges(e, index)
-                                            }
-                                          //  required
-                                          />
-                                        </fieldset>
-                                      ))}
-                                      <button
-                                        type="button"
-                                        onClick={handleAddURL}
-                                      >
-                                        Add URL
-                                      </button>
-                                    </div>
+                                   
                                   </div>
                                   <div className="col-xl-12 col-lg-12 col-md-12">
                                     <div>

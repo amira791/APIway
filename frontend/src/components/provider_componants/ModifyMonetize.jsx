@@ -31,7 +31,7 @@ const Monetizing = ({apiId}) => {
     Name: "",
     id: "",
     modelIndex: "",
-    ratelimit: 100,
+    
     quotalimit: "",
     price: "",
     features: "",
@@ -40,7 +40,6 @@ const Monetizing = ({apiId}) => {
     Name: "",
     id: "",
     modelIndex: "",
-    ratelimit: 1000,
     quotalimit: "",
     price: "",
     features: "",
@@ -96,10 +95,7 @@ const Monetizing = ({apiId}) => {
       !editedPlan.quotalimit 
     ) {
       toast.error("Please fill in all fields before editing the plan.");
-      const rateLimitInput = document.getElementById("rate-limit");
-      if (rateLimitInput) {
-        document.getElementById("rate-limit").value = "";
-      }
+      
       document.getElementById("quota-limit").value = "";
       document.getElementById("sub-price").value = "";
       document.getElementById("features").value = "";
@@ -116,7 +112,7 @@ const Monetizing = ({apiId}) => {
         Models[indexModel].plans[planIndex].quotalimit = editedPlan.quotalimit; // Modify quotalimit to "100"
         Models[indexModel].plans[planIndex].price = editedPlan.price; // Modify price to "1000"
         Models[indexModel].plans[planIndex].features = editedPlan.features; // Modify quotalimit to "100"
-        Models[indexModel].plans[planIndex].ratelimit = editedPlan.ratelimit; // Modify quotalimit to "100"
+       
 
       } else {
         console.log("Plan not found.");
@@ -129,15 +125,11 @@ const Monetizing = ({apiId}) => {
     setEditedPlan({
       Name: "",
       id: "",
-      ratelimit: "",
       quotalimit: "",
       price: "",
       features: "",
     });
-    const rateLimitInput = document.getElementById("rate-limit");
-    if (rateLimitInput) {
-      document.getElementById("rate-limit").value = "";
-    }
+    
     document.getElementById("quota-limit").value = "";
     document.getElementById("sub-price").value = "";
     document.getElementById("features").value = "";
@@ -154,7 +146,6 @@ const Monetizing = ({apiId}) => {
       setNewPlan({
         Name: "",
         id: "",
-        ratelimit: "",
         quotalimit: "",
         price: "",
         features: "",
@@ -187,7 +178,6 @@ const Monetizing = ({apiId}) => {
     setNewPlan({
       Name: "",
       id: "",
-      ratelimit: "",
       quotalimit: "",
       price: "",
       features: "",
@@ -195,7 +185,7 @@ const Monetizing = ({apiId}) => {
     document.getElementById("quota-limit").value = "";
     document.getElementById("sub-price").value = "";
     document.getElementById("features").value = "";
-    setRateLimit("");
+
     setSubscriptionPrice("");
     setPlanValidated(true);
 
@@ -213,7 +203,6 @@ const Monetizing = ({apiId}) => {
       setEditedPlan({
         Name: "",
         id: "",
-        ratelimit: "",
         quotalimit: "",
         price: "",
         features: "",
@@ -390,25 +379,16 @@ const Monetizing = ({apiId}) => {
   }, [editedPlan]);
 
   const [subscriptionPrice, setSubscriptionPrice] = useState("");
-  const [rateLimitEnabled, setRateLimitEnabled] = useState(false);
-  const [rateLimit, setRateLimit] = useState("");
+
   const [isChecked, setIsChecked] = useState(false);
 
   const handleSubscriptionPriceChange = (e) => {
     const price = parseFloat(e.target.value);
     setSubscriptionPrice(price);
-    // Enable rate limit if subscription price is greater than 0
-    setRateLimitEnabled(price > 0);
+
   };
 
-  const handleRateLimitCheckboxChange = () => {
-    // Toggle rate limit input visibility when checkbox is clicked
-    setRateLimitEnabled(!rateLimitEnabled);
-    if (!rateLimitEnabled) {
-      // Reset rate limit input value when hiding it
-      setRateLimit("");
-    }
-  };
+ 
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(4);
@@ -710,57 +690,7 @@ const Monetizing = ({apiId}) => {
                     : handlePlanChange("price", e.target.value);
                 }}
               />
-              {rateLimitEnabled ? (
-                <div>
-                  <p className="label-1">Rate Limit:</p>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <input
-                      id="rate-limit"
-                      type="number"
-                      value={rateLimit}
-                      placeholder="Rate limit"
-                      onChange={(e) => {
-                        modificationOn
-                          ? handlePlanEdit("ratelimit", e.target.value)
-                          : handlePlanChange("ratelimit", e.target.value);
-                        setRateLimit(e.target.value);
-                      }}
-                    />
-                    <p>requests per hour</p>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  {" "}
-                  <p className="label-1">Rate Limit:</p>{" "}
-                  <p>
-                    Custom rate limit is enabled for paid plans or plans with
-                    overages.
-                  </p>
-                  <a style={{ textDecorationLine: "underline" }}>
-                    {" "}
-                    1,000 requests per hour
-                  </a>
-                </>
-              )}
-
-              {subscriptionPrice > 0 && (
-                <div>
-                  <input
-                    type="checkbox"
-                    id="rate-limit-checkbox"
-                    checked={rateLimitEnabled}
-                    onChange={handleRateLimitCheckboxChange}
-                  />
-                  <label htmlFor="rate-limit-checkbox">Enable Rate Limit</label>
-                </div>
-              )}
+              
               <p class="label-1">Features:</p>
               <fieldset class="message">
                 <textarea

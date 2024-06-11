@@ -73,16 +73,13 @@ export default function ManipulateVersion() {
     }
   };
 
-  const addVersion = async (formData, functionalities, baseLinks, endpoints) => {
+  const addVersion = async (formData, functionalities, endpoints) => {
   
     const functionalityIds = await postFunctionalities(functionalities);
-  
-    let baseLinkIds = [];
-    
-    baseLinkIds = await postBaseLinks(baseLinks);
+
     
   
-    const versionData = await handleCurrentVersion(formData, functionalityIds, baseLinkIds);
+    const versionData = await handleCurrentVersion(formData, functionalityIds);
   
     const apiversionId = await postVersion(versionData);
   
@@ -106,7 +103,7 @@ export default function ManipulateVersion() {
     return baseLinkResponses.map((response) => response.data.baselink_id);
   };
   
-  const handleCurrentVersion = async (formData, functionalityIds, baseLinkIds) => {
+  const handleCurrentVersion = async (formData, functionalityIds) => {
     if (formData.current == 1) {
       const { exists, currentVersion } = await checkIfCurrentVersionExists(formData.api);
       if (exists && currentVersion) {
@@ -114,7 +111,7 @@ export default function ManipulateVersion() {
       }
     }
     // Check if baseLinkIds is empty and set base_links accordingly
-     const base_links = baseLinkIds.length > 0 ? baseLinkIds : [];
+     
      console.log("description:",formData.description);
     return {
       num_version: formData.num_version,
@@ -122,7 +119,6 @@ export default function ManipulateVersion() {
       state: formData.state,
       api: formData.api,
       functions: functionalityIds,
-      base_links: base_links,
       current: formData.current == 1 ? 1 : 0
     };
   };

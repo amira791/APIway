@@ -239,7 +239,7 @@ class Tarification(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     features = models.TextField()
     quota_limit = models.IntegerField()  # Total limit
-    rate_limit = models.IntegerField()  # Per hour
+    rate_limit = models.IntegerField(null=True)  # Per hour
     priceId = models.CharField(max_length= 50, default="price_1PDneKEwLPoE4RaHXfQcbdpj")
 
     def __str__(self):

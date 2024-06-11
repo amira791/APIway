@@ -662,7 +662,7 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
                           id="message"
                           name="message"
                           rows="4"
-                          
+                          placeholder="documentation"
                           tabindex="4"
                           defaultValue={endpointBody.body_example}
                           aria-required="true"
@@ -695,7 +695,7 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
                     href="#"
                     onClick={() => handleChoiceClick("Response Example")}
                   >
-                    <h5>Response Example</h5>
+                    <h6>Response Example</h6>
                   </a>
                 </li>
                 <li
@@ -713,7 +713,7 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
                       fontSize: "15px", // Increase font size for buttons
                       padding: "10px 20px", // Increase padding for buttons
                     }}
-                    disabled
+                    disabled ={apiResult==null}
                   >
                     <a
                       href="#"
@@ -758,7 +758,15 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
 
                    
 
-                    {apiResult && (
+                  
+                  </div>
+                </div>
+              )}
+              {selectedChoice === "View Results" && (
+                <div>
+                  {/* Your code for the View Results section goes here */}
+                {/*   <Button disabled>View Results</Button> */}
+                  {apiResult && (
                       <>
                         <div class="top-menu">
                           <ul className="filter-menu">
@@ -839,13 +847,6 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
                         </div>
                       </>
                     )}
-                  </div>
-                </div>
-              )}
-              {selectedChoice === "View Results" && (
-                <div>
-                  {/* Your code for the View Results section goes here */}
-                  <Button disabled>View Results</Button>
                 </div>
               )}
             </div>
