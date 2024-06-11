@@ -33,6 +33,9 @@ urlpatterns = [
     path('api/versions/', api_versions_view, name='api-versions'),
     path('api/functions/<int:id>/', get_api_functions, name='api-functions'),
     path('signup/',signup),
-    path('signin/',signin)
+    path('signin/',signin),
+    path('api/pie_chart_data/', pie_chart_data, name='pie_chart_data'),
+    path('api/bar_chart_data/', bar_chart_data, name='bar_chart_data'),
+    path('api/line_chart_data/', line_chart_data, name='line_chart_data'),
    
     ] + router.urls

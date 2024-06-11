@@ -16,6 +16,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from django.contrib.auth import get_user_model
+from django.db.models import Count
 
 
 
@@ -332,3 +333,47 @@ def get_api_functions(request, id):
     
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+# Admin Dashboard----------------------------------------------------------------
+
+# Pie chart
+@api_view(['GET'])
+def pie_chart_data(request):
+    active_fournisseurs = Fournisseur.objects.filter(user__is_active=True).count()
+    inactive_fournisseurs = Fournisseur.objects.filter(user__is_active=False).count()
+    active_consommateurs = Consommateur.objects.filter(user__is_active=True).count()
+    inactive_consommateurs = Consommateur.objects.filter(user__is_active=False).count()
+
+    data = {
+        "active_fournisseurs": active_fournisseurs,
+        "inactive_fournisseurs": inactive_fournisseurs,
+        "active_consommateurs": active_consommateurs,
+        "inactive_consommateurs": inactive_consommateurs,
+    }
+    return JsonResponse(data)
+
+
+# Bar chart
+@api_view(['GET'])
+def bar_chart_data(request):
+    fournisseurs_data = (
+        Fournisseur.objects
+        .annotate(api_count=Count('api'))
+        .values('user__username', 'api_count')
+    )
+
+    data = {
+        "fournisseurs": list(fournisseurs_data),
+    }
+    return JsonResponse(data)
+
+
+# Line chart
+@api_view(['GET'])
+def line_chart_data(request):
+    # Assuming `Abonnement` model is used for counting API sales
+    top_apis = Abonnement.objects.values('api__api_name').annotate(sales_count=Count('api')).order_by('-sales_count')[:7]
+    data = {
+        'top_apis': list(top_apis)
+    }
+    return Response(data)
