@@ -371,6 +371,14 @@ class TarificationView(viewsets.ModelViewSet):
 class AbonnementView(viewsets.ModelViewSet):
     queryset = Abonnement.objects.all()
     serializer_class = AbonnementSerializer
+
+    @action(detail=False, methods=['get'], url_path='byconsumer/(?P<consumer_id>\d+)')
+    def by_consumer(self, request, consumer_id=None):
+        if consumer_id:
+            abonnements = Abonnement.objects.filter(consumer=consumer_id)
+            serializer = self.get_serializer(abonnements, many=True)
+            return Response(serializer.data)
+        return Response([]) 
     
 # Endpoint_parameter View
 class Endpoint_parameterView(viewsets.ModelViewSet):

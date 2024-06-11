@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import React, { useRef } from "react";
 import ManipulateCat from "../../hooks/CategoryHook.jsx";
-import APIAjout from "../../hooks/APIHook.jsx";
+import APIAjout from "../../hooks/ApiHook.jsx";
 import ManipulateVersion from "../../hooks/VersionHook.jsx";
 import $ from "jquery";
 import "datatables.net";

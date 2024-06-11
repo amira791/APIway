@@ -34,7 +34,7 @@ export default function Navbar() {
                 <div id="site-header-inner">
                   <div id="site-logo" className="clearfix">
                     <div id="site-logo-inner">
-                      <a href="index-2.html" rel="home" className="main-logo">
+                      <a href="/" rel="home" className="main-logo">
                         <img id="logo_header" style={{ paddingTop: "5%", translate: "-10%", width: "60%" }} src="assets/images/logo/MAPI_logo_White.png" alt="Image" />
                       </a>
                     </div>

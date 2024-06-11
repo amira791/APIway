@@ -25,7 +25,7 @@ const HomeSection = () => {
 
 
   return (
-    <body className="body header-fixed home-6">
+    <div className="body header-fixed home-6">
       <div id="wrapper" className="wrapper-style">
         <div id="page" className="clearfix">
           <Navbar />
@@ -192,7 +192,7 @@ const HomeSection = () => {
 
       <a id="scroll-top"></a>
 
-    </body>
+    </div>
   );
 };
 

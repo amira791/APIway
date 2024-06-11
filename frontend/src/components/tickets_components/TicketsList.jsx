@@ -43,11 +43,11 @@ export default function TicketsList({ tickets , ticket_id, onTicketClick }) {
 
   return (
     <>
-      <div class="sidebar sidebar-explore">
-        <div class="widget widget-search">
+      <div className="sidebar sidebar-explore">
+        <div className="widget widget-search">
           <form action="#">
             <input type="text" value={searchTerm} onChange={handleSearchChange} placeholder="Search by API name" />
-            <a class="btn-search"><i class="icon-fl-search-filled"></i></a>
+            <a className="btn-search"><i className="icon-fl-search-filled"></i></a>
           </form>
         </div>
         <select value={statusFilter} onChange={handleStatusChange}>

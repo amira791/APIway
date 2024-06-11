@@ -20,41 +20,41 @@ export default function Contact() {
   return (
     <>
   
-<div class="preload preload-container">
-    <div class="preload-logo"></div>
+<div className="preload preload-container">
+    <div className="preload-logo"></div>
 </div>
 
 
-<div id="wrapper" class="wrapper-style">
-    <div id="page" class="clearfix">
+<div id="wrapper" className="wrapper-style">
+    <div id="page" className="clearfix">
     <Navbar />
 
         
-        <section class="tf-contact">
-            <div class="tf-container">
-                <div class="row ">
-                    <div class="col-md-6">
-                        <div class="image ani4">
+        <section className="tf-contact">
+            <div className="tf-container">
+                <div className="row ">
+                    <div className="col-md-6">
+                        <div className="image ani4">
                             <img src="assets/images/img-contact.png" alt="Image"/>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="tf-heading style-3">
-                            <h4 class="heading">Drop Up A Message</h4>
-                            <p class="sub-heading">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum obcaecati dignissimos quae quo ad iste ipsum officiis deleniti asperiores sit. </p>
+                    <div className="col-md-6">
+                        <div className="tf-heading style-3">
+                            <h4 className="heading">Drop Up A Message</h4>
+                            <p className="sub-heading">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum obcaecati dignissimos quae quo ad iste ipsum officiis deleniti asperiores sit. </p>
                         </div>
-                        <form onSubmit={handleSubmit} id="commentform"  class="comment-form">
-                            <fieldset class="name">
-                                <input type="text" id="name" placeholder="Your Full Name" class="tb-my-input" name="name" value={name} onChange={(e) => setName(e.target.value)}  tabindex="2" aria-required="true" required=""/>
+                        <form onSubmit={handleSubmit} id="commentform"  className="comment-form">
+                            <fieldset className="name">
+                                <input type="text" id="name" placeholder="Your Full Name" className="tb-my-input" name="name" value={name} onChange={(e) => setName(e.target.value)}  tabindex="2" aria-required="true" required=""/>
                             </fieldset>    
-                            <fieldset class="email">
-                                <input type="email" id="email" placeholder="Your Email Address" class="tb-my-input" name="email" value={email} onChange={(e) => setEmail(e.target.value)} tabindex="2" aria-required="true" required=""/>
+                            <fieldset className="email">
+                                <input type="email" id="email" placeholder="Your Email Address" className="tb-my-input" name="email" value={email} onChange={(e) => setEmail(e.target.value)} tabindex="2" aria-required="true" required=""/>
                             </fieldset>
                            
-                            <fieldset class="message">
+                            <fieldset className="message">
                                 <textarea id="message" name="message" value={message} onChange={(e) => setMessage(e.target.value)}rows="4" placeholder="Message"  tabindex="4" aria-required="true" required=""></textarea>
                             </fieldset>
-                            <div class="btn-submit"><button class="tf-button" type="submit">Send message</button></div>
+                            <div className="btn-submit"><button className="tf-button" type="submit">Send message</button></div>
                         </form>
                         
 

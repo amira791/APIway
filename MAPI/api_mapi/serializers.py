@@ -153,6 +153,7 @@ class TarificationSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class AbonnementSerializer(serializers.ModelSerializer):
+    api_info = APISerializer(source='api', read_only=True)
     class Meta:
         model = Abonnement
         fields = '__all__'

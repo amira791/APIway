@@ -8,13 +8,31 @@ import Footer from '../global_components/footer'
 import { useAuthContext } from '../../context/authContext';
 
 export default function TicketForm() {
+  const modules = {
+    toolbar: [
+      [{ 'header': [1, 2, false] }],
+      ['bold', 'italic', 'underline','strike', 'blockquote'],
+      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+      ['link', 'image'],
+      ['clean']
+    ],
+  };
+
+  const formats = [
+    'header',
+    'bold', 'italic', 'underline', 'strike', 'blockquote',
+    'list', 'bullet', 'indent',
+    'link', 'image','code-block'
+  ];
+
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const { addNewTicket, error: addError, loading: addLoading } = useTicket();
-  const {authState} = useAuthContext();
+  const { authState } = useAuthContext();
   const creator = authState.userId;
-  const {api_id} = useParams(); 
+  const { api_id } = useParams();
+
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +45,7 @@ export default function TicketForm() {
 
     try {
       await addNewTicket(newTicket);
-      
+
     } catch (error) {
       console.error('Error submitting ticket:', error);
       // Handle error state here
@@ -41,7 +59,7 @@ export default function TicketForm() {
   return (
     <>
       <Navbar />
-     
+
       <section className="tf-login">
         <div className="tf-container">
           <div className="row justify-content-center">
@@ -52,16 +70,19 @@ export default function TicketForm() {
             </div>
             <div className="col-xl-6 col-lg-9 col-md-12">
               <form onSubmit={handleFormSubmit}>
-              <fieldset><label htmlFor="title">Title</label>
-                 <textarea name="title" id="title" value={title} onChange={(e) => setTitle(e.target.value)} required />
-              </fieldset>
+                <fieldset><label htmlFor="title">Title</label>
+                  <textarea name="title" id="title" value={title} onChange={(e) => setTitle(e.target.value)} required />
+                </fieldset>
                 <fieldset><label htmlFor="description">Description</label>
-                <ReactQuill
-                  theme='snow'
-                  placeholder="Enter your description"
-                  value={description}
-                  onChange={handleDescriptionChange}
-                /></fieldset>
+                  <ReactQuill
+                    theme='snow'
+                    modules={modules}
+                    formats={formats}
+                    placeholder="Enter your description"
+                    value={description}
+                    onChange={handleDescriptionChange} />
+
+                </fieldset>
                 <input type="submit" value="Submit" disabled={addLoading} required />
               </form>
               {addError && <div>Error: {addError.message}</div>}
@@ -69,7 +90,7 @@ export default function TicketForm() {
           </div>
         </div>
       </section>
-        <Footer />
-      </>
-      );
+      <Footer />
+    </>
+  );
 }

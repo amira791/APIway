@@ -1,9 +1,14 @@
 import { CardNumberElement } from '@stripe/react-stripe-js';
 import { payementApiClient } from '../API';
 import { useAuthContext } from '../context/authContext';
+import { fetchData , BASEURL} from './API';
+import { useState } from 'react';
 
 export default function usePayment() {
     const {authState} = useAuthContext()
+    const [subscriptions,setSubscriptions] = useState([])
+    const [error,setError]=useState(null)
+    const [loading,setLoading]= useState(null)
     
 
       const generateStripeToeken = async (stripe, elements, type, holderName) =>
@@ -62,11 +67,20 @@ export default function usePayment() {
         return { success, error };
     }
 
+    const getConsumerSubscriptions = async (id) =>{
+      fetchData(`${BASEURL}abonnements/byconsumer/${id}/`, setSubscriptions, setLoading, setError);
+      
+    }
+
 
 
   return {
     generateStripeToeken,
     subscribe,
-    subscribtion
+    subscribtion,
+    getConsumerSubscriptions,
+    subscriptions,
+    error,
+    loading
   };
 }

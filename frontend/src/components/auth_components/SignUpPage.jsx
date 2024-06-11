@@ -76,8 +76,8 @@ export default function SignUpPage() {
                                 </a>
 
                             </div>
-                            <div class="features">
-                                <div class="product-media">
+                            <div className="features">
+                                <div className="product-media">
                                     {picture && (
                                         <div className="avatar">
                                             <img
@@ -88,10 +88,10 @@ export default function SignUpPage() {
                                     )}{" "}
                                 </div>
 
-                                <div class="rain-drop1">
+                                <div className="rain-drop1">
                                     <img src="/assets/images/icon/rain1.svg" alt="images" />
                                 </div>
-                                <div class="rain-drop2">
+                                <div className="rain-drop2">
                                     <img src="/assets/images/icon/rain2.svg" alt="images" />
                                 </div>
                             </div>

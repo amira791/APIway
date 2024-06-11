@@ -2766,7 +2766,7 @@ header.absolute {
   font-weight: bold;
 }
 
-.status-open {
+.status-open , .status-active{
   background-color: #c6f6d5;
   color: #2a5b44;
 }

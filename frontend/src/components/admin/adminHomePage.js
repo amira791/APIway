@@ -22,7 +22,7 @@ class AdminHome extends Component {
                                     <div className="row">
                                         <div className="col-md-12">
                                             <ul className="breadcrumbs">
-                                                <li><a href="index-2.html">Home</a></li>
+                                                <li><a href="/">Home</a></li>
                                                 <li>Profile</li>
                                             </ul>
                                         </div>
