@@ -25,7 +25,7 @@ const Details = () => {
   const [chosenVersionInfo, setChosenVersionInfo] = useState(null);
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [api_key ,setAPIKey] = useState()
- const [apiWebsite, setApiWebsite] = useState('');
+  const [apiWebsite, setApiWebsite] = useState('');
   const [apiVersions, setApiVersions] = useState([]);
   const [apiEndpoints, setApiEndpoints] = useState(null);
   const [versionFunctionalities, setVersionFunctionalities] = useState(null);
@@ -70,6 +70,7 @@ const Details = () => {
         setAPICategory(category);
         setAPIProvider(provider);
         setApiVersions(versions);
+        setApiWebsite(details.website);
 
         if (versionId !== null) {
           const endpoints = await fetchAPIEndpointsByVersion(versionId);
@@ -230,7 +231,13 @@ const Details = () => {
                                 </div>
                               </fieldset>
                               <div class="tab-details">
-                                {apiEndpoints ? <Example  api_key={api_key} endpoints={apiEndpoints} state={chosenVersionState} isSubscribed={isSubscribed} navigate={() => handleTabClick('Pricing')} /> : <></>}
+                                {apiEndpoints ? <Example  
+                                    api_key={api_key} 
+                                    endpoints={apiEndpoints} 
+                                    state={chosenVersionState} 
+                                    isSubscribed={isSubscribed}
+                                    website={apiWebsite}
+                                    navigate={() => handleTabClick('Pricing')} /> : <></>}
                               </div>
                             </div>)}
                           {activeTab === 'Functionalities' && (

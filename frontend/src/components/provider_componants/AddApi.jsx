@@ -13,10 +13,12 @@ import Monetizing from "./Monetize.jsx";
 import PlansAjout from "../../hooks/MonetizationHook.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAuthContext } from "../../context/authContext.js";
 
 const AddAPIPage = () => {
   $.noConflict();
-  const provider_id = 1;
+  const { authState } = useAuthContext();
+  const provider_id = authState.userId;
   /**************From hooks****************************/
   const { categories } = ManipulateCat();
   const { addNewAPI } = APIAjout();

@@ -18,9 +18,7 @@ const Monetizing = ({Models ,setModels}) => {
   const [modificationOn, setModificationOn] = useState(false);
   const { tarifTypes } = APIAjout();
   const [subscriptionPrice, setSubscriptionPrice] = useState("");
-  const [rateLimitEnabled, setRateLimitEnabled] = useState(false);
-  const [rateLimit, setRateLimit] = useState("");
-  const [changedPeriod, setchangedPeriod] = useState(false);
+   const [changedPeriod, setchangedPeriod] = useState(false);
 
   const [Model, setModel] = useState({
     Name: "",
@@ -32,7 +30,7 @@ const Monetizing = ({Models ,setModels}) => {
     Name: "",
     id: "",
     modelIndex: "",
-    ratelimit: 1000,
+  
     quotalimit: "",
     price: "",
     features: "",
@@ -42,7 +40,6 @@ const Monetizing = ({Models ,setModels}) => {
     id: "",
     modelIndex: "",
   
-    ratelimit: 1000,//changed here
     quotalimit: "",
     price: "",
     features: "",
@@ -98,10 +95,7 @@ const Monetizing = ({Models ,setModels}) => {
       !editedPlan.quotalimit 
     ) {
       toast.error("Please fill in all fields before editing the plan.");
-      const rateLimitInput = document.getElementById("rate-limit");
-      if (rateLimitInput) {
-        document.getElementById("rate-limit").value = "";
-      }
+     
       document.getElementById("quota-limit").value = "";
       document.getElementById("sub-price").value = "";
       document.getElementById("features").value = "";
@@ -118,8 +112,7 @@ const Monetizing = ({Models ,setModels}) => {
         Models[indexModel].plans[planIndex].quotalimit = editedPlan.quotalimit; // Modify quotalimit to "100"
         Models[indexModel].plans[planIndex].price = editedPlan.price; // Modify price to "1000"
         Models[indexModel].plans[planIndex].features = editedPlan.features; // Modify quotalimit to "100"
-         Models[indexModel].plans[planIndex].ratelimit = editedPlan.ratelimit; // Modify quotalimit to "100"
-        Models[indexModel].plans[planIndex].Recommended =
+         Models[indexModel].plans[planIndex].Recommended =
           editedPlan.Recommended; // Modify price to "1000"
       } else {
         console.log("Plan not found.");
@@ -131,17 +124,13 @@ const Monetizing = ({Models ,setModels}) => {
     setEditedPlan({
       Name: "",
       id: "",
-      ratelimit: "",
-      quotalimit: "",
+       quotalimit: "",
      
       price: "",
       features: "",
     });
     
-    const rateLimitInput = document.getElementById("rate-limit");
-    if (rateLimitInput) {
-      document.getElementById("rate-limit").value = "";
-    }
+
     document.getElementById("quota-limit").value = "";
     document.getElementById("sub-price").value = "";
     document.getElementById("features").value = "";
@@ -158,7 +147,6 @@ const Monetizing = ({Models ,setModels}) => {
       setNewPlan({
         Name: "",
         id: "",
-        ratelimit: "",
         quotalimit: "",
         price: "",
         features: "",
@@ -180,8 +168,7 @@ const Monetizing = ({Models ,setModels}) => {
     setNewPlan({
       Name: "",
       id: "",
-      ratelimit: "",
-      quotalimit: "",
+     quotalimit: "",
       price: "",
       features: "",
     });
@@ -192,7 +179,7 @@ const Monetizing = ({Models ,setModels}) => {
     document.getElementById("quota-limit").value = "";
     document.getElementById("sub-price").value = "";
     document.getElementById("features").value = "";
-    setRateLimit("");
+
     setSubscriptionPrice("");
     console.log(Models);
   };
@@ -208,7 +195,7 @@ const Monetizing = ({Models ,setModels}) => {
       setEditedPlan({
         Name: "",
         id: "",
-        ratelimit: "",
+     
         quotalimit: "",
         price: "",
         features: "",
@@ -355,17 +342,10 @@ console.log(Models[index].Period);
     const price = parseFloat(e.target.value);
     setSubscriptionPrice(price);
     // Enable rate limit if subscription price is greater than 0
-    setRateLimitEnabled(price > 0);
+  
   };
 
-  const handleRateLimitCheckboxChange = () => {
-    // Toggle rate limit input visibility when checkbox is clicked
-    setRateLimitEnabled(!rateLimitEnabled);
-    if (!rateLimitEnabled) {
-      // Reset rate limit input value when hiding it
-      setRateLimit("");
-    }
-  };
+  
   useEffect(() => {
     console.log("ModificationOn:", modificationOn); // This will log the updated value
     // Perform other actions that rely on the updated state
@@ -610,59 +590,10 @@ console.log(Models[index].Period);
                     : handlePlanChange("price", e.target.value);
                 }}
               />
-              {rateLimitEnabled ? (
-                <div>
-                  <p className="label-1">Rate Limit:</p>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <input
-                      id="rate-limit"
-                      type="number"
-                      value={rateLimit}
-                      placeholder="Rate limit"
-                      onChange={(e) => {
-                        modificationOn
-                          ? handlePlanEdit("ratelimit", e.target.value)
-                          : handlePlanChange("ratelimit", e.target.value);
-                        setRateLimit(e.target.value);
-                      }}
-                    />
-                    <p>requests per hour</p>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  {" "}
-                  <p className="label-1">Rate Limit:</p>{" "}
-                  <p>
-                    Custom rate limit is enabled for paid plans or plans with
-                    overages.
-                  </p>
-                  <a style={{ textDecorationLine: "underline" }}>
-                    {" "}
-                    1,000 requests per hour
-                  </a>
-                </>
-              )}
-
-              {subscriptionPrice > 0 && (
-                <div>
-                  <input
-                    type="checkbox"
-                    id="rate-limit-checkbox"
-                    checked={rateLimitEnabled}
-                    onChange={handleRateLimitCheckboxChange}
-                  />
-                  <label htmlFor="rate-limit-checkbox">Enable Rate Limit</label>
-                </div>
-              )}
-              <p className="label-1">Features:</p>
-              <fieldset className="message">
+          
+              
+              <p class="label-1">Features:</p>
+              <fieldset class="message">
                 <textarea
                   id="features"
                   name="message"

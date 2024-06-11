@@ -67,7 +67,7 @@ const PricingPlan = ({ type, tarifications }) =>
                 </div>
                 <div className="price">
                   <div className="content">
-                    <div className="cash">Rate Limit: {tarif.rate}/hour</div>
+                    
                   </div>
                 </div>
               </div>
@@ -128,7 +128,7 @@ const PricingContainer = ({ id, tarifs }) => {
                 price: tarif.price,
                 features: tarif.features.split(','), // Assuming features are stored as a comma-separated string
                 quota: tarif.quota_limit,
-                rate: tarif.rate_limit,
+              
               };
             });
 
