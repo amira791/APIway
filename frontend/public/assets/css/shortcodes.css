@@ -3441,6 +3441,13 @@ border-radius: 10rem;
   margin-bottom: 17px;
 }
 .add-nft-inner fieldset label {
+  font-size: 20px;
+  line-height: 18px;
+  font-weight: 700;
+  color: var(--primary-color5);
+  margin-bottom: 12px;
+}
+.title-style {
   font-size: 14px;
   line-height: 18px;
   font-weight: 700;

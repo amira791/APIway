@@ -33,7 +33,6 @@ const AddAPIPage = () => {
   const [endpoints, setEndpoints] = useState([]);
   const [newFunctionality, setNewFunctionality] = useState("");
   const [functionalities, setFunctionalities] = useState([]);
-  const [baseURLs, setBaseURLs] = useState([]);
   const [activeFilter, setActiveFilter] = useState("#general-section");
   const [activeType, setActiveType] = useState("#endpoints-section");
   const [groups, setGroups] = useState([]);
@@ -54,7 +53,6 @@ const AddAPIPage = () => {
     visibility: false,
     category: "",
     website: "",
-    /*    baseURLs: [""], */
     logo: null,
   });
   /*  useEffect(() => {
@@ -160,16 +158,8 @@ const AddAPIPage = () => {
   };
   const [editedRowIndex, setEditedRowIndex] = useState(null);
 
-  const handleChanges = (e, index) => {
-    const { value } = e.target;
-    const updatedURLs = [...baseURLs];
-    updatedURLs[index] = value; // Update the URL at the specified index
-    setBaseURLs(updatedURLs);
-  };
 
-  const handleAddURL = () => {
-    setBaseURLs([...baseURLs, ""]); // Add an empty string for the new URL
-  };
+
   const handleLogoChange = (e) => {
     const file = e.target.files[0];
     setFormData((prevState) => ({
@@ -189,8 +179,11 @@ const AddAPIPage = () => {
     }));
     setFormData((prevState) => ({
       ...prevState,
-      category: categories.at(categoryId),
+      category: categories.at((categoryId-1)),
     }));
+
+    console.log(formData.category);
+    console.log(formData.category.label);
   };
   const handleNewCategoryChange = (e) => {
     const newCategory = e.target.value;
@@ -231,7 +224,7 @@ const AddAPIPage = () => {
       return; // Stop execution if any required field is missing
     }
   
-    // Check if any functionality, baseURL, endpoint, or model is null
+    // Check if any functionality, endpoint, or model is null
     if (functionalities.length === 0|| endpoints.length === 0 || Models.length === 0) {
       // Construct message indicating which arrays are empty
       let missingDataMessage = "";
@@ -253,7 +246,7 @@ const AddAPIPage = () => {
   
     // If all required data is present, proceed with submission logic
     //alert(formData.apiName);
-    addNewAPI(formData, functionalities, baseURLs, endpoints, Models);
+    addNewAPI(formData, functionalities, endpoints, Models);
   };
   
   const handleRemoveEndpointFromGroup = (endpointId) => {
@@ -290,13 +283,7 @@ const AddAPIPage = () => {
     }
   };
 
-  /*   const handleAddURL = () => {
-    setFormData((prevState) => ({
-      ...prevState,
-      baseURLs: [...prevState.baseURLs, ""], // Add an empty string for the new URL
-    }));
-  };
- */
+ 
   const handleAddToGroup = (index) => {
     setEditedRowIndex(index);
     setGroupchoice(true);
@@ -498,7 +485,7 @@ const AddAPIPage = () => {
                             <div className="new-category">
                               <input
                                 type="text"
-                                value={formData.category} // Bind directly to category in formData
+                                value={formData.category.label} // Bind directly to category in formData
                                 onChange={handleNewCategoryChange}
                                 placeholder="Enter new category"
                               />
@@ -594,7 +581,7 @@ const AddAPIPage = () => {
                                   <div class="widget widget-category sc-product style2">
                                     <div>
                                       
-                                          <label  className="widget-title small-title">Website</label>
+                                          <label  className="widget-title small-title">Base URL</label>
                                         
                                       
 
@@ -609,37 +596,7 @@ const AddAPIPage = () => {
                                       </fieldset>
                                     </div>
                                   </div>
-                                  <div className="widget widget-category sc-product style2">
-                                    <div>
-                                      <label className="widget-title ">Base URL</label>
-                                      <p className="small-title"  style={{padding:"2%"}}>
-                                        Add a base URL, configure multiple URLs,
-                                        override URLs, and select a load
-                                        balancer
-                                      </p>
-                                      {baseURLs.map((url, index) => (
-                                        <fieldset key={index}>
-                                          <label>URL {index + 1}</label>
-                                          <input
-                                            type="text"
-                                            placeholder="Api base"
-                                            value={url}
-                                            onChange={(e) =>
-                                              handleChanges(e, index)
-                                            }
-                                            required="required"
-                                          />
-                                        </fieldset>
-                                      ))}
-                                        <div class="bottom-style2">
-                                        <div class="product-button">
-                                            <a onClick={handleAddURL} class="tf-button">  Add URL</a>
-                                        </div>
-                                </div>
-                                       
-                                   
-                                    </div>
-                                  </div>
+                                 
                                   <div className="col-xl-12 col-lg-12 col-md-12">
                                     <div> 
                                       <fieldset>
@@ -734,7 +691,7 @@ const AddAPIPage = () => {
                           </div>
                         </div>
                  
-                       
+                        <ToastContainer />
                     
                     <div class="product-button">
                         <button type="submit" class="tf-button">Submit</button>
@@ -781,7 +738,7 @@ const AddAPIPage = () => {
                               </div>
                             </div>
                             {showForm && (
-                              <CreateEndpointForm onSave={handleAddEndpoints} />
+                              <CreateEndpointForm website={formData.website} onSave={handleAddEndpoints} />
                             )}
                             {showGroupForm && (
                               <AddGroupForm onSave={handleAddGroup} />

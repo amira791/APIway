@@ -20,7 +20,7 @@ const Details = () => {
     const [chosenVersion, setChosenVersion]= useState(null);
     const [chosenVersionInfo, setChosenVersionInfo]= useState(null);
     const [isSubscribed, setIsSubscribed] = useState(false);
-   
+    const [apiWebsite, setApiWebsite] = useState('');
     const [apiVersions, setApiVersions] = useState([]);
     const [apiEndpoints, setApiEndpoints] = useState(null);
     const [versionFunctionalities, setVersionFunctionalities] = useState(null);
@@ -52,14 +52,14 @@ const Details = () => {
           const provider = await fetchAPIProviderById(details.provider);
           const versions = await fetchAllAPIVersionsById(id);
           console.log(versions);
-   
+          
           const versionId = versions.length > 0 ? versions[0].id_version : null;
           setChosenVersion(versionId);
           setAPIDetails(details);
           setAPICategory(category);
           setAPIProvider(provider);
           setApiVersions(versions);
-         
+          setApiWebsite(details.website);
           if (versionId !== null) {
             const endpoints = await fetchAPIEndpointsByVersion(versionId);
             const functionalities = await fetchAllFunctionalitiesById(versions[0].functions);
@@ -204,7 +204,7 @@ const Details = () => {
                             </div>
                             </fieldset>
                             <div class="tab-details">
-                           { apiEndpoints?    <Example endpoints={apiEndpoints} state={chosenVersionState} isSubscribed={isSubscribed} navigate={()=>handleTabClick('Pricing')} /> :<></>}
+                           { apiEndpoints?    <Example endpoints={apiEndpoints} state={chosenVersionState} isSubscribed={isSubscribed} navigate={()=>handleTabClick('Pricing')}  website={apiWebsite}/> :<></>}
                             </div>
                           </div> )}
                           {activeTab === 'Functionalities' && (
@@ -452,184 +452,7 @@ const Details = () => {
                           </div>)}
                           {activeTab === 'Discussion' && (
           <div id="Discussion" className="tab-content">
-                            <ul class="tab-history">
-                              <li>
-                                <div class="box-history">
-                                  <div class="infor">
-                                    <div class="img">
-                                      <img
-                                        src="/assets/images/author/author-history-1.jpg"
-                                        alt="Image"
-                                      />
-                                    </div>
-                                    <div class="content">
-                                      <h6 class="name">
-                                        Mason Woodward <span>place a bid</span>
-                                      </h6>
-                                      <p class="time">8 hours ago</p>
-                                    </div>
-                                  </div>
-                                  <div class="price">
-                                    <p>4.89 ET</p>
-                                    <span>= $12.245</span>
-                                  </div>
-                                </div>
-                              </li>
-                              <li>
-                                <div class="box-history">
-                                  <div class="infor">
-                                    <div class="img">
-                                      <img
-                                        src="/assets/images/author/author-history-2.jpg"
-                                        alt="Image"
-                                      />
-                                    </div>
-                                    <div class="content">
-                                      <h6>
-                                        Violet Pascall <span>place a bid</span>
-                                      </h6>
-                                      <p class="time">8 hours ago</p>
-                                    </div>
-                                  </div>
-                                  <div class="price">
-                                    <p>4.89 ET</p>
-                                    <span>= $12.245</span>
-                                  </div>
-                                </div>
-                              </li>
-                              <li>
-                                <div class="box-history">
-                                  <div class="infor">
-                                    <div class="img">
-                                      <img
-                                        src="/assets/images/author/author-history-3.jpg"
-                                        alt="Image"
-                                      />
-                                    </div>
-                                    <div class="content">
-                                      <h6>
-                                        Camilla Hudson <span>place a bid</span>
-                                      </h6>
-                                      <p class="time">8 hours ago</p>
-                                    </div>
-                                  </div>
-                                  <div class="price">
-                                    <p>4.89 ET</p>
-                                    <span>= $12.245</span>
-                                  </div>
-                                </div>
-                              </li>
-                              <li>
-                                <div class="box-history">
-                                  <div class="infor">
-                                    <div class="img">
-                                      <img
-                                        src="/assets/images/author/author-history-4.jpg"
-                                        alt="Image"
-                                      />
-                                    </div>
-                                    <div class="content">
-                                      <h6>
-                                        Derick Reed <span>place a bid</span>
-                                      </h6>
-                                      <p class="time">8 hours ago</p>
-                                    </div>
-                                  </div>
-                                  <div class="price">
-                                    <p>4.89 ET</p>
-                                    <span>= $12.245</span>
-                                  </div>
-                                </div>
-                              </li>
-                              <li>
-                                <div class="box-history">
-                                  <div class="infor">
-                                    <div class="img">
-                                      <img
-                                        src="/assets/images/author/author-history-1.jpg"
-                                        alt="Image"
-                                      />
-                                    </div>
-                                    <div class="content">
-                                      <h6>
-                                        Mason Woodward <span>place a bid</span>
-                                      </h6>
-                                      <p class="time">8 hours ago</p>
-                                    </div>
-                                  </div>
-                                  <div class="price">
-                                    <p>4.89 ET</p>
-                                    <span>= $12.245</span>
-                                  </div>
-                                </div>
-                              </li>
-                              <li>
-                                <div class="box-history">
-                                  <div class="infor">
-                                    <div class="img">
-                                      <img
-                                        src="/assets/images/author/author-history-2.jpg"
-                                        alt="Image"
-                                      />
-                                    </div>
-                                    <div class="content">
-                                      <h6>
-                                        Violet Pascall <span>place a bid</span>
-                                      </h6>
-                                      <p class="time">8 hours ago</p>
-                                    </div>
-                                  </div>
-                                  <div class="price">
-                                    <p>4.89 ET</p>
-                                    <span>= $12.245</span>
-                                  </div>
-                                </div>
-                              </li>
-                              <li>
-                                <div class="box-history">
-                                  <div class="infor">
-                                    <div class="img">
-                                      <img
-                                        src="/assets/images/author/author-history-3.jpg"
-                                        alt="Image"
-                                      />
-                                    </div>
-                                    <div class="content">
-                                      <h6>
-                                        Camilla Hudson <span>place a bid</span>
-                                      </h6>
-                                      <p class="time">8 hours ago</p>
-                                    </div>
-                                  </div>
-                                  <div class="price">
-                                    <p>4.89 ET</p>
-                                    <span>= $12.245</span>
-                                  </div>
-                                </div>
-                              </li>
-                              <li>
-                                <div class="box-history">
-                                  <div class="infor">
-                                    <div class="img">
-                                      <img
-                                        src="/assets/images/author/author-history-4.jpg"
-                                        alt="Image"
-                                      />
-                                    </div>
-                                    <div class="content">
-                                      <h6>
-                                        Derick Reed <span>place a bid</span>
-                                      </h6>
-                                      <p class="time">8 hours ago</p>
-                                    </div>
-                                  </div>
-                                  <div class="price">
-                                    <p>4.89 ET</p>
-                                    <span>= $12.245</span>
-                                  </div>
-                                </div>
-                              </li>
-                            </ul>
+                      
                           </div> )}
                           {activeTab === 'Pricing' && (
           <div id="Pricing" className="tab-content">

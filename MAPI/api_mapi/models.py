@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils import timezone 
 class Fournisseur(models.Model):
     id_fournisseur = models.AutoField(primary_key=True)
     FR_first_name = models.CharField(max_length=100)
@@ -55,12 +55,7 @@ class API(models.Model):
 
     def __str__(self):
         return self.api_name
-class BaseLink(models.Model):
-    baselink_id = models.AutoField(primary_key=True)
-    url = models.TextField(verbose_name="Base Link URL", help_text="Base link for API endpoints")
 
-    def __str__(self):
-        return self.url
 class APIversion(models.Model):
     id_version = models.AutoField(primary_key=True)
     num_version= models.CharField(max_length=100, null=True)
@@ -75,7 +70,6 @@ class APIversion(models.Model):
     api = models.ForeignKey(API, on_delete=models.DO_NOTHING, null=True )
     current = models.BooleanField(default=False, verbose_name="Current Version", null = True)
     functions = models.ManyToManyField('Functionnality', null=True)
-    base_links = models.ManyToManyField('BaseLink', verbose_name="Base Links", blank=True)
     def __str__(self):
         return self.num_version
     
@@ -104,7 +98,7 @@ class TypeParam(models.Model):
 class ApiHeader(models.Model):
     id_header =models.AutoField(primary_key=True)
     key = models.CharField(max_length=255)
-    example_value = models.CharField(max_length=255)
+    example_value = models.CharField(max_length=255, null=True)
     required = models.BooleanField(default=False)
     endpoint = models.ForeignKey(APIendpoint, related_name='headers', on_delete=models.CASCADE)
     def __str__(self):
@@ -114,7 +108,7 @@ class ApiQueryParam(models.Model):
     id_queryparams =models.AutoField(primary_key=True)
     key = models.CharField(max_length=255)
     type_id = models.ForeignKey(TypeParam, on_delete=models.DO_NOTHING,default=1)
-    example_value = models.CharField(max_length=255)
+    example_value = models.CharField(max_length=255, null=True)
     required = models.BooleanField(default=False)
     endpoint = models.ForeignKey(APIendpoint, related_name='query_params', on_delete=models.CASCADE)
     def __str__(self):
@@ -123,9 +117,9 @@ class ApiQueryParam(models.Model):
 class ApiEndpointBody(models.Model):
     id_body =models.AutoField(primary_key=True)
     media_type = models.CharField(max_length=255)
-    payload_name = models.CharField(max_length=255)
-    payload_description = models.TextField(verbose_name="Payload text", help_text="Payload text")
-    body_example = models.TextField(verbose_name="Example", help_text="Example of a body")
+    payload_name = models.CharField(max_length=255, null=True)
+    payload_description = models.TextField(verbose_name="Payload text", help_text="Payload text", null=True)
+    body_example = models.TextField(verbose_name="Example", help_text="Example of a body", null=True)
     endpoint = models.ForeignKey(APIendpoint, related_name='body', on_delete=models.CASCADE)
   
     def __str__(self):
@@ -136,7 +130,7 @@ class Endpoint_parameter(models.Model):
     id_endpoint = models.ForeignKey(APIendpoint, on_delete=models.DO_NOTHING )
     name= models.CharField(max_length=100)
     type_id = models.ForeignKey(TypeParam, on_delete=models.DO_NOTHING,default=1  )
-    example_value = models.CharField(max_length=255)
+    example_value = models.CharField(max_length=255, null=True)
     required = models.BooleanField(default=False)
     deleted = models.BooleanField(default=False)
     def __str__(self):
@@ -150,9 +144,9 @@ class Functionnality(models.Model):
 class ResponseExample(models.Model):
     id_response = models.AutoField(primary_key=True)
     id_endpoint = models.ForeignKey(APIendpoint, on_delete=models.DO_NOTHING )
-    code_status = models.IntegerField()
-    title = models.CharField(max_length=100)
-    body = models.TextField()
+    code_status = models.IntegerField( null=True)
+    title = models.CharField(max_length=100, null=True)
+    body = models.TextField( null=True)
   
     def __str__(self):
         return self.title
@@ -205,6 +199,20 @@ class Abonnement(models.Model):
     consumer = models.ForeignKey(Consommateur, on_delete=models.DO_NOTHING )
     pricing = models.ForeignKey(Tarification, on_delete=models.DO_NOTHING )
     api = models.ForeignKey(API, on_delete=models.DO_NOTHING )
-
+    quota_remaining = models.IntegerField(default=0)
+    def save(self, *args, **kwargs):
+        if not self.pk:  # Only set quota_remaining when creating the subscription
+            self.quota_remaining = self.pricing.quota_limit
+        super().save(*args, **kwargs)
     def __str__(self):
         return self.id_subscription
+    
+
+class APIUsage(models.Model):
+    subscription = models.ForeignKey(Abonnement, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default=timezone.now)
+    status_code = models.IntegerField()
+    response_time = models.FloatField()  # Response time in seconds
+    endpoint = models.ForeignKey(APIendpoint, on_delete=models.DO_NOTHING )
+    def __str__(self):
+        return str( self.status_code)
