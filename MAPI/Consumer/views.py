@@ -14,6 +14,9 @@ from api_mapi.serializers import AbonnementSerializer
 from datetime import datetime
 import string, random
 
+
+from datetime import datetime, date
+
 import stripe
 stripe.api_key = settings.STRIPE_TEST_SECRET_KEY
 
@@ -33,7 +36,7 @@ def addUser(request):
                 email=email,
                 name=name
             )
-            return Response({'stripe_customer_id': stripe_customer.id}, status=status.HTTP_201_CREATED)
+
     except stripe.error.StripeError as e:
         return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -49,33 +52,57 @@ def generate_api_key(length=40):
 def subscribe(request):
     customerId = "cus_Q4AcDyR9VnKBet"
     userId = request.data.get('userId')
+    userName = request.data.get('userName')
+    userEmail = request.data.get('userEmail')
     tarificationId = request.data.get('tarificationId')
+
+
+    customers = stripe.Customer.list(email=userEmail)
+    if customers.data:
+        customerId = customers.data[0].id
+    else:
+        stripe_customer = stripe.Customer.create(
+                name=userName,
+                email=userEmail
+            )
+        customerId = stripe_customer.id
+
 
     tarification = Tarification.objects.filter(id_tarif= tarificationId)[0]
 
     apiId = tarification.pricingModel.api.id_api;
-    priceId = tarification.priceId
     token = request.data.get('token')
     method = request.data.get('paymentMethod')
+    
+    
+    priceMap = {
+        'Daily': 'price_1PJEnzEwLPoE4RaHeBiiO068',
+        'Monthly': 'price_1PJEoOEwLPoE4RaH9wRDCtUy',
+        'Yearly': 'price_1PJEoeEwLPoE4RaHXVRLrOTN',
+    }
 
+    priceId = priceMap[tarification.pricingModel.period]
+
+    print(priceId)
 
     if(method == "Dhahabia" and token["card"]["brand"] != "UnionPay"):
         return Response({'message': "please enter a valid Dhahabia card (starting with 62..)"}, status=status.HTTP_400_BAD_REQUEST)
 
-    subs = Abonnement.objects.filter(consumer=userId, statut="active")
+    subs = Abonnement.objects.filter(consumer=userId)
     updgrading = None
 
     if(len(subs)):
+        current_date = date.today()
         for sub in subs:
-            if(sub.pricing.pricingModel.api.id_api != apiId):
-                continue
-            if(sub.pricing.priceId == priceId):
-                return Response({"message" : "this user is already subscribed"}, status=status.HTTP_409_CONFLICT)
-                break
-            else:
-                updgrading = sub.id.split("-")[0]
-                sub.statut="upgraded"
-                sub.save()
+            if sub.end_date < current_date:
+                if(sub.pricing.pricingModel.api.id_api != apiId):
+                    continue
+                if(sub.pricing.priceId == priceId):
+                    return Response({"message" : "this user is already subscribed"}, status=status.HTTP_409_CONFLICT)
+                    break
+                else:
+                    sub.statut="upgraded"
+                    sub.save()
 
     
 
@@ -127,11 +154,11 @@ def subscribe(request):
             "id_subscription": stripeSubscription.id +"-"+str(random.randrange(1000)),
             "start_date": datetime.now().strftime('%Y-%m-%d'),
             "end_date": datetime.fromtimestamp(stripeSubscription.current_period_end).strftime('%Y-%m-%d'),
-            "statut": stripeSubscription.status,
             "consumer": userId,
             "pricing": tarificationId,
             "api": apiId,
-            "api_key": "API_WAY_KEY_"+generate_api_key()
+            "api_key": "API_WAY_KEY_"+generate_api_key(),
+            "quota_remaining" : tarification.quota_limit,
         }
 
 

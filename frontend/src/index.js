@@ -30,7 +30,7 @@ import Subscrib from './components/Subscrib/Subscrib';
 
 
 function Root() {
-  const stripe = loadStripe("pk_test_51OygXvLDzFR9kcMzeb7UST3IEa8SXi7CD3pXxIcTSQFunxMWcnaKqIJiCHZWO7fLFvnpgauFm9XArtMtZ9xjBJGl00FHM5TiPB");
+  const stripe = loadStripe("pk_test_51PDnbzEwLPoE4RaHQe4ixfjuIe0BQgN8A9K6E58sADIVHfvt7vf3brz7wRrjkGa150mvlfpxyAOhkNR6UBCMJQhg00lybgm8BX");
 
   
   return (

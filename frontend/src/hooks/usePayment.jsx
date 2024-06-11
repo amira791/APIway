@@ -15,16 +15,16 @@ export default function usePayment() {
 
         const cardNumberElement = elements.getElement(CardNumberElement)
         
-        const {token, error} =  type!= 2 ? await stripe.createToken(cardNumberElement,
+        const {token, error} =  await stripe.createToken(cardNumberElement,
             {
               name : holderName
-            }): {token:{id: "tok_unionpay"}, error: null}
+            })
             
         if (!token || error)
         {
           throw error || "token creation failed"
         }
-        return {id:"tok_visa"}
+        return token
     }
 
 
@@ -32,7 +32,7 @@ export default function usePayment() {
         let success = false;
         let error = null;
         try {
-            const response = await payementApiClient.post("/subscribe", { userId:1,tarificationId,token,method});
+            const response = await payementApiClient.post("/subscribe", { userId:1,userName:"testing", userEmail: "testing@test.com",tarificationId,token,method});
             console.log("Payment successful: " + response.data.id);
             success = response.data;
         } catch (err) {

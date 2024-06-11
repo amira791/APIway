@@ -225,18 +225,24 @@ class Tarification(models.Model):
     def __str__(self):
         return self.pricingModel.name + " " + self.type.name
 
+
 class Abonnement(models.Model):
     id_subscription = models.AutoField(primary_key=True)
     api_key = models.CharField(max_length=100)
     start_date = models.DateField(auto_now=True)
     end_date = models.DateField(auto_now=True)
-    statut = models.CharField(max_length=20)
-    consumer = models.ForeignKey(Consommateur, on_delete=models.DO_NOTHING)
-    pricing = models.ForeignKey(Tarification, on_delete=models.DO_NOTHING)
-    api = models.ForeignKey(API, on_delete=models.DO_NOTHING)
+    consumer = models.ForeignKey(Consommateur, on_delete=models.DO_NOTHING )
+    pricing = models.ForeignKey(Tarification, on_delete=models.DO_NOTHING )
+    api = models.ForeignKey(API, on_delete=models.DO_NOTHING )
+    quota_remaining = models.IntegerField(default=0)
 
+    def save(self, *args, **kwargs):
+        if not self.pk:  # Only set quota_remaining when creating the subscription
+            self.quota_remaining = self.pricing.quota_limit
+        super().save(*args, **kwargs)
     def __str__(self):
-        return self.consumer.CNusername + " on " + self.pricing.type.name
+        return self.id_subscription
+
 
 
 class APIForum(models.Model):
