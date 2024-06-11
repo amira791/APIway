@@ -2,7 +2,7 @@ import ManipulateProv from "../../hooks/ProviderHook";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ManipulateCat from "../../hooks/CategoryHook";
-import APIAjout from "../../hooks/APIHook";
+import APIAjout from "../../hooks/ApiHook.jsx";
 import VersionTable from "../provider_componants/APIversions";
 import CustomPagination from "../global_components/pagination";
 import Monetizing from "./ModifyMonetize";

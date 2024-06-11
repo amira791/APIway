@@ -16,6 +16,8 @@ import {
 import { AccordionDetails, Box, Button } from "@mui/material";
 import { Icons } from "react-toastify";
 import APIAjout from "../../../hooks/APIHook2";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export const data = [
   {
     name: "User Endpoint",
@@ -58,11 +60,11 @@ const getColorForMethod = (method) => {
 };
 const useStyles = makeStyles({
   tableHeader: {
-    fontSize: '20px', // Adjust the font size as needed
-    fontWeight: 'bold', // You can adjust other typography styles here
+    fontSize: "20px", // Adjust the font size as needed
+    fontWeight: "bold", // You can adjust other typography styles here
   },
   tableCell: {
-    fontSize: '1rem', // Adjust the font size as needed
+    fontSize: "1rem", // Adjust the font size as needed
   },
   endpointDetails: {
     padding: "20px",
@@ -87,53 +89,170 @@ const useStyles = makeStyles({
   },
 });
 
-const Example = ({ api_key , endpoints , state,isSubscribed,navigate}) => {
+const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
   const classes = useStyles(); // Initialize the styles
   const [selectedEndpoint, setSelectedEndpoint] = useState(endpoints[0]); // Initialize selected endpoint state
   const [headers, setHeaders] = useState([]);
   const [queryParams, setQueryParams] = useState([]);
+
   const [endpointBody, setEndpointBody] = useState(null);
   const [responseExamples, setResponseExamples] = useState([]);
   const [endpointParameters, setEndpointParameters] = useState([]);
-  const [selectedCode, setSelectedCode] = useState('');
-  const [responseContent, setResponseContent] = useState('');
+  const [selectedCode, setSelectedCode] = useState("");
+  const [responseContent, setResponseContent] = useState("");
+  const [apiResult, setApiResult] = useState(null); // State to hold API result
 
+  const [result, setResult] = useState(null);
+  const [queryParamValues, setQueryParamValues] = useState({});
+  const [endpointParamValues, setEndpointParamValues] = useState({});
 
+  const [activeFilter, setActiveFilter] = useState("result-section");
   const {
     fetchAPIHeadersByEndpointId,
     fetchAPIQueryParamsByEndpointId,
     fetchAPIEndpointBodyByEndpointId,
     fetchAPIResponseExamplesByEndpointId,
     fetchEndpointParametersByEndpointId,
+    executeAPI,
   } = APIAjout();
-  const [selectedChoice, setSelectedChoice] = useState('Response Example');
-
-
+  const [selectedChoice, setSelectedChoice] = useState("Response Example");
   const handleEndpointSelection = (endpoint) => {
     setSelectedEndpoint(endpoint);
   };
   const handleChoiceClick = (choice) => {
     setSelectedChoice(choice);
-    if (choice === 'Response Example') {
-      setSelectedCode('');
-      setResponseContent('');
+    if (choice === "Response Example") {
+      setSelectedCode("");
+      setResponseContent("");
     }
   };
-
+  const handleFilterClick = (filterId) => {
+    setActiveFilter(filterId);
+  };
   const handleCodeSelect = (code) => {
     setSelectedCode(code);
-    const selectedExample = responseExamples.find(example => example.code_status === code);
-  
+    const selectedExample = responseExamples.find(
+      (example) => example.code_status === code
+    );
+
     if (selectedExample) {
       setResponseContent(selectedExample.body);
     } else {
-      setResponseContent('');
+      setResponseContent("");
     }
   };
-  useEffect(() => {
-     console.log(api_key)
-  }, [api_key])
-  
+  const handleInputChange = (e, key) => {
+    const { value } = e.target;
+    setHeaders(prevHeaders =>
+      prevHeaders.map(header =>
+        header.key === key ? { ...header, example_value: value } : header
+      )
+    );
+  };
+  // Handle input change for query parameters
+  const handleQueryParamChange = (name, value) => {
+    setQueryParamValues((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  // Handle input change for endpoint parameters
+  const handleEndpointParamChange = (name, value) => {
+    setEndpointParamValues((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  // Handle form submission
+  // Handle form submission
+  const handleSubmit = async () => {
+    const combinedQueryParams = {
+      ...queryParams
+        .filter((param) => !param.required)
+        .reduce(
+          (obj, param) => ({
+            ...obj,
+            [param.name]: queryParamValues[param.name] || "",
+          }),
+          {}
+        ),
+      ...queryParams
+        .filter((param) => param.required)
+        .reduce(
+          (obj, param) => ({
+            ...obj,
+            [param.name]: queryParamValues[param.name] || "",
+          }),
+          {}
+        ),
+    };
+
+    const combinedEndpointParams = {
+      ...endpointParameters
+        .filter((param) => !param.required)
+        .reduce(
+          (obj, param) => ({
+            ...obj,
+            [param.name]: endpointParamValues[param.name] || "",
+          }),
+          {}
+        ),
+      ...endpointParameters
+        .filter((param) => param.required)
+        .reduce(
+          (obj, param) => ({
+            ...obj,
+            [param.name]: endpointParamValues[param.name] || "",
+          }),
+          {}
+        ),
+    };
+    const headerValues = headers.reduce((acc, header) => {
+      acc[header.key] = header.example_value;
+      return acc;
+    }, {});
+
+    const apiKey = 'valid_api_key_123';//localStorage.getItem("apiKey");
+    if (apiKey) {
+      headerValues['x-api-key'] = apiKey; // Add API key to headers
+    } else {
+      // Handle case where API key is not available
+      alert("API key not found. Please subscribe to get an API key.");
+      return;
+    }
+    console.log(headerValues);
+    let bodyValue = null; // Initialize body value as null
+
+    // Check if the textarea element exists
+    const textarea = document.getElementById("message");
+    const method = document.getElementById("method").innerText;
+    const path = document.getElementById("path").innerText;
+    if (textarea) {
+      bodyValue = JSON.parse(textarea.value); // Parse the JSON string
+      console.log(bodyValue);
+    }
+    const endpointWithoutLeadingSlash = path.startsWith("/")
+      ? path.substring(1)
+      : path;
+    console.log(method);
+
+    const result = await executeAPI(
+      website, // website
+      endpointWithoutLeadingSlash, // endpoint
+      method, // method
+      headerValues, // headers
+      combinedQueryParams, // query params
+      bodyValue, // body (modify as needed)
+      combinedEndpointParams, // path params
+      selectedEndpoint.id_endpoint
+    );
+
+    console.log(result);
+
+    setApiResult(result);
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -208,7 +327,7 @@ const Example = ({ api_key , endpoints , state,isSubscribed,navigate}) => {
   const table = useMaterialReactTable({
     columns,
     data: endpoints,
-    muiTableHeadProps:{
+    muiTableHeadProps: {
       sx: {
         fontSize: "20px",
       },
@@ -241,7 +360,7 @@ const Example = ({ api_key , endpoints , state,isSubscribed,navigate}) => {
   return (
     <Box display="flex" justifyContent="space-between" gap="25px">
       <Box sx={{ flex: 1, maxHeight: 700 }}>
-        <MaterialReactTable    table={table} />
+        <MaterialReactTable table={table} />
       </Box>
 
       <>
@@ -262,9 +381,11 @@ const Example = ({ api_key , endpoints , state,isSubscribed,navigate}) => {
                 fontSize: "20px",
               }}
             >
-              {selectedEndpoint.method} {selectedEndpoint.path}
+              <h6 id="method">{selectedEndpoint.method}</h6>{" "}
+              <p id="path">{selectedEndpoint.path}</p>
             </Typography>
-            {state!="Deprecated"?
+            <button onClick={handleSubmit}>Execute API</button>
+            {/*  {state!="Deprecated"?
              <Button
               variant="contained"
               color="primary"
@@ -273,10 +394,10 @@ const Example = ({ api_key , endpoints , state,isSubscribed,navigate}) => {
                 fontSize: "15px", // Increase font size for buttons
                 padding: "10px 20px", // Increase padding for buttons
               }}
-              onClick={navigate}
+              onClick={()=>executeAPI(selectedEndpoint.id_endpoint)}
             >
              {isSubscribed? "Test":"Subscribe"}
-            </Button>:<></>}
+            </Button>:<></>} */}
           </div>
           <Divider />
           {selectedEndpoint.description}
@@ -293,8 +414,8 @@ const Example = ({ api_key , endpoints , state,isSubscribed,navigate}) => {
             </Typography>
             <Box className={classes.insidertext} sx={{ mt: 1 }}>
               {/* <Typography variant="body1">Select Application:</Typography> */}
-              <select  name="" id="" disabled="disabled">
-                <option value="">Default Application{" "}</option>
+              <select name="" id="" disabled="disabled">
+                <option value="">Default Application </option>
               </select>
               {/* <Select disabled value="default">
                 <MenuItem value="default" disabled>
@@ -330,9 +451,11 @@ const Example = ({ api_key , endpoints , state,isSubscribed,navigate}) => {
             </Box>
           </div>
           <Divider />
-          <Accordion  sx={{ mt: 2 }}>
+          <Accordion sx={{ mt: 2 }}>
             <AccordionSummary expandIcon={<StepIcon />}>
-              <Typography className={classes.text}>Header Parameters</Typography>
+              <Typography className={classes.text}>
+                Header Parameters
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <div
@@ -343,129 +466,198 @@ const Example = ({ api_key , endpoints , state,isSubscribed,navigate}) => {
                 }}
               >
                 <Typography variant="h5" sx={{ mt: 2 }}>
-                X-APIway-Key
+                  X-APIway-Key
                 </Typography>
                 <Box sx={{ mt: 1 }}>
                   {/* <Typography variant="body1">Select Application:</Typography> */}
-                  <Select className={classes.insidertext} disabled value="default">
-                    <MenuItem  value="default" disabled>
-                      {api_key}{" "}
+                  <Select
+                    className={classes.insidertext}
+                    disabled
+                    value="default"
+                  >
+                    <MenuItem value="default" disabled>
+                      Default Application{" "}
                     </MenuItem>
                   </Select>
                   <Typography variant="body1">Required</Typography>
                 </Box>
               </div>
               <Divider />
-              
-              {headers.map((parameter) => (
-                <div key={parameter.id}>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                    }}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography variant="h5" sx={{ mt: 2 }}>
+                  X-APIway-Host
+                </Typography>
+                <Box sx={{ mt: 1 }}>
+                  {/* <Typography variant="body1">Select Application:</Typography> */}
+                  <Select
+                    className={classes.insidertext}
+                    disabled
+                    value="default"
                   >
+                    <MenuItem value="default" disabled>
+                      {" "}
+                      Apiway.com{" "}
+                    </MenuItem>
+                  </Select>
+                  <Typography variant="body1">Required</Typography>
+                </Box>
+              </div>
+              {headers.map((parameter) => (
+        <div key={parameter.key}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography variant="h5" sx={{ mt: 2 }}>
+              {parameter.key}
+            </Typography>
+            <Box sx={{ mt: 1 }}>
+              <input
+                className="insidertext"
+                value={parameter.example_value}
+                onChange={(e) => handleInputChange(e, parameter.key)}
+              />
+              {parameter.required && (
+                <Typography variant="body1">Required</Typography>
+              )}
+            </Box>
+          </div>
+          <Divider />
+        </div>
+      ))}
+            </AccordionDetails>
+          </Accordion>
+          <Accordion sx={{ mt: 2 }}>
+            <AccordionSummary>
+              <Typography>Required Parameters</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>Query Parameters</Typography>
+              {queryParams
+                .filter((param) => param.required)
+                .map((param, index) => (
+                  <div key={index}>
                     <Typography variant="h5" sx={{ mt: 2 }}>
-                      {parameter.key}
+                      {param.name}
                     </Typography>
                     <Box sx={{ mt: 1 }}>
-                      <Select className={classes.insidertext}   disabled value="default">
-                        <MenuItem value="default" disabled>
-                          {parameter.example_value}
-                        </MenuItem>
-                      </Select>
-                      {parameter.required ? (
-                        <Typography variant="body1">Required</Typography>
-                      ) : (
-                        <></>
-                      )}
+                      <input
+                        type="text"
+                        onChange={(e) =>
+                          handleQueryParamChange(param.name, e.target.value)
+                        }
+                      />
+                      <Typography variant="body1">
+                        Example values: {param.example_value}
+                      </Typography>
                     </Box>
                   </div>
-                  <Divider />
-                </div>
-              ))}
+                ))}
+              <Divider />
+              <Typography>Endpoint Parameters</Typography>
+              {endpointParameters
+                .filter((param) => param.required)
+                .map((param, index) => (
+                  <div key={index}>
+                    <Typography variant="h5" sx={{ mt: 2 }}>
+                      {param.name}
+                    </Typography>
+                    <Box sx={{ mt: 1 }}>
+                      <input
+                        type="text"
+                        defaultValue={param.example_value}
+                        onChange={(e) =>
+                          handleEndpointParamChange(param.name, e.target.value)
+                        }
+                      />
+                      <Typography variant="body1">
+                        Example values: {param.example_value}
+                      </Typography>
+                    </Box>
+                  </div>
+                ))}
             </AccordionDetails>
           </Accordion>
-          <Accordion  sx={{ mt: 2 }}>
-            <AccordionSummary expandIcon={<StepIcon />}>
-              <Typography className={classes.text}>Required Parameters</Typography>
+          <Accordion sx={{ mt: 2 }}>
+            <AccordionSummary>
+              <Typography>Optional Parameters</Typography>
             </AccordionSummary>
             <AccordionDetails>
-            <Typography className={classes.insidertext}>Query Parameters</Typography>
-            {queryParams.filter(param => param.required).map((param, index) => (
-            <div key={index}>
-              <Typography variant="h5" sx={{ mt: 2 }}>
-                {param.name}
-              </Typography>
-              <Box sx={{ mt: 1 }}>
-                <input type="text" defaultValue={param.example_value} />
-                <Typography variant="body1"> Example values: {param.example_value}</Typography>
-              </Box>
-            </div>
-            ))}
+              <Typography>Query Parameters</Typography>
+              {queryParams
+                .filter((param) => !param.required)
+                .map((param, index) => (
+                  <div key={index}>
+                    <Typography variant="h5" sx={{ mt: 2 }}>
+                      {param.name}
+                    </Typography>
+                    <Box sx={{ mt: 1 }}>
+                      <input
+                        type="text"
+                        defaultValue={param.example_value}
+                        onChange={(e) =>
+                          handleQueryParamChange(param.name, e.target.value)
+                        }
+                      />
+                      <Typography variant="body1">
+                        Example values: {param.example_value}
+                      </Typography>
+                    </Box>
+                  </div>
+                ))}
               <Divider />
-              <Typography className={classes.insidertext}>Endpoint Parameters</Typography>
-              {endpointParameters.filter(param => param.required).map((param, index) => (
-            <div key={index}>
-              <Typography variant="h5" sx={{ mt: 2 }}>
-                {param.name}
-              </Typography>
-              <Box sx={{ mt: 1 }}>
-                <input type="text" defaultValue={param.example_value} />
-                <Typography variant="body1">Example values: {param.example_value}</Typography>
-              </Box>
-            </div>
-          ))}
-            
-            </AccordionDetails>
-          </Accordion>
-          <Accordion  sx={{ mt: 2 }}>
-            <AccordionSummary expandIcon={<StepIcon />}>
-              <Typography className={classes.text}>Optional Parameters</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-            <Typography className={classes.insidertext}>Query Parameters</Typography>
-            {queryParams.filter(param => !param.required).map((param, index) => (
-            <div key={index}>
-              <Typography variant="h5" sx={{ mt: 2 }}>
-                {param.name}
-              </Typography>
-              <Box sx={{ mt: 1 }}>
-                <input type="text" defaultValue={param.example_value} />
-                <Typography variant="body1">Example values: {param.example_value}</Typography>
-              </Box>
-            </div>
-            ))}
-              <Divider />
-              <Typography className={classes.insidertext}>Endpoint Parameters</Typography>
-              {endpointParameters.filter(param => !param.required).map((param, index) => (
-            <div key={index}>
-              <Typography variant="h5" sx={{ mt: 2 }}>
-                {param.name}
-              </Typography>
-              <Box sx={{ mt: 1 }}>
-                <input type="text" defaultValue={param.example_value} />
-                <Typography variant="body1">Example values: {param.example_value}</Typography>
-              </Box>
-            </div>
-          ))}
-            
+              <Typography>Endpoint Parameters</Typography>
+              {endpointParameters
+                .filter((param) => !param.required)
+                .map((param, index) => (
+                  <div key={index}>
+                    <Typography variant="h5" sx={{ mt: 2 }}>
+                      {param.name}
+                    </Typography>
+                    <Box sx={{ mt: 1 }}>
+                      <input
+                        type="text"
+                        defaultValue={param.example_value}
+                        onChange={(e) =>
+                          handleEndpointParamChange(param.name, e.target.value)
+                        }
+                      />
+                      <Typography variant="body1">
+                        Example values: {param.example_value}
+                      </Typography>
+                    </Box>
+                  </div>
+                ))}
             </AccordionDetails>
           </Accordion>
           {selectedEndpoint.method === "POST" && (
-            <Accordion  sx={{ mt: 2 }}>
+            <Accordion sx={{ mt: 2 }}>
               <AccordionSummary expandIcon={<StepIcon />}>
                 <Typography className={classes.text}>Request Body</Typography>
               </AccordionSummary>
               <AccordionDetails>
-              {endpointBody && (
-  <div >
-    <Box sx={{ mt: 1 , lineHeight:"120px"}}>
-      <Typography className={classes.insidertext}>Media Type: {endpointBody.media_type}</Typography>
-      <Typography className={classes.insidertext}> Name: {endpointBody.payload_name}</Typography>
-      <Typography className={classes.insidertext}>Description: {endpointBody.payload_description}</Typography>
-      <fieldset class="message">
+                {endpointBody && (
+                  <div>
+                    <Box sx={{ mt: 1, lineHeight: "120px" }}>
+                      <Typography className={classes.insidertext}>
+                        Media Type: {endpointBody.media_type}
+                      </Typography>
+                      <Typography className={classes.insidertext}>
+                        Name: {endpointBody.payload_name}
+                      </Typography>
+                      <Typography className={classes.insidertext}>
+                        Description: {endpointBody.payload_description}
+                      </Typography>
+                      <fieldset class="message">
                         <textarea
                           id="message"
                           name="message"
@@ -477,82 +669,186 @@ const Example = ({ api_key , endpoints , state,isSubscribed,navigate}) => {
                           required=""
                         ></textarea>
                       </fieldset>
-     
-    </Box>
-  </div>
-)}
+                    </Box>
+                  </div>
+                )}
               </AccordionDetails>
             </Accordion>
           )}
         </Box>
         <Box sx={{ flex: 1, padding: "1rem" }}>
-          <Typography variant="h1" className={classes.text}>{selectedEndpoint.name}</Typography>
+          <Typography variant="h1" className={classes.text}>
+            {selectedEndpoint.name}
+          </Typography>
           <Divider />
-          <div className="tf-tab">
-          <div>
-      <ul className="menu-tab">
-        <li className={selectedChoice === 'Response Example' ? 'tab-title active' : 'tab-title'}>
-          <a href="#" onClick={() => handleChoiceClick('Response Example')}>
-          <h6>Response Example</h6>  
-          </a>
-        </li>
-        <li className={selectedChoice === 'View Results' ? 'tab-title active' : 'tab-title'}>
-        <Button
-          variant="contained"
-          color="primary"
-          style={{
-            margin: "0.5rem",
-            fontSize: "15px", // Increase font size for buttons
-            padding: "10px 20px", // Increase padding for buttons
-          }}
-          disabled
-          >
-          <a href="#" onClick={() => handleChoiceClick('View Results')}>
-        
-
-            View Results
-       
-          </a>   </Button>
-        </li>
-      </ul>
-      {selectedChoice === 'Response Example' && (
-        <div>
-        <Select
-          value={selectedCode}
-          onChange={(e) => handleCodeSelect(e.target.value)}
-          disabled={!responseExamples.length}
-        >
-          <MenuItem value="" disabled>
-            {responseExamples.length ? 'Select Code' : 'No Code Statues'}
-          </MenuItem>
-          {responseExamples.map((example, index) => (
-            <MenuItem key={index} value={example.code_status}>
-              {example.code_status}
-            </MenuItem>
-          ))}
-        </Select>
-        <div>
-          {responseContent && (
+          <div class="tf-tab">
             <div>
-              <p>Response content:</p>
-              <p>{responseContent}</p>
+              <ul className="menu-tab">
+                <li
+                  className={
+                    selectedChoice === "Response Example"
+                      ? "tab-title active"
+                      : "tab-title"
+                  }
+                >
+                  <a
+                    href="#"
+                    onClick={() => handleChoiceClick("Response Example")}
+                  >
+                    <h5>Response Example</h5>
+                  </a>
+                </li>
+                <li
+                  className={
+                    selectedChoice === "View Results"
+                      ? "tab-title active"
+                      : "tab-title"
+                  }
+                >
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    style={{
+                      margin: "0.5rem",
+                      fontSize: "15px", // Increase font size for buttons
+                      padding: "10px 20px", // Increase padding for buttons
+                    }}
+                    disabled
+                  >
+                    <a
+                      href="#"
+                      onClick={() => handleChoiceClick("View Results")}
+                    >
+                      View Results
+                    </a>{" "}
+                  </Button>
+                </li>
+              </ul>
+              {selectedChoice === "Response Example" && (
+                <div>
+                  <Select
+                    value={selectedCode}
+                    onChange={(e) => handleCodeSelect(e.target.value)}
+                    disabled={!responseExamples.length}
+                  >
+                    <MenuItem value="" disabled>
+                      {responseExamples.length
+                        ? "Select Code"
+                        : "No Code Statues"}
+                    </MenuItem>
+                    {responseExamples.map((example, index) => (
+                      <MenuItem key={index} value={example.code_status}>
+                        {example.code_status}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  <div>
+                    {responseContent && (
+                      <div>
+                        <p>Response content:</p>
+                        <p>{responseContent}</p>
+                        {result && (
+                          <div>
+                            <h4>Response:</h4>
+                            <pre>{JSON.stringify(result, null, 2)}</pre>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                   
+
+                    {apiResult && (
+                      <>
+                        <div class="top-menu">
+                          <ul className="filter-menu">
+                            <li
+                              className={
+                                activeFilter === "result-section"
+                                  ? "active"
+                                  : ""
+                              }
+                            >
+                              <a
+                              
+                                onClick={() =>
+                                  handleFilterClick("result-section")
+                                }
+                              >
+                                Results
+                              </a>
+                            </li>
+                            <li
+                              className={
+                                activeFilter === "header-section"
+                                  ? "active"
+                                  : ""
+                              }
+                            >
+                              <a
+                              
+                                onClick={() =>
+                                  handleFilterClick("header-section")
+                                }
+                              >
+                                Header
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="inner-content wallet">
+                          <div class="wallet-list">
+                            <div
+                              class="tf-wallet"
+                              style={{ height: "700px", overflow: "auto" }}
+                            >
+                              <div class="icon">
+                                <h5>Code status</h5>
+                                <span class="label">
+                                  {apiResult.status_code}
+                                </span>
+                              </div>
+                              <p class="content" id="header-section"  style={{
+                        display:
+                          activeFilter === "header-section"
+                            ? "block"
+                            : "none",
+                      }}>
+                                {Object.entries(apiResult.headers).map(
+                                  ([key, value]) => (
+                                    <div key={key}>
+                                      <strong>{key}:</strong> {value}
+                                    </div>
+                                  )
+                                )}
+                              </p>
+                              <p class="content" id="result-section" style={{
+                        display:
+                          activeFilter === "result-section"
+                            ? "block"
+                            : "none",
+                      }}>
+                                {JSON.stringify(
+                                  JSON.parse(apiResult.body),
+                                  null,
+                                  2
+                                )}{" "}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+              )}
+              {selectedChoice === "View Results" && (
+                <div>
+                  {/* Your code for the View Results section goes here */}
+                  <Button disabled>View Results</Button>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      </div>
-      )}
-      {selectedChoice === 'View Results' && (
-        <div>
-          {/* Your code for the View Results section goes here */}
-          <Button
-           
-            disabled
-          >
-            View Results
-          </Button>
-        </div>
-      )}
-    </div>
           </div>
         </Box>
       </>

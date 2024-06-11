@@ -199,12 +199,16 @@ class ApiEndpointBodySerializer(serializers.ModelSerializer):
         model = ApiEndpointBody
         fields = '__all__'
 
-class BaseLinkSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BaseLink
-        fields = '__all__'
 
 class ResponseExampleSerializer(serializers.ModelSerializer):
     class Meta:
         model = ResponseExample
         fields = '__all__'
+ 
+
+class APIUsageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = APIUsage
+        fields = '__all__'       
+        
+        

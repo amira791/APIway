@@ -13,7 +13,9 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from django.contrib.auth import get_user_model
-
+import requests
+from django.utils import timezone 
+import time
 
 
 User = get_user_model()
@@ -109,6 +111,79 @@ def signin(request):
         'user': serialized_user,
     }, status=status.HTTP_200_OK)
 
+
+@api_view(['POST'])
+def execute_api(request, website, endpoint):
+    try:
+        headers = request.data.get('headers', {}) #still not done
+      
+        api_key = headers.get('x-api-key')
+
+        print(api_key)
+        if not api_key:
+            return Response({'error': 'API key is missing.'}, status=400)
+        
+        try:
+            subscription = Abonnement.objects.get(api_key=api_key)
+        except Abonnement.DoesNotExist:
+            return Response({'error': 'Invalid API key'}, status=403)
+
+        if subscription.end_date < timezone.now().date():
+            return Response({'error': 'API key has expired'}, status=403)
+
+        if subscription.quota_remaining <= 0:
+            return Response({'error': 'Quota exceeded'}, status=403)
+
+        print(request.data)
+        params = request.data.get('params', {})
+        body = request.data.get('body', None)
+        path_params = request.data.get('path_params', {})
+        method = request.data.get('method')
+        selectedEndpointId =  request.data.get('selectedEndpoint')
+        # Replace {} in the endpoint with the actual value
+        formatted_endpoint = endpoint.format(**path_params)
+
+        # Construct the full URL with formatted endpoint
+        full_url = f"{website}/{formatted_endpoint}"
+        try:
+            selectedEndpoint = APIendpoint.objects.get(id_endpoint=selectedEndpointId)
+        except APIendpoint.DoesNotExist:
+            return Response({'error': 'Invalid endpoint.'}, status=404)
+
+        print(full_url)
+        start_time = time.time()
+        response = requests.request(method=method,
+                                    url=full_url,
+                                    headers=headers,
+                                    params=params,
+                                    json=body if body else None)
+        response_time = time.time() - start_time
+        # Handle response
+        result = {
+            'status_code': response.status_code,
+            'headers': dict(response.headers),
+            'body': response.json() if response.headers.get('content-type') == 'application/json' else response.text
+        }
+        APIUsage.objects.create(
+            subscription=subscription,
+            status_code=response.status_code,
+            response_time=response_time,
+            endpoint=selectedEndpoint
+        )
+
+        # Update the quota
+        subscription.quota_remaining -= 1
+        subscription.save()
+
+      #condition for when there is an error in the returned value
+        return Response({'result': result})
+    except requests.exceptions.RequestException as e:
+        return Response({'error': str(e)}, status=400)
+    except Abonnement.DoesNotExist:
+        return Response({'result':{
+           
+            'body': "You need to resubscribe in  order to execute"
+        },'error': 'Invalid API key.'}, status=403)
 
 # Fournisseur View
 class FournisseurView(viewsets.ModelViewSet):
@@ -370,14 +445,7 @@ class ApiQueryParamView(viewsets.ModelViewSet):
 class ApiEndpointBodyView(viewsets.ModelViewSet):
     queryset = ApiEndpointBody.objects.all()
     serializer_class = ApiEndpointBodySerializer
-# BaseLink View
-class BaseLinkView(viewsets.ModelViewSet):
-    queryset = BaseLink.objects.all()
-    serializer_class = BaseLinkSerializer
-# BaseLink View
-class BaseLinkView(viewsets.ModelViewSet):
-    queryset = BaseLink.objects.all()
-    serializer_class = BaseLinkSerializer
+
 # TypeTarif View
 class TypeTarifView(viewsets.ModelViewSet):
     queryset = TypeTarif.objects.all()
@@ -531,3 +599,175 @@ def get_api_functions(request, id):
     
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+# Accounts management view *****************************************************************************
+
+#Activate status-------------------------------------------------------
+@api_view(['POST'])
+def activate_user(request, id):
+    return manage_user_status(request, id, action='activate')
+
+#Deactivate status-----------------------------------------------------
+@api_view(['POST'])
+def deactivate_user(request, id):
+    return manage_user_status(request, id, action='deactivate')
+
+
+#Managing function-----------------------------------------------------
+def manage_user_status(request, id, action):
+    # Get user type from request data
+    user_type = request.data.get('type')
+    
+    # Check user type and retrieve the corresponding user object
+    if user_type == 'F':
+        user_model = Fournisseur
+        serializer_class = FournisseurSerializer
+        id_field = 'id_fournisseur'
+        status_field = 'is_active'
+    elif user_type == 'C':
+        user_model = Consommateur
+        serializer_class = ConsommateurSerializer
+        id_field = 'id_consommateur'
+        status_field = 'is_active'
+    else:
+        return Response({'error': 'Invalid user type'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    # Check if user exists
+    try:
+        user_instance = user_model.objects.get(**{id_field: id})
+    except user_model.DoesNotExist:
+        return Response({'error': f'{user_model.__name__} does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+    # Update user status based on the action
+    if action == 'activate':
+        new_status = 'Active'
+    elif action == 'deactivate':
+        new_status = 'Inactive'
+    else:
+        return Response({'error': 'Invalid action'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Update user status
+    setattr(user_instance, status_field, new_status)
+    user_instance.save()
+
+    # Serialize and return the updated user data
+    serializer = serializer_class(user_instance)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+# Search API by Name, Description, or Functionalities **************************************************************
+@api_view(['POST'])
+def search_api(request):
+    query = request.data.get('query', '')
+    search_field = request.data.get('filter')
+    category_label = request.data.get('category')
+
+    # Check if search_field parameter is provided
+    if not search_field:
+        return Response({'error': 'search_field parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Define the fields to search based on the selected search field
+    if search_field == 'Name':
+        search_query = Q(api_name__icontains=query)
+    elif search_field == 'Description':
+        search_query = Q(description__icontains=query)
+    elif search_field == 'Category':
+        if query == 'All':
+            search_query = Q()  # Empty query, which means all APIs will be included
+        else:
+            search_query = Q(category__label__icontains=query)
+    elif search_field == 'Functionalities':
+        search_query = Q(apiversion__functions__functName__icontains=query)
+
+    else:
+        return Response({'error': 'Invalid search field'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Filter results based on the search query and category label
+    if category_label and category_label != 'All':
+        results = API.objects.filter(search_query, category__label=category_label).distinct()
+    else:
+        results = API.objects.filter(search_query).distinct()
+
+    serializer = APISerializer(results, many=True)
+    return Response(serializer.data)
+
+
+
+# Sorting APIs*************************************************************************************************************
+@api_view(['POST'])
+def api_versions_view(request):
+    sortby = request.data.get('sortby')  # Get sort parameter from frontend
+    
+    if sortby == 'recent':
+       apis = API.objects.annotate(latest_version_date=Max('apiversion__date_version')).order_by('-latest_version_date')
+    
+    elif  sortby == 'oldest':
+          apis = API.objects.annotate(latest_version_date=Max('apiversion__date_version')).order_by('latest_version_date')
+
+    else:
+        # Default sorting, no sorting by versions
+        apis = API.objects.all()
+
+    serializer = APISerializer(apis, many=True)
+    return Response(serializer.data)
+
+# Get API functions*******************************************
+@api_view(['GET'])
+def get_api_functions(request, id):
+    try:
+        # Fetch API instance based on api_id
+        api_instance = API.objects.get(id_api=id)
+        
+        # Fetch API version associated with the API instance
+        api_version = APIversion.objects.filter(api=api_instance).first()
+        
+        if api_version:
+            # Fetch functions associated with the API version
+            functions = api_version.functions.all()
+            
+            # Serialize the functions data
+            serializer = FunctionnalitySerializer(functions, many=True)
+            
+            # Return the serialized functions data
+            return Response(serializer.data)
+        else:
+            return Response({'error': 'API version not found'}, status=status.HTTP_404_NOT_FOUND)
+    
+    except API.DoesNotExist:
+        return Response({'error': 'API not found'}, status=status.HTTP_404_NOT_FOUND)
+    
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+# ResponseExample View
+class APIUsageView(viewsets.ModelViewSet):
+    queryset = APIUsage.objects.all()
+    serializer_class = APIUsageSerializer
+
+
+""" class ExecuteAPI(APIView):
+permission_classes = [IsAuthenticated]
+
+def post(self, request): 
+        api_id = request.data.get('apiId')
+        endpoint_id = request.data.get('endpointId')
+        params = request.data.get('params', {})
+        try:
+            api = API.objects.get(id_api=api_id)
+            endpoint = APIendpoint.objects.get(id_endpoint=endpoint_id)
+            headers = {header.key: header.example_value for header in endpoint.headers.all()}
+            query_params = {param.key: param.example_value for param in endpoint.query_params.all()}
+            body_params = {body.payload_name: body.body_example for body in endpoint.body.all()}
+
+            response = requests.request(
+                method=endpoint.method,
+                url=api.website + endpoint.path,
+                headers=headers,
+                params=query_params,
+                json=body_params if endpoint.method in ['POST', 'PUT', 'PATCH'] else None
+            )
+            return Response(response.json(), status=response.status_code)
+        except (API.DoesNotExist, APIendpoint.DoesNotExist) as e:
+            return Response({'error': str(e)}, status=status.HTTP_404_NOT_FOUND)
+        except requests.RequestException as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)"""

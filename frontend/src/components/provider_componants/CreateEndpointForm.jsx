@@ -1,29 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios"; // Import axios for making HTTP requests
 import { Button, Input, Checkbox, Switch, Radio, Select, Tabs } from "antd";
 import ManipulateTypes from "../../hooks/EndpointHook";
 import ParamsTable from "./CommunComponants/paramTable";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import APIAjout from "../../hooks/APIHook2";
 const { Option } = Select;
 
 const { TabPane } = Tabs;
 
-const AddEndpointForm = ({ onSave }) => {
+const AddEndpointForm = ({ website, onSave }) => {
   //const [groups, setGroups] = useState([]);
   const { types } = ManipulateTypes();
+  /* const { executeAPI } = APIAjout(); */
   const [endpointName, setEndpointName] = useState("");
   const [endpointDesc, setEndpointDesc] = useState("");
   const [method, setMethod] = useState("GET");
   const [endpointPath, setEndpointPath] = useState("/");
   const [headers, setHeaders] = useState([]);
   const [queryParams, setQueryParams] = useState([]);
-
+  const [results, setResults] = useState(null);
   const [body, setBody] = useState({
     mediaType: "application/json",
     payloadName: "",
     payloadValue: "",
     bodyExample: "",
   });
+  const [size, setSize] = useState('large');
+  const [color, setColor] = useState('var(--primary-color5)');
   const [dynamicTabs, setDynamicTabs] = useState([]);
   const [responseExamples, setResponseExamples] = useState([]);
   const [newExample, setNewExample] = useState({
@@ -175,9 +180,14 @@ const AddEndpointForm = ({ onSave }) => {
     ////alert("params is",params);
 
     try {
+
+      if(website != "")
       //alert("params is",params);
       // Send endpoint data to parent component to save to database
-      onSave(formData);
+     {
+       onSave(formData);
+     /*   const results = await executeAPI(endpointPath,website);
+       setResults(results) */
       // Clear form fields
       setEndpointName("");
       setMethod("GET");
@@ -185,12 +195,29 @@ const AddEndpointForm = ({ onSave }) => {
       setHeaders([]);
       setParams([{ name: "", type: "", value: "", required: false }]);
       setQueryParams([]);
-      setResponseExamples([]);
+      setResponseExamples([]);}
+      else{
+        alert("Insert the website");
+        return;
+      }
     } catch (error) {
       console.error("Error saving endpoint:", error);
     }
   };
 
+  /* useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const results = await executeAPI(endpointPath,website);
+        setResults(results)
+       console.log(results);
+        
+      } catch (error) {
+        console.error("Error fetching API details:", error);
+      }
+    };
+    fetchData();
+  }, []); */
   const handleAddHeader = (newRow) => {
     setHeaders([...headers, newRow]);
   };
@@ -322,10 +349,10 @@ const AddEndpointForm = ({ onSave }) => {
         </section>
         {/* Tab section for headers, query parameters, etc. */}
         <section className="tab-section">
-          <Tabs defaultActiveKey="headers" style={{fontSize:"20px"}}>
-            <TabPane tab="Endpoint params" key="params" >
+          <Tabs defaultActiveKey="headers"    size={size} tabBarStyle={{color:"fff"}}>
+            <TabPane  tab="Endpoint params" key="params" >
               {dynamicTabs.length === 0 ? (
-                <p>No parameters yet.</p>
+                <p className="custom-tabpane" >No parameters yet.</p>
               ) : (
                 <div>
                   <table>
@@ -405,7 +432,7 @@ const AddEndpointForm = ({ onSave }) => {
                 </div>
               )}
             </TabPane>
-            <TabPane tab="Headers" key="headers">
+            <TabPane  className="title-style" tab="Headers" key="headers">
               <div>
                 <label className="capitalize is-required infos-text">Headers</label>
 
@@ -419,8 +446,8 @@ const AddEndpointForm = ({ onSave }) => {
                 />
               </div>
             </TabPane>
-            {method === "GET" && (
-              <TabPane tab="Query Parameters" key="queryParameters">
+            { (method === "POST" || method === "PUT" || method === "GET") && (
+              <TabPane  className="title-style" tab="Query Parameters" key="queryParameters">
                 <div>
                   <label className="capitalize is-required infos-text">Query Parameters</label>
 
@@ -612,6 +639,10 @@ const AddEndpointForm = ({ onSave }) => {
         >
           <i className="fa-solid fa-xmark"></i> <span>cancel</span>
         </button>
+      </div>
+      <div>
+        {results
+        }
       </div>
     </div>
   );

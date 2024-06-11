@@ -66,9 +66,10 @@ const ParamsTable = ({ data, params, onAddRow, onChange, onDelete, activeTab }) 
         <thead>
           <tr>
             {params.map((header, index) => (
-              <th key={index}>{header}</th>
+           
+            <th key={index}>  <fieldset><label>{header}</label></fieldset> </th>
             ))}
-            <th>Actions</th>
+            <th> <fieldset><label>Actions</label></fieldset> </th>
           </tr>
         </thead>
         <tbody>
@@ -106,6 +107,7 @@ const ParamsTable = ({ data, params, onAddRow, onChange, onDelete, activeTab }) 
                       <input
                         type={key === 'required' ? "checkbox" : "text"}
                         value={info[key]}
+                        placeholder="Example"
                         checked={key === 'required' ? info[key] : undefined}
                         onChange={(e) => handleEditInputChange(key, e.target.type === 'checkbox' ? e.target.checked : e.target.value)}
                       />
@@ -153,6 +155,7 @@ const ParamsTable = ({ data, params, onAddRow, onChange, onDelete, activeTab }) 
                     (  <input
                       type= "checkbox" 
                       value={info[key]}
+                      placeholder="Example"
                       checked={info[key] }
                       disabled />):
                       key === 'type' ?
@@ -206,6 +209,7 @@ const ParamsTable = ({ data, params, onAddRow, onChange, onDelete, activeTab }) 
                       </select>):(
               <input
                 type="text"
+                placeholder="Enter value"
                 value={newRow.key}
                 onChange={(e) => handleInputChange("key", e.target.value)}
               />)}
@@ -230,6 +234,7 @@ const ParamsTable = ({ data, params, onAddRow, onChange, onDelete, activeTab }) 
             <td>
               <input
                 type="text"
+                placeholder="Example"
                 value={newRow.value}
                 onChange={(e) => handleInputChange("value", e.target.value)}
               />

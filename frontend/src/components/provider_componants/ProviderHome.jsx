@@ -3,7 +3,7 @@ import NavbarProvider from "../provider_componants/CommunComponants/NavBar";
 import AddAPIPage from "../provider_componants/AddApi";
 import ProvAPIList from "../provider_componants/ListProvAPI";
 import React, { useState, useEffect } from "react";
-import APIAjout from "../../hooks/APIHook";
+import APIAjout from "../../hooks/ApiHook.jsx";
 import { useAuthContext } from "../../context/authContext";
 import TicketsList from "../tickets_components/TicketsList";
 import ProviderProfile from "./ProviderProfile";

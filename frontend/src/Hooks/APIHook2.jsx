@@ -3,59 +3,62 @@
 import API from "../API";
 import { useState, useEffect } from "react";
 import PlansAjout from "./MonetizationHook";
-import { useAuthContext } from '../context/authContext';
-
 
 export default function APIAjout() {
 
-  const { authState } = useAuthContext();
-
   /*************************************************************************** */
+  const addNewAPI = async (
+    formData,
+    functionalities,
+    endpoints,
+    Models
+  ) => {
+    try {
+      let apiId = await createAPI(formData);
+      await createModels(apiId, Models);
+      let functionalityIds = await createFunctionnalities(functionalities);
+      let apiversionId = await createAPIVersions(
+        apiId,
+        functionalityIds
+      );
+      await createEndpoints(apiversionId, endpoints);
+      alert("API created successfully!");
+      window.location.reload();
+    } catch (error) {
+      console.error("Error creating API:", error);
+      // Handle error
+    }
+  };
 
-const addNewAPI = async (formData, functionalities, baseLinks, endpoints, Models) => {
-  try {
-    let apiId = await createAPI(formData);
-    await createModels(apiId, Models);
-    let functionalityIds = await createFunctionnalities(functionalities);
-    let baseLinkIds =  await createBaseLinks(baseLinks);
-    let apiversionId=  await createAPIVersions(apiId,functionalityIds, baseLinkIds);
-    await createEndpoints(apiversionId, endpoints);
-   alert("API created successfully!");
-  } catch (error) {
-    console.error("Error creating API:", error);
-    // Handle error
-  }
-};
-
-const createAPI = async (formData) => {
-
-  
-  if (formData.categoryId === null) {
-    const categoryId = await createCategory(formData.category);
-    formData.categoryId = categoryId;
-  }
-  const response = await API.post(`/apis/`, {
-    api_name: formData.apiName,
-    description: formData.description,
-    terms_of_use: formData.termOfUse,
-    logo: formData.logo,
-    visibility: formData.visibility,
-    provider: authState.userId,
-    category: formData.categoryId,
-    website: formData.website,
-  },
-  {
-    headers: {
-      "Content-Type": "application/json",
-      "Content-Type": "multipart/form-data",
-    },
-  });
-  if (response.status !== 201) {
-    throw new Error("Failed to create API");
-  }
-  return response.data.id_api;
-};
-
+  const createAPI = async (formData) => {
+    if (formData.categoryId === null) {
+      const categoryId = await createCategory(formData.category);
+      formData.categoryId = categoryId;
+    }
+    const response = await API.post(
+      `/apis/`,
+      {
+        api_name: formData.apiName,
+        description: formData.description,
+        terms_of_use: formData.termOfUse,
+        logo: formData.logo,
+        visibility: formData.visibility,
+        provider: formData.providerId,
+        category: formData.categoryId,
+        website: formData.website,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    if (response.status !== 201) {
+      throw new Error("Failed to create API");
+    }
+    return response.data.id_api;
+  };
 
   const createCategory = async (categoryLabel) => {
     try {
@@ -135,30 +138,14 @@ const createAPI = async (formData) => {
     }
   };
 
-  const createBaseLinks = async (baseLinks) => {
-    try {
-      const baseLinkResponses = await Promise.all(
-        baseLinks.map(async (url) => {
-          const response = await API.post(`/baselink/`, { url });
-          return response.data.baselink_id;
-        })
-      );
-      return baseLinkResponses;
-    } catch (error) {
-      console.error("Error creating base links:", error);
-      throw error;
-    }
-  };
-  const createAPIVersions = async (apiId, functionalityIds, baseLinkIds) => {
-    // Check if baseLinkIds is empty and set base_links accordingly
-    const base_links = baseLinkIds.length > 0 ? baseLinkIds : [];
-    try {
+
+  const createAPIVersions = async (apiId, functionalityIds) => {
+       try {
       const apiVersionsData = {
         num_version: "1",
         state: "Active",
         api: apiId,
         functions: functionalityIds,
-        base_links: base_links,
       };
       const response = await API.post(`/apiversions/`, apiVersionsData);
       return response.data.id_version;
@@ -167,6 +154,7 @@ const createAPI = async (formData) => {
       throw error;
     }
   };
+ 
   const createEndpoints = async (apiVersionId, endpoints) => {
     try {
       const endpointPromises = endpoints.map(async (endpoint) => {
@@ -240,6 +228,7 @@ const createAPI = async (formData) => {
         key: queryParam.key,
         type_id: queryParam.type,
         example_value: queryParam.value,
+        required:queryParam.required,
         endpoint: endpointResponse.data.id_endpoint,
       }));
       return Promise.all(
@@ -554,6 +543,34 @@ const createAPI = async (formData) => {
       throw error.response ? error.response.data : error.message;
     }
   };
+  const executeAPI = async (website, endpoint,method,headers,queryparams,body,pathParams,selectedEndpoint) => {
+    try {
+        const response = await API.post(
+            `/api/execute/${encodeURIComponent(website)}/${encodeURIComponent(endpoint)}/`,
+            {
+                headers:headers|| {},  // Add any necessary headers
+                params:queryparams|| {},   // Add any necessary params
+                body:body || null  ,  // Add any necessary body
+                path_params: pathParams || {},// Add path params here
+                method: method,
+                selectedEndpoint:selectedEndpoint
+            }, {
+              headers: {
+                "Content-Type": "application/json",             
+              },
+            }
+        );
+        const data = response.data;
+      /*   console.log(data);
+        console.log(data.result.body);
+        console.log(data.result.status_code); */
+        // Make sure to have a state setter or handler to process the result
+       
+        return data.result;
+    } catch (error) {
+        console.error("Error executing API:", error);
+      }
+};
   const [tarifTypes, setTarifTypes] = useState([]);
 
   const getTarifType = () => {
@@ -564,6 +581,8 @@ const createAPI = async (formData) => {
       })
       .catch((error) => {});
   };
+
+  
   useEffect(() => {
     getTarifType();
   }, []);
@@ -584,6 +603,8 @@ const createAPI = async (formData) => {
     fetchAPITarifByModelId,
     fetchAllFunctionalitiesById,
     fetchAPIVersionsInfoById,
+    executeAPI,
+  /*   executeAPI, */
     tarifTypes,
   };
 }

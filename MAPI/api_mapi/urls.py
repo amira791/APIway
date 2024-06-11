@@ -26,13 +26,15 @@ router.register(r'types_tarif', TypeTarifView, basename='types_tarif')
 router.register(r'apiheaders', ApiHeaderView, basename='apiheaders')
 router.register(r'apiquery', ApiQueryParamView, basename='apiquery')
 router.register(r'apiendpointbody', ApiEndpointBodyView, basename='apiendpointbody')
-router.register(r'baselink', BaseLinkView, basename='baselink')
 router.register(r'pricing_model', PricingModelView, basename='pricing_model')
 router.register(r'endpoint_parameter', Endpoint_parameterView, basename='endpoint_parameter')
 router.register(r'responseexample', ResponseExampleView, basename='responseexample')
+router.register(r'api_usage', APIUsageView, basename='api_usage')
 
 # Get the urlpatterns from the router
 urlpatterns = [
+    path('api/execute/<path:website>/<path:endpoint>/', execute_api, name='execute_api'),
+    
     path('apiforum/', APIForumView.as_view({'get': 'list', 'post': 'create'}), name='apiforum-list'),
     path('comments/', CommentView.as_view({'get': 'list', 'post': 'create'}), name='comments-list'),
     path('tickets/', TicketView.as_view({'get': 'list', 'post': 'create'}), name='tickets-list'),
@@ -57,3 +59,5 @@ urlpatterns = [
     path('signin/',signin)
    
 ] + router.urls
+
+

@@ -25,7 +25,7 @@ const Details = () => {
   const [chosenVersionInfo, setChosenVersionInfo] = useState(null);
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [api_key ,setAPIKey] = useState()
-
+ const [apiWebsite, setApiWebsite] = useState('');
   const [apiVersions, setApiVersions] = useState([]);
   const [apiEndpoints, setApiEndpoints] = useState(null);
   const [versionFunctionalities, setVersionFunctionalities] = useState(null);
