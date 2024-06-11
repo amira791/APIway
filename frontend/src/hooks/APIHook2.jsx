@@ -99,7 +99,7 @@ export default function APIAjout() {
               recommended: false,
               features: plan.features,
               quota_limit: plan.quotalimit,
-              rate_limit: plan.ratelimit || 1000,
+             
               type: plan.id,
               pricingModel: modelId,
             },

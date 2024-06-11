@@ -63,7 +63,6 @@ const PricingMenu = ({ allPricingData, onSelect }) => {
                                     </div>
                                     <div class="price">
                                              <div class="content">
-                                  <div class="cash">Rate Limit: {tarif.rate}/hour</div>
                                         </div>
                                     </div>
                                     </div>
@@ -118,7 +117,7 @@ const PricingMenu = ({ allPricingData, onSelect }) => {
                 price: tarif.price,
                 features: tarif.features.split(','), // Assuming features are stored as a comma-separated string
                 quota: tarif.quota_limit,
-                rate: tarif.rate_limit,
+              
               };
             });
             

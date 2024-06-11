@@ -179,7 +179,7 @@ class ResponseExampleView(viewsets.ModelViewSet):
     queryset = ResponseExample.objects.all()
     serializer_class = ResponseExampleSerializer
 
-# ResponseExample View
+# API usage View
 class APIUsageView(viewsets.ModelViewSet):
     queryset = APIUsage.objects.all()
     serializer_class = APIUsageSerializer

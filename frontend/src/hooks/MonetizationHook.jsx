@@ -34,7 +34,7 @@ export default function PlansAjout() {
                 recommended: false,
                 features: plan.features,
                 quota_limit: plan.quotalimit,
-                rate_limit: plan.ratelimit || null,
+                
                 type: plan.id,
                 pricingModel: modelId,
            
