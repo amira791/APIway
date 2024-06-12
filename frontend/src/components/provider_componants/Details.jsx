@@ -19,7 +19,7 @@ const Details = () => {
     const [apiProvider, setAPIProvider] = useState(null);
     const [chosenVersion, setChosenVersion]= useState(null);
     const [chosenVersionInfo, setChosenVersionInfo]= useState(null);
-    const [isSubscribed, setIsSubscribed] = useState(false);
+    const [isSubscribed, setIsSubscribed] = useState(true);
     const [apiWebsite, setApiWebsite] = useState('');
     const [apiVersions, setApiVersions] = useState([]);
     const [apiEndpoints, setApiEndpoints] = useState(null);
@@ -143,18 +143,7 @@ const Details = () => {
                           />
                           <h6 class="title"  style={{fontSize:"17px"}}>Provider: {apiProvider.FR_first_name}  {apiProvider.FR_last_name}</h6>
                         </div>
-                        <div class="wishlish" >
-                          <div class="number-wishlish">
-                            <i class="far fa-heart"></i>
-                          </div>
-                         {/*  <div class="option btn-option">
-                            <i class="far fa-ellipsis-h"></i>
-                            <div class="option_popup">
-                              <a href="#">Delete</a>
-                              <a href="#">Edit</a>
-                            </div>
-                          </div> */}
-                        </div>
+                     
                         </div>
                         <div>
                           <p></p>
