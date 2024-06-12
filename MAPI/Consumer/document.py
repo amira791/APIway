@@ -1,7 +1,10 @@
+from django.db import models
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 from elasticsearch_dsl import Index, Text, Keyword, Date, Object
 from api_mapi.models import API, APIversion, Functionnality
+from django.dispatch import receiver
+from django.db.models.signals import post_save, post_delete
 
 @registry.register_document
 class APIDocument(Document):
@@ -39,3 +42,22 @@ class APIDocument(Document):
         
         # Prepare the functions data for indexing
         return [{'functName': func.functName} for func in functions]
+    
+#     def indexing(self):
+#         obj = self.get_object()
+#         self.update(obj)
+
+#     def unindexing(self):
+#         obj = self.get_object()
+#         self.delete(obj.pk)
+
+#     def get_object(self):
+#         return self.get_queryset().get(pk=self.pk)
+
+# @receiver(post_save, sender=API)
+# def index_api(sender, instance, **kwargs):
+#     instance.indexing()
+
+# @receiver(post_delete, sender=API)
+# def delete_api(sender, instance, **kwargs):
+#     instance.unindexing()

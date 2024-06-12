@@ -1,17 +1,22 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../global_components/navbar';
 import Footer from '../global_components/footer';
-import TheDataTable from './FrDatatable';
-import useManageAccountsF from '../../hooks/FouAccountsHook';
+import FourDataTable from './FrDatatable';
+import useManageAccountsF from '../../Hook/FouAccountsHook';
 import { Button } from '@chakra-ui/react'; // Import Chakra UI Button or your preferred button component
 
 const FourAccountManag = () => {
-  const { fournisseurs, loading, error, activateStatus, deactivateStatus, fetchFournisseursData } = useManageAccountsF();
   const [selectedRows, setSelectedRows] = useState([]);
-  const [clearSelRows , setClearSelRows] = useState(false);
+  const { fournisseurs, loading, error, activateStatus, deactivateStatus, fetchFournisseursData } = useManageAccountsF();
 
+  // Fetch the data when the component mounts
+  useEffect(() => {
+    fetchFournisseursData();
+  }, []);
+
+  // Custom cell for rendering status with Tailwind CSS classes
   const customStatusCell = (row) => {
-    const status = row.is_active.toLowerCase();
+    const status = row?.user?.is_active ? 'active' : 'inactive';
     let statusClass = '';
   
     switch (status) {
@@ -26,255 +31,78 @@ const FourAccountManag = () => {
         break;
     }
   
-    return <div className={statusClass}>{row.is_active}</div>;
+    return <div className={statusClass}>{status}</div>;
   };
 
-// Define a function to handle the selected row IDs from TheDataTable
-
-
-  const handleActivateStatus =  () => {
+  const handleActivateStatus = () => {
     for (const userId of selectedRows) {
       activateStatus(userId);
     }
-    setSelectedRows([]); // Use the state updater function
-    setClearSelRows(true);
-    console.log("selectedRows in activate ",selectedRows); // Log selectedRows after clearing
+    setSelectedRows([]);
+    console.log("selectedRows: ", selectedRows); // Log selectedRows after clearing
   };
 
- const handleDeactivateStatus = () => {
+  const handleDeactivateStatus = () => {
     for (const userId of selectedRows) {
-       deactivateStatus(userId);
+      deactivateStatus(userId);
     }
     fetchFournisseursData();
-    setSelectedRows([]); // Use the state updater function
-    setClearSelRows(true);
-    console.log("selectedRows in activate ",selectedRows); // Log selectedRows after clearing
+    setSelectedRows([]);
+    console.log("selectedRows: ", selectedRows); // Log selectedRows after clearing
   };
 
-// Then, you can log the updated state inside the component re-render
-useEffect(() => {
-  console.log("Updated selectedRows:", selectedRows);
-}, [selectedRows]);
-
-  
   const columns = [
     {
       name: 'User Name',
-      selector: (row) => row.FRusername,
+      selector: (row) => row?.user?.username || 'N/A',
       sortable: true,
     },
     {
       name: 'First Name',
-      selector: (row) => row.FR_first_name,
+      selector: (row) => row?.user?.first_name || 'N/A',
       sortable: true,
     },
     {
       name: 'Last Name',
-      selector: (row) => row.FR_last_name,
+      selector: (row) => row?.user?.last_name || 'N/A',
       sortable: true,
     },
     {
       name: 'Email',
-      selector: (row) => row.FRemail,
+      selector: (row) => row?.user?.email || 'N/A',
       sortable: true,
     },
     {
       name: 'Phone',
-      selector: (row) => row.FRphone,
+      selector: (row) => row?.user?.phone || 'N/A',
       sortable: true,
     },
     {
       name: 'Status',
-      selector: (row) => row.is_active,
+      selector: (row) => row?.user?.is_active ? 'Active' : 'Inactive',
       sortable: true,
-      // Assuming you still need custom status cell rendering
       cell: customStatusCell,
     },
   ];
 
-//****************************data****************** */
-const data = [
-  {
-    FRusername: 'john_doe',
-    FR_first_name: 'John',
-    FR_last_name: 'Doe',
-    FRemail: 'john@example.com',
-    FRphone: '+1234567890',
-    is_active: 'Active',
-  },
-  {
-    FRusername: 'jane_smith',
-    FR_first_name: 'Jane',
-    FR_last_name: 'Smith',
-    FRemail: 'jane@example.com',
-    FRphone: '+9876543210',
-    is_active: 'Inactive',
-  },
-  {
-    FRusername: 'alex_rossi',
-    FR_first_name: 'Alex',
-    FR_last_name: 'Rossi',
-    FRemail: 'alex@example.com',
-    FRphone: '+1122334455',
-    is_active: 'Active',
-  },
-  {
-    FRusername: 'lisa_wang',
-    FR_first_name: 'Lisa',
-    FR_last_name: 'Wang',
-    FRemail: 'lisa@example.com',
-    FRphone: '+9988776655',
-    is_active: 'Inactive',
-  },
-  {
-    FRusername: 'michael_jackson',
-    FR_first_name: 'Michael',
-    FR_last_name: 'Jackson',
-    FRemail: 'michael@example.com',
-    FRphone: '+1123456789',
-    is_active: 'Active',
-  },
-  {
-    FRusername: 'sarah_anderson',
-    FR_first_name: 'Sarah',
-    FR_last_name: 'Anderson',
-    FRemail: 'sarah@example.com',
-    FRphone: '+9988776655',
-    is_active: 'Active',
-  },
-  {
-    FRusername: 'chris_evans',
-    FR_first_name: 'Chris',
-    FR_last_name: 'Evans',
-    FRemail: 'chris@example.com',
-    FRphone: '+1122334455',
-    is_active: 'Inactive',
-  },
-  {
-    FRusername: 'emily_lee',
-    FR_first_name: 'Emily',
-    FR_last_name: 'Lee',
-    FRemail: 'emily@example.com',
-    FRphone: '+1234509876',
-    is_active: 'Active',
-  },
-  {
-    FRusername: 'david_kim',
-    FR_first_name: 'David',
-    FR_last_name: 'Kim',
-    FRemail: 'david@example.com',
-    FRphone: '+1122334455',
-    is_active: 'Inactive',
-  },
-  {
-    FRusername: 'olivia_smith',
-    FR_first_name: 'Olivia',
-    FR_last_name: 'Smith',
-    FRemail: 'olivia@example.com',
-    FRphone: '+9988776655',
-    is_active: 'Active',
-  },
-  {
-    FRusername: 'james_jones',
-    FR_first_name: 'James',
-    FR_last_name: 'Jones',
-    FRemail: 'james@example.com',
-    FRphone: '+1122334455',
-    is_active: 'Inactive',
-  },
-  {
-    FRusername: 'sophia_brown',
-    FR_first_name: 'Sophia',
-    FR_last_name: 'Brown',
-    FRemail: 'sophia@example.com',
-    FRphone: '+9988776655',
-    is_active: 'Active',
-  },
-  {
-    FRusername: 'ethan_nguyen',
-    FR_first_name: 'Ethan',
-    FR_last_name: 'Nguyen',
-    FRemail: 'ethan@example.com',
-    FRphone: '+1122334455',
-    is_active: 'Inactive',
-  },
-  {
-    FRusername: 'mia_miller',
-    FR_first_name: 'Mia',
-    FR_last_name: 'Miller',
-    FRemail: 'mia@example.com',
-    FRphone: '+9988776655',
-    is_active: 'Active',
-  },
-  {
-    FRusername: 'william_davis',
-    FR_first_name: 'William',
-    FR_last_name: 'Davis',
-    FRemail: 'william@example.com',
-    FRphone: '+1122334455',
-    is_active: 'Inactive',
-  },
-  {
-    FRusername: 'ava_garcia',
-    FR_first_name: 'Ava',
-    FR_last_name: 'Garcia',
-    FRemail: 'ava@example.com',
-    FRphone: '+9988776655',
-    is_active: 'Active',
-  },
-  {
-    FRusername: 'noah_rodriguez',
-    FR_first_name: 'Noah',
-    FR_last_name: 'Rodriguez',
-    FRemail: 'noah@example.com',
-    FRphone: '+1122334455',
-    is_active: 'Inactive',
-  },
-  {
-    FRusername: 'emma_martinez',
-    FR_first_name: 'Emma',
-    FR_last_name: 'Martinez',
-    FRemail: 'emma@example.com',
-    FRphone: '+9988776655',
-    is_active: 'Active',
-  },
-  {
-    FRusername: 'liam_hernandez',
-    FR_first_name: 'Liam',
-    FR_last_name: 'Hernandez',
-    FRemail: 'liam@example.com',
-    FRphone: '+1122334455',
-    is_active: 'Inactive',
-  },
-  {
-    FRusername: 'isabella_lopez',
-    FR_first_name: 'Isabella',
-    FR_last_name: 'Lopez',
-    FRemail: 'isabella@example.com',
-    FRphone: '+9988776655',
-    is_active: 'Active',
-  },
-];
-
-/****************************************************** */
-
-
-
   return (
     <div className="content">
-        
-        {/* Add buttons for activating and deactivating status */}
-        <div className="flex space-x-4 justify-end mb-4">
-          <Button className="bg-green-200 hover:bg-green-300 text-green-800 font-bold py-3 px-6 rounded-lg" disabled={selectedRows.length === 0} onClick={handleActivateStatus}>
-            Activate Status
-          </Button>
-          <Button className="bg-red-200 hover:bg-red-300 text-red-800 font-bold py-3 px-6 rounded-lg" disabled={selectedRows.length === 0} onClick={handleDeactivateStatus}>
-            Deactivate Status
-          </Button>
-        </div>
-        {/* Passing the columns and data props to the DataTable component */}
-        <TheDataTable columns={columns} data={fournisseurs} clearSelRows={clearSelRows} selectedRows={selectedRows} onSelectedRowsChange={setSelectedRows} />
-       </div>
+      <div className="flex space-x-4 justify-end mb-4">
+        <Button className="bg-green-200 hover:bg-green-300 text-green-800 font-bold py-3 px-6 rounded-lg" disabled={selectedRows.length === 0} onClick={handleActivateStatus}>
+          Activate Status
+        </Button>
+        <Button className="bg-red-200 hover:bg-red-300 text-red-800 font-bold py-3 px-6 rounded-lg" disabled={selectedRows.length === 0} onClick={handleDeactivateStatus}>
+          Deactivate Status
+        </Button>
+      </div>
+      {loading ? (
+        <div>Loading...</div>
+      ) : error ? (
+        <div>Error fetching data: {error.message}</div>
+      ) : (
+        <FourDataTable columns={columns} data={fournisseurs} selectedRows={selectedRows} onSelectedRowsChange={setSelectedRows} />
+      )}
+    </div>
   );
 };
 

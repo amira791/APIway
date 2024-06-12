@@ -1,6 +1,6 @@
-import { useState , useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { BASEURL ,fetchData } from './API'
+import { BASEURL } from '../hooks/API';
 
 export default function useManageAccountsC() {
     const [consommateurs, setConsommateurs] = useState([]);
@@ -8,22 +8,27 @@ export default function useManageAccountsC() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        setLoading(true);
-        axios.get(`${BASEURL}consommateurs/`)
-            .then(response => {
-                setConsommateurs(response.data);
-                setLoading(false);
-            })
-            .catch(error => {
-                setError(error);
-                setLoading(false);
-            });
+        fetchConsomsData();
     }, []);
 
-    
+    const fetchConsomsData = async () => {
+        setLoading(true);
+        setError(null); // Clear previous errors
+        try {
+            const response = await axios.get(`${BASEURL}consommateurs/`);
+            console.log('Fetched Data Consommateur:', response.data);
+            setConsommateurs(response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const activateStatus = async (userId) => {
         try {
-          const response = await axios.post(`${BASEURL}/activate/${userId}/`, {
+          const response = await axios.post(`${BASEURL}activate/${userId}/`, {
             type: "C" // Include user type in the request body
           });
           console.log(response.data.message);
@@ -51,19 +56,6 @@ export default function useManageAccountsC() {
 
 
 
-    const fetchConsomsData = () => {
-        axios.get(`${BASEURL}consommateurs/`)
-            .then(response => {
-                console.log('Fetched Data:', response.data);
-                setConsommateurs(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                setError(error);
-            });
-    };
-
-   
     return {
         consommateurs,
         loading,

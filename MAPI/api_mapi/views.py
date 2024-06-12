@@ -13,10 +13,12 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from django.contrib.auth import get_user_model
+from django.db.models import Count
 import requests
 from django.utils import timezone 
 import time
-
+from django.http import JsonResponse
+from django.db.models import Min, Max
 
 User = get_user_model()
 
@@ -462,98 +464,6 @@ class ResponseExampleView(viewsets.ModelViewSet):
     serializer_class = ResponseExampleSerializer
 
 
-
-# Accounts management view *****************************************************************************
-
-#Activate status-------------------------------------------------------
-@api_view(['POST'])
-def activate_user(request, id):
-    return manage_user_status(request, id, action='activate')
-
-#Deactivate status-----------------------------------------------------
-@api_view(['POST'])
-def deactivate_user(request, id):
-    return manage_user_status(request, id, action='deactivate')
-
-
-#Managing function-----------------------------------------------------
-def manage_user_status(request, id, action):
-    # Get user type from request data
-    user_type = request.data.get('type')
-    
-    # Check user type and retrieve the corresponding user object
-    if user_type == 'F':
-        user_model = Fournisseur
-        serializer_class = FournisseurSerializer
-        id_field = 'id_fournisseur'
-        status_field = 'is_active'
-    elif user_type == 'C':
-        user_model = Consommateur
-        serializer_class = ConsommateurSerializer
-        id_field = 'id_consommateur'
-        status_field = 'is_active'
-    else:
-        return Response({'error': 'Invalid user type'}, status=status.HTTP_400_BAD_REQUEST)
-    
-    # Check if user exists
-    try:
-        user_instance = user_model.objects.get(**{id_field: id})
-    except user_model.DoesNotExist:
-        return Response({'error': f'{user_model.__name__} does not exist'}, status=status.HTTP_404_NOT_FOUND)
-
-    # Update user status based on the action
-    if action == 'activate':
-        new_status = 'Active'
-    elif action == 'deactivate':
-        new_status = 'Inactive'
-    else:
-        return Response({'error': 'Invalid action'}, status=status.HTTP_400_BAD_REQUEST)
-
-    # Update user status
-    setattr(user_instance, status_field, new_status)
-    user_instance.save()
-
-    # Serialize and return the updated user data
-    serializer = serializer_class(user_instance)
-    return Response(serializer.data, status=status.HTTP_200_OK)
-# Search API by Name, Description, or Functionalities **************************************************************
-@api_view(['POST'])
-def search_api(request):
-    query = request.data.get('query', '')
-    search_field = request.data.get('filter')
-    category_label = request.data.get('category')
-
-    # Check if search_field parameter is provided
-    if not search_field:
-        return Response({'error': 'search_field parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
-
-    # Define the fields to search based on the selected search field
-    if search_field == 'Name':
-        search_query = Q(api_name__icontains=query)
-    elif search_field == 'Description':
-        search_query = Q(description__icontains=query)
-    elif search_field == 'Category':
-        if query == 'All':
-            search_query = Q()  # Empty query, which means all APIs will be included
-        else:
-            search_query = Q(category__label__icontains=query)
-    elif search_field == 'Functionalities':
-        search_query = Q(apiversion__functions__functName__icontains=query)
-
-    else:
-        return Response({'error': 'Invalid search field'}, status=status.HTTP_400_BAD_REQUEST)
-
-    # Filter results based on the search query and category label
-    if category_label and category_label != 'All':
-        results = API.objects.filter(search_query, category__label=category_label).distinct()
-    else:
-        results = API.objects.filter(search_query).distinct()
-
-    serializer = APISerializer(results, many=True)
-    return Response(serializer.data)
-
-
-
 # Sorting APIs*************************************************************************************************************
 @api_view(['POST'])
 def api_versions_view(request):
@@ -572,34 +482,6 @@ def api_versions_view(request):
     serializer = APISerializer(apis, many=True)
     return Response(serializer.data)
 
-# Get API functions*******************************************
-@api_view(['GET'])
-def get_api_functions(request, id):
-    try:
-        # Fetch API instance based on api_id
-        api_instance = API.objects.get(id_api=id)
-        
-        # Fetch API version associated with the API instance
-        api_version = APIversion.objects.filter(api=api_instance).first()
-        
-        if api_version:
-            # Fetch functions associated with the API version
-            functions = api_version.functions.all()
-            
-            # Serialize the functions data
-            serializer = FunctionnalitySerializer(functions, many=True)
-            
-            # Return the serialized functions data
-            return Response(serializer.data)
-        else:
-            return Response({'error': 'API version not found'}, status=status.HTTP_404_NOT_FOUND)
-    
-    except API.DoesNotExist:
-        return Response({'error': 'API not found'}, status=status.HTTP_404_NOT_FOUND)
-    
-    except Exception as e:
-        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
 
 # Accounts management view *****************************************************************************
@@ -615,82 +497,40 @@ def deactivate_user(request, id):
     return manage_user_status(request, id, action='deactivate')
 
 
-#Managing function-----------------------------------------------------
+# Managing function-----------------------------------------------------
 def manage_user_status(request, id, action):
     # Get user type from request data
     user_type = request.data.get('type')
     
-    # Check user type and retrieve the corresponding user object
+    # Check user type and retrieve the corresponding user model
     if user_type == 'F':
         user_model = Fournisseur
-        serializer_class = FournisseurSerializer
-        id_field = 'id_fournisseur'
-        status_field = 'is_active'
     elif user_type == 'C':
         user_model = Consommateur
-        serializer_class = ConsommateurSerializer
-        id_field = 'id_consommateur'
-        status_field = 'is_active'
     else:
         return Response({'error': 'Invalid user type'}, status=status.HTTP_400_BAD_REQUEST)
     
     # Check if user exists
     try:
-        user_instance = user_model.objects.get(**{id_field: id})
+        user_instance = user_model.objects.get(pk=id)
     except user_model.DoesNotExist:
         return Response({'error': f'{user_model.__name__} does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
     # Update user status based on the action
     if action == 'activate':
-        new_status = 'Active'
+        user_instance.user.is_active = True
     elif action == 'deactivate':
-        new_status = 'Inactive'
+        user_instance.user.is_active = False
     else:
         return Response({'error': 'Invalid action'}, status=status.HTTP_400_BAD_REQUEST)
 
-    # Update user status
-    setattr(user_instance, status_field, new_status)
-    user_instance.save()
+    # Save the user instance
+    user_instance.user.save()
 
     # Serialize and return the updated user data
+    serializer_class = FournisseurSerializer if user_type == 'F' else ConsommateurSerializer
     serializer = serializer_class(user_instance)
     return Response(serializer.data, status=status.HTTP_200_OK)
-# Search API by Name, Description, or Functionalities **************************************************************
-@api_view(['POST'])
-def search_api(request):
-    query = request.data.get('query', '')
-    search_field = request.data.get('filter')
-    category_label = request.data.get('category')
-
-    # Check if search_field parameter is provided
-    if not search_field:
-        return Response({'error': 'search_field parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
-
-    # Define the fields to search based on the selected search field
-    if search_field == 'Name':
-        search_query = Q(api_name__icontains=query)
-    elif search_field == 'Description':
-        search_query = Q(description__icontains=query)
-    elif search_field == 'Category':
-        if query == 'All':
-            search_query = Q()  # Empty query, which means all APIs will be included
-        else:
-            search_query = Q(category__label__icontains=query)
-    elif search_field == 'Functionalities':
-        search_query = Q(apiversion__functions__functName__icontains=query)
-
-    else:
-        return Response({'error': 'Invalid search field'}, status=status.HTTP_400_BAD_REQUEST)
-
-    # Filter results based on the search query and category label
-    if category_label and category_label != 'All':
-        results = API.objects.filter(search_query, category__label=category_label).distinct()
-    else:
-        results = API.objects.filter(search_query).distinct()
-
-    serializer = APISerializer(results, many=True)
-    return Response(serializer.data)
-
 
 
 # Sorting APIs*************************************************************************************************************
@@ -771,3 +611,46 @@ def post(self, request):
             return Response({'error': str(e)}, status=status.HTTP_404_NOT_FOUND)
         except requests.RequestException as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)"""
+# Admin Dashboard----------------------------------------------------------------
+
+# Pie chart
+@api_view(['GET'])
+def pie_chart_data(request):
+    active_fournisseurs = Fournisseur.objects.filter(user__is_active=True).count()
+    inactive_fournisseurs = Fournisseur.objects.filter(user__is_active=False).count()
+    active_consommateurs = Consommateur.objects.filter(user__is_active=True).count()
+    inactive_consommateurs = Consommateur.objects.filter(user__is_active=False).count()
+
+    data = {
+        "active_fournisseurs": active_fournisseurs,
+        "inactive_fournisseurs": inactive_fournisseurs,
+        "active_consommateurs": active_consommateurs,
+        "inactive_consommateurs": inactive_consommateurs,
+    }
+    return JsonResponse(data)
+
+
+# Bar chart
+@api_view(['GET'])
+def bar_chart_data(request):
+    fournisseurs_data = (
+        Fournisseur.objects
+        .annotate(api_count=Count('api'))
+        .values('user__username', 'api_count')
+    )
+
+    data = {
+        "fournisseurs": list(fournisseurs_data),
+    }
+    return JsonResponse(data)
+
+
+# Line chart
+@api_view(['GET'])
+def line_chart_data(request):
+    # Assuming `Abonnement` model is used for counting API sales
+    top_apis = Abonnement.objects.values('api__api_name').annotate(sales_count=Count('api')).order_by('-sales_count')[:7]
+    data = {
+        'top_apis': list(top_apis)
+    }
+    return Response(data)

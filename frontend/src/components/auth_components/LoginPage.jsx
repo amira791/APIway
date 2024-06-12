@@ -35,13 +35,15 @@ export default function LoginPage() {
         }
     
 
-        if (authState.isAuth  && authState.isConsommateur ) {
+        if (authState.isConsommateur ) {
             console.log("Consumer is logged in");
             navigate('/');
-        } else if (authState.isAuth && authState.isFournisseur) {
+        } else if ( authState.isFournisseur) {
             console.log("Provider is logged in");
             localStorage.setItem('load',true)
             navigate('/provider_home');
+        } else if (authState.isAdmin){
+            navigate('/adminhome');
         }
     };
     

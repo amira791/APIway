@@ -50,13 +50,17 @@ urlpatterns = [
     path('tickets/<int:pk>/status/', TicketView.as_view({'post': 'change_ticket_status'}), name='change_ticket_status'),
     
     path('apis/byprovider/<int:provider>/', APIByProviderView.as_view({'get': 'list'}), name='api_by_provider'),
+    
     path('activate/<int:id>/', activate_user, name='activate_user'),
     path('deactivate/<int:id>/', deactivate_user, name='deactivate_user'),
-    path('api/search/', search_api, name='search_api'),
+    
     path('api/versions/', api_versions_view, name='api-versions'),
     path('api/functions/<int:id>/', get_api_functions, name='api-functions'),
     path('signup/',signup),
-    path('signin/',signin)
+    path('signin/',signin),
+    path('api/pie_chart_data/', pie_chart_data, name='pie_chart_data'),
+    path('api/bar_chart_data/', bar_chart_data, name='bar_chart_data'),
+    path('api/line_chart_data/', line_chart_data, name='line_chart_data'),
    
 ] + router.urls
 

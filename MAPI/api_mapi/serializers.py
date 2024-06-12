@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'username', 'first_name', 'last_name', 'phone', 'password']
+        fields = ['id', 'email', 'username', 'first_name', 'last_name', 'phone', 'password','is_active','is_staff']
 
     def create(self, validated_data):
         password = validated_data.pop('password')
@@ -26,6 +26,8 @@ class FournisseurSerializer(serializers.ModelSerializer):
         fields = ['id_fournisseur', 'user']  
 
 class AdminSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
     class Meta:
         model = Admin
         fields = '__all__'

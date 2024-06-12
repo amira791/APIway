@@ -1,6 +1,6 @@
-import { useState ,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { BASEURL ,fetchData } from './API';
+import { BASEURL } from '../hooks/API';
 
 export default function useManageAccountsF() {
     const [fournisseurs, setFournisseurs] = useState([]);
@@ -8,19 +8,23 @@ export default function useManageAccountsF() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        setLoading(true);
-        axios.get(`${BASEURL}fournisseurs/`)
-            .then(response => {
-                console.log('Fetched Data:', response.data);
-                setFournisseurs(response.data);
-                setLoading(false);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                setError(error);
-                setLoading(false);
-            });
+        fetchFournisseursData();
     }, []);
+
+    const fetchFournisseursData = async () => {
+        setLoading(true);
+        setError(null); // Clear previous errors
+        try {
+            const response = await axios.get(`${BASEURL}fournisseurs/`);
+            console.log('Fetched Data Fournisseur:', response.data);
+            setFournisseurs(response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const activateStatus = async (userId) => {
         try {
@@ -48,27 +52,12 @@ export default function useManageAccountsF() {
         }
       };
 
-    const fetchFournisseursData = () => {
-        axios.get(`${BASEURL}fournisseurs/`)
-            .then(response => {
-                console.log('Fetched Data:', response.data);
-                setFournisseurs(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                setError(error);
-            });
-    };
-
-    
-
     return {
         fournisseurs,
         loading,
         error,
         activateStatus,
         deactivateStatus,
-        fetchFournisseursData,
-        
+        fetchFournisseursData
     };
 }

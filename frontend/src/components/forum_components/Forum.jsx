@@ -4,7 +4,6 @@ import { Flex, Box, Heading, Text, HStack } from '@chakra-ui/react';
 import useForum from '../../hooks/useForum';
 import ThreadList from './ThreadList';
 import { useAuthContext } from '../../context/authContext';
-import useManageAccountsC from '../../hooks/ConsomAccountsHook';
 import Thread from './Thread'
 
 export default function Forum({ forum_id , api_id }) {
