@@ -18,32 +18,7 @@ import { Icons } from "react-toastify";
 import APIAjout from "../../../hooks/APIHook2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-export const data = [
-  {
-    name: "User Endpoint",
-    method: "GET",
-    group: "Like Management",
-    path: "/user",
-  },
-  {
-    name: "Post Endpoint",
-    method: "POST",
-    group: "Post Management",
-    path: "/post",
-  },
-  {
-    name: "Comment Endpoint",
-    method: "PUT",
-    group: "Comment Management",
-    path: "/comment",
-  },
-  {
-    name: "Like Endpoint",
-    method: "DELETE",
-    group: "Like Management",
-    path: "/like",
-  },
-];
+
 const getColorForMethod = (method) => {
   switch (method) {
     case "GET":
@@ -89,7 +64,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
+const Example = ({ api_key, endpoints, state, isSubscribed, navigate, website }) => {
   const classes = useStyles(); // Initialize the styles
   const [selectedEndpoint, setSelectedEndpoint] = useState(endpoints[0]); // Initialize selected endpoint state
   const [headers, setHeaders] = useState([]);
@@ -105,7 +80,6 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
   const [result, setResult] = useState(null);
   const [queryParamValues, setQueryParamValues] = useState({});
   const [endpointParamValues, setEndpointParamValues] = useState({});
-
   const [activeFilter, setActiveFilter] = useState("result-section");
   const {
     fetchAPIHeadersByEndpointId,
@@ -143,8 +117,8 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
   };
   const handleInputChange = (e, key) => {
     const { value } = e.target;
-    setHeaders(prevHeaders =>
-      prevHeaders.map(header =>
+    setHeaders((prevHeaders) =>
+      prevHeaders.map((header) =>
         header.key === key ? { ...header, example_value: value } : header
       )
     );
@@ -214,9 +188,9 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
       return acc;
     }, {});
 
-    const apiKey = 'valid_api_key_123';//localStorage.getItem("apiKey");
-    if (apiKey) {
-      headerValues['x-api-key'] = apiKey; // Add API key to headers
+    
+    if (api_key) {
+      headerValues["x-api-key"] = api_key; // Add API key to headers
     } else {
       // Handle case where API key is not available
       alert("API key not found. Please subscribe to get an API key.");
@@ -384,7 +358,35 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
               <h6 id="method">{selectedEndpoint.method}</h6>{" "}
               <p id="path">{selectedEndpoint.path}</p>
             </Typography>
-            <button onClick={handleSubmit}>Execute API</button>
+            {isSubscribed ? (
+                <Button
+                     style={{
+                      margin: "0.5rem",
+                      fontSize: "15px", // Increase font size for buttons
+                      padding: "10px 20px", // Increase padding for buttons
+                    }}
+                  className={classes.button}
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit}
+                >
+                  Execute API
+                </Button>
+              ) : (
+                <Button
+                style={{
+                  margin: "0.5rem",
+                  fontSize: "15px", // Increase font size for buttons
+                  padding: "10px 20px", // Increase padding for buttons
+                }}
+                  variant="contained"
+                  color="secondary"
+                  onClick={navigate}
+                >
+                  Subscribe
+                </Button>
+              )}
+           {/*  <button onClick={handleSubmit}>Execute API</button> */}
             {/*  {state!="Deprecated"?
              <Button
               variant="contained"
@@ -402,7 +404,7 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
           <Divider />
           {selectedEndpoint.description}
           <Divider />
-          <div
+          {/* <div
             style={{
               display: "flex",
               alignItems: "center",
@@ -413,7 +415,7 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
               APIway App
             </Typography>
             <Box className={classes.insidertext} sx={{ mt: 1 }}>
-              {/* <Typography variant="body1">Select Application:</Typography> */}
+              {/* <Typography variant="body1">Select Application:</Typography> }
               <select name="" id="" disabled="disabled">
                 <option value="">Default Application </option>
               </select>
@@ -421,36 +423,12 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
                 <MenuItem value="default" disabled>
                   Default Application{" "}
                 </MenuItem>
-              </Select> */}
+              </Select> *
               <Typography variant="body1">Required</Typography>
             </Box>
-          </div>
+          </div> */}
           <Divider />
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <Typography variant="h5" sx={{ mt: 2 }}>
-              Request URL
-            </Typography>
-            <Box sx={{ mt: 1 }}>
-              {/* <Typography variant="body1">Select Application:</Typography> */}
-              <select name="" id="" disabled="disabled">
-                <option value=""> Apiway.com</option>
-              </select>
-              {/* <Select disabled value="default">
-                <MenuItem value="default" disabled>
-                  {" "}
-                  Apiway.com{" "}
-                </MenuItem>
-              </Select> */}
-              <Typography variant="body1">Required</Typography>
-            </Box>
-          </div>
-          <Divider />
+          
           <Accordion sx={{ mt: 2 }}>
             <AccordionSummary expandIcon={<StepIcon />}>
               <Typography className={classes.text}>
@@ -476,7 +454,7 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
                     value="default"
                   >
                     <MenuItem value="default" disabled>
-                      Default Application{" "}
+                    {api_key}
                     </MenuItem>
                   </Select>
                   <Typography variant="body1">Required</Typography>
@@ -490,11 +468,11 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
                   justifyContent: "space-between",
                 }}
               >
-                <Typography variant="h5" sx={{ mt: 2 }}>
+             {/*    <Typography variant="h5" sx={{ mt: 2 }}>
                   X-APIway-Host
                 </Typography>
                 <Box sx={{ mt: 1 }}>
-                  {/* <Typography variant="body1">Select Application:</Typography> */}
+               
                   <Select
                     className={classes.insidertext}
                     disabled
@@ -506,42 +484,44 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
                     </MenuItem>
                   </Select>
                   <Typography variant="body1">Required</Typography>
-                </Box>
+                </Box> */}
               </div>
               {headers.map((parameter) => (
-        <div key={parameter.key}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <Typography variant="h5" sx={{ mt: 2 }}>
-              {parameter.key}
-            </Typography>
-            <Box sx={{ mt: 1 }}>
-              <input
-                className="insidertext"
-                value={parameter.example_value}
-                onChange={(e) => handleInputChange(e, parameter.key)}
-              />
-              {parameter.required && (
-                <Typography variant="body1">Required</Typography>
-              )}
-            </Box>
-          </div>
-          <Divider />
-        </div>
-      ))}
+                <div key={parameter.key}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Typography variant="h5" sx={{ mt: 2 }}>
+                      {parameter.key}
+                    </Typography>
+                    <Box sx={{ mt: 1 }}>
+                      <input
+                        className="insidertext"
+                        value={parameter.example_value}
+                        onChange={(e) => handleInputChange(e, parameter.key)}
+                      />
+                      {parameter.required && (
+                        <Typography variant="body1">Required</Typography>
+                      )}
+                    </Box>
+                  </div>
+                  <Divider />
+                </div>
+              ))}
             </AccordionDetails>
           </Accordion>
           <Accordion sx={{ mt: 2 }}>
             <AccordionSummary>
-              <Typography>Required Parameters</Typography>
+              <Typography className={classes.text}>
+                Required Parameters
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>Query Parameters</Typography>
+              <Typography className={classes.insidertext}>Query Parameters</Typography>
               {queryParams
                 .filter((param) => param.required)
                 .map((param, index) => (
@@ -563,7 +543,7 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
                   </div>
                 ))}
               <Divider />
-              <Typography>Endpoint Parameters</Typography>
+              <Typography className={classes.insidertext}>Endpoint Parameters</Typography>
               {endpointParameters
                 .filter((param) => param.required)
                 .map((param, index) => (
@@ -589,10 +569,12 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
           </Accordion>
           <Accordion sx={{ mt: 2 }}>
             <AccordionSummary>
-              <Typography>Optional Parameters</Typography>
+              <Typography className={classes.text}>
+                Optional Parameters
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>Query Parameters</Typography>
+              <Typography className={classes.insidertext}>Query Parameters</Typography>
               {queryParams
                 .filter((param) => !param.required)
                 .map((param, index) => (
@@ -615,7 +597,7 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
                   </div>
                 ))}
               <Divider />
-              <Typography>Endpoint Parameters</Typography>
+              <Typography className={classes.insidertext}>Endpoint Parameters</Typography>
               {endpointParameters
                 .filter((param) => !param.required)
                 .map((param, index) => (
@@ -651,12 +633,7 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
                       <Typography className={classes.insidertext}>
                         Media Type: {endpointBody.media_type}
                       </Typography>
-                      <Typography className={classes.insidertext}>
-                        Name: {endpointBody.payload_name}
-                      </Typography>
-                      <Typography className={classes.insidertext}>
-                        Description: {endpointBody.payload_description}
-                      </Typography>
+                    
                       <fieldset class="message">
                         <textarea
                           id="message"
@@ -713,7 +690,7 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
                       fontSize: "15px", // Increase font size for buttons
                       padding: "10px 20px", // Increase padding for buttons
                     }}
-                    disabled ={apiResult==null}
+                    disabled={apiResult == null}
                   >
                     <a
                       href="#"
@@ -755,98 +732,95 @@ const Example = ({ endpoints, state, isSubscribed, navigate,website }) => {
                         )}
                       </div>
                     )}
-
-                   
-
-                  
                   </div>
                 </div>
               )}
               {selectedChoice === "View Results" && (
                 <div>
                   {/* Your code for the View Results section goes here */}
-                {/*   <Button disabled>View Results</Button> */}
+                  {/*   <Button disabled>View Results</Button> */}
                   {apiResult && (
-                      <>
-                        <div class="top-menu">
-                          <ul className="filter-menu">
-                            <li
-                              className={
-                                activeFilter === "result-section"
-                                  ? "active"
-                                  : ""
+                    <>
+                      <div class="top-menu">
+                        <ul className="filter-menu">
+                          <li
+                            className={
+                              activeFilter === "result-section" ? "active" : ""
+                            }
+                          >
+                            <a
+                              onClick={() =>
+                                handleFilterClick("result-section")
                               }
                             >
-                              <a
-                              
-                                onClick={() =>
-                                  handleFilterClick("result-section")
-                                }
-                              >
-                                Results
-                              </a>
-                            </li>
-                            <li
-                              className={
-                                activeFilter === "header-section"
-                                  ? "active"
-                                  : ""
+                              Results
+                            </a>
+                          </li>
+                          <li
+                            className={
+                              activeFilter === "header-section" ? "active" : ""
+                            }
+                          >
+                            <a
+                              onClick={() =>
+                                handleFilterClick("header-section")
                               }
                             >
-                              <a
-                              
-                                onClick={() =>
-                                  handleFilterClick("header-section")
-                                }
-                              >
-                                Header
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                        <div class="inner-content wallet">
-                          <div class="wallet-list">
-                            <div
-                              class="tf-wallet"
-                              style={{ height: "700px", overflow: "auto" }}
-                            >
-                              <div class="icon">
-                                <h5>Code status</h5>
-                                <span class="label">
-                                  {apiResult.status_code}
-                                </span>
-                              </div>
-                              <p class="content" id="header-section"  style={{
-                        display:
-                          activeFilter === "header-section"
-                            ? "block"
-                            : "none",
-                      }}>
-                                {Object.entries(apiResult.headers).map(
-                                  ([key, value]) => (
-                                    <div key={key}>
-                                      <strong>{key}:</strong> {value}
-                                    </div>
-                                  )
-                                )}
-                              </p>
-                              <p class="content" id="result-section" style={{
-                        display:
-                          activeFilter === "result-section"
-                            ? "block"
-                            : "none",
-                      }}>
-                                {JSON.stringify(
-                                  JSON.parse(apiResult.body),
-                                  null,
-                                  2
-                                )}{" "}
-                              </p>
+                              Header
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="inner-content wallet">
+                        <div class="wallet-list">
+                          <div
+                            class="tf-wallet"
+                            style={{ height: "700px", overflow: "auto" }}
+                          >
+                            <div class="icon">
+                              <h5>Code status</h5>
+                              <span class="label">{apiResult.status_code}</span>
                             </div>
+                            <p
+                              class="content"
+                              id="header-section"
+                              style={{
+                                height: "700px", overflow: "auto",
+                                display:
+                                  activeFilter === "header-section"
+                                    ? "block"
+                                    : "none",
+                              }}
+                            >
+                              {Object.entries(apiResult.headers).map(
+                                ([key, value]) => (
+                                  <div key={key}>
+                                    <strong>{key}:</strong> {value}
+                                  </div>
+                                )
+                              )}
+                            </p>
+                            <p
+                              class="content"
+                              id="result-section"
+                              style={{
+                                display:
+                                  activeFilter === "result-section"
+                                    ? "block"
+                                    : "none",
+                              }}
+                            >
+                              {JSON.stringify(
+                                JSON.parse(apiResult.body),
+                                null,
+                                3
+                              )}{" "}
+                            </p>
                           </div>
                         </div>
-                      </>
-                    )}
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
             </div>

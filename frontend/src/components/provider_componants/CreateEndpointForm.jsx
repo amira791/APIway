@@ -23,8 +23,7 @@ const AddEndpointForm = ({ website, onSave }) => {
   const [results, setResults] = useState(null);
   const [body, setBody] = useState({
     mediaType: "application/json",
-    payloadName: "",
-    payloadValue: "",
+  
     bodyExample: "",
   });
   const [size, setSize] = useState('large');
@@ -480,26 +479,9 @@ const AddEndpointForm = ({ website, onSave }) => {
                     <option value="text/plain">text/plain</option>
                     <option value="form-data">form-data</option>
                   </select>
-                  <label className="capitalize is-required infos-text">Body name</label>
-                  <input
-                    type="text"
-                    value={body.payloadName}
-                    onChange={(e) =>
-                      setBody({ ...body, payloadName: e.target.value })
-                    }
-                    placeholder="Body Name"
-                  />
-                  <label className="infos-text">Body description</label>
-                  <input
-                    type="text"
-                    value={body.payloadValue}
-                    onChange={(e) =>
-                      setBody({ ...body, payloadValue: e.target.value })
-                    }
-                    placeholder="Body Description"
-                  />
-                  <fieldset className="message">
-                    <label>Enter The Body</label>
+                
+                  <fieldset class="message">
+                    <label className="capitalize is-required infos-text">Enter un example</label>
                     <textarea
                       id="description"
                       name="message"

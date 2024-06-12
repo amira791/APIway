@@ -160,10 +160,30 @@ def execute_api(request, website, endpoint):
                                     params=params,
                                     json=body if body else None)
         response_time = time.time() - start_time
+         # Filter the headers to include only the desired ones
+        desired_headers = [
+            'Date',
+            'Content-Type',
+            'Transfer-Encoding',
+            'Connection',
+            'Vary',
+            'Access-Control-Allow-Credentials',
+            'Cache-Control',
+            'Pragma'
+        ]
+        filtered_headers = {key: value for key, value in response.headers.items() if key in desired_headers}
+
+        # Add custom headers
+        filtered_headers['Expires'] = subscription.end_date.strftime('%a, %d %b %Y %H:%M:%S GMT')
+        filtered_headers['Response-Time'] = response_time
+        filtered_headers['X-Quota-Limit'] = str(subscription.pricing.quota_limit)
+        filtered_headers['X-Quota-Remaining'] = str(subscription.quota_remaining)
+
+
         # Handle response
         result = {
             'status_code': response.status_code,
-            'headers': dict(response.headers),
+             'headers': filtered_headers,
             'body': response.json() if response.headers.get('content-type') == 'application/json' else response.text
         }
         APIUsage.objects.create(

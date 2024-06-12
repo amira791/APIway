@@ -19,20 +19,12 @@ from elasticsearch_dsl import Search, Q, Index
 from django.utils.text import slugify
 import re
 from django.db.models import Min, Max
-
-
-
-
-
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from django.shortcuts import render
 from rest_framework.response import Response
-
-
-
 from datetime import datetime
 import string, random
-
+from datetime import datetime, date
 import stripe
 
 
@@ -228,7 +220,7 @@ def subscribe(request):
     if(len(subs)):
         current_date = date.today()
         for sub in subs:
-            if sub.end_date < current_date:
+            if sub.end_date > current_date:
                 if(sub.pricing.pricingModel.api.id_api != apiId):
                     continue
                 if(sub.pricing.priceId == priceId):
@@ -286,12 +278,14 @@ def subscribe(request):
         #saving to our database 
         subscription = {
             "id_subscription": stripeSubscription.id +"-"+str(random.randrange(1000)),
+            "statut": "active",
             "start_date": datetime.now().strftime('%Y-%m-%d'),
             "end_date": datetime.fromtimestamp(stripeSubscription.current_period_end).strftime('%Y-%m-%d'),
             "consumer": userId,
             "pricing": tarificationId,
             "api": apiId,
             "api_key": "API_WAY_KEY_"+generate_api_key(),
+            "invoice":invoice.invoice_pdf,
             "quota_remaining" : tarification.quota_limit,
         }
 
@@ -305,6 +299,19 @@ def subscribe(request):
 
     except stripe.error.StripeError as e:
         return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['Get'])
+def getinvoices(request):
+    userId = request.GET.get('userId')
+
+    abonnement = Abonnement.objects.filter(consumer = userId, status ="active")
+
+
+    serializer = AbonnementSerializer(abonnement, many= True)
+    serialized_data = serializer.data
+
+    return Response(serialized_data, status=status.HTTP_200_OK)
+
 
 @api_view(['Get'])
 def getsubscription(request):

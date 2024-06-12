@@ -6,6 +6,7 @@ import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import { Elements } from '@stripe/react-stripe-js';
 import usePayment from '../../hooks/usePayment';
 import Navbar from '../global_components/navbar'
+import { useAuthContext } from '../../context/authContext';
 
 function Payment() {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ function Payment() {
   const [isLoading, setIsLoading] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
+  const {authState} = useAuthContext()
   const { id } = useParams();
 
   const {generateStripeToeken, subscribe} = usePayment()
@@ -38,16 +40,13 @@ function Payment() {
   
   const handleSubmit = async (event) => {
         event.preventDefault();
-        
         setIsLoading(true)
-
         const errors = {}
-
         try{
           const token = await generateStripeToeken(stripe, elements, activeButton, holderName)
 
 
-          const {success , error} = await subscribe(id, token, methods[activeButton])
+          const {success , error} = await subscribe(authState.userId, authState.username, "username@gmail.com",id ,token, methods[activeButton])
           if(success) {
             setPaymentSuccess(true)
             setSubscribed(success)

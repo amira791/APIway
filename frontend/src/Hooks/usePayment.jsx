@@ -1,10 +1,12 @@
 import { CardNumberElement } from '@stripe/react-stripe-js';
 import { payementApiClient } from '../API';
 import { useAuthContext } from '../context/authContext';
+import { useState } from 'react';
 
 export default function usePayment() {
     const {authState} = useAuthContext()
-    
+    const [isSubscribed,setIsSubscribed] = useState(false)
+    const [api_key ,setAPIKey] = useState([])
 
     const generateStripeToeken = async (stripe, elements, type, holderName) =>
       {
@@ -51,6 +53,11 @@ export default function usePayment() {
             const response = await payementApiClient.get(`/subscription?userId=${authState.userId}&apiId=${apiId}`);
             console.log("User is subscribed: " + response.data);
             success = response.data;
+            if (Array.isArray(success) && success.length > 0) {
+              setIsSubscribed(true);
+              setAPIKey(success[0].api_key); 
+              console.log("isSubscribed: " + isSubscribed);
+            }
         } catch (err) {
             error = err.response?.data?.message || err.message;
         }
@@ -63,6 +70,8 @@ export default function usePayment() {
   return {
     generateStripeToeken,
     subscribe,
-    subscribtion
+    subscribtion,
+    isSubscribed,
+    api_key
   };
 }

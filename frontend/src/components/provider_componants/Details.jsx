@@ -15,7 +15,7 @@ import { useAuthContext } from "../../context/authContext.js";
 
 const Details = () => {
   const { id } = useParams(); // Get the ID parameter from the URL
-  const {subscribtion} = usePayment();
+  const {subscribtion , isSubscribed , api_key} = usePayment();
 
   const [activeTab, setActiveTab] = useState('About');
   const [apiDetails, setAPIDetails] = useState(null);
@@ -23,8 +23,6 @@ const Details = () => {
   const [apiProvider, setAPIProvider] = useState(null);
   const [chosenVersion, setChosenVersion] = useState(null);
   const [chosenVersionInfo, setChosenVersionInfo] = useState(null);
-  const [isSubscribed, setIsSubscribed] = useState(false);
-  const [api_key ,setAPIKey] = useState()
   const [apiWebsite, setApiWebsite] = useState('');
   const [apiVersions, setApiVersions] = useState([]);
   const [apiEndpoints, setApiEndpoints] = useState(null);
@@ -118,13 +116,9 @@ const Details = () => {
     const fetchData = async () => {
       try {
         const { data, error } = await subscribtion(id);
-        if (!error) {
-          // setIsSubscribed(true);
-          setAPIKey(data[0].api_key)
-          console.log(data[0].api_key)
-        }
+    
       } catch (error) {
-       
+        console.error("Error fetching subscription data:", error);
       }
     };
   
@@ -152,44 +146,37 @@ const Details = () => {
             <h4 className="page-title-heading">API Details</h4>
           </section>
 
-          <section className="tf-item-detail">
-            <div className="tf-container2">
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="tf-item-detail-inner">
-
-                    <div className="content">
-                      <div className="content-top">
-                        <div className="image" style={{ width: "15%", height: "15%" }}>
-                          <img src={apiDetails.logo} alt="Image" />
-
-
+          <section class="tf-item-detail">
+            <div class="tf-container2">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="tf-item-detail-inner">
+                   
+                    <div class="content">
+                      <div class="content-top">
+                      <div class="image" style={{ width: "15%", height: "15%" }}>
+                      <img src={apiDetails.logo} alt="Image" />
+                     
+                      
+                    </div>
+                    <div style={{ width: "100%"}} >
+                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingBottom:"2%",gap:"20%"}}>
+                        <div class="author">
+                          <img
+                            src="/assets/images/author/author-detail-3.png"
+                            alt="Image"
+                          />
+                          <h6 class="title"  style={{fontSize:"17px"}}>Provider: {apiProvider.user.first_name}  {apiProvider.user.last_name}</h6>
                         </div>
-                        <div style={{ width: "100%" }} >
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: "2%", gap: "20%" }}>
-                            <div className="author">
-                              <h6 className="title" style={{ fontSize: "17px" }}>Provider: {apiProvider.user.first_name}  {apiProvider.user.last_name}</h6>
-                            </div>
-                            <div className="wishlish" >
-                              <div className="number-wishlish">
-                                <i className="far fa-heart"></i>
-                              </div>
-                              {/*  <div className="option btn-option">
-                            <i className="far fa-ellipsis-h"></i>
-                            <div className="option_popup">
-                              <a href="#">Delete</a>
-                              <a href="#">Edit</a>
-                            </div>
-                          </div> */}
-                            </div>
-                          </div>
-                          <div>
-                            <p></p>
-                            <h2 style={{ display: "flex", alignItems: "center", paddingBottom: "2%", gap: "2%" }} class="title-detail">API name: <p>{apiDetails.api_name}</p> </h2>
-                            <div class="author" style={{ display: "flex", alignItems: "center", paddingBottom: "2%", gap: "2%" }}>
-                              <h4 class="title" style={{ fontSize: "25px" }}>Category:  </h4> <p style={{ fontSize: "23px" }}>  {apiCategory.label}</p>
-                            </div>
-                            {/*   <div class="author" style={{display:"flex",alignItems:"center",paddingBottom:"2%",gap:"2%"}}>
+                     
+                        </div>
+                        <div>
+                          <p></p>
+                        <h2 style={{display:"flex",alignItems:"center",paddingBottom:"2%",gap:"2%"}} class="title-detail">API name: <p>{apiDetails.api_name}</p> </h2>
+                        <div class="author" style={{display:"flex",alignItems:"center",paddingBottom:"2%",gap:"2%"}}>
+                          <h4 class="title" style={{fontSize:"25px"}}>Category:  </h4> <p style={{fontSize:"23px"}}>  {   apiCategory.label}</p>
+                        </div>
+                      {/*   <div class="author" style={{display:"flex",alignItems:"center",paddingBottom:"2%",gap:"2%"}}>
                           <h4 class="title" style={{fontSize:"25px"}}>Description:  </h4> <p style={{fontSize:"23px"}}> {apiDetails.description}</p>
                         </div> */}
                           </div>

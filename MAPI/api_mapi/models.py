@@ -166,15 +166,12 @@ class ApiQueryParam(models.Model):
 class ApiEndpointBody(models.Model):
     id_body =models.AutoField(primary_key=True)
     media_type = models.CharField(max_length=255)
-    payload_name = models.CharField(max_length=255, null=True)
-    payload_description = models.TextField(verbose_name="Payload text", help_text="Payload text", null=True)
     body_example = models.TextField(verbose_name="Example", help_text="Example of a body", null=True)
     endpoint = models.ForeignKey(APIendpoint, related_name='body', on_delete=models.CASCADE)
   
     def __str__(self):
-        return self.payload_name
-
-
+        return self.media_type
+       
 class Endpoint_parameter(models.Model):
     id_parameter = models.AutoField(primary_key=True)
     id_endpoint = models.ForeignKey(APIendpoint, on_delete=models.DO_NOTHING )
