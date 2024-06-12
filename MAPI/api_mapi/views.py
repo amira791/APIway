@@ -280,11 +280,34 @@ class FunctionnalityView(viewsets.ModelViewSet):
     queryset = Functionnality.objects.all()
     serializer_class = FunctionnalitySerializer
    
-
-# APIdocumentation View
 class APIdocumentationView(viewsets.ModelViewSet):
     queryset = APIdocumentation.objects.all()
     serializer_class = APIdocumentationSerializer
+    
+# APIdocumentation View
+@api_view(['POST'])
+def save_swagger_spec(request):
+
+    # Fetch the API instance using the ID
+    #api_instance = API.objects.get(pk=api_id)
+    
+    try:
+        # Create a new instance of APIDocumentation
+        api_documentation = APIdocumentation()
+
+        # Assign api_id and swagger_spec fields
+        api_documentation.api_id_id = request.data.get('api_id')
+        api_documentation.swagger_spec = request.data.get('swagger_spec')
+
+        # Save the instance to the database
+        api_documentation.save()
+
+        return JsonResponse({'message': 'API documentation saved successfully'})
+    except Exception as e:
+        # Handle exceptions if any
+        print(f"An error occurred while saving API documentation: {e}")
+        return None
+    
 
 class APIForumView(viewsets.ModelViewSet):
     serializer_class = APIForumSerializer

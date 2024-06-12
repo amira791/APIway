@@ -14,6 +14,7 @@ import PlansAjout from "../../hooks/MonetizationHook.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuthContext } from "../../context/authContext.js";
+import generateSwaggerSpec from "./APIdoc.jsx";
 
 const AddAPIPage = () => {
   $.noConflict();
@@ -21,7 +22,7 @@ const AddAPIPage = () => {
   const provider_id = authState.userId;
   /**************From hooks****************************/
   const { categories } = ManipulateCat();
-  const { addNewAPI } = APIAjout();
+  const { addNewAPI ,createAPIDocumentation } = APIAjout();
   const { addApiModels } = PlansAjout();
   const [Models, setModels] = useState([]); // Define and manage the Models array in the parent component
 
@@ -157,7 +158,7 @@ const AddAPIPage = () => {
   };
   const [editedRowIndex, setEditedRowIndex] = useState(null);
 
-
+  const [swaggerSpec, setSwaggerSpec] = useState();
 
   const handleLogoChange = (e) => {
     const file = e.target.files[0];
@@ -209,7 +210,7 @@ const AddAPIPage = () => {
       }));
     }
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
   
     // Check if any required field is missing or empty in formData
@@ -245,7 +246,11 @@ const AddAPIPage = () => {
   
     // If all required data is present, proceed with submission logic
     //alert(formData.apiName);
-    addNewAPI(formData, functionalities, endpoints, Models);
+    
+    const apiId = await addNewAPI(formData, functionalities, endpoints, Models);
+    const swagger = await generateSwaggerSpec(formData, functionalities,endpoints);
+    setSwaggerSpec(swagger);
+    await createAPIDocumentation(apiId, swagger);
   };
   
   const handleRemoveEndpointFromGroup = (endpointId) => {

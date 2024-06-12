@@ -23,7 +23,7 @@ export default function APIAjout() {
       );
       await createEndpoints(apiversionId, endpoints);
       alert("API created successfully!");
-      window.location.reload();
+      return apiId
     } catch (error) {
       console.error("Error creating API:", error);
       // Handle error
@@ -582,10 +582,41 @@ export default function APIAjout() {
       .catch((error) => {});
   };
 
+  async function createAPIDocumentation(apiId, swaggerSpec) {
+    try {
+        const response = await API.post('/save_swagger_spec/', { api_id: apiId, swagger_spec: swaggerSpec });
+        console.log("responseDATA",response.data);
+        return response.data;
+        window.location.reload()
+    } catch (error) {
+        console.error(`Error creating APIDocumentation for API id ${apiId}:`, error);
+        throw error;
+    }
+  }
+
+  const [doc, setDoc] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  
+  const getAPIdoc = (apiId) =>  {
+    setLoading(true);
+    API.get(`/apidocumentations/`).then((res) =>
+      {
+        console.log("resp",res.data);
+        setDoc(res.data.filter(apidoc => apidoc.api_id == apiId));
+        console.log("docu",doc);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  };
   
   useEffect(() => {
     getTarifType();
   }, []);
+
   return {
     addNewAPI,
     getTarifType,
@@ -604,6 +635,8 @@ export default function APIAjout() {
     fetchAllFunctionalitiesById,
     fetchAPIVersionsInfoById,
     executeAPI,
+    createAPIDocumentation,
+    doc, getAPIdoc,
   /*   executeAPI, */
     tarifTypes,
   };

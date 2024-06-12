@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import APIAjout from "../../hooks/APIHook2";
 import { ToastContainer, toast } from "react-toastify";
+import SwaggerUI from "swagger-ui-react";
+import "swagger-ui-dist/swagger-ui.css";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../global_components/navbar.jsx";
 import Footer from "../global_components/footer.jsx";
@@ -15,7 +17,7 @@ import { useAuthContext } from "../../context/authContext.js";
 
 const Details = () => {
   const { id } = useParams(); // Get the ID parameter from the URL
-  const {subscribtion , isSubscribed , api_key} = usePayment();
+  const { subscribtion, isSubscribed, api_key } = usePayment();
 
   const [activeTab, setActiveTab] = useState('About');
   const [apiDetails, setAPIDetails] = useState(null);
@@ -29,10 +31,14 @@ const Details = () => {
   const [versionFunctionalities, setVersionFunctionalities] = useState(null);
 
   const [chosenVersionState, setChosenVersionState] = useState(null);
-  const { fetchAPIDetailsById, fetchAPICategorysById, fetchAPIProviderById, fetchAllAPIVersionsById, fetchAPIEndpointsByVersion, fetchAllFunctionalitiesById, fetchAPIVersionsInfoById, tarifTypes } = APIAjout();
+  const { fetchAPIDetailsById, fetchAPICategorysById, fetchAPIProviderById, fetchAllAPIVersionsById, fetchAPIEndpointsByVersion, fetchAllFunctionalitiesById, fetchAPIVersionsInfoById, tarifTypes , doc, getAPIdoc } = APIAjout();
 
   const { authState } = useAuthContext();
 
+  useEffect(() => {
+    getAPIdoc(id);
+    console.log(doc)
+  }, [id]);
 
   const handleVersionChange = (event) => {
     const selectedVersionId = event.target.value;
@@ -50,7 +56,7 @@ const Details = () => {
   };
 
 
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -86,6 +92,7 @@ const Details = () => {
       }
     };
     fetchData();
+   
   }, [id]);
 
   useEffect(() => {
@@ -116,16 +123,16 @@ const Details = () => {
     const fetchData = async () => {
       try {
         const { data, error } = await subscribtion(id);
-    
+
       } catch (error) {
         console.error("Error fetching subscription data:", error);
       }
     };
-  
+
     fetchData();
-  
+
   }, [id]);
-  
+
   if (!apiDetails) {
     return <div>Loading...</div>;
   }
@@ -140,8 +147,8 @@ const Details = () => {
     <body className="body header-fixed">
       <div id="wrapper" className="wrapper-style">
         <div id="page" className="clearfix">
-       
-        {authState.isConsommateur ? ( <Navbar /> ) : (<NavbarProvider/>)}
+
+          {authState.isConsommateur ? (<Navbar />) : (<NavbarProvider />)}
           <section className="tf-page-title-details ">
             <h4 className="page-title-heading">API Details</h4>
           </section>
@@ -151,32 +158,32 @@ const Details = () => {
               <div class="row">
                 <div class="col-lg-12">
                   <div class="tf-item-detail-inner">
-                   
+
                     <div class="content">
                       <div class="content-top">
-                      <div class="image" style={{ width: "15%", height: "15%" }}>
-                      <img src={apiDetails.logo} alt="Image" />
-                     
-                      
-                    </div>
-                    <div style={{ width: "100%"}} >
-                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingBottom:"2%",gap:"20%"}}>
-                        <div class="author">
-                          <img
-                            src="/assets/images/author/author-detail-3.png"
-                            alt="Image"
-                          />
-                          <h6 class="title"  style={{fontSize:"17px"}}>Provider: {apiProvider.user.first_name}  {apiProvider.user.last_name}</h6>
+                        <div class="image" style={{ width: "15%", height: "15%" }}>
+                          <img src={apiDetails.logo} alt="Image" />
+
+
                         </div>
-                     
-                        </div>
-                        <div>
-                          <p></p>
-                        <h2 style={{display:"flex",alignItems:"center",paddingBottom:"2%",gap:"2%"}} class="title-detail">API name: <p>{apiDetails.api_name}</p> </h2>
-                        <div class="author" style={{display:"flex",alignItems:"center",paddingBottom:"2%",gap:"2%"}}>
-                          <h4 class="title" style={{fontSize:"25px"}}>Category:  </h4> <p style={{fontSize:"23px"}}>  {   apiCategory.label}</p>
-                        </div>
-                      {/*   <div class="author" style={{display:"flex",alignItems:"center",paddingBottom:"2%",gap:"2%"}}>
+                        <div style={{ width: "100%" }} >
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: "2%", gap: "20%" }}>
+                            <div class="author">
+                              <img
+                                src="/assets/images/author/author-detail-3.png"
+                                alt="Image"
+                              />
+                              <h6 class="title" style={{ fontSize: "17px" }}>Provider: {apiProvider.user.first_name}  {apiProvider.user.last_name}</h6>
+                            </div>
+
+                          </div>
+                          <div>
+                            <p></p>
+                            <h2 style={{ display: "flex", alignItems: "center", paddingBottom: "2%", gap: "2%" }} class="title-detail">API name: <p>{apiDetails.api_name}</p> </h2>
+                            <div class="author" style={{ display: "flex", alignItems: "center", paddingBottom: "2%", gap: "2%" }}>
+                              <h4 class="title" style={{ fontSize: "25px" }}>Category:  </h4> <p style={{ fontSize: "23px" }}>  {apiCategory.label}</p>
+                            </div>
+                            {/*   <div class="author" style={{display:"flex",alignItems:"center",paddingBottom:"2%",gap:"2%"}}>
                           <h4 class="title" style={{fontSize:"25px"}}>Description:  </h4> <p style={{fontSize:"23px"}}> {apiDetails.description}</p>
                         </div> */}
                           </div>
@@ -218,13 +225,13 @@ const Details = () => {
                                 </div>
                               </fieldset>
                               <div class="tab-details">
-                                {apiEndpoints ? <Example  
-                                    api_key={api_key} 
-                                    endpoints={apiEndpoints} 
-                                    state={chosenVersionState} 
-                                    isSubscribed={isSubscribed}
-                                    website={apiWebsite}
-                                    navigate={() => handleTabClick('Pricing')} /> : <></>}
+                                {apiEndpoints ? <Example
+                                  api_key={api_key}
+                                  endpoints={apiEndpoints}
+                                  state={chosenVersionState}
+                                  isSubscribed={isSubscribed}
+                                  website={apiWebsite}
+                                  navigate={() => handleTabClick('Pricing')} /> : <></>}
                               </div>
                             </div>)}
                           {activeTab === 'Functionalities' && (
@@ -263,22 +270,26 @@ const Details = () => {
                             <div id="About" className="tab-content">
                               <h5>Description:</h5>
                               <p> {apiDetails.description}</p>
-                            </div>)}
-                          {activeTab === 'Discussion' && (
-                            <div id="Discussion" className="tab-content">
-                              <Forum forum_id={apiDetails.forum} api_id={id} />
-                            </div>)}
-                          {activeTab === 'Pricing' && (
-                            <div id="Pricing" className="tab-content">
-                              <PricingContainer id={id} tarifs={tarifTypes} />
-                            </div>)}
-                        </div>
+                              <div className="docContainer">
+                                <SwaggerUI spec={doc[0].swagger_spec} />
+                              </div>
+                              </div>)
+                          }
+                              {activeTab === 'Discussion' && (
+                                <div id="Discussion" className="tab-content">
+                                  <Forum forum_id={apiDetails.forum} api_id={id} />
+                                </div>)}
+                              {activeTab === 'Pricing' && (
+                                <div id="Pricing" className="tab-content">
+                                  <PricingContainer id={id} tarifs={tarifTypes} />
+                                </div>)}
+                            </div>
+                      </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
           </section>
         </div>
       </div>

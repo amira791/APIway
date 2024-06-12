@@ -14,7 +14,6 @@ router.register(r'apicategories', APIcategoryView, basename='apicategory')
 router.register(r'apiversions', APIversionView, basename='apiversion')
 router.register(r'apiendpoints', APIendpointView, basename='apiendpoint')
 router.register(r'functionnalities', FunctionnalityView, basename='functionnality')
-router.register(r'apidocumentations', APIdocumentationView, basename='apidocumentation')
 router.register(r'apiforum',APIForumView,basename='apiforum')
 router.register(r'threads',ThreadView,basename='threads')
 router.register(r'comments',CommentView,basename='comments')
@@ -26,6 +25,7 @@ router.register(r'types_tarif', TypeTarifView, basename='types_tarif')
 router.register(r'apiheaders', ApiHeaderView, basename='apiheaders')
 router.register(r'apiquery', ApiQueryParamView, basename='apiquery')
 router.register(r'apiendpointbody', ApiEndpointBodyView, basename='apiendpointbody')
+router.register(r'apidocumentations', APIdocumentationView, basename='apidocumentation')
 router.register(r'pricing_model', PricingModelView, basename='pricing_model')
 router.register(r'endpoint_parameter', Endpoint_parameterView, basename='endpoint_parameter')
 router.register(r'responseexample', ResponseExampleView, basename='responseexample')
@@ -61,6 +61,8 @@ urlpatterns = [
     path('api/pie_chart_data/', pie_chart_data, name='pie_chart_data'),
     path('api/bar_chart_data/', bar_chart_data, name='bar_chart_data'),
     path('api/line_chart_data/', line_chart_data, name='line_chart_data'),
+
+    path('save_swagger_spec/', save_swagger_spec, name='save_swagger_spec'),
    
 ] + router.urls
 

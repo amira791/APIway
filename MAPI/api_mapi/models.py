@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import  AbstractUser
 from django.contrib.auth.models import Group, Permission
 from django.utils import timezone 
+import json
 class UserBase(AbstractUser):
     email = models.CharField(max_length=100, unique=True)
     username = models.CharField(max_length=100, unique=True)
@@ -200,11 +201,17 @@ class ResponseExample(models.Model):
         return self.title
 
 class APIdocumentation(models.Model):
-    id_doc= models.AutoField(primary_key=True)
-    docLink = models.TextField
-    apiVersion = models.ForeignKey(APIversion, on_delete=models.DO_NOTHING )
+    id_doc = models.AutoField(primary_key=True)
+    api_id = models.ForeignKey(API, on_delete=models.CASCADE, verbose_name="API", null=True)
+    swagger_spec = models.TextField(blank=True)
     def __str__(self):
-        return self.id_doc
+        return f"API Documentation {self.id_doc}"
+
+    def save(self, *args, **kwargs):
+        # Serialize swaggerSpec to JSON before saving
+        if self.swagger_spec:
+            self.swagger_spec = json.dumps(self.swagger_spec)
+        super().save(*args, **kwargs)
     
 
 class PricingModel(models.Model):
